@@ -35,7 +35,7 @@
          ],
          "name": "paths·obfz64·api-validate·post·requestbody",
          "originalLocations": [
-          "file:///D:/Repos/Filuet.Fusion.SDK/swagger.json#/components/requestBodies/paths·obfz64·api-validate·post·requestbody"
+          "file:///D:/Repos/Filuet.Fusion.SDK/apimatic-swagger.json#/components/requestBodies/paths·obfz64·api-validate·post·requestbody"
          ]
         },
         "x-ms-requestBody-name": "body"
@@ -106,7 +106,7 @@
          ],
          "name": "paths·gcqitp·api-validate·post·responses·200",
          "originalLocations": [
-          "file:///D:/Repos/Filuet.Fusion.SDK/swagger.json#/components/responses/paths·gcqitp·api-validate·post·responses·200"
+          "file:///D:/Repos/Filuet.Fusion.SDK/apimatic-swagger.json#/components/responses/paths·gcqitp·api-validate·post·responses·200"
          ]
         }
        },
@@ -185,7 +185,7 @@
          ],
          "name": "paths·1wec4qc·getpricedetails·post·requestbody",
          "originalLocations": [
-          "file:///D:/Repos/Filuet.Fusion.SDK/swagger.json#/components/requestBodies/paths·1wec4qc·getpricedetails·post·requestbody"
+          "file:///D:/Repos/Filuet.Fusion.SDK/apimatic-swagger.json#/components/requestBodies/paths·1wec4qc·getpricedetails·post·requestbody"
          ]
         },
         "x-ms-requestBody-name": "body"
@@ -256,7 +256,7 @@
          ],
          "name": "paths·11rlo2k·getpricedetails·post·responses·200",
          "originalLocations": [
-          "file:///D:/Repos/Filuet.Fusion.SDK/swagger.json#/components/responses/paths·11rlo2k·getpricedetails·post·responses·200"
+          "file:///D:/Repos/Filuet.Fusion.SDK/apimatic-swagger.json#/components/responses/paths·11rlo2k·getpricedetails·post·responses·200"
          ]
         }
        },
@@ -286,7 +286,7 @@
          ],
          "name": "paths·13cm6c3·getpricedetails·post·responses·400",
          "originalLocations": [
-          "file:///D:/Repos/Filuet.Fusion.SDK/swagger.json#/components/responses/paths·13cm6c3·getpricedetails·post·responses·400"
+          "file:///D:/Repos/Filuet.Fusion.SDK/apimatic-swagger.json#/components/responses/paths·13cm6c3·getpricedetails·post·responses·400"
          ]
         }
        },
@@ -373,7 +373,7 @@
          ],
          "name": "paths·97d93e·hpspaymentgateway·post·requestbody",
          "originalLocations": [
-          "file:///D:/Repos/Filuet.Fusion.SDK/swagger.json#/components/requestBodies/paths·97d93e·hpspaymentgateway·post·requestbody"
+          "file:///D:/Repos/Filuet.Fusion.SDK/apimatic-swagger.json#/components/requestBodies/paths·97d93e·hpspaymentgateway·post·requestbody"
          ]
         },
         "x-ms-requestBody-name": "body"
@@ -444,7 +444,7 @@
          ],
          "name": "paths·5kpjon·hpspaymentgateway·post·responses·200",
          "originalLocations": [
-          "file:///D:/Repos/Filuet.Fusion.SDK/swagger.json#/components/responses/paths·5kpjon·hpspaymentgateway·post·responses·200"
+          "file:///D:/Repos/Filuet.Fusion.SDK/apimatic-swagger.json#/components/responses/paths·5kpjon·hpspaymentgateway·post·responses·200"
          ]
         }
        },
@@ -474,7 +474,7 @@
          ],
          "name": "paths·1pikj96·hpspaymentgateway·post·responses·400",
          "originalLocations": [
-          "file:///D:/Repos/Filuet.Fusion.SDK/swagger.json#/components/responses/paths·1pikj96·hpspaymentgateway·post·responses·400"
+          "file:///D:/Repos/Filuet.Fusion.SDK/apimatic-swagger.json#/components/responses/paths·1pikj96·hpspaymentgateway·post·responses·400"
          ]
         }
        },
@@ -561,7 +561,7 @@
          ],
          "name": "paths·yzlav6·getdistributorprofile·post·requestbody",
          "originalLocations": [
-          "file:///D:/Repos/Filuet.Fusion.SDK/swagger.json#/components/requestBodies/paths·yzlav6·getdistributorprofile·post·requestbody"
+          "file:///D:/Repos/Filuet.Fusion.SDK/apimatic-swagger.json#/components/requestBodies/paths·yzlav6·getdistributorprofile·post·requestbody"
          ]
         },
         "x-ms-requestBody-name": "body"
@@ -632,7 +632,7 @@
          ],
          "name": "paths·1tocdsk·getdistributorprofile·post·responses·200",
          "originalLocations": [
-          "file:///D:/Repos/Filuet.Fusion.SDK/swagger.json#/components/responses/paths·1tocdsk·getdistributorprofile·post·responses·200"
+          "file:///D:/Repos/Filuet.Fusion.SDK/apimatic-swagger.json#/components/responses/paths·1tocdsk·getdistributorprofile·post·responses·200"
          ]
         }
        },
@@ -662,7 +662,7 @@
          ],
          "name": "paths·1azwfh2·getdistributorprofile·post·responses·400",
          "originalLocations": [
-          "file:///D:/Repos/Filuet.Fusion.SDK/swagger.json#/components/responses/paths·1azwfh2·getdistributorprofile·post·responses·400"
+          "file:///D:/Repos/Filuet.Fusion.SDK/apimatic-swagger.json#/components/responses/paths·1azwfh2·getdistributorprofile·post·responses·400"
          ]
         }
        },
@@ -749,7 +749,7 @@
          ],
          "name": "paths·zlmb0n·getskuavailability·post·requestbody",
          "originalLocations": [
-          "file:///D:/Repos/Filuet.Fusion.SDK/swagger.json#/components/requestBodies/paths·zlmb0n·getskuavailability·post·requestbody"
+          "file:///D:/Repos/Filuet.Fusion.SDK/apimatic-swagger.json#/components/requestBodies/paths·zlmb0n·getskuavailability·post·requestbody"
          ]
         },
         "x-ms-requestBody-name": "body"
@@ -820,7 +820,7 @@
          ],
          "name": "paths·o3d501·getskuavailability·post·responses·200",
          "originalLocations": [
-          "file:///D:/Repos/Filuet.Fusion.SDK/swagger.json#/components/responses/paths·o3d501·getskuavailability·post·responses·200"
+          "file:///D:/Repos/Filuet.Fusion.SDK/apimatic-swagger.json#/components/responses/paths·o3d501·getskuavailability·post·responses·200"
          ]
         }
        },
@@ -850,7 +850,7 @@
          ],
          "name": "paths·12qafit·getskuavailability·post·responses·400",
          "originalLocations": [
-          "file:///D:/Repos/Filuet.Fusion.SDK/swagger.json#/components/responses/paths·12qafit·getskuavailability·post·responses·400"
+          "file:///D:/Repos/Filuet.Fusion.SDK/apimatic-swagger.json#/components/responses/paths·12qafit·getskuavailability·post·responses·400"
          ]
         }
        },
@@ -937,7 +937,7 @@
          ],
          "name": "paths·1exh62s·submitorder·post·requestbody",
          "originalLocations": [
-          "file:///D:/Repos/Filuet.Fusion.SDK/swagger.json#/components/requestBodies/paths·1exh62s·submitorder·post·requestbody"
+          "file:///D:/Repos/Filuet.Fusion.SDK/apimatic-swagger.json#/components/requestBodies/paths·1exh62s·submitorder·post·requestbody"
          ]
         },
         "x-ms-requestBody-name": "body"
@@ -1008,7 +1008,7 @@
          ],
          "name": "paths·1jp7rrz·submitorder·post·responses·200",
          "originalLocations": [
-          "file:///D:/Repos/Filuet.Fusion.SDK/swagger.json#/components/responses/paths·1jp7rrz·submitorder·post·responses·200"
+          "file:///D:/Repos/Filuet.Fusion.SDK/apimatic-swagger.json#/components/responses/paths·1jp7rrz·submitorder·post·responses·200"
          ]
         }
        },
@@ -1038,7 +1038,7 @@
          ],
          "name": "paths·17gxxlc·submitorder·post·responses·400",
          "originalLocations": [
-          "file:///D:/Repos/Filuet.Fusion.SDK/swagger.json#/components/responses/paths·17gxxlc·submitorder·post·responses·400"
+          "file:///D:/Repos/Filuet.Fusion.SDK/apimatic-swagger.json#/components/responses/paths·17gxxlc·submitorder·post·responses·400"
          ]
         }
        },
@@ -1125,7 +1125,7 @@
          ],
          "name": "paths·eksla1·getdistributordiscount·post·requestbody",
          "originalLocations": [
-          "file:///D:/Repos/Filuet.Fusion.SDK/swagger.json#/components/requestBodies/paths·eksla1·getdistributordiscount·post·requestbody"
+          "file:///D:/Repos/Filuet.Fusion.SDK/apimatic-swagger.json#/components/requestBodies/paths·eksla1·getdistributordiscount·post·requestbody"
          ]
         },
         "x-ms-requestBody-name": "body"
@@ -1196,7 +1196,7 @@
          ],
          "name": "paths·19jh9o0·getdistributordiscount·post·responses·200",
          "originalLocations": [
-          "file:///D:/Repos/Filuet.Fusion.SDK/swagger.json#/components/responses/paths·19jh9o0·getdistributordiscount·post·responses·200"
+          "file:///D:/Repos/Filuet.Fusion.SDK/apimatic-swagger.json#/components/responses/paths·19jh9o0·getdistributordiscount·post·responses·200"
          ]
         }
        },
@@ -1226,7 +1226,7 @@
          ],
          "name": "paths·1ll3092·getdistributordiscount·post·responses·400",
          "originalLocations": [
-          "file:///D:/Repos/Filuet.Fusion.SDK/swagger.json#/components/responses/paths·1ll3092·getdistributordiscount·post·responses·400"
+          "file:///D:/Repos/Filuet.Fusion.SDK/apimatic-swagger.json#/components/responses/paths·1ll3092·getdistributordiscount·post·responses·400"
          ]
         }
        },
@@ -1313,7 +1313,7 @@
          ],
          "name": "paths·983pwk·dsfoppurchasinglimits·post·requestbody",
          "originalLocations": [
-          "file:///D:/Repos/Filuet.Fusion.SDK/swagger.json#/components/requestBodies/paths·983pwk·dsfoppurchasinglimits·post·requestbody"
+          "file:///D:/Repos/Filuet.Fusion.SDK/apimatic-swagger.json#/components/requestBodies/paths·983pwk·dsfoppurchasinglimits·post·requestbody"
          ]
         },
         "x-ms-requestBody-name": "body"
@@ -1384,7 +1384,7 @@
          ],
          "name": "paths·bh9qf2·dsfoppurchasinglimits·post·responses·200",
          "originalLocations": [
-          "file:///D:/Repos/Filuet.Fusion.SDK/swagger.json#/components/responses/paths·bh9qf2·dsfoppurchasinglimits·post·responses·200"
+          "file:///D:/Repos/Filuet.Fusion.SDK/apimatic-swagger.json#/components/responses/paths·bh9qf2·dsfoppurchasinglimits·post·responses·200"
          ]
         }
        },
@@ -1463,7 +1463,7 @@
          ],
          "name": "paths·1qo3jow·dscashlimit·post·requestbody",
          "originalLocations": [
-          "file:///D:/Repos/Filuet.Fusion.SDK/swagger.json#/components/requestBodies/paths·1qo3jow·dscashlimit·post·requestbody"
+          "file:///D:/Repos/Filuet.Fusion.SDK/apimatic-swagger.json#/components/requestBodies/paths·1qo3jow·dscashlimit·post·requestbody"
          ]
         },
         "x-ms-requestBody-name": "body"
@@ -1534,7 +1534,7 @@
          ],
          "name": "paths·89b8gc·dscashlimit·post·responses·200",
          "originalLocations": [
-          "file:///D:/Repos/Filuet.Fusion.SDK/swagger.json#/components/responses/paths·89b8gc·dscashlimit·post·responses·200"
+          "file:///D:/Repos/Filuet.Fusion.SDK/apimatic-swagger.json#/components/responses/paths·89b8gc·dscashlimit·post·responses·200"
          ]
         }
        },
@@ -1564,7 +1564,7 @@
          ],
          "name": "paths·13b81a7·dscashlimit·post·responses·400",
          "originalLocations": [
-          "file:///D:/Repos/Filuet.Fusion.SDK/swagger.json#/components/responses/paths·13b81a7·dscashlimit·post·responses·400"
+          "file:///D:/Repos/Filuet.Fusion.SDK/apimatic-swagger.json#/components/responses/paths·13b81a7·dscashlimit·post·responses·400"
          ]
         }
        },
@@ -1651,7 +1651,7 @@
          ],
          "name": "paths·1r3znx3·getorderdualmonthstatus·post·requestbody",
          "originalLocations": [
-          "file:///D:/Repos/Filuet.Fusion.SDK/swagger.json#/components/requestBodies/paths·1r3znx3·getorderdualmonthstatus·post·requestbody"
+          "file:///D:/Repos/Filuet.Fusion.SDK/apimatic-swagger.json#/components/requestBodies/paths·1r3znx3·getorderdualmonthstatus·post·requestbody"
          ]
         },
         "x-ms-requestBody-name": "body"
@@ -1722,7 +1722,7 @@
          ],
          "name": "paths·10cqua8·getorderdualmonthstatus·post·responses·200",
          "originalLocations": [
-          "file:///D:/Repos/Filuet.Fusion.SDK/swagger.json#/components/responses/paths·10cqua8·getorderdualmonthstatus·post·responses·200"
+          "file:///D:/Repos/Filuet.Fusion.SDK/apimatic-swagger.json#/components/responses/paths·10cqua8·getorderdualmonthstatus·post·responses·200"
          ]
         }
        },
@@ -1752,7 +1752,7 @@
          ],
          "name": "paths·1qj8rki·getorderdualmonthstatus·post·responses·400",
          "originalLocations": [
-          "file:///D:/Repos/Filuet.Fusion.SDK/swagger.json#/components/responses/paths·1qj8rki·getorderdualmonthstatus·post·responses·400"
+          "file:///D:/Repos/Filuet.Fusion.SDK/apimatic-swagger.json#/components/responses/paths·1qj8rki·getorderdualmonthstatus·post·responses·400"
          ]
         }
        },
@@ -1839,7 +1839,7 @@
          ],
          "name": "paths·16yk3oa·updatedsaddresscontacts·post·requestbody",
          "originalLocations": [
-          "file:///D:/Repos/Filuet.Fusion.SDK/swagger.json#/components/requestBodies/paths·16yk3oa·updatedsaddresscontacts·post·requestbody"
+          "file:///D:/Repos/Filuet.Fusion.SDK/apimatic-swagger.json#/components/requestBodies/paths·16yk3oa·updatedsaddresscontacts·post·requestbody"
          ]
         },
         "x-ms-requestBody-name": "body"
@@ -1910,7 +1910,7 @@
          ],
          "name": "paths·1ywevs4·updatedsaddresscontacts·post·responses·200",
          "originalLocations": [
-          "file:///D:/Repos/Filuet.Fusion.SDK/swagger.json#/components/responses/paths·1ywevs4·updatedsaddresscontacts·post·responses·200"
+          "file:///D:/Repos/Filuet.Fusion.SDK/apimatic-swagger.json#/components/responses/paths·1ywevs4·updatedsaddresscontacts·post·responses·200"
          ]
         }
        },
@@ -1940,7 +1940,7 @@
          ],
          "name": "paths·puqe8·updatedsaddresscontacts·post·responses·400",
          "originalLocations": [
-          "file:///D:/Repos/Filuet.Fusion.SDK/swagger.json#/components/responses/paths·puqe8·updatedsaddresscontacts·post·responses·400"
+          "file:///D:/Repos/Filuet.Fusion.SDK/apimatic-swagger.json#/components/responses/paths·puqe8·updatedsaddresscontacts·post·responses·400"
          ]
         }
        },
@@ -2027,7 +2027,7 @@
          ],
          "name": "paths·1ob39et·getshippingwhseandfreightcodes·post·requestbody",
          "originalLocations": [
-          "file:///D:/Repos/Filuet.Fusion.SDK/swagger.json#/components/requestBodies/paths·1ob39et·getshippingwhseandfreightcodes·post·requestbody"
+          "file:///D:/Repos/Filuet.Fusion.SDK/apimatic-swagger.json#/components/requestBodies/paths·1ob39et·getshippingwhseandfreightcodes·post·requestbody"
          ]
         },
         "x-ms-requestBody-name": "body"
@@ -2098,7 +2098,7 @@
          ],
          "name": "paths·l8nmii·getshippingwhseandfreightcodes·post·responses·200",
          "originalLocations": [
-          "file:///D:/Repos/Filuet.Fusion.SDK/swagger.json#/components/responses/paths·l8nmii·getshippingwhseandfreightcodes·post·responses·200"
+          "file:///D:/Repos/Filuet.Fusion.SDK/apimatic-swagger.json#/components/responses/paths·l8nmii·getshippingwhseandfreightcodes·post·responses·200"
          ]
         }
        },
@@ -2128,7 +2128,7 @@
          ],
          "name": "paths·1awmjwo·getshippingwhseandfreightcodes·post·responses·400",
          "originalLocations": [
-          "file:///D:/Repos/Filuet.Fusion.SDK/swagger.json#/components/responses/paths·1awmjwo·getshippingwhseandfreightcodes·post·responses·400"
+          "file:///D:/Repos/Filuet.Fusion.SDK/apimatic-swagger.json#/components/responses/paths·1awmjwo·getshippingwhseandfreightcodes·post·responses·400"
          ]
         }
        },
@@ -2215,7 +2215,7 @@
          ],
          "name": "paths·kkyi0f·getdspostamatdetails·post·requestbody",
          "originalLocations": [
-          "file:///D:/Repos/Filuet.Fusion.SDK/swagger.json#/components/requestBodies/paths·kkyi0f·getdspostamatdetails·post·requestbody"
+          "file:///D:/Repos/Filuet.Fusion.SDK/apimatic-swagger.json#/components/requestBodies/paths·kkyi0f·getdspostamatdetails·post·requestbody"
          ]
         },
         "x-ms-requestBody-name": "body"
@@ -2286,7 +2286,7 @@
          ],
          "name": "paths·joorj9·getdspostamatdetails·post·responses·200",
          "originalLocations": [
-          "file:///D:/Repos/Filuet.Fusion.SDK/swagger.json#/components/responses/paths·joorj9·getdspostamatdetails·post·responses·200"
+          "file:///D:/Repos/Filuet.Fusion.SDK/apimatic-swagger.json#/components/responses/paths·joorj9·getdspostamatdetails·post·responses·200"
          ]
         }
        },
@@ -2365,7 +2365,7 @@
          ],
          "name": "paths·1iuuyx3·getproductinventory·post·requestbody",
          "originalLocations": [
-          "file:///D:/Repos/Filuet.Fusion.SDK/swagger.json#/components/requestBodies/paths·1iuuyx3·getproductinventory·post·requestbody"
+          "file:///D:/Repos/Filuet.Fusion.SDK/apimatic-swagger.json#/components/requestBodies/paths·1iuuyx3·getproductinventory·post·requestbody"
          ]
         },
         "x-ms-requestBody-name": "body"
@@ -2436,7 +2436,7 @@
          ],
          "name": "paths·1s9ris8·getproductinventory·post·responses·200",
          "originalLocations": [
-          "file:///D:/Repos/Filuet.Fusion.SDK/swagger.json#/components/responses/paths·1s9ris8·getproductinventory·post·responses·200"
+          "file:///D:/Repos/Filuet.Fusion.SDK/apimatic-swagger.json#/components/responses/paths·1s9ris8·getproductinventory·post·responses·200"
          ]
         }
        },
@@ -2466,7 +2466,7 @@
          ],
          "name": "paths·2sfi3d·getproductinventory·post·responses·400",
          "originalLocations": [
-          "file:///D:/Repos/Filuet.Fusion.SDK/swagger.json#/components/responses/paths·2sfi3d·getproductinventory·post·responses·400"
+          "file:///D:/Repos/Filuet.Fusion.SDK/apimatic-swagger.json#/components/responses/paths·2sfi3d·getproductinventory·post·responses·400"
          ]
         }
        },
@@ -2553,7 +2553,7 @@
          ],
          "name": "paths·1umumq2·getproductcatalog·post·requestbody",
          "originalLocations": [
-          "file:///D:/Repos/Filuet.Fusion.SDK/swagger.json#/components/requestBodies/paths·1umumq2·getproductcatalog·post·requestbody"
+          "file:///D:/Repos/Filuet.Fusion.SDK/apimatic-swagger.json#/components/requestBodies/paths·1umumq2·getproductcatalog·post·requestbody"
          ]
         },
         "x-ms-requestBody-name": "body"
@@ -2624,7 +2624,7 @@
          ],
          "name": "paths·1upg8gz·getproductcatalog·post·responses·200",
          "originalLocations": [
-          "file:///D:/Repos/Filuet.Fusion.SDK/swagger.json#/components/responses/paths·1upg8gz·getproductcatalog·post·responses·200"
+          "file:///D:/Repos/Filuet.Fusion.SDK/apimatic-swagger.json#/components/responses/paths·1upg8gz·getproductcatalog·post·responses·200"
          ]
         }
        },
@@ -2654,7 +2654,7 @@
          ],
          "name": "paths·18n0to9·getproductcatalog·post·responses·400",
          "originalLocations": [
-          "file:///D:/Repos/Filuet.Fusion.SDK/swagger.json#/components/responses/paths·18n0to9·getproductcatalog·post·responses·400"
+          "file:///D:/Repos/Filuet.Fusion.SDK/apimatic-swagger.json#/components/responses/paths·18n0to9·getproductcatalog·post·responses·400"
          ]
         }
        },
@@ -2741,7 +2741,7 @@
          ],
          "name": "paths·k33r2b·getdistributorvolumepoints·post·requestbody",
          "originalLocations": [
-          "file:///D:/Repos/Filuet.Fusion.SDK/swagger.json#/components/requestBodies/paths·k33r2b·getdistributorvolumepoints·post·requestbody"
+          "file:///D:/Repos/Filuet.Fusion.SDK/apimatic-swagger.json#/components/requestBodies/paths·k33r2b·getdistributorvolumepoints·post·requestbody"
          ]
         },
         "x-ms-requestBody-name": "body"
@@ -2795,7 +2795,7 @@
          ],
          "name": "paths·1tkjl4l·getdistributorvolumepoints·post·responses·200",
          "originalLocations": [
-          "file:///D:/Repos/Filuet.Fusion.SDK/swagger.json#/components/responses/paths·1tkjl4l·getdistributorvolumepoints·post·responses·200"
+          "file:///D:/Repos/Filuet.Fusion.SDK/apimatic-swagger.json#/components/responses/paths·1tkjl4l·getdistributorvolumepoints·post·responses·200"
          ]
         }
        },

@@ -1,0 +1,1 @@
+call autorest initialize.md --v3 --static-initializer --add-credentials --input-file=openapi-ts3.json --csharp --namespace=Filuet.Fusion.SDK --output-folder=./HerbalifeRestAPI_TS3

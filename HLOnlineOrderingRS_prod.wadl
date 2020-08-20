@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application xmlns="http://wadl.dev.java.net/2009/02">
+  <doc xml:lang="en" title="HLOnlineOrderingRS"/>
+  <resources base="https://herbalife-econnectslc.hrbl.com/Order/HLOnlineOrdering/prod">
+    <resource path="api/validate" id="">
+      <doc xml:lang="en" title=""/>
+      <method name="POST" id="">
+        <doc xml:lang="en" title=""/>
+        <request>
+          <representation mediaType="application/json"/>
+        </request>
+        <response status="">
+          <representation mediaType="application/json"/>
+        </response>
+        <response status="200">
+          <representation mediaType="application/xml" element="val:ValidateTokenResponse" xmlns:val="http://xmlns.herbalife.com/OAuthServices/token/validate"/>
+          <representation mediaType="application/json"/>
+        </response>
+      </method>
+    </resource>
+    <resource path="GetPriceDetails" id="">
+      <doc xml:lang="en" title=""/>
+      <method name="POST" id="">
+        <doc xml:lang="en" title=""/>
+        <request>
+          <representation mediaType="application/json"/>
+        </request>
+        <response status="">
+          <representation mediaType="application/json"/>
+        </response>
+        <response status="200">
+          <representation mediaType="application/xml" element="v1:GetOracleEbizOrderPricingResponse" xmlns:v1="http://xmlns.herbalife.net/EnterpriseObjects/Core/EBO/Pricing/V1"/>
+          <representation mediaType="application/json"/>
+        </response>
+        <response status="400">
+          <representation mediaType="application/xml" element="v1:GetOracleEbizOrderPricingFault" xmlns:v1="http://xmlns.herbalife.net/EnterpriseObjects/Core/EBO/Pricing/V1"/>
+        </response>
+      </method>
+    </resource>
+    <resource path="HPSPaymentGateway" id="">
+      <doc xml:lang="en" title=""/>
+      <method name="POST" id="">
+        <doc xml:lang="en" title=""/>
+        <request>
+          <representation mediaType="application/json"/>
+        </request>
+        <response status="">
+          <representation mediaType="application/json"/>
+        </response>
+        <response status="200">
+          <representation mediaType="application/xml" element="v1:HPSPaymentResponse" xmlns:v1="http://xmlns.herbalife.net/EnterpriseObjects/Core/EBO/Payment/V1"/>
+          <representation mediaType="application/json"/>
+        </response>
+        <response status="400">
+          <representation mediaType="application/xml" element="v1:PaymentFault" xmlns:v1="http://xmlns.herbalife.net/EnterpriseObjects/Core/EBO/Payment/V1"/>
+        </response>
+      </method>
+    </resource>
+    <resource path="GetDistributorProfile" id="">
+      <doc xml:lang="en" title=""/>
+      <method name="POST" id="">
+        <doc xml:lang="en" title=""/>
+        <request>
+          <representation mediaType="application/json"/>
+        </request>
+        <response status="">
+          <representation mediaType="application/json"/>
+        </response>
+        <response status="200">
+          <representation mediaType="application/xml" element="v1:GetDistributorProfileResponse" xmlns:v1="http://xmlns.herbalife.net/EnterpriseObjects/Core/EBO/Distributor/V1"/>
+          <representation mediaType="application/json"/>
+        </response>
+        <response status="400">
+          <representation mediaType="application/xml" element="v1:DistributorServicesFault" xmlns:v1="http://xmlns.herbalife.net/EnterpriseObjects/Core/EBO/Distributor/V1"/>
+        </response>
+      </method>
+    </resource>
+    <resource path="GetSkuAvailability" id="">
+      <doc xml:lang="en" title=""/>
+      <method name="POST" id="">
+        <doc xml:lang="en" title=""/>
+        <request>
+          <representation mediaType="application/json"/>
+        </request>
+        <response status="">
+          <representation mediaType="application/json"/>
+        </response>
+        <response status="200">
+          <representation mediaType="application/xml" element="v1:SkuInquiryResponse" xmlns:v1="http://xmlns.herbalife.net/EnterpriseObjects/Core/EBO/Products/V1"/>
+          <representation mediaType="application/json"/>
+        </response>
+        <response status="400">
+          <representation mediaType="application/xml" element="v1:InventoryServicesFault" xmlns:v1="http://xmlns.herbalife.net/EnterpriseObjects/Core/EBO/Products/V1"/>
+        </response>
+      </method>
+    </resource>
+    <resource path="SubmitOrder" id="">
+      <doc xml:lang="en" title=""/>
+      <method name="POST" id="">
+        <doc xml:lang="en" title=""/>
+        <request>
+          <representation mediaType="application/json"/>
+        </request>
+        <response status="">
+          <representation mediaType="application/json"/>
+        </response>
+        <response status="200">
+          <representation mediaType="application/xml" element="v1:SubmitOrderResponse" xmlns:v1="http://xmlns.herbalife.net/EnterpriseObjects/Core/EBO/Order/V1"/>
+          <representation mediaType="application/json"/>
+        </response>
+        <response status="400">
+          <representation mediaType="application/xml" element="v1:SubmitOrderFault" xmlns:v1="http://xmlns.herbalife.net/EnterpriseObjects/Core/EBO/Order/V1"/>
+        </response>
+      </method>
+    </resource>
+    <resource path="GetDistributorDiscount" id="">
+      <doc xml:lang="en" title=""/>
+      <method name="POST" id="">
+        <doc xml:lang="en" title=""/>
+        <request>
+          <representation mediaType="application/json"/>
+        </request>
+        <response status="">
+          <representation mediaType="application/json"/>
+        </response>
+        <response status="200">
+          <representation mediaType="application/xml" element="v1:GetDistributorDiscountResponse" xmlns:v1="http://xmlns.herbalife.net/EnterpriseObjects/Core/EBO/Distributor/V1"/>
+          <representation mediaType="application/json"/>
+        </response>
+        <response status="400">
+          <representation mediaType="application/xml" element="v1:DistributorServicesFault" xmlns:v1="http://xmlns.herbalife.net/EnterpriseObjects/Core/EBO/Distributor/V1"/>
+        </response>
+      </method>
+    </resource>
+    <resource path="DSFOPPurchasingLimits" id="">
+      <doc xml:lang="en" title=""/>
+      <method name="POST" id="">
+        <doc xml:lang="en" title=""/>
+        <request>
+          <representation mediaType="application/json"/>
+        </request>
+        <response status="">
+          <representation mediaType="application/json"/>
+        </response>
+        <response status="200">
+          <representation mediaType="application/xml" element="v1:GetDSPurchasingLimitsResponse" xmlns:v1="http://xmlns.herbalife.net/EnterpriseObjects/Core/EBO/PurchasingLimit/V1"/>
+          <representation mediaType="application/json"/>
+        </response>
+      </method>
+    </resource>
+    <resource path="DsCashLimit" id="">
+      <doc xml:lang="en" title=""/>
+      <method name="POST" id="">
+        <doc xml:lang="en" title=""/>
+        <request>
+          <representation mediaType="application/json"/>
+        </request>
+        <response status="">
+          <representation mediaType="application/json"/>
+        </response>
+        <response status="200">
+          <representation mediaType="application/xml" element="v1:DsCashLimitResponse" xmlns:v1="http://xmlns.herbalife.net/HLEnterpriseObjects/Core/EBO/DsCashLimit/V1"/>
+          <representation mediaType="application/json"/>
+        </response>
+        <response status="400">
+          <representation mediaType="application/xml" element="v1:DsCashLimitServiceFault" xmlns:v1="http://xmlns.herbalife.net/HLEnterpriseObjects/Core/EBO/DsCashLimit/V1"/>
+        </response>
+      </method>
+    </resource>
+    <resource path="GetOrderDualMonthStatus" id="">
+      <doc xml:lang="en" title=""/>
+      <method name="POST" id="">
+        <doc xml:lang="en" title=""/>
+        <request>
+          <representation mediaType="application/json"/>
+        </request>
+        <response status="">
+          <representation mediaType="application/json"/>
+        </response>
+        <response status="200">
+          <representation mediaType="application/xml" element="v1:GetDualMonthStatusResponse" xmlns:v1="http://xmlns.herbalife.net/EnterpriseObjects/Core/EBO/DualMonthStatus/V1"/>
+          <representation mediaType="application/json"/>
+        </response>
+        <response status="400">
+          <representation mediaType="application/xml" element="v1:GetDualMonthStatusFault" xmlns:v1="http://xmlns.herbalife.net/EnterpriseObjects/Core/EBO/DualMonthStatus/V1"/>
+        </response>
+      </method>
+    </resource>
+    <resource path="UpdateDsAddressContacts" id="">
+      <doc xml:lang="en" title=""/>
+      <method name="POST" id="">
+        <doc xml:lang="en" title=""/>
+        <request>
+          <representation mediaType="application/json"/>
+        </request>
+        <response status="">
+          <representation mediaType="application/json"/>
+        </response>
+        <response status="200">
+          <representation mediaType="application/xml" element="v1:UpdateDistContactAddressResponse" xmlns:v1="http://xmlns.herbalife.net/EnterpriseObjects/Core/EBO/Distributor/V1"/>
+          <representation mediaType="application/json"/>
+        </response>
+        <response status="400">
+          <representation mediaType="application/xml" element="v1:DistributorServicesFault" xmlns:v1="http://xmlns.herbalife.net/EnterpriseObjects/Core/EBO/Distributor/V1"/>
+        </response>
+      </method>
+    </resource>
+    <resource path="GetShippingWhseAndFreightCodes" id="">
+      <doc xml:lang="en" title=""/>
+      <method name="POST" id="">
+        <doc xml:lang="en" title=""/>
+        <request>
+          <representation mediaType="application/json"/>
+        </request>
+        <response status="">
+          <representation mediaType="application/json"/>
+        </response>
+        <response status="200">
+          <representation mediaType="application/xml" element="v1:QiWiWHFrieghtCodesResponse" xmlns:v1="http://xmlns.herbalife.net/EnterpriseObjects/Core/EBO/QiWi/V1"/>
+          <representation mediaType="application/json"/>
+        </response>
+        <response status="400">
+          <representation mediaType="application/xml" element="v1:QiWiServicesFault" xmlns:v1="http://xmlns.herbalife.net/EnterpriseObjects/Core/EBO/QiWi/V1"/>
+        </response>
+      </method>
+    </resource>
+    <resource path="GetDSPostamatDetails" id="">
+      <doc xml:lang="en" title=""/>
+      <method name="POST" id="">
+        <doc xml:lang="en" title=""/>
+        <request>
+          <representation mediaType="application/json"/>
+        </request>
+        <response status="">
+          <representation mediaType="application/json"/>
+        </response>
+        <response status="200">
+          <representation mediaType="application/xml" element="dsp:GetDSPostamatResponse" xmlns:dsp="http://xmlns.herbalife.net/HLEnterpriseObjects/Core/EBO/Distributor/V1/DSpostamat"/>
+          <representation mediaType="application/json"/>
+        </response>
+      </method>
+    </resource>
+    <resource path="GetProductInventory" id="">
+      <doc xml:lang="en" title=""/>
+      <method name="POST" id="">
+        <doc xml:lang="en" title=""/>
+        <request>
+          <representation mediaType="application/json"/>
+        </request>
+        <response status="">
+          <representation mediaType="application/json"/>
+        </response>
+        <response status="200">
+          <representation mediaType="application/xml" element="prod:GetProductInventoryResponse" xmlns:prod="http://xmlns.herbalife.com/HLServiceInfrastructure/schemas/Products/ProductInventory"/>
+          <representation mediaType="application/json"/>
+        </response>
+        <response status="400">
+          <representation mediaType="application/xml" element="prod:GetProductInventoryFault" xmlns:prod="http://xmlns.herbalife.com/HLServiceInfrastructure/schemas/Products/ProductInventory"/>
+        </response>
+      </method>
+    </resource>
+    <resource path="GetProductCatalog" id="">
+      <doc xml:lang="en" title=""/>
+      <method name="POST" id="">
+        <doc xml:lang="en" title=""/>
+        <request>
+          <representation mediaType="application/json"/>
+        </request>
+        <response status="">
+          <representation mediaType="application/json"/>
+        </response>
+        <response status="200">
+          <representation mediaType="application/xml" element="prod:GetProductCatalogResponse" xmlns:prod="http://xmlns.herbalife.com/HLServiceInfrastructure/schemas/Products"/>
+          <representation mediaType="application/json"/>
+        </response>
+        <response status="400">
+          <representation mediaType="application/xml" element="prod:ProductCatalogFault" xmlns:prod="http://xmlns.herbalife.com/HLServiceInfrastructure/schemas/Products"/>
+        </response>
+      </method>
+    </resource>
+    <resource path="GetDistributorVolumePoints" id="">
+      <doc xml:lang="en" title=""/>
+      <method name="POST" id="">
+        <doc xml:lang="en" title=""/>
+        <request>
+          <representation mediaType="application/json"/>
+        </request>
+        <response status="">
+          <representation mediaType="application/json"/>
+          <representation mediaType="application/json"/>
+          <representation mediaType="application/xml"/>
+          <representation mediaType="application/xml"/>
+        </response>
+      </method>
+    </resource>
+  </resources>
+</application>

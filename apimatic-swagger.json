@@ -1,0 +1,897 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0",
+    "title": "HLOnlineOrderingRS",
+    "description": "",
+    "contact": {},
+    "x-codegen-settings": {
+      "Nullify404": false,
+      "GenerateAsyncCode": true,
+      "UseMethodPrefix": true,
+      "UseModelPostfix": false,
+      "UseControllerPrefix": true,
+      "UseEnumPostfix": true,
+      "CollectParameters": false,
+      "UseConstructorsForConfig": false,
+      "UseCommonSDKLibrary": false,
+      "iOSUseAppInfoPlist": false,
+      "AndroidUseAppManifest": false,
+      "BodySerialization": 0,
+      "EnableAdditionalModelProperties": false,
+      "PreserveParameterOrder": true,
+      "AppendContentHeaders": true,
+      "iOSGenerateCoreData": false,
+      "GenerateInterfaces": false,
+      "NodeHttpClient": "NODE_REQUEST",
+      "ValidateRequiredParameters": false,
+      "JavaUsePropertiesConfig": false,
+      "Timeout": 0.0,
+      "StoreTimezoneInformation": false,
+      "EnablePHPComposerVersionString": false,
+      "EnableLogging": false,
+      "ArraySerialization": "Indexed",
+      "ModelSerializationScheme": "Json",
+      "UseExceptionPrefix": true,
+      "RunscopeEnabled": false,
+      "AndroidHttpClient": "ANDROID_OK",
+      "ObjCHttpClient": "UNIREST",
+      "CSharpHttpClient": "UNIREST",
+      "PHPHttpClient": "UNIREST",
+      "JavaHttpClient": "JAVA_OK",
+      "ParameterArrayFormat": "ParamArrayWithIndex",
+      "SecurityProtocols": [
+        "Ssl3",
+        "Tls"
+      ],
+      "GenerateTravisConfig": false,
+      "GenerateCircleConfig": false,
+      "GenerateAppveyorConfig": false,
+      "GenerateJenkinsConfig": false,
+      "EnableHttpCache": false,
+      "Retries": 0,
+      "RetryInterval": 1.0,
+      "GenerateAdvancedDocs": true,
+      "UnderscoreNumbers": true,
+      "UseSingletonPattern": true,
+      "DisableLinting": false,
+      "ApplyCustomizations": [],
+      "SortResources": false,
+      "AllowSkippingSSLCertVerification": false,
+      "DoNotSplitWords": [],
+      "EnableGlobalUserAgent": true,
+      "ReturnCompleteHttpResponse": false,
+      "GenerateModels": true,
+      "GenerateExceptions": true,
+      "IgnoreIfNullJson": false,
+      "DisableDocs": false,
+      "LiftParameterDescriptionFromCustomType": false,
+      "ThrowForHttpErrorStatusCodes": true,
+      "ResponseMapping": {
+        "Type": "Simple"
+      },
+      "ForceKeywordArgsInRuby": false,
+      "SymbolizeHashKeysInRuby": false,
+      "UsageExampleEndpoint": {
+        "Description": "",
+        "EndpointGroupName": "",
+        "EndpointName": ""
+      },
+      "IsLatestVersion": false,
+      "EnableImmutableModels": false,
+      "GenerateEnums": true,
+      "BackoffFactor": 0.0,
+      "UserConfigurableRetries": true,
+      "UseEndpointMethodName": false,
+      "EncodeTemplateParameters": true,
+      "GenerateExamplesForOptionalFields": false
+    },
+    "x-image-uri": ""
+  },
+  "host": "example.com",
+  "basePath": "/",
+  "schemes": [],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/api/validate": {
+      "post": {
+        "description": "",
+        "summary": "ApiValidate_POST",
+        "operationId": "ApiValidate_POST",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ApiValidate_POSTRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "xml": {
+                "name": "ValidateTokenResponse",
+                "attribute": false,
+                "wrapped": false
+              },
+              "type": "string"
+            },
+            "headers": {}
+          }
+        },
+        "x-unitTests": [],
+        "x-operation-settings": {
+          "CollectParameters": false,
+          "AllowDynamicQueryParameters": false,
+          "AllowDynamicFormParameters": false,
+          "IsMultiContentStreaming": false
+        }
+      }
+    },
+    "/GetPriceDetails": {
+      "post": {
+        "description": "",
+        "summary": "GetPriceDetails_POST",
+        "operationId": "GetPriceDetails_POST",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/GetPriceDetails_POSTRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "xml": {
+                "name": "GetOracleEbizOrderPricingResponse",
+                "attribute": false,
+                "wrapped": false
+              },
+              "type": "string"
+            },
+            "headers": {}
+          },
+          "400": {
+            "description": "",
+            "schema": {}
+          }
+        },
+        "x-unitTests": [],
+        "x-operation-settings": {
+          "CollectParameters": false,
+          "AllowDynamicQueryParameters": false,
+          "AllowDynamicFormParameters": false,
+          "IsMultiContentStreaming": false
+        }
+      }
+    },
+    "/HPSPaymentGateway": {
+      "post": {
+        "description": "",
+        "summary": "HPSPaymentGateway_POST",
+        "operationId": "HPSPaymentGateway_POST",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/HPSPaymentGateway_POSTRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "xml": {
+                "name": "HPSPaymentResponse",
+                "attribute": false,
+                "wrapped": false
+              },
+              "type": "string"
+            },
+            "headers": {}
+          },
+          "400": {
+            "description": "",
+            "schema": {}
+          }
+        },
+        "x-unitTests": [],
+        "x-operation-settings": {
+          "CollectParameters": false,
+          "AllowDynamicQueryParameters": false,
+          "AllowDynamicFormParameters": false,
+          "IsMultiContentStreaming": false
+        }
+      }
+    },
+    "/GetDistributorProfile": {
+      "post": {
+        "description": "",
+        "summary": "GetDistributorProfile_POST",
+        "operationId": "GetDistributorProfile_POST",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/GetDistributorProfile_POSTRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "xml": {
+                "name": "GetDistributorProfileResponse",
+                "attribute": false,
+                "wrapped": false
+              },
+              "type": "string"
+            },
+            "headers": {}
+          },
+          "400": {
+            "description": "",
+            "schema": {}
+          }
+        },
+        "x-unitTests": [],
+        "x-operation-settings": {
+          "CollectParameters": false,
+          "AllowDynamicQueryParameters": false,
+          "AllowDynamicFormParameters": false,
+          "IsMultiContentStreaming": false
+        }
+      }
+    },
+    "/GetSkuAvailability": {
+      "post": {
+        "description": "",
+        "summary": "GetSkuAvailability_POST",
+        "operationId": "GetSkuAvailability_POST",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/GetSkuAvailability_POSTRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "xml": {
+                "name": "SkuInquiryResponse",
+                "attribute": false,
+                "wrapped": false
+              },
+              "type": "string"
+            },
+            "headers": {}
+          },
+          "400": {
+            "description": "",
+            "schema": {}
+          }
+        },
+        "x-unitTests": [],
+        "x-operation-settings": {
+          "CollectParameters": false,
+          "AllowDynamicQueryParameters": false,
+          "AllowDynamicFormParameters": false,
+          "IsMultiContentStreaming": false
+        }
+      }
+    },
+    "/SubmitOrder": {
+      "post": {
+        "description": "",
+        "summary": "SubmitOrder_POST",
+        "operationId": "SubmitOrder_POST",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SubmitOrder_POSTRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "xml": {
+                "name": "SubmitOrderResponse",
+                "attribute": false,
+                "wrapped": false
+              },
+              "type": "string"
+            },
+            "headers": {}
+          },
+          "400": {
+            "description": "",
+            "schema": {}
+          }
+        },
+        "x-unitTests": [],
+        "x-operation-settings": {
+          "CollectParameters": false,
+          "AllowDynamicQueryParameters": false,
+          "AllowDynamicFormParameters": false,
+          "IsMultiContentStreaming": false
+        }
+      }
+    },
+    "/GetDistributorDiscount": {
+      "post": {
+        "description": "",
+        "summary": "GetDistributorDiscount_POST",
+        "operationId": "GetDistributorDiscount_POST",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/GetDistributorDiscount_POSTRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "xml": {
+                "name": "GetDistributorDiscountResponse",
+                "attribute": false,
+                "wrapped": false
+              },
+              "type": "string"
+            },
+            "headers": {}
+          },
+          "400": {
+            "description": "",
+            "schema": {}
+          }
+        },
+        "x-unitTests": [],
+        "x-operation-settings": {
+          "CollectParameters": false,
+          "AllowDynamicQueryParameters": false,
+          "AllowDynamicFormParameters": false,
+          "IsMultiContentStreaming": false
+        }
+      }
+    },
+    "/DSFOPPurchasingLimits": {
+      "post": {
+        "description": "",
+        "summary": "DSFOPPurchasingLimits_POST",
+        "operationId": "DSFOPPurchasingLimits_POST",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/DSFOPPurchasingLimits_POSTRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "xml": {
+                "name": "GetDSPurchasingLimitsResponse",
+                "attribute": false,
+                "wrapped": false
+              },
+              "type": "string"
+            },
+            "headers": {}
+          }
+        },
+        "x-unitTests": [],
+        "x-operation-settings": {
+          "CollectParameters": false,
+          "AllowDynamicQueryParameters": false,
+          "AllowDynamicFormParameters": false,
+          "IsMultiContentStreaming": false
+        }
+      }
+    },
+    "/DsCashLimit": {
+      "post": {
+        "description": "",
+        "summary": "DsCashLimit_POST",
+        "operationId": "DsCashLimit_POST",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/DsCashLimit_POSTRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "xml": {
+                "name": "DsCashLimitResponse",
+                "attribute": false,
+                "wrapped": false
+              },
+              "type": "string"
+            },
+            "headers": {}
+          },
+          "400": {
+            "description": "",
+            "schema": {}
+          }
+        },
+        "x-unitTests": [],
+        "x-operation-settings": {
+          "CollectParameters": false,
+          "AllowDynamicQueryParameters": false,
+          "AllowDynamicFormParameters": false,
+          "IsMultiContentStreaming": false
+        }
+      }
+    },
+    "/GetOrderDualMonthStatus": {
+      "post": {
+        "description": "",
+        "summary": "GetOrderDualMonthStatus_POST",
+        "operationId": "GetOrderDualMonthStatus_POST",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/GetOrderDualMonthStatus_POSTRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "xml": {
+                "name": "GetDualMonthStatusResponse",
+                "attribute": false,
+                "wrapped": false
+              },
+              "type": "string"
+            },
+            "headers": {}
+          },
+          "400": {
+            "description": "",
+            "schema": {}
+          }
+        },
+        "x-unitTests": [],
+        "x-operation-settings": {
+          "CollectParameters": false,
+          "AllowDynamicQueryParameters": false,
+          "AllowDynamicFormParameters": false,
+          "IsMultiContentStreaming": false
+        }
+      }
+    },
+    "/UpdateDsAddressContacts": {
+      "post": {
+        "description": "",
+        "summary": "UpdateDsAddressContacts_POST",
+        "operationId": "UpdateDsAddressContacts_POST",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UpdateDsAddressContacts_POSTRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "xml": {
+                "name": "UpdateDistContactAddressResponse",
+                "attribute": false,
+                "wrapped": false
+              },
+              "type": "string"
+            },
+            "headers": {}
+          },
+          "400": {
+            "description": "",
+            "schema": {}
+          }
+        },
+        "x-unitTests": [],
+        "x-operation-settings": {
+          "CollectParameters": false,
+          "AllowDynamicQueryParameters": false,
+          "AllowDynamicFormParameters": false,
+          "IsMultiContentStreaming": false
+        }
+      }
+    },
+    "/GetShippingWhseAndFreightCodes": {
+      "post": {
+        "description": "",
+        "summary": "GetShippingWhseAndFreightCodes_POST",
+        "operationId": "GetShippingWhseAndFreightCodes_POST",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/GetShippingWhseAndFreightCodes_POSTRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "xml": {
+                "name": "QiWiWHFrieghtCodesResponse",
+                "attribute": false,
+                "wrapped": false
+              },
+              "type": "string"
+            },
+            "headers": {}
+          },
+          "400": {
+            "description": "",
+            "schema": {}
+          }
+        },
+        "x-unitTests": [],
+        "x-operation-settings": {
+          "CollectParameters": false,
+          "AllowDynamicQueryParameters": false,
+          "AllowDynamicFormParameters": false,
+          "IsMultiContentStreaming": false
+        }
+      }
+    },
+    "/GetDSPostamatDetails": {
+      "post": {
+        "description": "",
+        "summary": "GetDSPostamatDetails_POST",
+        "operationId": "GetDSPostamatDetails_POST",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/GetDSPostamatDetails_POSTRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "xml": {
+                "name": "GetDSPostamatResponse",
+                "attribute": false,
+                "wrapped": false
+              },
+              "type": "string"
+            },
+            "headers": {}
+          }
+        },
+        "x-unitTests": [],
+        "x-operation-settings": {
+          "CollectParameters": false,
+          "AllowDynamicQueryParameters": false,
+          "AllowDynamicFormParameters": false,
+          "IsMultiContentStreaming": false
+        }
+      }
+    },
+    "/GetProductInventory": {
+      "post": {
+        "description": "",
+        "summary": "GetProductInventory_POST",
+        "operationId": "GetProductInventory_POST",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/GetProductInventory_POSTRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "xml": {
+                "name": "GetProductInventoryResponse",
+                "attribute": false,
+                "wrapped": false
+              },
+              "type": "string"
+            },
+            "headers": {}
+          },
+          "400": {
+            "description": "",
+            "schema": {}
+          }
+        },
+        "x-unitTests": [],
+        "x-operation-settings": {
+          "CollectParameters": false,
+          "AllowDynamicQueryParameters": false,
+          "AllowDynamicFormParameters": false,
+          "IsMultiContentStreaming": false
+        }
+      }
+    },
+    "/GetProductCatalog": {
+      "post": {
+        "description": "",
+        "summary": "GetProductCatalog_POST",
+        "operationId": "GetProductCatalog_POST",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/GetProductCatalog_POSTRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "xml": {
+                "name": "GetProductCatalogResponse",
+                "attribute": false,
+                "wrapped": false
+              },
+              "type": "string"
+            },
+            "headers": {}
+          },
+          "400": {
+            "description": "",
+            "schema": {}
+          }
+        },
+        "x-unitTests": [],
+        "x-operation-settings": {
+          "CollectParameters": false,
+          "AllowDynamicQueryParameters": false,
+          "AllowDynamicFormParameters": false,
+          "IsMultiContentStreaming": false
+        }
+      }
+    },
+    "/GetDistributorVolumePoints": {
+      "post": {
+        "description": "",
+        "summary": "GetDistributorVolumePoints_POST",
+        "operationId": "GetDistributorVolumePoints_POST",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/GetDistributorVolumePoints_POSTRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "x-unitTests": [],
+        "x-operation-settings": {
+          "CollectParameters": false,
+          "AllowDynamicQueryParameters": false,
+          "AllowDynamicFormParameters": false,
+          "IsMultiContentStreaming": false
+        }
+      }
+    }
+  },
+  "definitions": {
+    "ApiValidate_POSTRequest": {
+      "title": "ApiValidate_POSTRequest",
+      "description": "",
+      "type": "object"
+    },
+    "GetPriceDetails_POSTRequest": {
+      "title": "GetPriceDetails_POSTRequest",
+      "description": "",
+      "type": "object"
+    },
+    "HPSPaymentGateway_POSTRequest": {
+      "title": "HPSPaymentGateway_POSTRequest",
+      "description": "",
+      "type": "object"
+    },
+    "GetDistributorProfile_POSTRequest": {
+      "title": "GetDistributorProfile_POSTRequest",
+      "description": "",
+      "type": "object"
+    },
+    "GetSkuAvailability_POSTRequest": {
+      "title": "GetSkuAvailability_POSTRequest",
+      "description": "",
+      "type": "object"
+    },
+    "SubmitOrder_POSTRequest": {
+      "title": "SubmitOrder_POSTRequest",
+      "description": "",
+      "type": "object"
+    },
+    "GetDistributorDiscount_POSTRequest": {
+      "title": "GetDistributorDiscount_POSTRequest",
+      "description": "",
+      "type": "object"
+    },
+    "DSFOPPurchasingLimits_POSTRequest": {
+      "title": "DSFOPPurchasingLimits_POSTRequest",
+      "description": "",
+      "type": "object"
+    },
+    "DsCashLimit_POSTRequest": {
+      "title": "DsCashLimit_POSTRequest",
+      "description": "",
+      "type": "object"
+    },
+    "GetOrderDualMonthStatus_POSTRequest": {
+      "title": "GetOrderDualMonthStatus_POSTRequest",
+      "description": "",
+      "type": "object"
+    },
+    "UpdateDsAddressContacts_POSTRequest": {
+      "title": "UpdateDsAddressContacts_POSTRequest",
+      "description": "",
+      "type": "object"
+    },
+    "GetShippingWhseAndFreightCodes_POSTRequest": {
+      "title": "GetShippingWhseAndFreightCodes_POSTRequest",
+      "description": "",
+      "type": "object"
+    },
+    "GetDSPostamatDetails_POSTRequest": {
+      "title": "GetDSPostamatDetails_POSTRequest",
+      "description": "",
+      "type": "object"
+    },
+    "GetProductInventory_POSTRequest": {
+      "title": "GetProductInventory_POSTRequest",
+      "description": "",
+      "type": "object"
+    },
+    "GetProductCatalog_POSTRequest": {
+      "title": "GetProductCatalog_POSTRequest",
+      "description": "",
+      "type": "object"
+    },
+    "GetDistributorVolumePoints_POSTRequest": {
+      "title": "GetDistributorVolumePoints_POSTRequest",
+      "description": "",
+      "type": "object"
+    }
+  },
+  "tags": []
+}

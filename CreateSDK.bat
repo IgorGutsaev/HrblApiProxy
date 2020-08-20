@@ -1,1 +1,0 @@
-call autorest initialize.md --v3 --static-initializer --add-credentials --input-file=openapi.json --csharp --namespace=Filuet.Fusion.SDK --output-folder=./
