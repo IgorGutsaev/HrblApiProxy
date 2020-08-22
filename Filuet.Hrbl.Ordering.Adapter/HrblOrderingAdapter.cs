@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Filuet.Hrbl.Ordering.Abstractions.Warehouse;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
+using Filuet.Hrbl.Ordering.Abstractions.Profile;
 
 namespace Filuet.Hrbl.Ordering.Adapter
 {
@@ -29,6 +30,7 @@ namespace Filuet.Hrbl.Ordering.Adapter
             _proxy.HttpClient.DefaultRequestHeaders.Authorization = new BasicAuthenticationHeaderValue(_settings.Login, _settings.Password);
         }
 
+        #region Inventory
         /// <summary>
         /// Get remains of goods
         /// </summary>
@@ -59,16 +61,23 @@ namespace Filuet.Hrbl.Ordering.Adapter
         public async Task<SkuInventory[]> GetSkuAvailability(string warehouse, string sku, uint quantity)
             => await GetSkuAvailability(warehouse, new List<KeyValuePair<string, uint>> { new KeyValuePair<string, uint>(sku, quantity) }
                                 .ToDictionary(x => x.Key, x => x.Value));
+        #endregion
 
-        //public async Task<dynamic> Profile(string memberId)
-        //{
-        //    HttpOperationResponse rest = await _api.GetDistributorProfileWithHttpMessagesAsync(new Filuet.Fusion.SDK.Models.Body15
-        //    {
-        //        DistributorId = memberId,
-        //        ServiceConsumer = Consumer
-        //    });
 
-        //    return ((JObject)JsonConvert.DeserializeObject(rest.Response.Content.ReadAsStringAsync().Result));
-        //}
+
+        /// <summary>
+        /// Get distributor (customer) profile
+        /// </summary>
+        /// <param name="distributorId">Herbalife distributor id</param>
+        /// <returns></returns>
+        public async Task<DistributorProfile> GetProfile(string distributorId)
+        {
+            object response = await _proxy.GetDistributorProfile.POSTAsync(new {
+                ServiceConsumer = _settings.Consumer,
+                DistributorId = distributorId,
+            });
+
+            return JsonConvert.DeserializeObject<DistributorProfileResult>(JsonConvert.SerializeObject(response)).Profile;
+        }
     }
 }
