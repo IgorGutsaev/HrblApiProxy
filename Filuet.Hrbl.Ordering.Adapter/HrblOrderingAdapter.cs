@@ -10,6 +10,7 @@ using Filuet.Hrbl.Ordering.Abstractions.Warehouse;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using Filuet.Hrbl.Ordering.Abstractions.Profile;
+using Filuet.Hrbl.Ordering.Abstractions;
 
 namespace Filuet.Hrbl.Ordering.Adapter
 {
@@ -38,6 +39,9 @@ namespace Filuet.Hrbl.Ordering.Adapter
         /// <param name="items">collection of goods identifier</param>
         public async Task<SkuInventory[]> GetSkuAvailability(string warehouse, Dictionary<string, uint> items)
         {
+            if (string.IsNullOrWhiteSpace(warehouse))
+                throw new ArgumentException("Warehouse must be specified");
+
             object response = await _proxy.GetSkuAvailability.POSTAsync(new {
                 ServiceConsumer = _settings.Consumer,
                 SkuInquiryDetails = items.Select(x => new {
@@ -60,7 +64,7 @@ namespace Filuet.Hrbl.Ordering.Adapter
         /// <param name="quantity"></param>
         public async Task<SkuInventory[]> GetSkuAvailability(string warehouse, string sku, uint quantity)
             => await GetSkuAvailability(warehouse, new List<KeyValuePair<string, uint>> { new KeyValuePair<string, uint>(sku, quantity) }
-                                .ToDictionary(x => x.Key, x => x.Value));
+                .ToDictionary(x => x.Key, x => x.Value));
         #endregion
 
 
@@ -72,12 +76,33 @@ namespace Filuet.Hrbl.Ordering.Adapter
         /// <returns></returns>
         public async Task<DistributorProfile> GetProfile(string distributorId)
         {
+            if (string.IsNullOrWhiteSpace(distributorId))
+                throw new ArgumentException("Distributor ID must be specified");
+
             object response = await _proxy.GetDistributorProfile.POSTAsync(new {
                 ServiceConsumer = _settings.Consumer,
                 DistributorId = distributorId,
             });
 
             return JsonConvert.DeserializeObject<DistributorProfileResult>(JsonConvert.SerializeObject(response)).Profile;
+        }
+
+        public async Task<FOPPurchasingLimits> GetDSFOPPurchasingLimits(string distributorId, string country)
+        {
+            if (string.IsNullOrWhiteSpace(distributorId))
+                throw new ArgumentException("Distributor ID must be specified");
+
+            if (string.IsNullOrWhiteSpace(country))
+                throw new ArgumentException("Country must be specified");
+
+            object response = await _proxy.DSFOPPurchasingLimits.POSTAsync(new
+            {
+                ServiceConsumer = _settings.Consumer,
+                DistributorID = distributorId,
+                CountryCode = country.ToUpper()
+            });
+
+            return JsonConvert.DeserializeObject<FOPPurchasingLimits>(JsonConvert.SerializeObject(response));
         }
     }
 }

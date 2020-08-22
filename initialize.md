@@ -19,4 +19,16 @@ directive:
   - from: GetDistributorProfile.cs
     where: $
     transform: return $.replace(/DeserializeObject<string>/gi, 'DeserializeObject<object>');
+	
+  - from: DSFOPPurchasingLimits.cs
+    where: $
+    transform: return $.replace(/DeserializeObject<string>/gi, 'DeserializeObject<object>').replace(/new HttpOperationResponse<string>/gi, 'new HttpOperationResponse<object>').replace(/HttpOperationResponse<string>/gi, 'HttpOperationResponse<object>');
+	
+  - from: IDSFOPPurchasingLimits.cs
+    where: $
+    transform: return $.replace(/HttpOperationResponse<string>/gi, 'HttpOperationResponse<object>');
+	
+  - from: DSFOPPurchasingLimitsExtensions.cs
+    where: $
+    transform: return $.replace(/Task<string> POSTAsync/gi, 'Task<object> POSTAsync').replace(/public static string POST/gi, 'public static object POST');
 ```
