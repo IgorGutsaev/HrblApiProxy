@@ -24,12 +24,12 @@ namespace Filuet.Fusion.SDK
         /// <summary>
         /// Gets or sets json serialization settings.
         /// </summary>
-        public JsonSerializerSettings SerializationSettings { get; private set; }
+        public JsonSerializerSettings SerializationSettings { get; set; }
 
         /// <summary>
         /// Gets or sets json deserialization settings.
         /// </summary>
-        public JsonSerializerSettings DeserializationSettings { get; private set; }
+        public JsonSerializerSettings DeserializationSettings { get; set; }
 
         /// <summary>
         /// Subscription credentials which uniquely identify client subscription.
@@ -124,7 +124,7 @@ namespace Filuet.Fusion.SDK
         /// </param>
         /// <param name='disposeHttpClient'>
         /// True: will dispose the provided httpClient on calling HLOnlineOrderingRS.Dispose(). False: will not dispose provided httpClient</param>
-        protected HLOnlineOrderingRS(HttpClient httpClient, bool disposeHttpClient) : base(httpClient, disposeHttpClient)
+        public HLOnlineOrderingRS(HttpClient httpClient, bool disposeHttpClient) : base(httpClient, disposeHttpClient)
         {
             Initialize();
         }
@@ -135,7 +135,7 @@ namespace Filuet.Fusion.SDK
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        protected HLOnlineOrderingRS(params DelegatingHandler[] handlers) : base(handlers)
+        public HLOnlineOrderingRS(params DelegatingHandler[] handlers) : base(handlers)
         {
             Initialize();
         }
@@ -149,7 +149,7 @@ namespace Filuet.Fusion.SDK
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        protected HLOnlineOrderingRS(HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : base(rootHandler, handlers)
+        public HLOnlineOrderingRS(HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : base(rootHandler, handlers)
         {
             Initialize();
         }
@@ -166,7 +166,7 @@ namespace Filuet.Fusion.SDK
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        protected HLOnlineOrderingRS(System.Uri baseUri, params DelegatingHandler[] handlers) : this(handlers)
+        public HLOnlineOrderingRS(System.Uri baseUri, params DelegatingHandler[] handlers) : this(handlers)
         {
             if (baseUri == null)
             {
@@ -190,7 +190,7 @@ namespace Filuet.Fusion.SDK
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        protected HLOnlineOrderingRS(System.Uri baseUri, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
+        public HLOnlineOrderingRS(System.Uri baseUri, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
         {
             if (baseUri == null)
             {

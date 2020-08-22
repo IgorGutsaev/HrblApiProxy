@@ -1,5 +1,5 @@
 call autorest initialize.md --v3 --static-initializer --add-credentials --input-file=apimatic-swagger.json --csharp --namespace=Filuet.Fusion.SDK --output-folder=./Filuet.Fusion.SDK/Code
-dotnet new classlib --name Filuet.Fusion.SDK --force --framework netstandard2.1
+dotnet new classlib --name Filuet.Fusion.SDK --force --framework netstandard2.0
 
 del Filuet.Fusion.SDK\Class1.cs
 rmdir Filuet.Fusion.SDK\Models /S /Q
