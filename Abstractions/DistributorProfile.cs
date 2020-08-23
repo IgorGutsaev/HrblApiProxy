@@ -97,10 +97,10 @@ namespace Filuet.Hrbl.Ordering.Abstractions.Profile
         public string XTABLevel { get; private set; }
 
         [JsonProperty("CountryofResidence")]
-        public string CountryofResidence { get; private set; }
+        public string CountryOfResidence { get; private set; }
 
         [JsonProperty("CountryofProcessing")]
-        public string CountryofProcessing { get; private set; }
+        public string CountryOfProcessing { get; private set; }
 
         [JsonProperty("LanguageCodeLocal")]
         public string LanguageCodeLocal { get; private set; }
@@ -181,7 +181,7 @@ namespace Filuet.Hrbl.Ordering.Abstractions.Profile
         public string OrderRestrictions { get; private set; }
 
         [JsonProperty("CountryofMailing")]
-        public string CountryofMailing { get; private set; }
+        public string CountryOfMailing { get; private set; }
 
         [JsonProperty("AccountType")]
         public string AccountType { get; private set; }
@@ -197,6 +197,13 @@ namespace Filuet.Hrbl.Ordering.Abstractions.Profile
 
         [JsonIgnore]
         public string Email => Shipping.Contacts.FirstOrDefault(x => x.IsActive && string.Equals(x.Type, "email", StringComparison.InvariantCultureIgnoreCase))?.Value ?? null;
+
+        /// <summary>
+        /// Mobile phone number
+        /// </summary>
+        [JsonIgnore]
+        public string MobileNumber => Shipping.Contacts.FirstOrDefault(x => x.IsActive && string.Equals(x.Type, "mobile", StringComparison.InvariantCultureIgnoreCase))?.Value ?? null;
+
 
         public override string ToString() => Name.Trim();
     }
@@ -347,6 +354,9 @@ namespace Filuet.Hrbl.Ordering.Abstractions.Profile
         [JsonProperty("Attribute4")]
         public string Attribute4 { get; private set; }
 
+        [JsonIgnore]
+        public string FullAddress => $"{Line1} {Line2} {Line3} {Line4} ";
+
         public override string ToString() => Type.Trim();
     }
 
@@ -488,6 +498,9 @@ namespace Filuet.Hrbl.Ordering.Abstractions.Profile
 
         [JsonProperty("PBRequalDatepublic")]
         public DateTime? PBRequalDatepublic { get; private set; }
+
+        [JsonIgnore]
+        public bool IsAPFDebtor => APFDueDate.HasValue && APFDueDate < DateTime.UtcNow;
     }
 
     public sealed class DistributorFlags
