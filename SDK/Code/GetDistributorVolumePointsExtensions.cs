@@ -22,9 +22,9 @@ namespace Filuet.Fusion.SDK
             /// </param>
             /// <param name='body'>
             /// </param>
-            public static void POST(this IGetDistributorVolumePoints operations, object body)
+            public static object POST(this IGetDistributorVolumePoints operations, object body)
             {
-                operations.POSTAsync(body).GetAwaiter().GetResult();
+                return operations.POSTAsync(body).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -38,9 +38,12 @@ namespace Filuet.Fusion.SDK
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task POSTAsync(this IGetDistributorVolumePoints operations, object body, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> POSTAsync(this IGetDistributorVolumePoints operations, object body, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.POSTWithHttpMessagesAsync(body, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.POSTWithHttpMessagesAsync(body, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
     }

@@ -1,4 +1,4 @@
-using Filuet.Hrbl.Ordering.Abstractions.Warehouse;
+using Filuet.Hrbl.Ordering.Abstractions;
 using System;
 using System.Threading.Tasks;
 using Xunit;

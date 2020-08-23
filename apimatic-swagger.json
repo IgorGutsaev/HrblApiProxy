@@ -794,13 +794,26 @@
               "$ref": "#/definitions/GetDistributorVolumePoints_POSTRequest"
             }
           }
-        ],
-        "responses": {
+        ],		
+		 "responses": {
           "200": {
             "description": "",
+            "schema": {
+              "xml": {
+                "name": "GetDistributorVolumePointsResponse",
+                "attribute": false,
+                "wrapped": false
+              },
+              "type": "string"
+            },
             "headers": {}
+          },
+          "400": {
+            "description": "",
+            "schema": {}
           }
         },
+
         "x-unitTests": [],
         "x-operation-settings": {
           "CollectParameters": false,

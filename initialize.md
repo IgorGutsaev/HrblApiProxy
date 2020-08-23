@@ -31,4 +31,9 @@ directive:
   - from: DSFOPPurchasingLimitsExtensions.cs
     where: $
     transform: return $.replace(/Task<string> POSTAsync/gi, 'Task<object> POSTAsync').replace(/public static string POST/gi, 'public static object POST');
+	
+  - from: GetDistributorVolumePoints.cs
+    where: $
+    transform: return $.replace(/DeserializeObject<string>/gi, 'DeserializeObject<object>');
+	
 ```

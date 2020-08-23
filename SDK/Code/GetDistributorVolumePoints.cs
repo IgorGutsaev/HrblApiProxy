@@ -7,6 +7,7 @@
 namespace Filuet.Fusion.SDK
 {
     using Microsoft.Rest;
+    using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
     using System.IO;
@@ -58,6 +59,9 @@ namespace Filuet.Fusion.SDK
         /// <exception cref="HttpOperationException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
@@ -67,7 +71,7 @@ namespace Filuet.Fusion.SDK
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse> POSTWithHttpMessagesAsync(object body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<object>> POSTWithHttpMessagesAsync(object body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (body == null)
             {
@@ -135,7 +139,7 @@ namespace Filuet.Fusion.SDK
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200)
+            if ((int)_statusCode != 200 && (int)_statusCode != 400)
             {
                 var ex = new HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 if (_httpResponse.Content != null) {
@@ -158,9 +162,45 @@ namespace Filuet.Fusion.SDK
                 throw ex;
             }
             // Create Result
-            var _result = new HttpOperationResponse();
+            var _result = new HttpOperationResponse<object>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<object>(_responseContent, Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 400)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<object>(_responseContent, Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
             if (_shouldTrace)
             {
                 ServiceClientTracing.Exit(_invocationId, _result);

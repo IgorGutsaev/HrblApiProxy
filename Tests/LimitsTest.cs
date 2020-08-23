@@ -1,7 +1,5 @@
 using Filuet.Fusion.SDK;
 using Filuet.Hrbl.Ordering.Abstractions;
-using Filuet.Hrbl.Ordering.Abstractions.Profile;
-using Filuet.Hrbl.Ordering.Abstractions.Warehouse;
 using System;
 using System.Threading.Tasks;
 using Xunit;

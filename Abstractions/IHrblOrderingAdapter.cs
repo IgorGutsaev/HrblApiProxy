@@ -1,6 +1,4 @@
-﻿using Filuet.Hrbl.Ordering.Abstractions.Profile;
-using Filuet.Hrbl.Ordering.Abstractions.Warehouse;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,5 +25,7 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         Task<DistributorProfile> GetProfile(string distributorId);
 
         Task<FOPPurchasingLimits> GetDSFOPPurchasingLimits(string distributorId, string country);
+
+        Task<DistributorVolumePoints[]> GetVolumePoints(string distributorId, DateTime month, DateTime? monthTo = null);
     }
 }

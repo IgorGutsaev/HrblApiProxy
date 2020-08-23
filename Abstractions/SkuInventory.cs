@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Filuet.Hrbl.Ordering.Abstractions.Warehouse
+namespace Filuet.Hrbl.Ordering.Abstractions
 {
     internal class SkuInventoryDetailsResult
     {

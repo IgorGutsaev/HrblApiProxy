@@ -5,7 +5,7 @@ using System.Linq;
 using System.Net.Sockets;
 using System.Text;
 
-namespace Filuet.Hrbl.Ordering.Abstractions.Profile
+namespace Filuet.Hrbl.Ordering.Abstractions
 {
     internal class DistributorProfileResult
     {

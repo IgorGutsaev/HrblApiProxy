@@ -1,5 +1,4 @@
-using Filuet.Hrbl.Ordering.Abstractions.Profile;
-using Filuet.Hrbl.Ordering.Abstractions.Warehouse;
+using Filuet.Hrbl.Ordering.Abstractions;
 using System;
 using System.Threading.Tasks;
 using Xunit;
@@ -24,6 +23,24 @@ namespace Filuet.Hrbl.Ordering.Tests
             // Post-validate
             Assert.NotNull(result);
             Assert.Equal(distributorId, result.Id);
+        }
+
+        [Theory]
+        [InlineData("7918180560")]
+        public async Task Test_Get_volume_points(string distributorId)
+        {
+            // Prepare
+            Assert.NotNull(_adapter);
+
+            // Pre-validate
+            Assert.False(string.IsNullOrWhiteSpace(distributorId));
+
+            // Perform
+            DistributorVolumePoints[] result = await _adapter.GetVolumePoints(distributorId, DateTime.Now);
+
+            // Post-validate
+            Assert.NotNull(result);
+            //Assert.Equal(distributorId, result.Id);
         }
     }
 }

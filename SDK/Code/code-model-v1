@@ -2784,8 +2784,25 @@
      "responses": {
       "OK": {
        "$id": "369",
-       "extensions": {
+       "body": {
         "$id": "370",
+        "$type": "PrimaryType",
+        "knownPrimaryType": "string",
+        "deprecated": false,
+        "name": {
+         "$id": "371",
+         "fixed": false,
+         "raw": "String"
+        },
+        "xmlProperties": {
+         "$id": "372",
+         "name": "GetDistributorVolumePointsResponse",
+         "attribute": false,
+         "wrapped": false
+        }
+       },
+       "extensions": {
+        "$id": "373",
         "x-ms-metadata": {
          "apiVersions": [
           "1.0"
@@ -2800,14 +2817,55 @@
         }
        },
        "isNullable": true
+      },
+      "BadRequest": {
+       "$id": "374",
+       "body": {
+        "$id": "375",
+        "$type": "PrimaryType",
+        "knownPrimaryType": "object",
+        "deprecated": false,
+        "name": {
+         "$id": "376",
+         "fixed": false,
+         "raw": "Object"
+        }
+       },
+       "extensions": {
+        "$id": "377",
+        "x-ms-metadata": {
+         "apiVersions": [
+          "1.0"
+         ],
+         "filename": [
+          "mem:///106?oai3.shaken.json"
+         ],
+         "name": "paths·rrexm4·getdistributorvolumepoints·post·responses·400",
+         "originalLocations": [
+          "file:///D:/Repos/Filuet.Fusion.SDK/apimatic-swagger.json#/components/responses/paths·rrexm4·getdistributorvolumepoints·post·responses·400"
+         ]
+        }
+       },
+       "isNullable": true
       }
      },
      "defaultResponse": {
-      "$id": "371",
+      "$id": "378",
       "isNullable": true
      },
      "returnType": {
-      "$id": "372",
+      "$id": "379",
+      "body": {
+       "$id": "380",
+       "$type": "PrimaryType",
+       "knownPrimaryType": "object",
+       "deprecated": false,
+       "name": {
+        "$id": "381",
+        "fixed": false,
+        "raw": "Object"
+       }
+      },
       "isNullable": true
      },
      "description": "",
@@ -2832,12 +2890,12 @@
     }
    ],
    "name": {
-    "$id": "373",
+    "$id": "382",
     "fixed": false,
     "raw": "GetDistributorVolumePoints"
    },
    "typeName": {
-    "$id": "374",
+    "$id": "383",
     "fixed": false
    },
    "nameForProperty": "GetDistributorVolumePoints"

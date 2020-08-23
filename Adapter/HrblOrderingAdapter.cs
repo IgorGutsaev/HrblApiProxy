@@ -6,10 +6,8 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
-using Filuet.Hrbl.Ordering.Abstractions.Warehouse;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
-using Filuet.Hrbl.Ordering.Abstractions.Profile;
 using Filuet.Hrbl.Ordering.Abstractions;
 
 namespace Filuet.Hrbl.Ordering.Adapter
@@ -103,6 +101,23 @@ namespace Filuet.Hrbl.Ordering.Adapter
             });
 
             return JsonConvert.DeserializeObject<FOPPurchasingLimits>(JsonConvert.SerializeObject(response));
+        }
+
+        public async Task<DistributorVolumePoints[]> GetVolumePoints(string distributorId, DateTime month, DateTime? monthTo = null)
+        {
+            if (string.IsNullOrWhiteSpace(distributorId))
+                throw new ArgumentException("Distributor ID must be specified");
+
+            object response = await _proxy.GetDistributorVolumePoints.POSTAsync(new
+            {
+                ServiceConsumer = _settings.Consumer,
+                DistributorId = distributorId,
+                FromMonth = month.ToString("yyyy/MM"),
+                ToMonth = monthTo.HasValue ? monthTo.Value.ToString("yyyy/MM") : month.ToString("yyyy/MM"),
+                IncludeORgVolumes = "N"
+            });
+
+            return JsonConvert.DeserializeObject<DistributorVolumePointsDetailsResult>(JsonConvert.SerializeObject(response)).DistributorVolumeDetails.DistributorVolume;
         }
     }
 }
