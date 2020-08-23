@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Sockets;
 using System.Text;
 
@@ -193,6 +194,9 @@ namespace Filuet.Hrbl.Ordering.Abstractions.Profile
 
         [JsonProperty("CnSubType")]
         public string CnSubType { get; private set; }
+
+        [JsonIgnore]
+        public string Email => Shipping.Contacts.FirstOrDefault(x => x.IsActive && string.Equals(x.Type, "email", StringComparison.InvariantCultureIgnoreCase))?.Value ?? null;
 
         public override string ToString() => Name.Trim();
     }
