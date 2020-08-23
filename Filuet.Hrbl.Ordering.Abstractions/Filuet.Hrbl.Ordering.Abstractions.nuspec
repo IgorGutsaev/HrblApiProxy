@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <package>
   <metadata>
-    <id>Filuet.Fusion.SDK</id>
+    <id>Filuet.Hrbl.Ordering.Abstractions</id>
     <version>$version$</version>
     <authors>Filuet</authors>
     <owners>Filuet</owners>

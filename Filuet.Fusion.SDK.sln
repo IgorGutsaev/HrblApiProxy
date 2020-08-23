@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29521.150
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Filuet.Fusion.SDK", "Filuet.Fusion.SDK\Filuet.Fusion.SDK.csproj", "{8970F37A-8C06-4C28-86B6-E8A5DD88C0DD}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Filuet.Hrbl.Ordering.Adapter", "Filuet.Hrbl.Ordering.Adapter\Filuet.Hrbl.Ordering.Adapter.csproj", "{F34D8127-6BA2-4649-BA54-5C402F0BCE64}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Filuet.Hrbl.Ordering.Tests", "Filuet.Hrbl.Ordering.Tests\Filuet.Hrbl.Ordering.Tests.csproj", "{4A401FD8-555F-42BA-82BA-B020DA93AE58}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Filuet.Hrbl.Ordering.Abstractions", "Filuet.Hrbl.Ordering.Abstractions\Filuet.Hrbl.Ordering.Abstractions.csproj", "{205D4CCE-FE23-48FD-B167-9196C8C2AA94}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Filuet.Hrbl.Ordering.SDK", "Filuet.Hrbl.Ordering.SDK\Filuet.Hrbl.Ordering.SDK.csproj", "{7FC1AB37-9946-4042-B623-3436743086AF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,18 +21,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{8970F37A-8C06-4C28-86B6-E8A5DD88C0DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8970F37A-8C06-4C28-86B6-E8A5DD88C0DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8970F37A-8C06-4C28-86B6-E8A5DD88C0DD}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{8970F37A-8C06-4C28-86B6-E8A5DD88C0DD}.Debug|x64.Build.0 = Debug|Any CPU
-		{8970F37A-8C06-4C28-86B6-E8A5DD88C0DD}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{8970F37A-8C06-4C28-86B6-E8A5DD88C0DD}.Debug|x86.Build.0 = Debug|Any CPU
-		{8970F37A-8C06-4C28-86B6-E8A5DD88C0DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8970F37A-8C06-4C28-86B6-E8A5DD88C0DD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8970F37A-8C06-4C28-86B6-E8A5DD88C0DD}.Release|x64.ActiveCfg = Release|Any CPU
-		{8970F37A-8C06-4C28-86B6-E8A5DD88C0DD}.Release|x64.Build.0 = Release|Any CPU
-		{8970F37A-8C06-4C28-86B6-E8A5DD88C0DD}.Release|x86.ActiveCfg = Release|Any CPU
-		{8970F37A-8C06-4C28-86B6-E8A5DD88C0DD}.Release|x86.Build.0 = Release|Any CPU
 		{F34D8127-6BA2-4649-BA54-5C402F0BCE64}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F34D8127-6BA2-4649-BA54-5C402F0BCE64}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F34D8127-6BA2-4649-BA54-5C402F0BCE64}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -69,6 +57,18 @@ Global
 		{205D4CCE-FE23-48FD-B167-9196C8C2AA94}.Release|x64.Build.0 = Release|Any CPU
 		{205D4CCE-FE23-48FD-B167-9196C8C2AA94}.Release|x86.ActiveCfg = Release|Any CPU
 		{205D4CCE-FE23-48FD-B167-9196C8C2AA94}.Release|x86.Build.0 = Release|Any CPU
+		{7FC1AB37-9946-4042-B623-3436743086AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7FC1AB37-9946-4042-B623-3436743086AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7FC1AB37-9946-4042-B623-3436743086AF}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{7FC1AB37-9946-4042-B623-3436743086AF}.Debug|x64.Build.0 = Debug|Any CPU
+		{7FC1AB37-9946-4042-B623-3436743086AF}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{7FC1AB37-9946-4042-B623-3436743086AF}.Debug|x86.Build.0 = Debug|Any CPU
+		{7FC1AB37-9946-4042-B623-3436743086AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7FC1AB37-9946-4042-B623-3436743086AF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7FC1AB37-9946-4042-B623-3436743086AF}.Release|x64.ActiveCfg = Release|Any CPU
+		{7FC1AB37-9946-4042-B623-3436743086AF}.Release|x64.Build.0 = Release|Any CPU
+		{7FC1AB37-9946-4042-B623-3436743086AF}.Release|x86.ActiveCfg = Release|Any CPU
+		{7FC1AB37-9946-4042-B623-3436743086AF}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

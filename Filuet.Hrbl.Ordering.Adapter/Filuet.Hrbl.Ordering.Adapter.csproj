@@ -9,8 +9,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Filuet.Fusion.SDK\Filuet.Fusion.SDK.csproj" />
-    <ProjectReference Include="..\Filuet.Hrbl.Ordering.Abstractions\Filuet.Hrbl.Ordering.Abstractions.csproj" />
+    <ProjectReference Include="..\Filuet.Hrbl.Ordering.Abstractions\Filuet.Hrbl.Ordering.Abstractions.csproj">
+      <Private>true</Private>
+      <CopyLocalSatelliteAssemblies>true</CopyLocalSatelliteAssemblies>
+    </ProjectReference>
+    <ProjectReference Include="..\Filuet.Hrbl.Ordering.SDK\Filuet.Hrbl.Ordering.SDK.csproj">
+      <Private>true</Private>
+      <CopyLocalSatelliteAssemblies>true</CopyLocalSatelliteAssemblies>
+    </ProjectReference>
   </ItemGroup>
 
 </Project>
