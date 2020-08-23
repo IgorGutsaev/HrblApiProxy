@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Filuet.Hrbl.Ordering.Adapter\Filuet.Hrbl.Ordering.Adapter.csproj" />
+    <ProjectReference Include="..\Adapter\Filuet.Hrbl.Ordering.Adapter.csproj" />
   </ItemGroup>
 
 </Project>
