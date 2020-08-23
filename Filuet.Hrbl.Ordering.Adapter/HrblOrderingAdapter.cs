@@ -14,7 +14,7 @@ using Filuet.Hrbl.Ordering.Abstractions;
 
 namespace Filuet.Hrbl.Ordering.Adapter
 {
-    public class HrblOrderingAdapter
+    public class HrblOrderingAdapter : IHrblOrderingAdapter
     {
         /// <summary>
         /// Hrbl auto-generated proxy for REST API
