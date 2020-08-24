@@ -12,6 +12,6 @@
     <tags>Filuet SDK</tags>
   </metadata>
   <files>
-    <file src="bin\$configuration$\**" target="lib" />
+    <file src="bin\any cpu\$configuration$\**" target="lib" />
   </files>
 </package>
