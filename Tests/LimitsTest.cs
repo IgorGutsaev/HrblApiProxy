@@ -20,7 +20,7 @@ namespace Filuet.Hrbl.Ordering.Tests
             Assert.False(string.IsNullOrWhiteSpace(country));
 
             // Perform
-            FOPPurchasingLimits result = await _adapter.GetDSFOPPurchasingLimits(distributorId, country);
+            FOPPurchasingLimitsResult result = await _adapter.GetDSFOPPurchasingLimits(distributorId, country);
 
             // Post-validate
             Assert.NotNull(result);

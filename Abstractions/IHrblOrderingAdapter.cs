@@ -24,7 +24,7 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         /// <returns></returns>
         Task<DistributorProfile> GetProfile(string distributorId);
 
-        Task<FOPPurchasingLimits> GetDSFOPPurchasingLimits(string distributorId, string country);
+        Task<FOPPurchasingLimitsResult> GetDSFOPPurchasingLimits(string distributorId, string country);
 
         Task<DistributorVolumePoints[]> GetVolumePoints(string distributorId, DateTime month, DateTime? monthTo = null);
 

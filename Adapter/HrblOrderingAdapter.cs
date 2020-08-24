@@ -85,7 +85,7 @@ namespace Filuet.Hrbl.Ordering.Adapter
             return JsonConvert.DeserializeObject<DistributorProfileResult>(JsonConvert.SerializeObject(response)).Profile;
         }
 
-        public async Task<FOPPurchasingLimits> GetDSFOPPurchasingLimits(string distributorId, string country)
+        public async Task<FOPPurchasingLimitsResult> GetDSFOPPurchasingLimits(string distributorId, string country)
         {
             if (string.IsNullOrWhiteSpace(distributorId))
                 throw new ArgumentException("Distributor ID must be specified");
@@ -100,7 +100,7 @@ namespace Filuet.Hrbl.Ordering.Adapter
                 CountryCode = country.ToUpper()
             });
 
-            return JsonConvert.DeserializeObject<FOPPurchasingLimits>(JsonConvert.SerializeObject(response));
+            return JsonConvert.DeserializeObject<FOPPurchasingLimitsResult>(JsonConvert.SerializeObject(response));
         }
 
         public async Task<DistributorVolumePoints[]> GetVolumePoints(string distributorId, DateTime month, DateTime? monthTo = null)
