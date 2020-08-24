@@ -62,7 +62,7 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         public decimal DistEV { get; private set; }
 
         [JsonProperty("UvEvLastUpdateDate")]
-        public DateTime UvEvLastUpdateDate { get; private set; }
+        public DateTime? UvEvLastUpdateDate { get; private set; }
 
         [JsonProperty("Dist3DLV")]
         public decimal Dist3DLV { get; private set; }

@@ -9,6 +9,7 @@ namespace Filuet.Hrbl.Ordering.Tests
     {
         [Theory]
         [InlineData("7918180560")]
+        [InlineData("U515120144")]
         public async Task Test_Get_profile(string distributorId)
         {
             // Prepare
