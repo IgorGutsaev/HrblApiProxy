@@ -352,10 +352,22 @@ namespace Filuet.Fusion.SDK
         /// An optional partial-method to perform custom initialization.
         ///</summary>
     	private static System.TimeSpan _defaultTimeout = new System.TimeSpan(0, 3, 0);
-public void SetTimeout(System.TimeSpan timeout) { _defaultTimeout = HttpClient.Timeout; HttpClient.Timeout = timeout; }
-public void ResetTimeout() { if (_defaultTimeout < new System.TimeSpan(0, 3, 0)) _defaultTimeout = new System.TimeSpan(0, 3, 0);
-HttpClient.Timeout = _defaultTimeout; }
-partial void CustomInitialize();
+
+		public void SetTimeout(System.TimeSpan timeout)
+		{
+			_defaultTimeout = HttpClient.Timeout;
+			HttpClient.Timeout = timeout;
+		}
+
+		public void ResetTimeout()
+		{
+			if (_defaultTimeout < new System.TimeSpan(0, 3, 0))
+			_defaultTimeout = new System.TimeSpan(0, 3, 0);
+
+			HttpClient.Timeout = _defaultTimeout;
+		}
+
+		partial void CustomInitialize();
         /// <summary>
         /// Initializes client properties.
         /// </summary>
@@ -403,7 +415,8 @@ partial void CustomInitialize();
                         new Iso8601TimeSpanConverter()
                     }
             };
-            CustomInitialize(); HttpClient.Timeout = _defaultTimeout;
+            CustomInitialize();
+			HttpClient.Timeout = _defaultTimeout;
         }
     }
 }

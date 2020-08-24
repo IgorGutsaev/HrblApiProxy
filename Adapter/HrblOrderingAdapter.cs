@@ -119,5 +119,18 @@ namespace Filuet.Hrbl.Ordering.Adapter
 
             return JsonConvert.DeserializeObject<DistributorVolumePointsDetailsResult>(JsonConvert.SerializeObject(response)).DistributorVolumeDetails.DistributorVolume;
         }
+
+        public async Task<bool> GetOrderDualMonthStatus(string country)
+        {
+            if (string.IsNullOrWhiteSpace(country) || country.Trim().Length != 2)
+                throw new ArgumentException("Country must be specified");
+
+            object response = await _proxy.GetOrderDualMonthStatus.POSTAsync(new
+            {
+                ShipToCountry = country.Trim().ToUpper()
+            });
+
+            return JsonConvert.DeserializeObject<OrderDualMonthStatus>(JsonConvert.SerializeObject(response)).IsDualMonthAllowed;
+        }
     }
 }

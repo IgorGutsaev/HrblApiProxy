@@ -17,8 +17,10 @@ namespace Filuet.Fusion.SDK
         /// The base URI of the service.
         /// </summary>
         System.Uri BaseUri { get; set; }
-void SetTimeout(System.TimeSpan timeout);
-void ResetTimeout();
+
+		void SetTimeout(System.TimeSpan timeout);
+
+		void ResetTimeout();
 
         /// <summary>
         /// Gets or sets json serialization settings.

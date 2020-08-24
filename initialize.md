@@ -36,4 +36,7 @@ directive:
     where: $
     transform: return $.replace(/DeserializeObject<string>/gi, 'DeserializeObject<object>');
 	
+  - from: GetOrderDualMonthStatus.cs
+    where: $
+    transform: return $.replace(/DeserializeObject<string>/gi, 'DeserializeObject<object>');
 ```
