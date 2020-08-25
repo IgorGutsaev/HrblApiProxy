@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Filuet.Hrbl.Ordering.Abstractions
@@ -29,5 +28,21 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         Task<DistributorVolumePoints[]> GetVolumePoints(string distributorId, DateTime month, DateTime? monthTo = null);
 
         Task<bool> GetOrderDualMonthStatus(string country);
+
+
+        // Stub
+        Task<string> SubmitOrder();
+
+        Task<string> HpsPaymentGateway();
+
+        Task<string> DsCashLimit();
+
+        Task<string> GetDistributorDiscount();
+
+        Task<string> GetProductInventory();
+
+        Task<string> GetProductCatalog();
+
+        Task<string> GetPriceDetails();
     }
 }

@@ -132,5 +132,70 @@ namespace Filuet.Hrbl.Ordering.Adapter
 
             return JsonConvert.DeserializeObject<OrderDualMonthStatus>(JsonConvert.SerializeObject(response)).IsDualMonthAllowed;
         }
+
+        
+        // Stub
+        public async Task<string> SubmitOrder()
+        {
+            object response = await _proxy.SubmitOrder.POSTAsync(new
+            {
+            });
+
+            return JsonConvert.DeserializeObject<string>(JsonConvert.SerializeObject(response));
+        }
+
+        public async Task<string> HpsPaymentGateway()
+        {
+            object response = await _proxy.HPSPaymentGateway.POSTAsync(new
+            {
+            });
+
+            return JsonConvert.DeserializeObject<string>(JsonConvert.SerializeObject(response));
+        }
+
+        public async Task<string> DsCashLimit()
+        {
+            object response = await _proxy.HPSPaymentGateway.POSTAsync(new
+            {
+            });
+
+            return JsonConvert.DeserializeObject<string>(JsonConvert.SerializeObject(response));
+        }        
+
+        public async Task<string> GetDistributorDiscount()
+        {
+            object response = await _proxy.GetDistributorDiscount.POSTAsync(new
+            {
+            });
+
+            return JsonConvert.DeserializeObject<string>(JsonConvert.SerializeObject(response));
+        }
+
+        public async Task<string> GetProductInventory()
+        {
+            object response = await _proxy.GetProductInventory.POSTAsync(new
+            {
+            });
+
+            return JsonConvert.DeserializeObject<string>(JsonConvert.SerializeObject(response));
+        }
+
+        public async Task<string> GetProductCatalog()
+        {
+            object response = await _proxy.GetProductCatalog.POSTAsync(new
+            {
+            });
+
+            return JsonConvert.DeserializeObject<string>(JsonConvert.SerializeObject(response));
+        }
+
+        public async Task<string> GetPriceDetails()
+        {
+            object response = await _proxy.GetPriceDetails.POSTAsync(new
+            {
+            });
+
+            return JsonConvert.DeserializeObject<string>(JsonConvert.SerializeObject(response));
+        }
     }
 }
