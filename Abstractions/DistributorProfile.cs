@@ -136,7 +136,7 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         public string EnrollerLastName { get; private set; }
 
         [JsonProperty("CantBuyReasons")]
-        public string CantBuyReasons { get; private set; }
+        public CantBuyReasons CantBuyReasons { get; private set; }
 
         [JsonProperty("DsTrainings")]
         public string DsTrainings { get; private set; }
@@ -636,5 +636,13 @@ namespace Filuet.Hrbl.Ordering.Abstractions
 
         [JsonProperty("Message")]
         public string Message { get; private set; }
+    }
+
+    public sealed class CantBuyReasons
+    {
+        [JsonProperty("Reason", Order = 1)]
+        public string[] Reasons { get; set; }
+
+        public override string ToString() => $"{Reasons?.Length} reasons";
     }
 }

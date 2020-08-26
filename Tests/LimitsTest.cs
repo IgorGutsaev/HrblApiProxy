@@ -10,6 +10,7 @@ namespace Filuet.Hrbl.Ordering.Tests
     {
         [Theory]
         [InlineData("7918180560", "ru")]
+        [InlineData("HERB108388", "ru")]
         public async Task Test_Get_ds_fop_purchasing_limits(string distributorId, string country)
         {
             // Prepare
