@@ -196,14 +196,13 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         public string CnSubType { get; private set; }
 
         [JsonIgnore]
-        public string Email => Shipping.Contacts.FirstOrDefault(x => x.IsActive && string.Equals(x.Type, "email", StringComparison.InvariantCultureIgnoreCase))?.Value ?? null;
+        public string Email => Shipping.Contacts?.FirstOrDefault(x => x.IsActive && string.Equals(x.Type, "email", StringComparison.InvariantCultureIgnoreCase))?.Value ?? null;
 
         /// <summary>
         /// Mobile phone number
         /// </summary>
         [JsonIgnore]
-        public string MobileNumber => Shipping.Contacts.FirstOrDefault(x => x.IsActive && string.Equals(x.Type, "mobile", StringComparison.InvariantCultureIgnoreCase))?.Value ?? null;
-
+        public string MobileNumber => Shipping.Contacts?.FirstOrDefault(x => x.IsActive && string.Equals(x.Type, "mobile", StringComparison.InvariantCultureIgnoreCase))?.Value ?? null;
 
         public override string ToString() => Name.Trim();
     }
@@ -286,13 +285,13 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         private DistributorAddresses _addresses { get; set; }
 
         [JsonIgnore]
-        public DistributorAddress[] Addresses => _addresses.Addresses;
+        public DistributorAddress[] Addresses => _addresses?.Addresses;
 
         [JsonProperty("Contacts")]
         private DistributorContacts _contacts { get; set; }
 
         [JsonIgnore]
-        public DistributorContact[] Contacts => _contacts.Contacts;
+        public DistributorContact[] Contacts => _contacts?.Contacts;
     }
 
     public sealed class DistributorAddresses
