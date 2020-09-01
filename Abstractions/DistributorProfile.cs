@@ -1,9 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Net.Sockets;
-using System.Text;
 
 namespace Filuet.Hrbl.Ordering.Abstractions
 {
@@ -202,7 +199,7 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         /// Mobile phone number
         /// </summary>
         [JsonIgnore]
-        public string MobileNumber => Shipping.Contacts?.FirstOrDefault(x => x.IsActive && string.Equals(x.Type, "mobile", StringComparison.InvariantCultureIgnoreCase))?.Value ?? null;
+        public string MobileNumber => Shipping.Contacts?.FirstOrDefault(x => x.IsActive && string.Equals(x.Type, "phone", StringComparison.InvariantCultureIgnoreCase))?.Value ?? null;
 
         public override string ToString() => Name.Trim();
     }
@@ -389,7 +386,7 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         private string _isActive { get; set; }
 
         [JsonIgnore]
-        public bool IsActive => string.Equals(_isPrimary, "A", StringComparison.InvariantCultureIgnoreCase);
+        public bool IsActive => string.Equals(_isActive, "A", StringComparison.InvariantCultureIgnoreCase);
 
         [JsonProperty("LastUpdateDate")]
         public DateTime LastUpdateDate { get; private set; }

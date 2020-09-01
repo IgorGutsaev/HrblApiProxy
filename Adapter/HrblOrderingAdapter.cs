@@ -65,8 +65,6 @@ namespace Filuet.Hrbl.Ordering.Adapter
                 .ToDictionary(x => x.Key, x => x.Value));
         #endregion
 
-
-
         /// <summary>
         /// Get distributor (customer) profile
         /// </summary>
