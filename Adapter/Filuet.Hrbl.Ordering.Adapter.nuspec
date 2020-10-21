@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>Filuet.Hrbl.Ordering.Adapter</id>
-    <version>0.0.0</version>
+    <version>$(versionnumber)</version>
     <authors>Filuet</authors>
     <owners>Filuet</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
