@@ -1,9 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Net.Sockets;
-using System.Text;
 
 namespace Filuet.Hrbl.Ordering.Abstractions
 {
@@ -136,7 +133,7 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         public string EnrollerLastName { get; private set; }
 
         [JsonProperty("CantBuyReasons")]
-        public string CantBuyReasons { get; private set; }
+        public CantBuyReasons CantBuyReasons { get; private set; }
 
         [JsonProperty("DsTrainings")]
         public string DsTrainings { get; private set; }
@@ -196,14 +193,13 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         public string CnSubType { get; private set; }
 
         [JsonIgnore]
-        public string Email => Shipping.Contacts.FirstOrDefault(x => x.IsActive && string.Equals(x.Type, "email", StringComparison.InvariantCultureIgnoreCase))?.Value ?? null;
+        public string Email => Shipping.Contacts?.FirstOrDefault(x => x.IsActive && string.Equals(x.Type, "email", StringComparison.InvariantCultureIgnoreCase))?.Value ?? null;
 
         /// <summary>
         /// Mobile phone number
         /// </summary>
         [JsonIgnore]
-        public string MobileNumber => Shipping.Contacts.FirstOrDefault(x => x.IsActive && string.Equals(x.Type, "mobile", StringComparison.InvariantCultureIgnoreCase))?.Value ?? null;
-
+        public string MobileNumber => Shipping.Contacts?.FirstOrDefault(x => x.IsActive && string.Equals(x.Type, "phone", StringComparison.InvariantCultureIgnoreCase))?.Value ?? null;
 
         public override string ToString() => Name.Trim();
     }
@@ -286,13 +282,13 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         private DistributorAddresses _addresses { get; set; }
 
         [JsonIgnore]
-        public DistributorAddress[] Addresses => _addresses.Addresses;
+        public DistributorAddress[] Addresses => _addresses?.Addresses;
 
         [JsonProperty("Contacts")]
         private DistributorContacts _contacts { get; set; }
 
         [JsonIgnore]
-        public DistributorContact[] Contacts => _contacts.Contacts;
+        public DistributorContact[] Contacts => _contacts?.Contacts;
     }
 
     public sealed class DistributorAddresses
@@ -390,7 +386,7 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         private string _isActive { get; set; }
 
         [JsonIgnore]
-        public bool IsActive => string.Equals(_isPrimary, "A", StringComparison.InvariantCultureIgnoreCase);
+        public bool IsActive => string.Equals(_isActive, "A", StringComparison.InvariantCultureIgnoreCase);
 
         [JsonProperty("LastUpdateDate")]
         public DateTime LastUpdateDate { get; private set; }
@@ -636,5 +632,13 @@ namespace Filuet.Hrbl.Ordering.Abstractions
 
         [JsonProperty("Message")]
         public string Message { get; private set; }
+    }
+
+    public sealed class CantBuyReasons
+    {
+        [JsonProperty("Reason", Order = 1)]
+        public string[] Reasons { get; set; }
+
+        public override string ToString() => $"{Reasons?.Length} reasons";
     }
 }

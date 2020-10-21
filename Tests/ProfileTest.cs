@@ -9,8 +9,10 @@ namespace Filuet.Hrbl.Ordering.Tests
     public class ProfileTest : BaseTest
     {
         [Theory]
-        [InlineData("7918180560")]
-        [InlineData("U515120144")]
+       // [InlineData("7918180560")]
+        //[InlineData("U515120144")]
+        [InlineData("VA00863126")]
+       // [InlineData("HERB108388")] // DELETED member state
         public async Task Test_Get_profile(string distributorId)
         {
             // Prepare

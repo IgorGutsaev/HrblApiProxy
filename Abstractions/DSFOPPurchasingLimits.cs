@@ -44,7 +44,7 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         public DateTime? FOPFirstOrderDate { get; private set; }
 
         [JsonProperty("FOPThresholdPeriod")]
-        public int FOPThresholdPeriod { get; private set; }
+        public int? FOPThresholdPeriod { get; private set; }
     }
 
     public class DSPurchasingLimits
