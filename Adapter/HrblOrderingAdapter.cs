@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using Filuet.Hrbl.Ordering.Abstractions;
+using System.Text;
 
 namespace Filuet.Hrbl.Ordering.Adapter
 {
@@ -26,7 +27,7 @@ namespace Filuet.Hrbl.Ordering.Adapter
             _proxy = new HLOnlineOrderingRS(new Uri(_settings.ApiUri));
             _proxy.SerializationSettings = null;
             _proxy.DeserializationSettings = null;
-            _proxy.HttpClient.DefaultRequestHeaders.Authorization = new BasicAuthenticationHeaderValue(_settings.Login, _settings.Password);
+            _proxy.HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(Encoding.UTF8.GetBytes($"{_settings.Login}:{ _settings.Password}")));
         }
 
         #region Inventory
@@ -131,7 +132,19 @@ namespace Filuet.Hrbl.Ordering.Adapter
             return JsonConvert.DeserializeObject<OrderDualMonthStatus>(JsonConvert.SerializeObject(response)).IsDualMonthAllowed;
         }
 
-        
+        public async Task<string> GetDistributorDiscount(string distributorId, DateTime month, string country)
+        {
+            object response = await _proxy.GetDistributorDiscount.POSTAsync(new
+            {
+                ServiceConsumer = _settings.Consumer,
+                DistributorId = distributorId,
+                OrderMonth = month.ToString("yyyy/MM"),
+                ShipToCountry = country
+            });
+
+            return JsonConvert.DeserializeObject<string>(JsonConvert.SerializeObject(response));
+        }
+
         // Stub
         public async Task<string> SubmitOrder()
         {
@@ -159,15 +172,6 @@ namespace Filuet.Hrbl.Ordering.Adapter
 
             return JsonConvert.DeserializeObject<string>(JsonConvert.SerializeObject(response));
         }        
-
-        public async Task<string> GetDistributorDiscount()
-        {
-            object response = await _proxy.GetDistributorDiscount.POSTAsync(new
-            {
-            });
-
-            return JsonConvert.DeserializeObject<string>(JsonConvert.SerializeObject(response));
-        }
 
         public async Task<string> GetProductInventory()
         {

@@ -29,6 +29,8 @@ namespace Filuet.Hrbl.Ordering.Abstractions
 
         Task<bool> GetOrderDualMonthStatus(string country);
 
+        Task<string> GetDistributorDiscount(string distributorId, DateTime month, string country);
+
 
         // Stub
         Task<string> SubmitOrder();
@@ -36,8 +38,6 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         Task<string> HpsPaymentGateway();
 
         Task<string> DsCashLimit();
-
-        Task<string> GetDistributorDiscount();
 
         Task<string> GetProductInventory();
 

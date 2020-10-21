@@ -9,7 +9,8 @@ namespace Filuet.Hrbl.Ordering.Tests
     {
         [Theory]
        // [InlineData("7918180560")]
-        [InlineData("U515120144")]
+        //[InlineData("U515120144")]
+        [InlineData("VA00863126")]
        // [InlineData("HERB108388")] // DELETED member state
         public async Task Test_Get_profile(string distributorId)
         {
@@ -21,9 +22,6 @@ namespace Filuet.Hrbl.Ordering.Tests
 
             // Perform
             DistributorProfile result = await _adapter.GetProfile(distributorId);
-
-            string sd= result.MobileNumber;
-            string s= result.Email;
 
             // Post-validate
             Assert.NotNull(result);
