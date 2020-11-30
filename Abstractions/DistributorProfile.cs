@@ -297,63 +297,133 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         public DistributorAddress[] Addresses { get; private set; }
     }
 
-    public sealed class DistributorAddress
+    public class DistributorAddress
     {
         [JsonProperty("AddressType")]
-        public string Type { get; private set; }
+        public string Type { get; internal set; }
 
         [JsonProperty("AddressLine1")]
-        public string Line1 { get; private set; }
+        public string Line1 { get; internal set; }
 
         [JsonProperty("AddressLine2")]
-        public string Line2 { get; private set; }
+        public string Line2 { get; internal set; }
 
         [JsonProperty("AddressLine3")]
-        public string Line3 { get; private set; }
+        public string Line3 { get; internal set; }
 
         [JsonProperty("AddressLine4")]
-        public string Line4 { get; private set; }
+        public string Line4 { get; internal set; }
 
         [JsonProperty("suburb")]
-        public string Suburb { get; private set; }
+        public string Suburb { get; internal set; }
 
         [JsonProperty("geo_code")]
-        public string GeoCode { get; private set; }
+        public string GeoCode { get; internal set; }
 
         [JsonProperty("City")]
-        public string City { get; private set; }
+        public string City { get; internal set; }
 
         [JsonProperty("State")]
-        public string State { get; private set; }
+        public string State { get; internal set; }
 
         [JsonProperty("Province")]
-        public string Province { get; private set; }
+        public string Province { get; internal set; }
 
         [JsonProperty("County")]
-        public string County { get; private set; }
+        public string County { get; internal set; }
 
         [JsonProperty("Country")]
-        public string Country { get; private set; }
+        public string Country { get; internal set; }
 
         [JsonProperty("ZipCode")]
-        public string ZipCode { get; private set; }
+        public string ZipCode { get; internal set; }
 
         [JsonProperty("ZipPlusFour")]
-        public string ZipPlusFour { get; private set; }
+        public string ZipPlusFour { get; internal set; }
 
         [JsonProperty("CareOfName")]
-        public string CareOfName { get; private set; }
+        public string CareOfName { get; internal set; }
 
         [JsonProperty("LastUpdateDate")]
-        public DateTime LastUpdateDate { get; private set; }
+        public DateTime LastUpdateDate { get; internal set; }
 
         [JsonProperty("Attribute4")]
-        public string Attribute4 { get; private set; }
+        public string Attribute4 { get; internal set; }
 
         [JsonIgnore]
         public string FullAddress => $"{Line1} {Line2} {Line3} {Line4} ";
 
         public override string ToString() => Type.Trim();
+    }
+
+    internal sealed class DistributorAddressToUpdate : DistributorAddress
+    {
+        public string Building { get; internal set; } = null;
+        public string SiteId { get; private set; } = null;
+        public string IsPrimary { get; private set; } = null;
+        public string IsActive { get; private set; } = null;
+        public string FedexLocation { get; private set; } = null;
+        public string Reason { get; private set; } = null;
+        public string Attribute1 { get; private set; } = null;
+        public string Attribute2 { get; private set; } = null;
+        public string Attribute3 { get; private set; } = null;
+        public string Attribute5 { get; private set; } = null;
+        public string Attribute6 { get; private set; } = null;
+        public string Attribute7 { get; private set; } = null;
+        public string Attribute8 { get; private set; } = null;
+        public string Attribute9 { get; private set; } = null;
+        public string Attribute10 { get; private set; } = null;
+
+        internal void FillInWithUnspecifiedData(DistributorAddress address)
+        {
+            if (Line1 == null)
+                Line1 = address.Line1;
+
+            if (Line2 == null)
+                Line2 = address.Line2;
+
+            if (Line3 == null)
+                Line3 = address.Line3;
+
+            if (Line4 == null)
+                Line4 = address.Line4;
+
+            if (Suburb == null)
+                Suburb = address.Suburb;
+
+            if (GeoCode == null)
+                GeoCode = address.GeoCode;
+
+            if (City == null)
+                City = address.City;
+
+            if (State == null)
+                State = address.State;
+
+            if (Province == null)
+                Province = address.Province;
+
+            if (County == null)
+                County = address.County;
+
+            if (Country == null)
+                Country = address.Country;
+
+            if (ZipCode == null)
+                ZipCode = address.ZipCode;
+
+            if (ZipPlusFour == null)
+                ZipPlusFour = address.ZipPlusFour;
+
+            if (CareOfName == null)
+                CareOfName = address.CareOfName;
+
+            if (LastUpdateDate == null)
+                LastUpdateDate = address.LastUpdateDate;
+
+            if (Attribute4 == null)
+                Attribute4 = address.Attribute4;
+        }
     }
 
     public sealed class DistributorContacts
@@ -362,36 +432,69 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         public DistributorContact[] Contacts { get; private set; }
     }
 
-    public sealed class DistributorContact
+    public class DistributorContact
     {
         [JsonProperty("Type")]
-        public string Type { get; private set; }
+        public string Type { get; internal set; }
 
         [JsonProperty("SubType")]
-        public string SubType { get; private set; }
+        public string SubType { get; internal set; }
 
         [JsonProperty("Value")]
-        public string Value { get; private set; }
+        public string Value { get; internal set; }
 
         [JsonProperty("OldValue")]
-        public string OldValue { get; private set; }
+        public string OldValue { get; internal set; }
 
         [JsonProperty("IsPrimary")]
-        private string _isPrimary { get; set; }
+        internal string _isPrimary { get; set; }
 
         [JsonIgnore]
         public bool IsPrimary => string.Equals(_isPrimary, "Y", StringComparison.InvariantCultureIgnoreCase);
 
         [JsonProperty("IsActive")]
-        private string _isActive { get; set; }
+        internal string _isActive { get; set; }
 
         [JsonIgnore]
         public bool IsActive => string.Equals(_isActive, "A", StringComparison.InvariantCultureIgnoreCase);
 
         [JsonProperty("LastUpdateDate")]
-        public DateTime LastUpdateDate { get; private set; }
+        public DateTime LastUpdateDate { get; internal set; }
 
         public override string ToString() => Type.Trim();
+    }
+
+    internal sealed class DistributorContactToUpdate : DistributorContact
+    {
+        [JsonProperty("Attribute1")]
+        public string Attribute1 { get; private set; }
+
+        [JsonProperty("Attribute2")]
+        public string Attribute2 { get; private set; }
+
+        [JsonProperty("Attribute3")]
+        public string Attribute3 { get; private set; }
+
+        [JsonProperty("Attribute4")]
+        public string Attribute4 { get; private set; }
+
+        [JsonProperty("Attribute5")]
+        public string Attribute5 { get; private set; }
+
+        internal void FillInWithUnspecifiedData(DistributorContact address)
+        {
+            if (SubType == null)
+                SubType = address.SubType;
+
+            if (OldValue == null)
+                OldValue = address.OldValue;
+
+            if (_isPrimary == null)
+                _isPrimary = address._isPrimary;
+
+            if (_isActive == null)
+                _isActive = address._isActive;
+        }
     }
 
     public sealed class DistributorDatesFlags

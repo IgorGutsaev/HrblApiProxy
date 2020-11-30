@@ -32,3 +32,7 @@ How to generate openapi/swagger notation from wadl or openapi3:
           }
         },
 		
+
+Swaggerhub urls
+    https://app.swaggerhub.com/apis/rameshn/HLORD/0.1#/
+    https://app.swaggerhub.com/apis-docs/rameshn/HLORD/0.1

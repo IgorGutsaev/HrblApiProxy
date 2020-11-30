@@ -22,7 +22,7 @@ namespace Filuet.Fusion.SDK
             /// </param>
             /// <param name='body'>
             /// </param>
-            public static string POST(this IGetDSPostamatDetails operations, object body)
+            public static object POST(this IGetDSPostamatDetails operations, object body)
             {
                 return operations.POSTAsync(body).GetAwaiter().GetResult();
             }
@@ -38,7 +38,7 @@ namespace Filuet.Fusion.SDK
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<string> POSTAsync(this IGetDSPostamatDetails operations, object body, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> POSTAsync(this IGetDSPostamatDetails operations, object body, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.POSTWithHttpMessagesAsync(body, null, cancellationToken).ConfigureAwait(false))
                 {

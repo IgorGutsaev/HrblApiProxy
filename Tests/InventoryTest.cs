@@ -49,5 +49,42 @@ namespace Filuet.Hrbl.Ordering.Tests
             // Perform
             // Post-validate
         }
+
+
+        [Theory]
+        [InlineData("RU", "RSO")]
+        public async Task Test_Product_Inventory(string country, string orderType)
+        {
+            // Prepare
+            Assert.NotNull(_adapter);
+
+            // Pre-validate
+            Assert.False(string.IsNullOrWhiteSpace(country));
+            Assert.False(string.IsNullOrWhiteSpace(orderType));
+
+            // Perform
+            object result = await _adapter.GetProductInventory(country, orderType);
+
+            // Post-validate
+            Assert.NotNull(result);
+        }
+
+        [Theory]
+        [InlineData("LV", "RSO")]
+        public async Task Test_Product_Catalog(string country, string orderType)
+        {
+            // Prepare
+            Assert.NotNull(_adapter);
+
+            // Pre-validate
+            Assert.False(string.IsNullOrWhiteSpace(country));
+            Assert.False(string.IsNullOrWhiteSpace(orderType));
+
+            // Perform
+            object result = await _adapter.GetProductCatalog(country, orderType);
+
+            // Post-validate
+            Assert.NotNull(result);
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Filuet.Hrbl.Ordering.Abstractions.Builders;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -23,6 +24,8 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         /// <returns></returns>
         Task<DistributorProfile> GetProfile(string distributorId);
 
+        Task UpdateAddressAndContacts(Action<ProfileUpdateBuilder> setupAction);
+
         Task<FOPPurchasingLimitsResult> GetDSFOPPurchasingLimits(string distributorId, string country);
 
         Task<DistributorVolumePoints[]> GetVolumePoints(string distributorId, DateTime month, DateTime? monthTo = null);
@@ -31,18 +34,22 @@ namespace Filuet.Hrbl.Ordering.Abstractions
 
         Task<string> GetDistributorDiscount(string distributorId, DateTime month, string country);
 
+        Task<DsCashLimitResult> GetDsCashLimit(string distributorId, string country);
 
-        // Stub
-        Task<string> SubmitOrder();
+        Task<InventoryItem[]> GetProductInventory(string country, string orderType = null);
 
-        Task<string> HpsPaymentGateway();
+        Task<CatalogItem[]> GetProductCatalog(string country, string orderType = null);
 
-        Task<string> DsCashLimit();
+        Task<string> GetPriceDetails(PricingRequest request);
 
-        Task<string> GetProductInventory();
+        Task<DsPostamatDetails[]> GetPostamats(string country, string postamatType, string region = null, string city = null, string zipCode = null);
 
-        Task<string> GetProductCatalog();
+        Task<WHFreightCode[]> GetShippingWhseAndFreightCodes(string postalCode, bool expressDeliveryFlag = true);
 
-        Task<string> GetPriceDetails();
+        Task<(bool isValid, string memberId)> ValidateSsoBearerToken(string token);
+
+        Task<string> HpsPaymentGateway(HpsPaymentPayload payload);
+
+        Task<string> SubmitOrder(Action<SubmitRequestBuilder> setupAction);
     }
 }

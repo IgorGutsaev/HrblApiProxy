@@ -8,6 +8,12 @@ namespace Filuet.Hrbl.Ordering.Tests
 {
     public class LimitsTest : BaseTest
     {
+        /// <summary>
+        /// DSFOPPurchasingLimits
+        /// </summary>
+        /// <param name="distributorId"></param>
+        /// <param name="country">Ship to country</param>
+        /// <returns></returns>
         [Theory]
         [InlineData("7918180560", "ru")]
         [InlineData("HERB108388", "ru")]
@@ -26,6 +32,31 @@ namespace Filuet.Hrbl.Ordering.Tests
             // Post-validate
             Assert.NotNull(result);
             //Assert.Equal(distributorId, result.);
+        }
+
+        /// <summary>
+        /// DSCashLimit
+        /// </summary>
+        /// <param name="distributorId"></param>
+        /// <param name="country"></param>
+        /// <returns></returns>
+        [Theory]
+        [InlineData("7918180560", "ru")]
+        [InlineData("HERB108388", "ru")]
+        public async Task Test_Get_ds_cash_limit(string distributorId, string country)
+        {
+            // Prepare
+            Assert.NotNull(_adapter);
+
+            // Pre-validate
+            Assert.False(string.IsNullOrWhiteSpace(distributorId));
+            Assert.False(string.IsNullOrWhiteSpace(country));
+
+            // Perform
+            DsCashLimitResult result = await _adapter.GetDsCashLimit(distributorId, country);
+
+            // Post-validate
+            Assert.NotNull(result);
         }
     }
 }

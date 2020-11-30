@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Filuet.Hrbl.Ordering.SDK", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Filuet.Hrbl.Ordering.Tests", "Tests\Filuet.Hrbl.Ordering.Tests.csproj", "{732F16DD-FD37-4C3D-805C-82FAB85BEBBA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Filuet.Hrbl.Ordering.Common", "Filuet.Hrbl.Ordering.Common\Filuet.Hrbl.Ordering.Common.csproj", "{55670398-B4C1-4908-9D36-487FC554DD20}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +71,18 @@ Global
 		{732F16DD-FD37-4C3D-805C-82FAB85BEBBA}.Release|x64.Build.0 = Release|Any CPU
 		{732F16DD-FD37-4C3D-805C-82FAB85BEBBA}.Release|x86.ActiveCfg = Release|Any CPU
 		{732F16DD-FD37-4C3D-805C-82FAB85BEBBA}.Release|x86.Build.0 = Release|Any CPU
+		{55670398-B4C1-4908-9D36-487FC554DD20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55670398-B4C1-4908-9D36-487FC554DD20}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55670398-B4C1-4908-9D36-487FC554DD20}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{55670398-B4C1-4908-9D36-487FC554DD20}.Debug|x64.Build.0 = Debug|Any CPU
+		{55670398-B4C1-4908-9D36-487FC554DD20}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{55670398-B4C1-4908-9D36-487FC554DD20}.Debug|x86.Build.0 = Debug|Any CPU
+		{55670398-B4C1-4908-9D36-487FC554DD20}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55670398-B4C1-4908-9D36-487FC554DD20}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55670398-B4C1-4908-9D36-487FC554DD20}.Release|x64.ActiveCfg = Release|Any CPU
+		{55670398-B4C1-4908-9D36-487FC554DD20}.Release|x64.Build.0 = Release|Any CPU
+		{55670398-B4C1-4908-9D36-487FC554DD20}.Release|x86.ActiveCfg = Release|Any CPU
+		{55670398-B4C1-4908-9D36-487FC554DD20}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

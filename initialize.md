@@ -16,9 +16,44 @@ directive:
     where: $
     transform: return $.replace(/DeserializeObject<string>/gi, 'DeserializeObject<object>');
 	
+	
+  - from: IApiValidate.cs
+	where: $
+    transform: return $.replace(/HttpOperationResponse<string>/gi, 'HttpOperationResponse<object>');
+
+  - from: ApiValidate.cs
+    where: $
+    transform: return $.replace(/DeserializeObject<string>/gi, 'DeserializeObject<object>').replace(/new HttpOperationResponse<string>/gi, 'new HttpOperationResponse<object>').replace(/HttpOperationResponse<string>/gi, 'HttpOperationResponse<object>');
+	
+  - from: ApiValidateExtensions.cs
+    where: $
+    transform: return $.replace(/Task<string> POSTAsync/gi, 'Task<object> POSTAsync').replace(/public static string POST/gi, 'public static object POST');
+	
+	
+	
   - from: GetDistributorProfile.cs
     where: $
     transform: return $.replace(/DeserializeObject<string>/gi, 'DeserializeObject<object>');
+	
+  - from: GetShippingWhseAndFreightCodes.cs
+	where: $
+	transform: return $.replace(/DeserializeObject<string>/gi, 'DeserializeObject<object>');
+	
+	
+	
+  - from: GetDSPostamatDetails.cs
+    where: $
+    transform: return $.replace(/DeserializeObject<string>/gi, 'DeserializeObject<object>').replace(/new HttpOperationResponse<string>/gi, 'new HttpOperationResponse<object>').replace(/HttpOperationResponse<string>/gi, 'HttpOperationResponse<object>');
+
+  - from: IGetDSPostamatDetails.cs
+	where: $
+    transform: return $.replace(/HttpOperationResponse<string>/gi, 'HttpOperationResponse<object>');
+	
+  - from: GetDSPostamatDetailsExtensions.cs
+    where: $
+    transform: return $.replace(/Task<string> POSTAsync/gi, 'Task<object> POSTAsync').replace(/public static string POST/gi, 'public static object POST');
+	
+	
 	
   - from: DSFOPPurchasingLimits.cs
     where: $
@@ -32,11 +67,17 @@ directive:
     where: $
     transform: return $.replace(/Task<string> POSTAsync/gi, 'Task<object> POSTAsync').replace(/public static string POST/gi, 'public static object POST');
 	
+	
+	
   - from: GetDistributorVolumePoints.cs
     where: $
     transform: return $.replace(/DeserializeObject<string>/gi, 'DeserializeObject<object>');
 	
   - from: GetOrderDualMonthStatus.cs
+    where: $
+    transform: return $.replace(/DeserializeObject<string>/gi, 'DeserializeObject<object>');
+	
+  - from: HPSPaymentGateway.cs
     where: $
     transform: return $.replace(/DeserializeObject<string>/gi, 'DeserializeObject<object>');
 ```

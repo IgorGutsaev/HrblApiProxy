@@ -10,6 +10,8 @@ using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using Filuet.Hrbl.Ordering.Abstractions;
 using System.Text;
+using Filuet.Hrbl.Ordering.Common;
+using Filuet.Hrbl.Ordering.Abstractions.Builders;
 
 namespace Filuet.Hrbl.Ordering.Adapter
 {
@@ -20,6 +22,10 @@ namespace Filuet.Hrbl.Ordering.Adapter
         /// </summary>
         private readonly HLOnlineOrderingRS _proxy;
         private readonly HrblOrderingAdapterSettings _settings;
+
+        public HrblEnvironment Environment => _settings.ApiUri.ToLower().Contains("/ts3/") ? HrblEnvironment.TS3 :
+            (_settings.ApiUri.ToLower().Contains("/prs/") ? HrblEnvironment.PRS :
+            (_settings.ApiUri.ToLower().Contains("/prod/") ? HrblEnvironment.Prod : HrblEnvironment.Unknown));
 
         public HrblOrderingAdapter(HrblOrderingAdapterSettings settings)
         {
@@ -41,10 +47,13 @@ namespace Filuet.Hrbl.Ordering.Adapter
             if (string.IsNullOrWhiteSpace(warehouse))
                 throw new ArgumentException("Warehouse must be specified");
 
-            object response = await _proxy.GetSkuAvailability.POSTAsync(new {
+            object response = await _proxy.GetSkuAvailability.POSTAsync(new
+            {
                 ServiceConsumer = _settings.Consumer,
-                SkuInquiryDetails = items.Select(x => new {
-                    Sku = new {
+                SkuInquiryDetails = items.Select(x => new
+                {
+                    Sku = new
+                    {
                         SkuName = x.Key,
                         Quantity = x.Value.ToString(),
                         WarehouseCode = warehouse
@@ -54,7 +63,7 @@ namespace Filuet.Hrbl.Ordering.Adapter
 
             return JsonConvert.DeserializeObject<SkuInventoryDetailsResult>(JsonConvert.SerializeObject(response)).SkuInventoryDetails.Inventory;
         }
-        
+
         /// <summary>
         /// Get remains of goods
         /// </summary>
@@ -64,7 +73,53 @@ namespace Filuet.Hrbl.Ordering.Adapter
         public async Task<SkuInventory[]> GetSkuAvailability(string warehouse, string sku, uint quantity)
             => await GetSkuAvailability(warehouse, new List<KeyValuePair<string, uint>> { new KeyValuePair<string, uint>(sku, quantity) }
                 .ToDictionary(x => x.Key, x => x.Value));
+
+        public async Task<InventoryItem[]> GetProductInventory(string country, string orderType = null)
+        {
+            OrderType type = string.IsNullOrWhiteSpace(orderType) ? OrderType.Rso
+                : EnumHelper.GetValueFromDescription<OrderType>(orderType);
+
+            object response = await _proxy.GetProductInventory.POSTAsync(new
+            {
+                CountryCode = country,
+                OrderType = EnumHelper.GetDescription(type)
+            });
+
+            InventoryResult result = JsonConvert.DeserializeObject<InventoryResult>(JsonConvert.SerializeObject(response));
+            if (!result.Inventory.IsSussess)
+                throw new HrblRestApiException($"An error occured while requesting product inventory in {country}");
+
+            return result.Inventory.Inventories.ItemsRoot.Items;
+        }
+
+        public async Task<CatalogItem[]> GetProductCatalog(string country, string orderType = null)
+        {
+            OrderType type = string.IsNullOrWhiteSpace(orderType) ? OrderType.Rso
+    : EnumHelper.GetValueFromDescription<OrderType>(orderType);
+
+            object response = await _proxy.GetProductCatalog.POSTAsync(new
+            {
+                CountryCode = country,
+                OrderType = EnumHelper.GetDescription(type)
+            });
+
+            return JsonConvert.DeserializeObject<CatalogResult>(JsonConvert.SerializeObject(response)).CatalogDetails.Items;
+        }
         #endregion
+
+        #region Distributor
+        public async Task<(bool isValid, string memberId)> ValidateSsoBearerToken(string token)
+        {
+            if (string.IsNullOrWhiteSpace(token))
+                throw new ArgumentException("Country is mandatory");
+
+            object response = await _proxy.ApiValidate.POSTAsync(
+                ApiValidateRequest.Create(_settings.OrganizationId, token));
+
+            ApiValidateResponse result = JsonConvert.DeserializeObject<ApiValidateResponse>(JsonConvert.SerializeObject(response));
+
+            return (result.IsValid, result.MemberId);
+        }
 
         /// <summary>
         /// Get distributor (customer) profile
@@ -76,7 +131,8 @@ namespace Filuet.Hrbl.Ordering.Adapter
             if (string.IsNullOrWhiteSpace(distributorId))
                 throw new ArgumentException("Distributor ID must be specified");
 
-            object response = await _proxy.GetDistributorProfile.POSTAsync(new {
+            object response = await _proxy.GetDistributorProfile.POSTAsync(new
+            {
                 ServiceConsumer = _settings.Consumer,
                 DistributorId = distributorId,
             });
@@ -84,13 +140,39 @@ namespace Filuet.Hrbl.Ordering.Adapter
             return JsonConvert.DeserializeObject<DistributorProfileResult>(JsonConvert.SerializeObject(response)).Profile;
         }
 
+        public async Task UpdateAddressAndContacts(Action<ProfileUpdateBuilder> setup)
+        {
+            UpdateAddressAndContactsRequest request =
+                setup.CreateTargetAndInvoke().SetServiceConsumer(_settings.Consumer).Build();
+
+            DistributorProfile profile = await GetProfile(request.DistributorId);
+
+            if (request.Address != null)
+            {
+                DistributorAddress addressToUpdate = profile.Shipping?.Addresses?.FirstOrDefault(x => x.Type.Equals(request.Address.Type, StringComparison.InvariantCultureIgnoreCase));
+                if (addressToUpdate != null)
+                    request.Address.FillInWithUnspecifiedData(addressToUpdate);
+                else request.Address = null; // We're not allowed to create new address
+            }
+
+            if (request.Contact != null)
+            {
+                DistributorContact contactToUpdate = profile.Shipping?.Contacts?.FirstOrDefault(x => x.Type.Equals(request.Contact.Type, StringComparison.InvariantCultureIgnoreCase));
+                if (contactToUpdate != null)
+                    request.Contact.FillInWithUnspecifiedData(contactToUpdate);
+                else request.Contact = null; // We're not allowed to create new contact
+            }
+
+            object response = await _proxy.UpdateDsAddressContacts.POSTAsync(request);
+        }
+
         public async Task<FOPPurchasingLimitsResult> GetDSFOPPurchasingLimits(string distributorId, string country)
         {
             if (string.IsNullOrWhiteSpace(distributorId))
-                throw new ArgumentException("Distributor ID must be specified");
+                throw new ArgumentException("Distributor ID is mandatory");
 
             if (string.IsNullOrWhiteSpace(country))
-                throw new ArgumentException("Country must be specified");
+                throw new ArgumentException("Country is mandatory");
 
             object response = await _proxy.DSFOPPurchasingLimits.POSTAsync(new
             {
@@ -119,19 +201,6 @@ namespace Filuet.Hrbl.Ordering.Adapter
             return JsonConvert.DeserializeObject<DistributorVolumePointsDetailsResult>(JsonConvert.SerializeObject(response)).DistributorVolumeDetails.DistributorVolume;
         }
 
-        public async Task<bool> GetOrderDualMonthStatus(string country)
-        {
-            if (string.IsNullOrWhiteSpace(country) || country.Trim().Length != 2)
-                throw new ArgumentException("Country must be specified");
-
-            object response = await _proxy.GetOrderDualMonthStatus.POSTAsync(new
-            {
-                ShipToCountry = country.Trim().ToUpper()
-            });
-
-            return JsonConvert.DeserializeObject<OrderDualMonthStatus>(JsonConvert.SerializeObject(response)).IsDualMonthAllowed;
-        }
-
         public async Task<string> GetDistributorDiscount(string distributorId, DateTime month, string country)
         {
             object response = await _proxy.GetDistributorDiscount.POSTAsync(new
@@ -145,59 +214,119 @@ namespace Filuet.Hrbl.Ordering.Adapter
             return JsonConvert.DeserializeObject<string>(JsonConvert.SerializeObject(response));
         }
 
-        // Stub
-        public async Task<string> SubmitOrder()
+        /// <summary>
+        /// Get member cash limit
+        /// </summary>
+        /// <param name="distributorId"></param>
+        /// <param name="country">Shipp to country</param>
+        /// <returns></returns>
+        public async Task<DsCashLimitResult> GetDsCashLimit(string distributorId, string country)
         {
-            object response = await _proxy.SubmitOrder.POSTAsync(new
+            object response = await _proxy.DsCashLimit.POSTAsync(new
             {
+                ServiceConsumer = _settings.Consumer,
+                DistributorId = distributorId,
+                ShipToCountry = country,
+                PaymentMethod = "CASH"
             });
+
+            return JsonConvert.DeserializeObject<DsCashLimitResult>(JsonConvert.SerializeObject(response));
+        }
+
+        public async Task<string> GetPriceDetails(PricingRequest request)
+        {
+            object response = await _proxy.GetPriceDetails.POSTAsync(request);
 
             return JsonConvert.DeserializeObject<string>(JsonConvert.SerializeObject(response));
         }
 
-        public async Task<string> HpsPaymentGateway()
+        public async Task<string> HpsPaymentGateway(HpsPaymentPayload payload)
         {
-            object response = await _proxy.HPSPaymentGateway.POSTAsync(new
-            {
-            });
+            HpsPaymentRequest request = new HpsPaymentRequestBuilder()
+                .AddServiceConsumer(_settings.Consumer)
+                .AddPayload(payload).Build();
+
+            // string data = JsonConvert.SerializeObject(request); // look at your payload
+
+            HpsPaymentResponse result =
+                JsonConvert.DeserializeObject<HpsPaymentResponse>(JsonConvert.SerializeObject(await _proxy.HPSPaymentGateway.POSTAsync(request)));
+
+            if (result.Errors.HasErrors)
+                throw new HrblRestApiException(result.Errors.ErrorMessage);
+
+            return result.PaymentResponse.TransactionID;
+        }
+
+        public async Task<string> SubmitOrder(Action<SubmitRequestBuilder> setupAction)
+        {
+            SubmitRequest request = setupAction.CreateTargetAndInvoke()
+                .AddServiceConsumer(_settings.Consumer)
+                .Build();
+
+            object response = await _proxy.SubmitOrder.POSTAsync(request);
 
             return JsonConvert.DeserializeObject<string>(JsonConvert.SerializeObject(response));
         }
+        #endregion
 
-        public async Task<string> DsCashLimit()
+        #region Common
+        public async Task<bool> GetOrderDualMonthStatus(string country)
         {
-            object response = await _proxy.HPSPaymentGateway.POSTAsync(new
+            if (string.IsNullOrWhiteSpace(country) || country.Trim().Length != 2)
+                throw new ArgumentException("Country is mandatory");
+
+            object response = await _proxy.GetOrderDualMonthStatus.POSTAsync(new
             {
+                ShipToCountry = country.Trim().ToUpper()
             });
 
-            return JsonConvert.DeserializeObject<string>(JsonConvert.SerializeObject(response));
-        }        
-
-        public async Task<string> GetProductInventory()
-        {
-            object response = await _proxy.GetProductInventory.POSTAsync(new
-            {
-            });
-
-            return JsonConvert.DeserializeObject<string>(JsonConvert.SerializeObject(response));
+            return JsonConvert.DeserializeObject<OrderDualMonthStatus>(JsonConvert.SerializeObject(response)).IsDualMonthAllowed;
         }
 
-        public async Task<string> GetProductCatalog()
+        public async Task<DsPostamatDetails[]> GetPostamats(string country, string postamatType, string region = null, string city = null, string zipCode = null)
         {
-            object response = await _proxy.GetProductCatalog.POSTAsync(new
+            if (string.IsNullOrWhiteSpace(country) || country.Trim().Length != 2)
+                throw new ArgumentException("Country is mandatory");
+
+            if (string.IsNullOrWhiteSpace(postamatType))
+                throw new ArgumentException("Postamat is mandatory");
+
+            object response = await _proxy.GetDSPostamatDetails.POSTAsync(new
             {
+                Country = country.Trim(),
+                PostamatType = postamatType.Trim(),
+                City = city?.Trim(),
+                Region = region?.Trim(),
+                ZipCode = zipCode?.Trim()
             });
 
-            return JsonConvert.DeserializeObject<string>(JsonConvert.SerializeObject(response));
+            DSPostamatDetailsResult result = JsonConvert.DeserializeObject<DSPostamatDetailsResult>(JsonConvert.SerializeObject(response));
+
+            if (result.Errors.HasErrors)
+                throw new HrblRestApiException(result.Errors.ErrorMessage);
+
+            return result.DsPostamatDetails;
         }
 
-        public async Task<string> GetPriceDetails()
+        public async Task<WHFreightCode[]> GetShippingWhseAndFreightCodes(string postalCode, bool expressDeliveryFlag = true)
         {
-            object response = await _proxy.GetPriceDetails.POSTAsync(new
+            if (string.IsNullOrWhiteSpace(postalCode))
+                throw new ArgumentException("Postal code is mandatory");
+
+            object response = await _proxy.GetShippingWhseAndFreightCodes.POSTAsync(new
             {
+                ServiceConsumer = _settings.Consumer,
+                ExpressDeliveryFlag = expressDeliveryFlag ? "Y" : "N",
+                PostalCode = postalCode.Trim()
             });
 
-            return JsonConvert.DeserializeObject<string>(JsonConvert.SerializeObject(response));
+            WHFreightCodesResult result = JsonConvert.DeserializeObject<WHFreightCodesResult>(JsonConvert.SerializeObject(response));
+
+            if (result.ErrorCode != "0")
+                throw new HrblRestApiException(result.ErrorMessage);
+
+            return result.WHFriehtCodes;
         }
+        #endregion
     }
 }

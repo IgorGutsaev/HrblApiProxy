@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Abstractions\Filuet.Hrbl.Ordering.Abstractions.csproj" />
+    <ProjectReference Include="..\Filuet.Hrbl.Ordering.Common\Filuet.Hrbl.Ordering.Common.csproj" />
     <ProjectReference Include="..\SDK\Filuet.Hrbl.Ordering.SDK.csproj" />
   </ItemGroup>
 
