@@ -62,7 +62,7 @@ namespace Filuet.Hrbl.Ordering.Abstractions.Builders
             if (string.IsNullOrWhiteSpace(header.OrderPaymentStatus))
                 issues.AppendLine($"Order payment status is mandatory");
 
-            if (header.OrderDiscount <= 0m)
+            if (header.OrderDiscountPercent < 0m)
                 issues.AppendLine($"Order discount must be non-negative");
 
             if (string.IsNullOrWhiteSpace(header.CountryCode))
@@ -79,6 +79,9 @@ namespace Filuet.Hrbl.Ordering.Abstractions.Builders
 
             if (string.IsNullOrWhiteSpace(header.City))
                 issues.AppendLine($"City is mandatory");
+
+            //if (header.FreightCharges < 0m)
+            //    issues.AppendLine($"Freight charge must be non-negative");
 
             if (string.IsNullOrWhiteSpace(header.InvShipFlag))
                 issues.AppendLine($"InvShipFlag is mandatory");
@@ -111,8 +114,7 @@ namespace Filuet.Hrbl.Ordering.Abstractions.Builders
             if (string.IsNullOrWhiteSpace(payment.PaymentMethodName))
                 issues.AppendLine($"Payment method name is mandatory");
 
-            if (payment.PaymentMethodId <= 0m)
-                issues.AppendLine($"Payment method id must be positive");
+            // payment.PaymentMethodId // is optional
 
             if (payment.PaymentAmount <= 0m)
                 issues.AppendLine($"Payment amount must be non-negative");
@@ -160,6 +162,7 @@ namespace Filuet.Hrbl.Ordering.Abstractions.Builders
                         issues.AppendLine($"Invcalid card expiration date");
                 }
             }
+            else payment.CreditCard = null;
 
             if (issues.Length > 0)
                 throw new ArgumentException(issues.ToString());
@@ -179,19 +182,28 @@ namespace Filuet.Hrbl.Ordering.Abstractions.Builders
 
             StringBuilder issues = new StringBuilder();
 
+            int index = 0;
             foreach (SubmitRequestOrderLine l in lines)
             {
-                if (issues.Length > 0)
-                    throw new ArgumentException(issues.ToString());
-                if (string.IsNullOrWhiteSpace(payment))
-                    issues.AppendLine($" is mandatory");
+                index++;
 
-                if (payment <= 0m)
-                    issues.AppendLine($" must be positive");
+                if (string.IsNullOrWhiteSpace(l.Sku))
+                    issues.AppendLine($"[line {index}] Sku is mandatory");
 
-                if (payment <= 0m)
-                    issues.AppendLine($" must be non-negative");
+                if (l.Quantity <= 0)
+                    issues.AppendLine($"[line {index}] Quantity must be positive");
+
+                if (l.Amount <= 0m)
+                    issues.AppendLine($"[line {index}] Amount must be non-negative");
+
+                if (l.UnitVolume <= 0m)
+                    issues.AppendLine($"[line {index}] Amount must be non-negative");
             }
+
+            if (issues.Length > 0)
+                throw new ArgumentException(issues.ToString());
+
+            _request.Lines = lines;
 
             return this;
         }

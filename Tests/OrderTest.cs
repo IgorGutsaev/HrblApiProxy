@@ -1,6 +1,7 @@
 using Filuet.Hrbl.Ordering.Abstractions;
 using Filuet.Hrbl.Ordering.Abstractions.Builders;
 using Filuet.Hrbl.Ordering.Common;
+using Newtonsoft.Json;
 using System;
 using System.Threading.Tasks;
 using Xunit;
@@ -78,30 +79,33 @@ namespace Filuet.Hrbl.Ordering.Tests
             Action<SubmitRequestBuilder> setupAction = (b) =>
                 b.AddHeader(h =>
                 {
+                    h.OrderSource = "KIOSK";
                     h.DistributorId = "U512310066";
                     h.CustomerName = "ILVA VISTERE";
                     h.SalesChannelCode = "AUTOSTORE";
-                    h.ReferenceNumber = "LVRIGAS3";
+                    //h.ReferenceNumber = "LVRIGAS3";
                     h.WareHouseCode = "LR";
                     h.ProcessingLocation = "LR";
                     h.OrderMonth = new DateTime(2020, 11, 1);
-                    h.ShippingMethodCode = "LR";
+                    h.ShippingMethodCode = "PU1";
                     h.CountryCode = "LV";
                     h.PostalCode = "LV-1073";
                     h.Address1 = "Piedrujas street, 7a";
                     h.City = "Riga";
-                    h.ExternalOrderNumber = "LRK1336308";
+                    h.ExternalOrderNumber = "LRK1336319";
                     h.OrderTypeCode = "RSO";
-                    // h.OrderTypeId = ???,
+                    //h.OrderTypeId = 2991, // isn't represented in rest api 
                     h.PricingDate = new DateTime(2020, 11, 27, 8, 31, 44);
                     h.OrderDate = new DateTime(2020, 11, 27, 8, 31, 44);
-                    h.OrgId = 256;
-                    h.DiscountAmount = 3931m;
-                    h.OrderDiscount = 50m;
-                    h.TotalDue = 4835m;
-                    h.TotalVolume = 148.7m;
-                    h.TotalAmountPaid = 4605m;
-                    h.TaxAmount = 230;
+                    h.OrgId = 294;
+                    h.DiscountAmount = 0m;// 57.51m;
+                    h.OrderDiscountPercent = 35m;
+                    h.TotalDue = 167.94m;
+                    h.TotalVolume = 146.4m;
+                    h.TotalAmountPaid = 167.94m;
+                    h.OrderPaymentStatus = "PAID";
+                    h.TaxAmount = 29.15m;
+                    //h.FreightCharges = 9.13m;
                     h.InvShipFlag = "Y";
                     h.SMSNumber = "000-012345";
                     h.OrderConfirmEmail = "igor.gutsaev@filuet.ru";
@@ -110,7 +114,8 @@ namespace Filuet.Hrbl.Ordering.Tests
                 .AddPayment(p =>
                 {
                     p.PaymentMethodName = "CARD";
-                    // p.PaymentMethodId = 3;
+                    p.PaymentStatus = "PAID";
+                    p.PaymentMethodId = string.Empty; // Empty for LV
                     p.PaymentAmount = 167.94m;
                     p.Date = new DateTime(2020, 11, 27, 8, 31, 44);
                     p.Paycode = "CARD";
@@ -122,7 +127,9 @@ namespace Filuet.Hrbl.Ordering.Tests
                     p.CreditCard.CardNumber = "0B11074741560000";
                     p.CreditCard.CardType = "CARD";
                     p.CreditCard.CardExpiryDate = new DateTime(2021, 11, 30, 23, 59, 59);
-
+                    p.CreditCard.TrxApprovalNumber = "51505";
+                    p.ClientRefNumber = "LVRIGAS3";
+                    p.ApprovalNumber = "51505";
                 })
                 .AddItems(() =>
                     new SubmitRequestOrderLine[] {
@@ -131,8 +138,7 @@ namespace Filuet.Hrbl.Ordering.Tests
                             Quantity = 2,
                             Amount = 54.19m,
                             EarnBase = 27.97m,
-                            UnitEarnBase = 55.94m,
-                            UnitVolume = 47.9m,
+                            UnitVolume = 23.95m,
                             TotalRetailPrice = 61.36m,
                             TotalDiscountedPrice = 19.58m
                         },
@@ -141,8 +147,7 @@ namespace Filuet.Hrbl.Ordering.Tests
                             Quantity = 3,
                             Amount = 63.82m,
                             EarnBase = 21.97m,
-                            UnitEarnBase = 65.91m,
-                            UnitVolume = 53.85m,
+                            UnitVolume = 17.95m,
                             TotalRetailPrice = 72.27m,
                             TotalDiscountedPrice = 23.07m
                         },
@@ -151,7 +156,6 @@ namespace Filuet.Hrbl.Ordering.Tests
                             Quantity = 1,
                             Amount = 15.76m,
                             EarnBase = 7.13m,
-                            UnitEarnBase = 7.13m,
                             UnitVolume = 7.7m,
                             TotalRetailPrice = 14.81m,
                             TotalDiscountedPrice = 2.5m
@@ -161,7 +165,6 @@ namespace Filuet.Hrbl.Ordering.Tests
                             Quantity = 1,
                             Amount = 21.29m,
                             EarnBase = 21.97m,
-                            UnitEarnBase = 21.97m,
                             UnitVolume = 22.95m,
                             TotalRetailPrice = 21.97m,
                             TotalDiscountedPrice = 7.69m
@@ -171,7 +174,6 @@ namespace Filuet.Hrbl.Ordering.Tests
                             Quantity = 1,
                             Amount = 12.8839m,
                             EarnBase = 13.33m,
-                            UnitEarnBase = 13.33m,
                             UnitVolume = 14m,
                             TotalRetailPrice = 14.63m,
                             TotalDiscountedPrice = 4.67m
@@ -179,12 +181,14 @@ namespace Filuet.Hrbl.Ordering.Tests
                     }
                 );
 
-            new SubmitRequestBuilder();
-
             // Pre-validate
             Assert.NotNull(_adapter);
+            SubmitRequest request = setupAction.CreateTargetAndInvoke().Build();
+            Assert.NotNull(request);
 
+            string data = JsonConvert.SerializeObject(request);
             // Perform
+            string orderNumber = await _adapter.SubmitOrder(setupAction);
 
             //Post-validate
         }

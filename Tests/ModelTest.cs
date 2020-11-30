@@ -28,7 +28,7 @@ namespace Filuet.Hrbl.Ordering.Tests
                 OrderTypeCode = "RSO",
                 TotalAmountPaid = 123.45m,
                 OrderPaymentStatus = "PAID",// "UNDERPAID" "OVERPAID"
-                OrderDiscount = 35m,
+                OrderDiscountPercent = 35m,
                 // Location payload mandatory
                 CountryCode = "RU",
                 WareHouseCode = "Foo",
@@ -82,8 +82,7 @@ namespace Filuet.Hrbl.Ordering.Tests
                 TotalDiscountedPrice = 1.12m,
                 EarnBase = 12.56m,
                 TotalRetailPrice = 14.11m,
-                UnitVolume = 22.95m,
-                UnitEarnBase = 12.56m // eq to EarnBase 
+                UnitVolume = 22.95m
             };
 
             // Perform
@@ -100,7 +99,7 @@ namespace Filuet.Hrbl.Ordering.Tests
             SubmitRequestPayment payment = new SubmitRequestPayment
             {
                 PaymentMethodName = "CARD",
-                PaymentMethodId = 3,
+                PaymentMethodId = "3",
                 PaymentAmount = 10m,
                 Date = DateTime.UtcNow,
                 Paycode = "CARD",

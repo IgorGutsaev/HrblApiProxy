@@ -19,6 +19,15 @@ namespace Filuet.Hrbl.Ordering.Abstractions
 
         [JsonProperty("OrderPayment")]
         internal SubmitRequestPayment Payment { get; set; }
+
+        [JsonProperty("OrderNotes")]
+        internal string OrderNotes { get; set; }
+
+        [JsonProperty("OrderAddress")]
+        internal string OrderAddress { get; set; }
+
+        [JsonProperty("OrderPromotionLine")]
+        internal string OrderPromotionLine { get; set; }
     }
 
     public class SubmitRequestHeader
@@ -44,8 +53,8 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         [JsonProperty("SalesChannelCode")]
         public string SalesChannelCode { get; set; }
 
-        [JsonProperty("ReferenceNumber")]
-        public string ReferenceNumber { get; set; }  // e.g. Kiosk UID
+        //[JsonProperty("ReferenceNumber")]
+        //public string ReferenceNumber { get; set; }  // e.g. Kiosk UID
 
         [JsonProperty("OrderDate")]
         [JsonConverter(typeof(StandardDateTimeConverter))]
@@ -72,12 +81,9 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         [JsonProperty("OrderPaymentStatus")]
         public string OrderPaymentStatus { get; set; }
 
-        /// <summary>
-        /// DiscountPercent probably
-        /// </summary>
         [JsonProperty("OrderDiscount")]
         [JsonConverter(typeof(StringDecimalConverter))]
-        public decimal OrderDiscount { get; set; } // DiscountPercent from OrderPriceHeader
+        public decimal OrderDiscountPercent { get; set; } // DiscountPercent from OrderPriceHeader
 
         // Location payload mandatory (oracle settings basically)
         [JsonProperty("CountryCode")]
@@ -129,7 +135,11 @@ namespace Filuet.Hrbl.Ordering.Abstractions
 
         [JsonProperty("TaxAmount")]
         [JsonConverter(typeof(StringDecimalConverter))]
-        public decimal TaxAmount { get; set; } // ???
+        public decimal TaxAmount { get; set; } // Total tax amount
+
+        //[JsonProperty("FreightCharges")]
+        //[JsonConverter(typeof(StringDecimalConverter))]
+        //public decimal FreightCharges { get; set; }
 
         [JsonProperty("DiscountAmount")]
         [JsonConverter(typeof(StringDecimalConverter))]
@@ -163,10 +173,10 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         public string ChrAttribute4 { get; set; }  //(isPudo ? postamatCode : null)  bool isPudo = freightCode.Equals("BLD") || freightCode.Equals("BLO");
 
         [JsonProperty("ChrAttribute3")]
-        public string ChrAttribute3 { get; set; }           // isPudo ?"Y":"N"
+        public string ChrAttribute3 { get; set; } = "N";          // isPudo ?"Y":"N"
 
         [JsonProperty("ChrAttribute6")]
-        public string ChrAttribute6 { get; set; } // = "QR"              // QR хардкод (для Балтики как минимум)
+        public string ChrAttribute6 { get; set; } = "QR";            // QR хардкод (для Балтики как минимум)
 
         [JsonProperty("ChrAttribute5")]
         public string ChrAttribute5 { get; set; }          //(isPudo ? phone : null)
@@ -211,58 +221,68 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         [JsonConverter(typeof(StringDecimalConverter))]
         public decimal EarnBase { get; set; }
 
-        [JsonProperty("UnitEarnBase", Order = 6)]
-        [JsonConverter(typeof(StringDecimalConverter))]
-        public decimal UnitEarnBase { get; set; } // Возможно TotalEarnbase в soap
-
-        [JsonProperty("TotalRetailPrice", Order = 7)]
+        [JsonProperty("TotalRetailPrice", Order = 6)]
         [JsonConverter(typeof(StringDecimalConverter))]
         public decimal TotalRetailPrice { get; set; }
 
-        [JsonProperty("TotalDiscountedPrice", Order = 8)]
+        [JsonProperty("TotalDiscountedPrice", Order = 7)]
         [JsonConverter(typeof(StringDecimalConverter))]
         public decimal TotalDiscountedPrice { get; set; }
+
+        [JsonProperty("ProductType", Order = 8)]
+        public string ProductType { get; set; } = "P";
     }
 
-    internal class SubmitRequestPayment
+    public class SubmitRequestPayment
     {
         [JsonProperty("PaymentMethodName", Order = 1)]
         public string PaymentMethodName { get; set; }
 
-        [JsonProperty("PaymentMethodId", Order = 2)]
-        [JsonConverter(typeof(StringIntConverter))]
-        public int PaymentMethodId { get; set; }
+        [JsonProperty("PaymentStatus", Order = 2)]
+        public string PaymentStatus { get; set; }
 
-        [JsonProperty("PaymentAmount", Order = 3)]
+        [JsonProperty("PaymentMethodId", Order = 3)]
+        public string PaymentMethodId { get; set; }
+
+        [JsonProperty("PaymentAmount", Order = 4)]
         [JsonConverter(typeof(StringDecimalConverter))]
         public decimal PaymentAmount { get; set; }
 
-        [JsonProperty("PaymentDate", Order = 4)]
+        [JsonProperty("PaymentDate", Order = 5)]
         [JsonConverter(typeof(StandardDateTimeConverter))]
         public DateTime Date { get; set; } // nullable
 
-        [JsonProperty("Paycode", Order = 5)]
+        [JsonProperty("Paycode", Order = 6)]
         public string Paycode { get; set; } // CARD CASH
 
-        [JsonProperty("PaymentType", Order = 6)]
+        [JsonProperty("PaymentType", Order = 7)]
         public string PaymentType { get; set; }
 
-        [JsonProperty("CurrencyCode", Order = 7)]
+        [JsonProperty("CurrencyCode", Order = 8)]
         public string CurrencyCode { get; set; }
 
-        [JsonProperty("AppliedDate", Order = 8)]
+        [JsonProperty("AppliedDate", Order = 9)]
         [JsonConverter(typeof(StandardDateTimeConverter))]
         public DateTime AppliedDate { get; set; }
 
-        [JsonProperty("ApprovalNumber", Order = 9)]
+        [JsonProperty("ApprovalNumber", Order = 10)]
         public string ApprovalNumber { get; set; }
 
-        [JsonProperty("PaymentReceived", Order = 10)]
+        [JsonProperty("PaymentReceived", Order = 11)]
         [JsonConverter(typeof(StringDecimalConverter))]
         public decimal PaymentReceived { get; set; }
 
-        [JsonProperty("CreditCard", Order = 11)]
-        public OrderSubmitPaymentCreditCard CreditCard { get; set; }
+        [JsonProperty("CreditCard", Order = 12)]
+        public OrderSubmitPaymentCreditCard CreditCard { get; set; } = new OrderSubmitPaymentCreditCard();
+
+        [JsonProperty("AuthorizationType", Order = 13)]
+        internal string AuthorizationType { get; set; } = "ONLINE";
+
+        [JsonProperty("VoidFlag", Order = 14)]
+        internal string VoidFlag { get; set; } = "N";
+
+        [JsonProperty("ClientRefNumber", Order = 15)]
+        public string ClientRefNumber { get; set; }
     }
 
     public class OrderSubmitPaymentCreditCard
@@ -282,5 +302,12 @@ namespace Filuet.Hrbl.Ordering.Abstractions
 
         [JsonProperty("CardHolderName", Order = 5)]
         public string CardHolderName { get; set; }
+
+        [JsonProperty("CardValidationType", Order = 6)]
+        internal string CardValidationType { get; set; } = "ONLINE";
+
+        [JsonProperty("CardHolderRelation", Order = 7)]
+        internal string CardHolderRelation { get; set; } = "SELF";
+        
     }
 }
