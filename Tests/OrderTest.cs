@@ -10,54 +10,28 @@ namespace Filuet.Hrbl.Ordering.Tests
 {
     public class OrderTest : BaseTest
     {
-        [Fact]
-        public async Task Test_get_Pricing_order()
+        [Theory]
+        [MemberData(nameof(TestDataGenerator.GetPricingRequest), MemberType = typeof(TestDataGenerator))]
+        public async Task Test_Pricing_request__Correct_response(object input)
         {
             // Prepare
-            Action<PricingRequestBuilder> setupAction = (p) =>
-               p.AddHeader(h =>
-               {
-                   h.ProcessingLocation = "LR";
-                   h.ExternalOrderNumber = null;
-                   h.OrderSource = "KIOSK";
-                   h.CurrencyCode = "EUR";
-                   h.DistributorId = "U515170226";
-                   h.Warehouse = "LR";
-                   h.OrderMonth = DateTime.UtcNow.AddDays(-1);
-                   h.FreightCode = "PU1";
-                   h.CountryCode = "LV";
-                   h.PostalCode = "LV-1073";
-                   h.City = "Riga";
-                   h.OrderCategory = "RSO";
-                   h.OrderType = "RSO";
-                   h.PriceDate = DateTime.UtcNow;
-                   h.OrderDate = DateTime.UtcNow;
-                   h.CurrencyCode = null;
-                   h.Address1 = "Piedrujas street, 7a";
-               })
-               .AddItems(() =>
-                    new OrderPriceLine[] {
-                        new OrderPriceLine {
-                            Sku = "0003",
-                            Quantity = 1,
-                            ProcessingLocation = "LR",
-                            PriceDate = DateTime.UtcNow
-                        }
-                    });
-
+            PricingRequest request = (PricingRequest)input;
 
             // Pre-validate
-            Assert.NotNull(_adapter);
-            PricingRequest request = setupAction.CreateTargetAndInvoke().Build();
             Assert.NotNull(request);
 
             // Perform
-            string data = JsonConvert.SerializeObject(request);
-            string result = await _adapter.GetPriceDetails(setupAction);
+            PricingResponse response = await _adapter.GetPriceDetails(request);
 
             // Post-validate
-            Assert.NotNull(result);
-            Assert.True(result.Length == 1);
+            Assert.NotNull(response);
+            Assert.Equal(request.Header.DistributorId, response.Header.DistributorId);
+            Assert.True(!string.IsNullOrWhiteSpace(response.Header.ExternalOrderNumber));
+            if (!string.IsNullOrWhiteSpace(request.Header.ExternalOrderNumber))
+                Assert.Equal(request.Header.ExternalOrderNumber, response.Header.ExternalOrderNumber);
+            Assert.Equal(request.Lines.Length, response.Lines.Length);
+            Assert.True(response.Header.TotalDue > 0);
+            Assert.True(response.Header.VolumePoints > 0);
         }
 
         /// <summary>
@@ -128,7 +102,6 @@ namespace Filuet.Hrbl.Ordering.Tests
                     h.City = "Riga";
                     h.ExternalOrderNumber = "LRK1334836";
                     h.OrderTypeCode = "RSO";
-                    //h.OrderTypeId = 2991, // isn't represented in rest api 
                     h.PricingDate = new DateTime(2020, 11, 17, 17, 49, 13);
                     h.OrderDate = new DateTime(2020, 11, 17, 17, 49, 13);
                     h.OrgId = 294;

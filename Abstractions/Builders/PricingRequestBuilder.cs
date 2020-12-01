@@ -20,9 +20,9 @@ namespace Filuet.Hrbl.Ordering.Abstractions.Builders
             return this;
         }
 
-        public PricingRequestBuilder AddHeader(Action<OrderPriceHeader> setupHeader)
+        public PricingRequestBuilder AddHeader(Action<PricingRequestHeader> setupHeader)
         {
-            OrderPriceHeader header = setupHeader?.CreateTargetAndInvoke();
+            PricingRequestHeader header = setupHeader?.CreateTargetAndInvoke();
 
             #region Validation
             StringBuilder issues = new StringBuilder();
@@ -37,7 +37,7 @@ namespace Filuet.Hrbl.Ordering.Abstractions.Builders
                 issues.AppendLine($"Invalid external order number. It might be null (to get a brand new order number from fusion) or specified (from previous pricing request)");
 
             if (string.IsNullOrWhiteSpace(header.CurrencyCode))
-                issues.AppendLine($"Currency order is mandatory"); // fusion doesn't compute currency of order
+                issues.AppendLine($"Currency is mandatory"); // fusion doesn't compute currency of order
 
             if (header.OrderMonth == DateTime.MinValue)
                 issues.AppendLine($"Invalid order month");
@@ -87,9 +87,9 @@ namespace Filuet.Hrbl.Ordering.Abstractions.Builders
             return this;
         }
 
-        public PricingRequestBuilder AddItems(Func<OrderPriceLine[]> setupPayment)
+        public PricingRequestBuilder AddItems(Func<PricingRequestLine[]> setupPayment)
         {
-            OrderPriceLine[] lines = setupPayment?.Invoke();
+            PricingRequestLine[] lines = setupPayment?.Invoke();
 
             if (!lines.Any())
                 throw new ArgumentException("The shopping cart is empty (no order lines)");
@@ -97,7 +97,7 @@ namespace Filuet.Hrbl.Ordering.Abstractions.Builders
             StringBuilder issues = new StringBuilder();
 
             int index = 0;
-            foreach (OrderPriceLine l in lines)
+            foreach (PricingRequestLine l in lines)
             {
                 index++;
 

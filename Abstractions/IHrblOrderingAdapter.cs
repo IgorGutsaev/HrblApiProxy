@@ -42,13 +42,13 @@ namespace Filuet.Hrbl.Ordering.Abstractions
 
         Task<CatalogItem[]> GetProductCatalog(string country, string orderType = null);
 
-
-
         Task<DsPostamatDetails[]> GetPostamats(string country, string postamatType, string region = null, string city = null, string zipCode = null);
 
         Task<WHFreightCode[]> GetShippingWhseAndFreightCodes(string postalCode, bool expressDeliveryFlag = true);
 
-        Task<string> GetPriceDetails(Action<PricingRequestBuilder> setupAction);
+        Task<PricingResponse> GetPriceDetails(Action<PricingRequestBuilder> setupAction);
+
+        Task<PricingResponse> GetPriceDetails(PricingRequest request);
 
         Task<string> HpsPaymentGateway(HpsPaymentPayload payload);
 

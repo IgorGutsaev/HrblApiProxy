@@ -233,24 +233,18 @@ namespace Filuet.Hrbl.Ordering.Adapter
             return JsonConvert.DeserializeObject<DsCashLimitResult>(JsonConvert.SerializeObject(response));
         }
 
-        public async Task<string> GetPriceDetails(Action<PricingRequestBuilder> setupAction)
-        {
-            PricingRequest request = setupAction.CreateTargetAndInvoke()
-                .AddServiceConsumer(_settings.Consumer)
-                .Build();
+        public async Task<PricingResponse> GetPriceDetails(Action<PricingRequestBuilder> setupAction)
+            => await GetPriceDetails(setupAction.CreateTargetAndInvoke().AddServiceConsumer(_settings.Consumer).Build());
 
-            object response = await _proxy.GetPriceDetails.POSTAsync(request);
-
-            return JsonConvert.DeserializeObject<string>(JsonConvert.SerializeObject(response));
-        }
+        public async Task<PricingResponse> GetPriceDetails(PricingRequest request)
+            => await _proxy.GetPriceDetails.POSTAsync(request).ContinueWith((x) =>
+                JsonConvert.DeserializeObject<PricingResponse>(JsonConvert.SerializeObject(x.Result)));
 
         public async Task<string> HpsPaymentGateway(HpsPaymentPayload payload)
         {
             HpsPaymentRequest request = new HpsPaymentRequestBuilder()
                 .AddServiceConsumer(_settings.Consumer)
                 .AddPayload(payload).Build();
-
-            // string data = JsonConvert.SerializeObject(request); // look at your payload
 
             HpsPaymentResponse result =
                 JsonConvert.DeserializeObject<HpsPaymentResponse>(JsonConvert.SerializeObject(await _proxy.HPSPaymentGateway.POSTAsync(request)));
