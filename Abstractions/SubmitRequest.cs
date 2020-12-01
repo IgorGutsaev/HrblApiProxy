@@ -43,7 +43,6 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         public string ExternalOrderNumber { get; set; }
 
         [JsonProperty("TotalDue")]
-        [JsonConverter(typeof(StringDecimalConverter))]
         public decimal TotalDue { get; set; }
 
         [JsonProperty("OrderMonth")]
@@ -52,9 +51,6 @@ namespace Filuet.Hrbl.Ordering.Abstractions
 
         [JsonProperty("SalesChannelCode")]
         public string SalesChannelCode { get; set; }
-
-        //[JsonProperty("ReferenceNumber")]
-        //public string ReferenceNumber { get; set; }  // e.g. Kiosk UID
 
         [JsonProperty("OrderDate")]
         [JsonConverter(typeof(StandardDateTimeConverter))]
@@ -65,7 +61,6 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         public DateTime PricingDate { get; set; }
 
         [JsonProperty("TotalVolume")]
-        [JsonConverter(typeof(StringDecimalConverter))]
         public decimal TotalVolume { get; set; }
 
         /// <summary>
@@ -75,14 +70,12 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         public string OrderTypeCode { get; set; }
 
         [JsonProperty("TotalAmountPaid")]
-        [JsonConverter(typeof(StringDecimalConverter))]
         public decimal TotalAmountPaid { get; set; }
 
         [JsonProperty("OrderPaymentStatus")]
         public string OrderPaymentStatus { get; set; }
 
         [JsonProperty("OrderDiscount")]
-        [JsonConverter(typeof(StringDecimalConverter))]
         public decimal OrderDiscountPercent { get; set; } // DiscountPercent from OrderPriceHeader
 
         // Location payload mandatory (oracle settings basically)
@@ -134,7 +127,6 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         public string PickupName { get; set; } // = string.Empty;
 
         [JsonProperty("TaxAmount")]
-        [JsonConverter(typeof(StringDecimalConverter))]
         public decimal TaxAmount { get; set; } // Total tax amount
 
         //[JsonProperty("FreightCharges")]
@@ -142,7 +134,6 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         //public decimal FreightCharges { get; set; }
 
         [JsonProperty("DiscountAmount")]
-        [JsonConverter(typeof(StringDecimalConverter))]
         public decimal DiscountAmount { get; set; } = 0m;
 
         [JsonProperty("OrderConfirmEmail")]
@@ -155,14 +146,12 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         public string OrderPurpose { get; set; } // = string.Empty;
 
         [JsonProperty("SlidingDiscount")]
-        [JsonConverter(typeof(StringDecimalConverter))]
         public decimal SlidingDiscount { get; set; } = 0m;           // = 0 по-умолчанию, в агрументы передавать не нужно
 
         [JsonProperty("OrderSource")]
         public string OrderSource { get; set; }// =  "KIOSK"   хардкод (переделать на знач по-умолчанию)
 
         [JsonProperty("Balance")]
-        [JsonConverter(typeof(StringDecimalConverter))]
         public decimal Balance { get; set; } = 0m;             // = 0 по-умолчанию, в агрументы передавать не нужно
 
         [JsonProperty("TotalRetailPrice")]
@@ -206,27 +195,27 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         public string Sku { get; set; }
 
         [JsonProperty("Quantity", Order = 2)]
-        [JsonConverter(typeof(StringIntConverter))]
-        public int Quantity { get; set; }
+       // [JsonConverter(typeof(StringIntConverter))]
+        public decimal Quantity { get; set; }
 
         [JsonProperty("LineAmount", Order = 3)]
-        [JsonConverter(typeof(StringDecimalConverter))]
+        //[JsonConverter(typeof(StringDecimalConverter))]
         public decimal Amount { get; set; }
 
         [JsonProperty("UnitVolume", Order = 4)]
-        [JsonConverter(typeof(StringDecimalConverter))]
+       // [JsonConverter(typeof(StringDecimalConverter))]
         public decimal UnitVolume { get; set; }
 
         [JsonProperty("EarnBase", Order = 5)]
-        [JsonConverter(typeof(StringDecimalConverter))]
+       // [JsonConverter(typeof(StringDecimalConverter))]
         public decimal EarnBase { get; set; }
 
         [JsonProperty("TotalRetailPrice", Order = 6)]
-        [JsonConverter(typeof(StringDecimalConverter))]
+        //[JsonConverter(typeof(StringDecimalConverter))]
         public decimal TotalRetailPrice { get; set; }
 
         [JsonProperty("TotalDiscountedPrice", Order = 7)]
-        [JsonConverter(typeof(StringDecimalConverter))]
+        //[JsonConverter(typeof(StringDecimalConverter))]
         public decimal TotalDiscountedPrice { get; set; }
 
         [JsonProperty("ProductType", Order = 8)]
@@ -245,7 +234,7 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         public string PaymentMethodId { get; set; }
 
         [JsonProperty("PaymentAmount", Order = 4)]
-        [JsonConverter(typeof(StringDecimalConverter))]
+        //[JsonConverter(typeof(StringDecimalConverter))]
         public decimal PaymentAmount { get; set; }
 
         [JsonProperty("PaymentDate", Order = 5)]

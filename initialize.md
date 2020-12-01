@@ -40,6 +40,10 @@ directive:
 	transform: return $.replace(/DeserializeObject<string>/gi, 'DeserializeObject<object>');
 	
 	
+  - from: GetPriceDetails.cs
+	where: $
+	transform: return $.replace(/DeserializeObject<string>/gi, 'DeserializeObject<object>');
+	
 	
   - from: GetDSPostamatDetails.cs
     where: $

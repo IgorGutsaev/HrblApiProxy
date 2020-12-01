@@ -7,6 +7,8 @@ namespace Filuet.Hrbl.Ordering.Abstractions
 {
     public interface IHrblOrderingAdapter
     {
+        Task<(bool isValid, string memberId)> ValidateSsoBearerToken(string token);
+
         Task<SkuInventory[]> GetSkuAvailability(string warehouse, Dictionary<string, uint> items);
 
         /// <summary>
@@ -40,13 +42,13 @@ namespace Filuet.Hrbl.Ordering.Abstractions
 
         Task<CatalogItem[]> GetProductCatalog(string country, string orderType = null);
 
-        Task<string> GetPriceDetails(PricingRequest request);
+
 
         Task<DsPostamatDetails[]> GetPostamats(string country, string postamatType, string region = null, string city = null, string zipCode = null);
 
         Task<WHFreightCode[]> GetShippingWhseAndFreightCodes(string postalCode, bool expressDeliveryFlag = true);
 
-        Task<(bool isValid, string memberId)> ValidateSsoBearerToken(string token);
+        Task<string> GetPriceDetails(Action<PricingRequestBuilder> setupAction);
 
         Task<string> HpsPaymentGateway(HpsPaymentPayload payload);
 

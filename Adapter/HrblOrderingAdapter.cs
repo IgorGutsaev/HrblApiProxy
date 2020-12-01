@@ -233,8 +233,12 @@ namespace Filuet.Hrbl.Ordering.Adapter
             return JsonConvert.DeserializeObject<DsCashLimitResult>(JsonConvert.SerializeObject(response));
         }
 
-        public async Task<string> GetPriceDetails(PricingRequest request)
+        public async Task<string> GetPriceDetails(Action<PricingRequestBuilder> setupAction)
         {
+            PricingRequest request = setupAction.CreateTargetAndInvoke()
+                .AddServiceConsumer(_settings.Consumer)
+                .Build();
+
             object response = await _proxy.GetPriceDetails.POSTAsync(request);
 
             return JsonConvert.DeserializeObject<string>(JsonConvert.SerializeObject(response));
