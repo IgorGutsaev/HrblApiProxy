@@ -53,7 +53,7 @@ namespace Filuet.Hrbl.Ordering.Tests
 
             // Perform
             HrblRestApiException ex = await Assert.ThrowsAsync<HrblRestApiException>(async () =>
-            await _adapter.HpsPaymentGateway(new HpsPaymentPayload
+             await _adapter.HpsPaymentGateway(new HpsPaymentPayload
             {
                 Country = country,
                 OrderNumber = orderNumber,
