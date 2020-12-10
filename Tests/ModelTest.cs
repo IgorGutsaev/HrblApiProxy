@@ -143,5 +143,21 @@ namespace Filuet.Hrbl.Ordering.Tests
             // Post-validate
             Assert.Equal(expected, actual);
         }
+
+        [Fact]
+        public void Test_CantBuyReasons_Aggregate_From_Empty_cant_but_reasons()
+        {
+            // Prepare
+            CantBuyReasons reasons = new CantBuyReasons();
+
+            // Pre-validate
+            reasons.Reasons = null;
+
+            // Perform
+            string actual = reasons.AggregateReason;
+
+            // Post-validate
+            Assert.Equal(string.Empty, actual);
+        }
     }
 }
