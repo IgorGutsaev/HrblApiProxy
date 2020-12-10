@@ -122,7 +122,7 @@ namespace Filuet.Hrbl.Ordering.Tests
                 {
                     p.PaymentMethodName = "CARD";
                     p.PaymentStatus = "PAID";
-                    p.PaymentMethodId = null; // Empty for LV
+                    p.PaymentMethodId = null; // Empty for LV; 
                     p.PaymentAmount = 9.36m;
                     p.Date = new DateTime(2020, 11, 17, 17, 49, 13);
                     p.Paycode = "CARD";
@@ -161,6 +161,93 @@ namespace Filuet.Hrbl.Ordering.Tests
             // Perform
             string orderNumber = await _adapter.SubmitOrder(setupAction);
 
+            //Post-validate
+        }
+
+
+        [Fact]
+        public async Task Test_Submit_Order_AM()
+        {
+            // Prepare
+            Action<SubmitRequestBuilder> setupAction = (b) =>
+                b.AddHeader(h =>
+                {
+                    h.OrderSource = "KIOSK";
+                    h.DistributorId = "V712310189";
+                    h.CustomerName = "ANDREAS KALLI";
+                    h.SalesChannelCode = "INTERNET";
+                    //h.ReferenceNumber = "LVRIGAS3";
+                    h.WareHouseCode = "AI";
+                    h.ProcessingLocation = "FA";
+                    h.OrderMonth = new DateTime(2020, 12, 1);
+                    h.ShippingMethodCode = "PU";
+                    h.CountryCode = "AM";
+                    h.PostalCode = "0019";
+                    h.Address1 = "FILUET ARMENIA";
+                    h.Address2 = "6 BAGHRAMYAN AVE,";
+                    h.City = "Yerevan";
+                    h.ExternalOrderNumber = "FAK1079599";
+                    h.OrderTypeCode = "RSO";
+                    h.Phone = "0-45678";
+                    h.PricingDate = DateTime.UtcNow;
+                    h.OrderDate = DateTime.UtcNow;
+                    h.OrgId = 2155;
+                    h.DiscountAmount = 0m;// 57.51m;
+                    h.OrderDiscountPercent = 50m;
+                    h.TotalDue = 7714.19m;
+                    h.TotalVolume = 24.95m;
+                    h.TotalAmountPaid = 7714.19m;
+                    h.OrderPaymentStatus = "PAID";
+                    // h.TaxAmount = 1.62m;
+                    //h.FreightCharges = 9.13m;
+                    h.InvShipFlag = "Y";
+                    h.SMSNumber = "";
+                    h.OrderConfirmEmail = "igor.gutsaev@filuet.ru";
+                    h.ShippingInstructions = "p:123-456789";
+                })
+                .AddPayment(p =>
+                {
+                    p.PaymentMethodName = "CARD";
+                    p.PaymentStatus = "PAID";
+                    p.PaymentMethodId = null; // Empty for LV; 
+                    p.PaymentAmount = 7714.19m;
+                    p.Date = DateTime.UtcNow;
+                    p.Paycode = "CARD";
+                    p.PaymentType = "SALE";
+                    p.CurrencyCode = "AMD";
+                    p.AppliedDate = DateTime.UtcNow;
+                    p.PaymentReceived = 7714.19m;
+                    p.CreditCard.CardHolderName = "CARD HOLDER";
+                    p.CreditCard.CardNumber = "0B11074741560000";
+                    p.CreditCard.CardType = "CARD";
+                    p.CreditCard.CardExpiryDate = DateTime.UtcNow.AddYears(1);
+                    p.CreditCard.TrxApprovalNumber = "51189";
+                    //p.ClientRefNumber = "INTERNET";
+                    p.ApprovalNumber = "51189";
+                })
+                .AddItems(() =>
+                    new SubmitRequestOrderLine[] {
+                        new SubmitRequestOrderLine {
+                            Sku = "0006",
+                            Quantity = 1.0m,
+                            Amount = 7714.1851m,
+                            EarnBase = 12244.5m,
+                            UnitVolume = 24.95m,
+                            TotalRetailPrice = 13076.68m,
+                            TotalDiscountedPrice = 6122.25m
+                        }
+                    }
+                );
+
+            // Pre-validate
+            Assert.NotNull(_adapter);
+            SubmitRequest request = setupAction.CreateTargetAndInvoke().Build();
+            Assert.NotNull(request);
+
+            string data = JsonConvert.SerializeObject(request);
+            // Perform
+            string orderNumber = await _adapter.SubmitOrder(setupAction);
+            //AIK1111732
             //Post-validate
         }
     }

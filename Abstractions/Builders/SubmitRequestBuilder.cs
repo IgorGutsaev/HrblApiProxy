@@ -159,7 +159,7 @@ namespace Filuet.Hrbl.Ordering.Abstractions.Builders
                         issues.AppendLine($"Card type is mandatory");
 
                     if (payment.CreditCard.CardExpiryDate <= DateTime.Now.AddDays(1))
-                        issues.AppendLine($"Invcalid card expiration date");
+                        issues.AppendLine($"Invalid card expiration date");
                 }
             }
             else payment.CreditCard = null;
