@@ -124,5 +124,24 @@ namespace Filuet.Hrbl.Ordering.Tests
             // Post-validate
             Assert.Equal("{\"PaymentMethodName\":\"CARD\",\"PaymentMethodId\":\"3\",\"PaymentAmount\":\"10\",\"PaymentDate\":\"2020-11-30T10:12:56\",\"Paycode\":\"CARD\",\"PaymentType\":\"SALE\",\"CurrencyCode\":\"TWD\",\"AppliedDate\":\"2020-11-30T10:12:56\",\"ApprovalNumber\":\"070070\",\"PaymentReceived\":\"10\",\"CreditCard\":{\"CardNumber\":\"4A37991092121000\",\"TrxApprovalNumber\":\"59b2996d9f20435a9773aadfbda868\",\"CardType\":\"VI\",\"CardExpiryDate\":\"2021-11-30T10:12:56\",\"CardHolderName\":\"CARD HOLDER\"}}", result);
         }
+
+        [Theory]
+        [InlineData("foo", "bar", "baz", "foo, bar, baz")]
+        [InlineData(null, "bar", null, "bar")]
+        [InlineData(null, null, null, "")]
+        public void Test_CantBuyReasons_Aggregate__cant_but_reasons(string reason1, string reason2, string reason3, string expected)
+        {
+            // Prepare
+            CantBuyReasons reasons = new CantBuyReasons();
+
+            // Pre-validate
+            reasons.Reasons = new []{ reason1, reason2, reason3 };
+
+            // Perform
+            string actual = reasons.AggregateReason;
+
+            // Post-validate
+            Assert.Equal(expected, actual);
+        }
     }
 }

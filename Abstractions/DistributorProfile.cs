@@ -744,6 +744,9 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         [JsonProperty("Reason", Order = 1)]
         public string[] Reasons { get; set; }
 
+        [JsonIgnore]
+        public string AggregateReason => Reasons != null && Reasons.Any() ? string.Join(", ", Reasons.Where(r => !string.IsNullOrWhiteSpace(r))) : string.Empty;
+
         public override string ToString() => $"{Reasons?.Length} reasons";
     }
 }
