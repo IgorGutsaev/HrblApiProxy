@@ -137,7 +137,8 @@ namespace Filuet.Hrbl.Ordering.Adapter
                 DistributorId = distributorId,
             });
 
-            return JsonConvert.DeserializeObject<DistributorProfileResult>(JsonConvert.SerializeObject(response)).Profile;
+            return JsonConvert.DeserializeObject<DistributorProfileResult>(response.ToString(),
+                new HrblNullableResponseConverter<DistributorProfileResult>()).Profile;
         }
 
         public async Task UpdateAddressAndContacts(Action<ProfileUpdateBuilder> setup)
