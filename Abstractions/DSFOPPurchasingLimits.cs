@@ -32,7 +32,7 @@ namespace Filuet.Hrbl.Ordering.Abstractions
     public class DSFOPLimit
     {
         [JsonProperty("EarnedFOP")]
-        public string EarnedFOP { get; private set; }
+        public decimal? EarnedFOP { get; private set; }
 
         [JsonProperty("AvailableFOPLimit")]
         public decimal? AvailableFOPLimit { get; private set; }

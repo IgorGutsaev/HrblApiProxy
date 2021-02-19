@@ -31,7 +31,6 @@ namespace Filuet.Hrbl.Ordering.Tests
 
             // Post-validate
             Assert.NotNull(result);
-            //Assert.Equal(distributorId, result.);
         }
 
         /// <summary>

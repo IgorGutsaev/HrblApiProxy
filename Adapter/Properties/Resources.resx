@@ -1,0 +1,523 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="MockDistributorDiscount" xml:space="preserve">
+    <value>{"Distributor":{"DistributorType":"DS","Discount":{"DistributorDiscount":35,"HerbalifeMinDiscount":0,"HerbalifeMaxDiscount":50}}}</value>
+  </data>
+  <data name="MockDSFOPPurchasingLimit" xml:space="preserve">
+    <value>{
+   "DSFOPLimits":{
+      "DSFOPLimit":{
+         "EarnedFOP":{
+            "@nil":"true"
+         },
+         "AvailableFOPLimit":1080.79,
+         "ThresholdFOPimit":3999.99,
+         "FOPFirstOrderDate":"2019-01-16T11:00:00+03:00",
+         "FOPThresholdPeriod":29
+      }
+   },
+   "DSOTLimits":null,
+   "DSPurchasingLimits":{
+      "DSPurchasingLimit":[
+         {
+            "PPVOrderMonth":"2021/02",
+            "EarnedPC":-1,
+            "AvailablePCLimit":-1,
+            "ThresholdPCLimit":-1,
+            "EarnedAI":{
+               "@nil":"true"
+            },
+            "AvailableAILimit":{
+               "@nil":"true"
+            },
+            "ThresholdAILimit":{
+               "@nil":"true"
+            },
+            "EarnedRO":{
+               "@nil":"true"
+            },
+            "AvailableROLimit":{
+               "@nil":"true"
+            },
+            "ThresholdROLimit":{
+               "@nil":"true"
+            },
+            "EarnedCD":{
+               "@nil":"true"
+            },
+            "AvailableCDLimit":{
+               "@nil":"true"
+            },
+            "ThresholdCDLimit":{
+               "@nil":"true"
+            }
+         },
+         {
+            "PPVOrderMonth":"2021/01",
+            "EarnedPC":-1,
+            "AvailablePCLimit":-1,
+            "ThresholdPCLimit":-1,
+            "EarnedAI":{
+               "@nil":"true"
+            },
+            "AvailableAILimit":{
+               "@nil":"true"
+            },
+            "ThresholdAILimit":{
+               "@nil":"true"
+            },
+            "EarnedRO":{
+               "@nil":"true"
+            },
+            "AvailableROLimit":{
+               "@nil":"true"
+            },
+            "ThresholdROLimit":{
+               "@nil":"true"
+            },
+            "EarnedCD":{
+               "@nil":"true"
+            },
+            "AvailableCDLimit":{
+               "@nil":"true"
+            },
+            "ThresholdCDLimit":{
+               "@nil":"true"
+            }
+         }
+      ]
+   },
+   "Errors":{
+      "Error":[
+         {
+            "ErrorCode":"0",
+            "ErrorMessage":"Success"
+         }
+      ]
+   }
+}</value>
+  </data>
+  <data name="MockProfileResponse" xml:space="preserve">
+    <value>{
+   "DistributorName":"VALENTINA VASILEVA",
+   "DistributorId":"7918180560",
+   "DistributorShip":{
+      "Type":"SELF",
+      "PartyId":"44461955",
+      "PartyNumber":null,
+      "PartyName":"VALENTINA VASILEVA",
+      "FirstName":"VALENTINA",
+      "LastName":"VASILEVA",
+      "MiddleName":"NIKOLAEVNA",
+      "FirstNameLocal":"ВАЛЕНТИНА",
+      "LastNameLocal":"ВАСИЛЬЕВА",
+      "MiddleNameLocal":"НИКОЛАЕВНА",
+      "SpouseFirstName":null,
+      "SpouseLastName":null,
+      "SpouseMiddleName":null,
+      "SpouseFirstNameLocal":null,
+      "SpouseLastNameLocal":null,
+      "SpouseMiddleNameLocal":null,
+      "DateofBirth":"1981-01-01T11:00:00+03:00",
+      "Gender":"F",
+      "Addresses":{
+         "Address":[
+            {
+               "AddressType":"BILL_TO",
+               "AddressLine1":"OKTYABRSKIY",
+               "AddressLine2":"95-4-159",
+               "AddressLine3":null,
+               "AddressLine4":null,
+               "suburb":null,
+               "geo_code":null,
+               "City":"TVER",
+               "State":null,
+               "Province":null,
+               "County":null,
+               "Country":"RU",
+               "ZipCode":"170043",
+               "ZipPlusFour":null,
+               "CareOfName":null,
+               "LastUpdateDate":"2018-12-26T01:13:38+03:00",
+               "Attribute4":null
+            },
+            {
+               "AddressType":"MAILING",
+               "AddressLine1":"OKTYABRSKIY",
+               "AddressLine2":"95-4-159",
+               "AddressLine3":null,
+               "AddressLine4":null,
+               "suburb":null,
+               "geo_code":null,
+               "City":"TVER",
+               "State":null,
+               "Province":null,
+               "County":null,
+               "Country":"RU",
+               "ZipCode":"170043",
+               "ZipPlusFour":null,
+               "CareOfName":null,
+               "LastUpdateDate":"2018-12-26T01:13:38+03:00",
+               "Attribute4":null
+            },
+            {
+               "AddressType":"MAILING_LOCAL",
+               "AddressLine1":"ОКТЯБРЬСКИЙ ПР-КТ",
+               "AddressLine2":"ДОМ 95, КОР 4, КВ 159",
+               "AddressLine3":null,
+               "AddressLine4":"VALENTINA VASILEVA",
+               "suburb":null,
+               "geo_code":null,
+               "City":"ТВЕРЬ Г",
+               "State":null,
+               "Province":null,
+               "County":null,
+               "Country":"RU",
+               "ZipCode":"170043",
+               "ZipPlusFour":null,
+               "CareOfName":"VALENTINA VASILEVA",
+               "LastUpdateDate":"2020-08-09T16:54:11+03:00",
+               "Attribute4":null
+            },
+            {
+               "AddressType":"PERMLEGAL",
+               "AddressLine1":"OKTYABRSKIY",
+               "AddressLine2":"95-4-159",
+               "AddressLine3":null,
+               "AddressLine4":null,
+               "suburb":null,
+               "geo_code":null,
+               "City":"TVER",
+               "State":null,
+               "Province":null,
+               "County":null,
+               "Country":"RU",
+               "ZipCode":"170043",
+               "ZipPlusFour":null,
+               "CareOfName":null,
+               "LastUpdateDate":"2018-12-26T01:13:38+03:00",
+               "Attribute4":null
+            },
+            {
+               "AddressType":"PERMLEGAL_LOCAL",
+               "AddressLine1":"ОКТЯБРЬСКИЙ ПР-КТ",
+               "AddressLine2":"ДОМ 95, КОР 4, КВ 159",
+               "AddressLine3":null,
+               "AddressLine4":"VALENTINA VASILEVA",
+               "suburb":null,
+               "geo_code":null,
+               "City":"ТВЕРЬ Г",
+               "State":null,
+               "Province":null,
+               "County":null,
+               "Country":"RU",
+               "ZipCode":"170043",
+               "ZipPlusFour":null,
+               "CareOfName":"VALENTINA VASILEVA",
+               "LastUpdateDate":"2020-08-09T16:54:11+03:00",
+               "Attribute4":null
+            },
+            {
+               "AddressType":"SHIP_TO",
+               "AddressLine1":"ОКТЯБРЬСКИЙ ПР-КТ",
+               "AddressLine2":"ДОМ 95, КОР 4, КВ 159",
+               "AddressLine3":null,
+               "AddressLine4":"VALENTINA VASILEVA",
+               "suburb":null,
+               "geo_code":null,
+               "City":"ТВЕРЬ Г",
+               "State":null,
+               "Province":null,
+               "County":null,
+               "Country":"RU",
+               "ZipCode":"170043",
+               "ZipPlusFour":null,
+               "CareOfName":"VALENTINA VASILEVA",
+               "LastUpdateDate":"2020-08-09T16:54:11+03:00",
+               "Attribute4":null
+            }
+         ]
+      },
+      "Contacts":{
+         "Contact":[
+            {
+               "Type":"PHONE",
+               "SubType":"DAY",
+               "Value":"904-1111111",
+               "OldValue":null,
+               "IsPrimary":"Y",
+               "IsActive":"A",
+               "LastUpdateDate":"2018-12-26T01:13:38+03:00"
+            },
+            {
+               "Type":"EMAIL",
+               "SubType":"MAILING",
+               "Value":null,
+               "OldValue":null,
+               "IsPrimary":"Y",
+               "IsActive":"A",
+               "LastUpdateDate":"2018-12-26T01:13:38+03:00"
+            }
+         ]
+      }
+   },
+   "DistributorStatus":"COMPLETE",
+   "DistributorType":"DS",
+   "DistributorSubType":"SC",
+   "TypeSubType":"DS/SC",
+   "ApplicationNumber":"7918180560",
+   "ApplicationSource":"ORIGINAL",
+   "DistributorDatesFlags":{
+      "DistDates":{
+         "ApplicationDate":"2019-01-16T11:00:00+03:00",
+         "ApplicationInputDate":"2018-12-26T05:13:38+03:00",
+         "APFDueDate":"2022-01-16T11:00:00+03:00",
+         "APFPaymentDate":"2021-01-28T11:00:00+03:00",
+         "CompletionDate":"2019-01-17T00:50:08+03:00",
+         "CorpIncorporationDate":null,
+         "CorpEffectiveDate":null,
+         "DeletionDate":"2018-12-26T01:13:38+03:00",
+         "SubTypeQualDate":"2019-02-26T11:00:00+03:00",
+         "SBQualDate":null,
+         "SPQualDate":null,
+         "SPReQualDate":null,
+         "SPDemotionDate":null,
+         "QPQualDate":null,
+         "QPReQualDate":null,
+         "QPDemotionDate":null,
+         "TabQualDate":null,
+         "PBAppDate":null,
+         "PBAppInputDate":null,
+         "SlidingScaleDate":null,
+         "TrainingEndDate":null,
+         "TrainingExtEndDate":null,
+         "HAPExpiryDate":null,
+         "MBApplicationDate":null,
+         "MBApplicationInputDate":null,
+         "MBCompletionDate":null,
+         "LatestConversionDate":null,
+         "MandatoryTrainingEndDate":null,
+         "TabRequalDate":null,
+         "PBRequalDatepublic":null
+      },
+      "DistFlags":{
+         "APSStatus":"N",
+         "AuditFlag":"N",
+         "CantBuy":"N",
+         "CharterMember":"N",
+         "ChairmanClub":"N",
+         "DonotPay":"N",
+         "EBPFlag":"N",
+         "FRSSFFlag":"N",
+         "FoundersCircle":"N",
+         "HAPStatus":"N",
+         "HLDFGFlag":"N",
+         "HardCashOnly":"N",
+         "LTMSCFlag":"N",
+         "NSFFEE":"N",
+         "NSFONFlag":"N",
+         "NoUpdate":"N",
+         "OutstandingBalance":"N",
+         "PRNCKFlag":"N",
+         "Retired":"N",
+         "REGHDFlag":"N",
+         "SBStatus":"N",
+         "SKPPBFlag":"N",
+         "TodaysMagazine":null,
+         "Untouchable":"N",
+         "VerifiedDistributor":"N",
+         "CashOnlyFlag":"N",
+         "AdvisoryFlag":"Y",
+         "TrainingFlag":"Y",
+         "TrainingExtendFlag":"N",
+         "IsMPCFraud":"N",
+         "CONVHOLDFLAG":"N",
+         "MandatoryTrainingFlag":null,
+         "InternationalFlag":"Y",
+         "BCPFlag":null,
+         "NCLGFlag":null,
+         "PPV500Flag":"N",
+         "ForeignPurchaseRestriction":"N",
+         "ForeignSale":"N",
+         "DataPriv":"N"
+      }
+   },
+   "Minor":"PAMEMO",
+   "SponsorId":"7916514213",
+   "SponsorLastName":"YAKHANOVA",
+   "SponsorFirstName":"EKATERINA",
+   "SponsorMiddleName":"YUREVNA",
+   "DeletionReason":null,
+   "CorpIncorporationPlace":null,
+   "AuxillaryId":null,
+   "ProblemType":null,
+   "AvailableCreditLimit":null,
+   "ReceivabletoCollect":null,
+   "CheckPayableTo":null,
+   "MVPenaltyMonth":null,
+   "CheckPayableToLocal":null,
+   "NotificationPreference":null,
+   "TABLevel":null,
+   "XTABLevel":null,
+   "CountryofResidence":"RU",
+   "CountryofProcessing":"RU",
+   "LanguageCodeLocal":"RU",
+   "MXDSRefNum":"7918180560-75",
+   "ItalyDSType":"E",
+   "DSTypeDesc":"Distributor",
+   "DSSubTypeDesc":"SENIOR CONSULTANT",
+   "Partners":null,
+   "Discount":{
+      "DistributorDiscount":35,
+      "HerbalifeMinDiscount":15,
+      "HerbalifeMaxDiscount":35,
+      "PeronsalConsumptionDiscount":35,
+      "RetailDiscount":35
+   },
+   "CSExpiryDate":null,
+   "EnrollerID":null,
+   "EnrollerFirstName":null,
+   "EnrollerLastName":null,
+   "CantBuyReasons":null,
+   "DsTrainings":null,
+   "TrainingsHold":null,
+   "LifePartnerLastName":null,
+   "LifePartnerFirstName":null,
+   "LifePartnerMiddleName":null,
+   "LifePartnerLastLocalName":null,
+   "LifePartnerFirstLocalName":null,
+   "LifePartnerMiddleLocalName":null,
+   "OtherType":null,
+   "OtherSubtype":null,
+   "SponsorEmailAddress":null,
+   "DistTinsMessage":null,
+   "OrderRestrictionFlag":null,
+   "OrderRestrictions":null,
+   "CountryofMailing":"RU",
+   "AccountType":"D",
+   "DsJoiningPurpose":null,
+   "CnType":null,
+   "CnSubType":null
+}</value>
+  </data>
+  <data name="MockVP" xml:space="preserve">
+    <value>[{"OrderMonth":"yyyy/MM","DistPPV":0.0,"DistDLV":0.0,"DistPV":0.0,"DistGV":0.0,"DistTV":0.0,"DistRO":0.0,"DistMPV":0.0,"DistMTV":0.0,"Dist3PPV":98.5,"Dist12PPV":282.1,"DistUV":0.0,"DistEV":0.0,"UvEvLastUpdateDate":null,"Dist3DLV":0.0,"Dist12DLV":0.0,"Dist6PPV":209.25,"Dist6DLV":0.0,"Dist2PPV":0.0,"CDLV":0.0,"PM_12DLV":0.0}]</value>
+  </data>
+</root>

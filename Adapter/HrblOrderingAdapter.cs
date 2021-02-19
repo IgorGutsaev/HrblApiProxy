@@ -1,12 +1,9 @@
 ﻿using Filuet.Fusion.SDK;
-using Microsoft.Rest;
 using System;
 using System.Linq;
 using System.Collections.Generic;
-using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using Filuet.Hrbl.Ordering.Abstractions;
 using System.Text;
@@ -70,9 +67,9 @@ namespace Filuet.Hrbl.Ordering.Adapter
         /// <param name="warehouse">Warehouse to request</param>
         /// <param name="sku">sku to request</param>
         /// <param name="quantity"></param>
-        public async Task<SkuInventory[]> GetSkuAvailability(string warehouse, string sku, uint quantity)
+        public async Task<SkuInventory> GetSkuAvailability(string warehouse, string sku, uint quantity)
             => await GetSkuAvailability(warehouse, new List<KeyValuePair<string, uint>> { new KeyValuePair<string, uint>(sku, quantity) }
-                .ToDictionary(x => x.Key, x => x.Value));
+                .ToDictionary(x => x.Key, x => x.Value)).ContinueWith(x => x.Result.FirstOrDefault());
 
         public async Task<InventoryItem[]> GetProductInventory(string country, string orderType = null)
         {
@@ -95,7 +92,7 @@ namespace Filuet.Hrbl.Ordering.Adapter
         public async Task<CatalogItem[]> GetProductCatalog(string country, string orderType = null)
         {
             OrderType type = string.IsNullOrWhiteSpace(orderType) ? OrderType.Rso
-    : EnumHelper.GetValueFromDescription<OrderType>(orderType);
+                : EnumHelper.GetValueFromDescription<OrderType>(orderType);
 
             object response = await _proxy.GetProductCatalog.POSTAsync(new
             {
@@ -182,7 +179,8 @@ namespace Filuet.Hrbl.Ordering.Adapter
                 CountryCode = country.ToUpper()
             });
 
-            return JsonConvert.DeserializeObject<FOPPurchasingLimitsResult>(JsonConvert.SerializeObject(response));
+            return JsonConvert.DeserializeObject<FOPPurchasingLimitsResult>(JsonConvert.SerializeObject(response)
+                , new HrblNullableResponseConverter<FOPPurchasingLimitsResult>());
         }
 
         public async Task<DistributorVolumePoints[]> GetVolumePoints(string distributorId, DateTime month, DateTime? monthTo = null)
@@ -199,10 +197,11 @@ namespace Filuet.Hrbl.Ordering.Adapter
                 IncludeORgVolumes = "N"
             });
 
-            return JsonConvert.DeserializeObject<DistributorVolumePointsDetailsResult>(JsonConvert.SerializeObject(response)).DistributorVolumeDetails.DistributorVolume;
+            return JsonConvert.DeserializeObject<DistributorVolumePointsDetailsResult>(JsonConvert.SerializeObject(response),
+                new HrblNullableResponseConverter<DistributorVolumePointsDetailsResult>()).DistributorVolumeDetails.DistributorVolume;
         }
 
-        public async Task<string> GetDistributorDiscount(string distributorId, DateTime month, string country)
+        public async Task<DistributorDiscountResult> GetDistributorDiscount(string distributorId, DateTime month, string country)
         {
             object response = await _proxy.GetDistributorDiscount.POSTAsync(new
             {
@@ -212,7 +211,8 @@ namespace Filuet.Hrbl.Ordering.Adapter
                 ShipToCountry = country
             });
 
-            return JsonConvert.DeserializeObject<string>(JsonConvert.SerializeObject(response));
+            return JsonConvert.DeserializeObject<DistributorDiscountResult>(JsonConvert.SerializeObject(response),
+                new HrblNullableResponseConverter<DistributorDiscountResult>());
         }
 
         /// <summary>

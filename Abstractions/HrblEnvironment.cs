@@ -9,6 +9,7 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         Unknown = 0x01,
         Prod,
         PRS,
-        TS3
+        TS3,
+        Mock
     }
 }

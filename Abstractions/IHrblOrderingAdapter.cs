@@ -17,7 +17,7 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         /// <param name="warehouse">Warehouse to request</param>
         /// <param name="sku">sku to request</param>
         /// <param name="quantity"></param>
-        Task<SkuInventory[]> GetSkuAvailability(string warehouse, string sku, uint quantity);
+        Task<SkuInventory> GetSkuAvailability(string warehouse, string sku, uint quantity);
 
         /// <summary>
         /// Get distributor (customer) profile
@@ -34,7 +34,7 @@ namespace Filuet.Hrbl.Ordering.Abstractions
 
         Task<bool> GetOrderDualMonthStatus(string country);
 
-        Task<string> GetDistributorDiscount(string distributorId, DateTime month, string country);
+        Task<DistributorDiscountResult> GetDistributorDiscount(string distributorId, DateTime month, string country);
 
         Task<DsCashLimitResult> GetDsCashLimit(string distributorId, string country);
 
