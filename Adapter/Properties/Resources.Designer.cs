@@ -70,6 +70,15 @@ namespace Filuet.Hrbl.Ordering.Adapter.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {&quot;LimitAmount&quot;:0.0,&quot;CashAmountPaid&quot;:0.0,&quot;Responses&quot;:{&quot;Response&quot;:[{&quot;ResponseCode&quot;:&quot;0&quot;,&quot;ResponseMessage&quot;:&quot;SUCCESS: Req - 2021/02/19/90000031233 .&quot;}]}}.
+        /// </summary>
+        internal static string MockDSCashLimit {
+            get {
+                return ResourceManager.GetString("MockDSCashLimit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {
         ///   &quot;DSFOPLimits&quot;:{
         ///      &quot;DSFOPLimit&quot;:{
@@ -94,6 +103,15 @@ namespace Filuet.Hrbl.Ordering.Adapter.Properties {
         internal static string MockDSFOPPurchasingLimit {
             get {
                 return ResourceManager.GetString("MockDSFOPPurchasingLimit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {&quot;OrderPriceHeader&quot;:{&quot;DiscountPercent&quot;:50,&quot;VolumePoints&quot;:12.5,&quot;TotalFreightCharges&quot;:0.64,&quot;TotalPHCharges&quot;:0.0,&quot;TotalLogisticCharges&quot;:0.0,&quot;TotalOtherCharges&quot;:0.0,&quot;TotalTaxAmount&quot;:1.62,&quot;TotalRetailAmount&quot;:13.05,&quot;TotalOrderAmount&quot;:7.74,&quot;TotalDiscountAmount&quot;:5.95,&quot;TotalDue&quot;:9.36,&quot;TotalProductRetail&quot;:7.1,&quot;TotalLiteratureRetail&quot;:0.0,&quot;ExternalOrderNumber&quot;:&quot;LRK1350572&quot;,&quot;DistributorId&quot;:&quot;U515170226&quot;,&quot;Warehouse&quot;:&quot;LR&quot;,&quot;ProcessingLocation&quot;:&quot;LR&quot;,&quot;FreightCode&quot;:&quot;PU1&quot;,&quot;CountryCode&quot;:&quot;LV&quot;,&quot;OrderMonth&quot;:&quot;2102&quot;,&quot;OrderCategory&quot;:&quot; [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string MockPricingResponse {
+            get {
+                return ResourceManager.GetString("MockPricingResponse", resourceCulture);
             }
         }
         

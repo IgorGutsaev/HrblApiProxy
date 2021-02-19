@@ -17,34 +17,34 @@ namespace Filuet.Hrbl.Ordering.Tests
 
         static public IEnumerable<object[]> GetPricingRequest()
         {
-            //yield return new object[] { new PricingRequestBuilder()
-            //    .AddServiceConsumer(BaseTest.SERVICE_CONSUMER).AddHeader(h =>
-            //      {
-            //          h.ProcessingLocation = "LR";
-            //          h.ExternalOrderNumber = null;
-            //          h.OrderSource = "KIOSK";
-            //          h.CurrencyCode = "EUR";
-            //          h.DistributorId = "U515170226";
-            //          h.Warehouse = "LR";
-            //          h.OrderMonth = DateTime.UtcNow.AddDays(-1);
-            //          h.FreightCode = "PU1";
-            //          h.CountryCode = "LV";
-            //          h.PostalCode = "LV-1073";
-            //          h.City = "Riga";
-            //          h.OrderCategory = "RSO";
-            //          h.OrderType = "RSO";
-            //          h.PriceDate = DateTime.UtcNow;
-            //          h.OrderDate = DateTime.UtcNow;
-            //          h.Address1 = "Piedrujas street, 7a";
-            //      })
-            //      .AddItems(() =>
-            //           new PricingRequestLine[] {
-            //            new PricingRequestLine {
-            //                Sku = "0003",
-            //                Quantity = 1,
-            //                ProcessingLocation = "LR"
-            //            }
-            //           }).Build() };
+            yield return new object[] { new PricingRequestBuilder()
+                .AddServiceConsumer(BaseTest.SERVICE_CONSUMER).AddHeader(h =>
+                  {
+                      h.ProcessingLocation = "LR";
+                      h.ExternalOrderNumber = null;
+                      h.OrderSource = "KIOSK";
+                      h.CurrencyCode = "EUR";
+                      h.DistributorId = "U515170226";
+                      h.Warehouse = "LR";
+                      h.OrderMonth = DateTime.UtcNow.AddDays(-1);
+                      h.FreightCode = "PU1";
+                      h.CountryCode = "LV";
+                      h.PostalCode = "LV-1073";
+                      h.City = "Riga";
+                      h.OrderCategory = "RSO";
+                      h.OrderType = "RSO";
+                      h.PriceDate = DateTime.UtcNow;
+                      h.OrderDate = DateTime.UtcNow;
+                      h.Address1 = "Piedrujas street, 7a";
+                  })
+                  .AddItems(() =>
+                       new PricingRequestLine[] {
+                        new PricingRequestLine {
+                            Sku = "0003",
+                            Quantity = 1,
+                            ProcessingLocation = "LR"
+                        }
+                       }).Build() };
 
             yield return new object[] { new PricingRequestBuilder()
                 .AddServiceConsumer(BaseTest.SERVICE_CONSUMER).AddHeader(h =>
