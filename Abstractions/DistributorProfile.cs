@@ -722,6 +722,9 @@ namespace Filuet.Hrbl.Ordering.Abstractions
 
         [JsonProperty("DataPriv")]
         public string DataPriv { get; private set; }
+
+        [JsonIgnore]
+        public bool IsCantBuy => CantBuy.Equals("y", StringComparison.InvariantCultureIgnoreCase);
     }
 
     public sealed class DistTinsMessage
