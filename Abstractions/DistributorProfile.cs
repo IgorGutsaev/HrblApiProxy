@@ -725,6 +725,12 @@ namespace Filuet.Hrbl.Ordering.Abstractions
 
         [JsonIgnore]
         public bool IsCantBuy => CantBuy.Equals("y", StringComparison.InvariantCultureIgnoreCase);
+
+        [JsonIgnore]
+        public bool IsAdvisoryCompleted => AdvisoryFlag.Equals("y", StringComparison.InvariantCultureIgnoreCase);
+
+        [JsonIgnore]
+        public bool IsCashOnly => CashOnlyFlag.Equals("y", StringComparison.InvariantCultureIgnoreCase);
     }
 
     public sealed class DistTinsMessage
