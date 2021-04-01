@@ -13,12 +13,12 @@ namespace Filuet.Hrbl.Ordering.Common
                 if (Attribute.GetCustomAttribute(field,
                 typeof(DescriptionAttribute)) is DescriptionAttribute attribute)
                 {
-                    if (attribute.Description == description)
+                    if (string.Equals(attribute.Description, description, StringComparison.InvariantCultureIgnoreCase))
                         return (T)field.GetValue(null);
                 }
                 else
                 {
-                    if (field.Name == description)
+                    if (string.Equals(field.Name, description, StringComparison.InvariantCultureIgnoreCase))
                         return (T)field.GetValue(null);
                 }
             }
