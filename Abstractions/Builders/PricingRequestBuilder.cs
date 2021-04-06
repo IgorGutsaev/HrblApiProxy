@@ -122,6 +122,6 @@ namespace Filuet.Hrbl.Ordering.Abstractions.Builders
             return this;
         }
 
-        internal PricingRequest Build() => _request;
+        public PricingRequest Build() => _request;
     }
 }

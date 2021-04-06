@@ -33,64 +33,64 @@ namespace Filuet.Hrbl.Ordering.Abstractions
     public abstract class BasePricingHeader
     {
         [JsonProperty("ExternalOrderNumber", Order = 1)]
-        public string ExternalOrderNumber { get; internal set; }
+        public string ExternalOrderNumber { get; set; }
 
         [JsonProperty("DistributorId", Order = 2)]
-        public string DistributorId { get; internal set; }
+        public string DistributorId { get; set; }
 
         [JsonProperty("Warehouse", Order = 3)]
-        public string Warehouse { get; internal set; }
+        public string Warehouse { get; set; }
 
         [JsonProperty("ProcessingLocation", Order = 4)]
-        public string ProcessingLocation { get; internal set; }
+        public string ProcessingLocation { get; set; }
 
         [JsonProperty("FreightCode", Order = 5)]
-        public string FreightCode { get; internal set; }
+        public string FreightCode { get; set; }
 
         [JsonProperty("CountryCode", Order = 6)]
-        public string CountryCode { get; internal set; }
+        public string CountryCode { get; set; }
 
         [JsonProperty("OrderMonth", Order = 7)]
         [JsonConverter(typeof(OrderMonthSelectDateTimeConverter))]
-        public DateTime OrderMonth { get; internal set; }
+        public DateTime OrderMonth { get; set; }
 
         [JsonProperty("OrderCategory", Order = 8)]
-        public string OrderCategory { get; internal set; }
+        public string OrderCategory { get; set; }
 
         [JsonProperty("OrderType", Order = 9)]
-        public string OrderType { get; internal set; }
+        public string OrderType { get; set; }
 
         [JsonProperty("PriceDate", Order = 10)]
         [JsonConverter(typeof(StandardDateTimeConverter))]
-        public DateTime PriceDate { get; internal set; }
+        public DateTime PriceDate { get; internal set; } = DateTime.UtcNow;
 
         [JsonProperty("OrderDate", Order = 11)]
         [JsonConverter(typeof(StandardDateTimeConverter))]
-        public DateTime OrderDate { get; internal set; }
+        public DateTime OrderDate { get; internal set; } = DateTime.UtcNow;
 
         [JsonProperty("CurrencyCode", Order = 12)]
-        public string CurrencyCode { get; internal set; }
+        public string CurrencyCode { get; set; }
 
         [JsonProperty("PostalCode", Order = 13)]
-        public string PostalCode { get; internal set; }
+        public string PostalCode { get; set; }
 
         [JsonProperty("City", Order = 14)]
-        public string City { get; internal set; }
+        public string City { get; set; }
 
         [JsonProperty("State", Order = 15)]
-        public string State { get; internal set; } = string.Empty;
+        public string State { get; set; } = string.Empty;
 
         [JsonProperty("Address1", Order = 16)]
-        public string Address1 { get; internal set; }
+        public string Address1 { get; set; }
 
         [JsonProperty("Address2", Order = 17)]
-        public string Address2 { get; internal set; }
+        public string Address2 { get; set; }
 
         [JsonProperty("Address3", Order = 18)]
-        public string Address3 { get; internal set; }
+        public string Address3 { get; set; }
 
         [JsonProperty("Address4", Order = 19)]
-        public string Address4 { get; internal set; }
+        public string Address4 { get; set; }
 
         public override string ToString() => JsonConvert.SerializeObject(this);
     }
@@ -98,7 +98,7 @@ namespace Filuet.Hrbl.Ordering.Abstractions
     public class PricingRequestHeader : BasePricingHeader
     {
         [JsonProperty("OrderSource")]
-        public string OrderSource { get; internal set; }
+        public string OrderSource { get; set; }
     }
 
     public class PricingResponseHeader : BasePricingHeader
@@ -148,16 +148,16 @@ namespace Filuet.Hrbl.Ordering.Abstractions
     public class PricingRequestLine
     {
         [JsonProperty("ProcessingLocation", Order = 1)]
-        public string ProcessingLocation { get; internal set; }
+        public string ProcessingLocation { get; set; }
 
         [JsonProperty("SellingSKU", Order = 2)]
-        public string Sku { get; internal set; }
+        public string Sku { get; set; }
 
         [JsonProperty("ProductType", Order = 3)]
-        public string ProductType { get; internal set; } = "P";
+        public string ProductType { get; set; } = "P";
 
         [JsonProperty("OrderedQty", Order = 4)]
-        public decimal Quantity { get; internal set; }
+        public decimal Quantity { get; set; }
 
         public override string ToString() => JsonConvert.SerializeObject(this);
     }
