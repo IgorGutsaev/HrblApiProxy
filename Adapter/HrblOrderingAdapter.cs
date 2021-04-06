@@ -327,5 +327,7 @@ namespace Filuet.Hrbl.Ordering.Adapter
             return result.WHFriehtCodes;
         }
         #endregion
+
+        public override string ToString() => Environment.ToString();
     }
 }

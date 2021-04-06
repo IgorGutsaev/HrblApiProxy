@@ -59,7 +59,6 @@ namespace Filuet.Hrbl.Ordering.Adapter
 
         public async Task<DistributorVolumePoints[]> GetVolumePoints(string distributorId, DateTime month, DateTime? monthTo = null)
             => JsonConvert.DeserializeObject<DistributorVolumePointsDetailsResult>(Properties.Resources.MockVP.Replace("yyyy/MM", month.ToString("yyyy/MM"))).DistributorVolumeDetails.DistributorVolume;
-        
 
         public async Task<DistributorDiscountResult> GetDistributorDiscount(string distributorId, DateTime month, string country)
             => JsonConvert.DeserializeObject<DistributorDiscountResult>(Properties.Resources.MockDSFOPPurchasingLimit);
@@ -71,16 +70,13 @@ namespace Filuet.Hrbl.Ordering.Adapter
         /// <param name="country">Shipp to country</param>
         /// <returns></returns>
         public async Task<DsCashLimitResult> GetDsCashLimit(string distributorId, string country)
-        {
-            return null;
-            //return JsonConvert.DeserializeObject<DsCashLimitResult>(JsonConvert.SerializeObject(response));
-        }
+            => JsonConvert.DeserializeObject<DsCashLimitResult>(Properties.Resources.MockDSCashLimit);
 
         public async Task<PricingResponse> GetPriceDetails(Action<PricingRequestBuilder> setupAction)
-            => null;
+            => JsonConvert.DeserializeObject<PricingResponse>(Properties.Resources.MockPricingResponse);
 
         public async Task<PricingResponse> GetPriceDetails(PricingRequest request)
-            => null;
+            => JsonConvert.DeserializeObject<PricingResponse>(Properties.Resources.MockPricingResponse);
 
         public async Task<string> HpsPaymentGateway(HpsPaymentPayload payload)
             => Guid.NewGuid().ToString();
@@ -93,14 +89,9 @@ namespace Filuet.Hrbl.Ordering.Adapter
         public async Task<bool> GetOrderDualMonthStatus(string country) => true;
 
         public async Task<DsPostamatDetails[]> GetPostamats(string country, string postamatType, string region = null, string city = null, string zipCode = null)
-        {
-            return null;
-        }
+            => null;
 
-        public async Task<WHFreightCode[]> GetShippingWhseAndFreightCodes(string postalCode, bool expressDeliveryFlag = true)
-        {
-            return null;
-        }
+        public async Task<WHFreightCode[]> GetShippingWhseAndFreightCodes(string postalCode, bool expressDeliveryFlag = true) => null;
         #endregion
     }
 }

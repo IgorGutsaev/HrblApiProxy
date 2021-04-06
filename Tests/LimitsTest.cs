@@ -41,7 +41,7 @@ namespace Filuet.Hrbl.Ordering.Tests
         /// <returns></returns>
         [Theory]
         [InlineData("7918180560", "ru")]
-        [InlineData("HERB108388", "ru")]
+       // [InlineData("HERB108388", "ru")]
         public async Task Test_Get_ds_cash_limit(string distributorId, string country)
         {
             // Prepare
