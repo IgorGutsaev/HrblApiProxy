@@ -21,10 +21,10 @@ namespace Filuet.Hrbl.Ordering.Abstractions
     public class PricingResponse
     {
         [JsonProperty("OrderPriceHeader")]
-        internal PricingResponseHeader Header { get; set; }
+        public PricingResponseHeader Header { get; internal set; }
 
         [JsonProperty("OrderPriceLines")]
-        internal PricingResponseLine[] Lines { get; set; }
+        public PricingResponseLine[] Lines { get; internal set; }
 
         public override string ToString() => JsonConvert.SerializeObject(this);
     }
