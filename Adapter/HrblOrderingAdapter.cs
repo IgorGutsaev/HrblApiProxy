@@ -238,8 +238,12 @@ namespace Filuet.Hrbl.Ordering.Adapter
             => await GetPriceDetails(setupAction.CreateTargetAndInvoke().AddServiceConsumer(_settings.Consumer).Build());
 
         public async Task<PricingResponse> GetPriceDetails(PricingRequest request)
-            => await _proxy.GetPriceDetails.POSTAsync(request).ContinueWith((x) =>
+        {
+            request.ServiceConsumer = _settings.Consumer;
+
+            return await _proxy.GetPriceDetails.POSTAsync(request).ContinueWith((x) =>
                 JsonConvert.DeserializeObject<PricingResponse>(JsonConvert.SerializeObject(x.Result)));
+        }
 
         public async Task<string> HpsPaymentGateway(HpsPaymentPayload payload)
         {
