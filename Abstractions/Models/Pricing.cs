@@ -141,6 +141,15 @@ namespace Filuet.Hrbl.Ordering.Abstractions
 
         [JsonProperty("TotalLiteratureRetail")]
         public decimal TotalLiteratureRetail { get; private set; }
+
+        /// <summary>
+        /// For resubmit purposes
+        /// </summary>
+        /// <param name="date"></param>
+        public void SetOrderDate(DateTime date)
+        {
+            OrderDate = date;
+        }
     }
     #endregion
 
