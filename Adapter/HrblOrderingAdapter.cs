@@ -270,6 +270,15 @@ namespace Filuet.Hrbl.Ordering.Adapter
 
             return JsonConvert.DeserializeObject<string>(JsonConvert.SerializeObject(response));
         }
+
+        public async Task<string> SubmitOrder(SubmitRequest request)
+        {
+            request.ServiceConsumer = _settings.Consumer;
+
+            object response = await _proxy.SubmitOrder.POSTAsync(request);
+
+            return JsonConvert.DeserializeObject<string>(JsonConvert.SerializeObject(response));
+        }
         #endregion
 
         #region Common

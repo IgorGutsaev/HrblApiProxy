@@ -6,28 +6,28 @@ using System.Text;
 
 namespace Filuet.Hrbl.Ordering.Abstractions
 {
-    internal class SubmitRequest
+    public class SubmitRequest
     {
         [JsonProperty("ServiceConsumer")]
-        internal string ServiceConsumer { get; set; }
+        public string ServiceConsumer { get; internal set; }
 
         [JsonProperty("OrderHeaders")]
-        internal SubmitRequestHeader Header { get; set; }
+        public SubmitRequestHeader Header { get; internal set; }
 
         [JsonProperty("OrderLine")]
-        internal SubmitRequestOrderLine[] Lines { get; set; }
+        public SubmitRequestOrderLine[] Lines { get; internal set; }
 
         [JsonProperty("OrderPayment")]
-        internal SubmitRequestPayment Payment { get; set; }
+        public SubmitRequestPayment Payment { get; internal set; }
 
         [JsonProperty("OrderNotes")]
-        internal string OrderNotes { get; set; }
+        public string OrderNotes { get; internal set; }
 
         [JsonProperty("OrderAddress")]
-        internal string OrderAddress { get; set; }
+        public string OrderAddress { get; internal set; }
 
         [JsonProperty("OrderPromotionLine")]
-        internal string OrderPromotionLine { get; set; }
+        public string OrderPromotionLine { get; internal set; }
     }
 
     public class SubmitRequestHeader

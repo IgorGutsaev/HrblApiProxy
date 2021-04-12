@@ -83,6 +83,9 @@ namespace Filuet.Hrbl.Ordering.Adapter
 
         public async Task<string> SubmitOrder(Action<SubmitRequestBuilder> setupAction)
             => "LRK0123456";
+
+        public async Task<string> SubmitOrder(SubmitRequest request)
+            => "LRK0123456";
         #endregion
 
         #region Common

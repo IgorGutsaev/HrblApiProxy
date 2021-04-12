@@ -180,9 +180,15 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         [JsonProperty("UnitRetailPrice")]
         public decimal UnitRetailPrice { get; private set; }
 
+        /// <summary>
+        /// Without taxes
+        /// </summary>
         [JsonProperty("LineTotalAmount")]
         public decimal LineTotalAmount { get; private set; }
 
+        /// <summary>
+        /// Final amount (with taxes)
+        /// </summary>
         [JsonProperty("LineDueAmount")]
         public decimal LineDueAmount { get; private set; }
 
