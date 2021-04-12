@@ -208,6 +208,6 @@ namespace Filuet.Hrbl.Ordering.Abstractions.Builders
             return this;
         }
 
-        internal SubmitRequest Build() => _request;
+        public SubmitRequest Build() => _request;
     }
 }
