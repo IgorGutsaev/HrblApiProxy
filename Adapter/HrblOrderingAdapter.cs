@@ -260,7 +260,7 @@ namespace Filuet.Hrbl.Ordering.Adapter
             return result.PaymentResponse.TransactionID;
         }
 
-        public async Task<string> SubmitOrder(Action<SubmitRequestBuilder> setupAction)
+        public async Task<SubmitResponse> SubmitOrder(Action<SubmitRequestBuilder> setupAction)
         {
             SubmitRequest request = setupAction.CreateTargetAndInvoke()
                 .AddServiceConsumer(_settings.Consumer)
@@ -268,16 +268,16 @@ namespace Filuet.Hrbl.Ordering.Adapter
 
             object response = await _proxy.SubmitOrder.POSTAsync(request);
 
-            return JsonConvert.DeserializeObject<string>(JsonConvert.SerializeObject(response));
+            return JsonConvert.DeserializeObject<SubmitResponse>(JsonConvert.SerializeObject(response));
         }
 
-        public async Task<string> SubmitOrder(SubmitRequest request)
+        public async Task<SubmitResponse> SubmitOrder(SubmitRequest request)
         {
             request.ServiceConsumer = _settings.Consumer;
 
             object response = await _proxy.SubmitOrder.POSTAsync(request);
 
-            return JsonConvert.DeserializeObject<string>(JsonConvert.SerializeObject(response));
+            return JsonConvert.DeserializeObject<SubmitResponse>(JsonConvert.SerializeObject(response));
         }
         #endregion
 
