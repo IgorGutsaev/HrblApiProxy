@@ -1,8 +1,6 @@
 ﻿using Filuet.Hrbl.Ordering.Abstractions.Serializers;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Filuet.Hrbl.Ordering.Abstractions
 {
