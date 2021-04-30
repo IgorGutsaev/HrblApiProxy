@@ -54,7 +54,7 @@ namespace Filuet.Hrbl.Ordering.Tests
 
 
         [Theory]
-        [InlineData("RU", "RSO")]
+        [InlineData("IN", "RSO")]
         public async Task Test_Product_Inventory(string country, string orderType)
         {
             // Prepare

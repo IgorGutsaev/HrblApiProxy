@@ -11,13 +11,13 @@ namespace Filuet.Hrbl.Ordering.Tests
 
         private HrblOrderingAdapterSettings _defaultSettings =>
             new HrblOrderingAdapterSettingsBuilder()
-            //.WithUri("https://herbalife-oegdevws.hrbl.com/Order/HLOnlineOrdering/ts3/")
-            .WithUri("https://herbalife-oegdevws.hrbl.com/Order/HLOnlineOrdering/prs/")
+            .WithUri("https://herbalife-oegdevws.hrbl.com/Order/HLOnlineOrdering/ts3/")
+            //.WithUri("https://herbalife-oegdevws.hrbl.com/Order/HLOnlineOrdering/prs/")
             //.WithUri("https://herbalife-econnectslc.hrbl.com/Order/HLOnlineOrdering/prod/")
             .WithServiceConsumer(SERVICE_CONSUMER)
             .WithOrganizationId(73)
-            .WithCredentials("hlfnord", "welcome123") // prs + ts3
-            //.WithCredentials("hlfnord", "F1uT2H1n@0rd")
+            //.WithCredentials("hlfnord", "welcome123") // prs + ts3
+            .WithCredentials("hlfnord", "F1uT2H1n@0rd")
             .Build();
 
         public HrblOrderingAdapter _adapter => new HrblOrderingAdapter(_defaultSettings);

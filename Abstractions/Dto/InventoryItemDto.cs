@@ -18,9 +18,9 @@ namespace Filuet.Hrbl.Ordering.Abstractions.Dto
 
         public static InventoryItemDto Create(InventoryItem item)
             => new InventoryItemDto {
-                Sku = item.SKU,
+                Sku = item.SKU.ToUpper(),
                 QuantityAvailable = (uint)item.QuantityAvailable,
-                Warehouse = item.Warehouse,
+                Warehouse = item.Warehouse.ToUpper(),
                 IsBlocked = item.IsBlocked
             };
     }

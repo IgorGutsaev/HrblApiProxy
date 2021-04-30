@@ -41,6 +41,9 @@ namespace Filuet.Hrbl.Ordering.Adapter
         /// <param name="items">collection of goods identifier</param>
         public async Task<SkuInventory[]> GetSkuAvailability(string warehouse, Dictionary<string, uint> items)
         {
+            if (!items.Any())
+                return new SkuInventory[0];
+
             if (string.IsNullOrWhiteSpace(warehouse))
                 throw new ArgumentException("Warehouse must be specified");
 

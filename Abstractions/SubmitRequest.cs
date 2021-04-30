@@ -104,6 +104,10 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         [JsonConverter(typeof(StringIntConverter))]
         public int OrgId { get; set; }
 
+        [JsonProperty("OrderTypeId")]
+        [JsonConverter(typeof(StringIntConverter))]
+        public int OrderTypeId { get; set; }
+
         [JsonProperty("PostalCode")]
         public string PostalCode { get; set; }
 
