@@ -1,6 +1,7 @@
 ﻿using Filuet.Hrbl.Ordering.Abstractions;
 using Filuet.Hrbl.Ordering.Abstractions.Builders;
 using Filuet.Hrbl.Ordering.Common;
+using Filuet.Hrbl.Ordering.Test;
 using Newtonsoft.Json;
 using System;
 using System.Threading.Tasks;
@@ -32,6 +33,52 @@ namespace Filuet.Hrbl.Ordering.Tests
             Assert.Equal(request.Lines.Length, response.Lines.Length);
             Assert.True(response.Header.TotalDue > 0);
             Assert.True(response.Header.VolumePoints > 0);
+        }
+
+        /// <summary>
+        /// Try to pay with invalid card data (works in the production only for the time being)
+        /// </summary>
+        /// <returns></returns>
+        [Theory]
+        [MemberData(nameof(TestDataGenerator.GetHpsPayloadsWithValidNumber), MemberType = typeof(TestDataGenerator))]
+        public async Task Test_HPS_payment_with__Valid_card_number(
+            string country, string processingLocation, string distributorId, string orderNumber, string currency, decimal amount,
+            string cardHolderName, string cardNumber, string cardType, DateTime cardExpirationMonth, string cvv2, string payeeId,
+            uint installments, string clientRefNum, string address, string city, string postalCode, string orderType)
+        {
+            // Prepare
+            Assert.NotNull(_adapter);
+
+            // Pre-validate
+          //  Assert.NotEqual(_adapter.Environment, HrblEnvironment.Prod);
+
+            // Perform
+            string result =
+             await _adapter.HpsPaymentGateway(new HpsPaymentPayload
+             {
+                 Country = country,
+                 OrderNumber = orderNumber,
+                 ClientRefNum = clientRefNum,
+                 DistributorId = distributorId,
+                 PayCode = cardType,
+                 Currency = currency,
+                 Amount = amount.ToString(),
+                 CardHolderName = cardHolderName,
+                 CreditCardNumTokenized = cardNumber,
+                 ExpiryDate = cardExpirationMonth,
+                 CVV2 = cvv2,
+                 PayeeID = payeeId,
+                 Address1 = address,
+                 City = city,
+                 PostalCode = postalCode,
+                 ProcessingLocation = processingLocation,
+                 OrderType = orderType,
+                 Installments = installments
+             });
+
+            // Post-validate
+            Assert.NotNull(result);
+           // Assert.Equal("Invalid card number", ex.Message);
         }
 
         /// <summary>
@@ -319,6 +366,25 @@ namespace Filuet.Hrbl.Ordering.Tests
             SubmitResponse response = await _adapter.SubmitOrder(setupAction);
             //AIK1111732
             //Post-validate
+        }
+
+        [Theory]
+        [InlineData("5536913792313245", "5B18869635313245")] // 5C23514072513245- Prod
+        public void Test_Tokenization_Service_Tokenize_card(string cardNumber, string expected)
+        {
+            // Prepare
+
+            // Pre-validate
+            Assert.NotEmpty(cardNumber);
+            Assert.NotEmpty(CardTokenizationUrl);
+            Assert.NotEmpty(CardTokenizationLogin);
+            Assert.NotEmpty(CardTokenizationPassword);
+
+            // Perform
+            string fact = CardTokenizer.Tokenize(cardNumber, CardTokenizationUrl, CardTokenizationLogin, CardTokenizationPassword);
+
+            // Post-validate
+            Assert.Equal(expected, fact);
         }
     }
 }

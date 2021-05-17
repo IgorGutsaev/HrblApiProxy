@@ -70,8 +70,8 @@ namespace Filuet.Hrbl.Ordering.Adapter
             _adapterSettings.Password = password;
 
             return this;
-        }
-
+        }        
+        
         public HrblOrderingAdapterSettings Build() => _adapterSettings;
     }
 }

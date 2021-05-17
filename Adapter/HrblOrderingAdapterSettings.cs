@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Filuet.Hrbl.Ordering.Adapter
+﻿namespace Filuet.Hrbl.Ordering.Adapter
 {
     public class HrblOrderingAdapterSettings
     {
