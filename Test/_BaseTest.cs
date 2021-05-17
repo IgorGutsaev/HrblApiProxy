@@ -8,7 +8,7 @@ namespace Filuet.Hrbl.Ordering.Tests
 
         private HrblOrderingAdapterSettings _defaultSettings =>
             new HrblOrderingAdapterSettingsBuilder()
-            //.WithUri("https://herbalife-oegdevws.hrbl.com/Order/HLOnlineOrdering/ts3/")
+            .WithUri("https://herbalife-oegdevws.hrbl.com/Order/HLOnlineOrdering/ts3/")
             //.WithUri("https://herbalife-oegdevws.hrbl.com/Order/HLOnlineOrdering/prs/")
             .WithServiceConsumer(SERVICE_CONSUMER)
             .WithOrganizationId(73)
