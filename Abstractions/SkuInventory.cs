@@ -32,7 +32,7 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         private string ValidSKU { get; set; }
 
         [JsonIgnore]
-        public bool IsSkuValid => string.Equals(SKUAvailable, "Y", StringComparison.InvariantCultureIgnoreCase);
+        public bool IsSkuValid => string.Equals(ValidSKU, "Y", StringComparison.InvariantCultureIgnoreCase);
 
         /// <summary>
         /// Original SKUAvailable
