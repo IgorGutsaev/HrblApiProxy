@@ -131,11 +131,14 @@ namespace Filuet.Hrbl.Ordering.Adapter
             if (string.IsNullOrWhiteSpace(distributorId))
                 throw new ArgumentException("Distributor ID must be specified");
 
+            _proxy.SetTimeout(TimeSpan.FromSeconds(30));
+
             object response = await _proxy.GetDistributorProfile.POSTAsync(new
             {
                 ServiceConsumer = _settings.Consumer,
                 DistributorId = distributorId,
             });
+            _proxy.ResetTimeout();
 
             return JsonConvert.DeserializeObject<DistributorProfileResult>(response.ToString(),
                 new HrblNullableResponseConverter<DistributorProfileResult>()).Profile;

@@ -15,6 +15,7 @@ namespace Filuet.Hrbl.Ordering.Tests
         [InlineData("U515120144")]
         [InlineData("VA00863126")]
         [InlineData("HERB108388")] // DELETED member state
+        [InlineData("HERB101058")]
         public async Task Test_Get_profile(string distributorId)
         {
             // Prepare
