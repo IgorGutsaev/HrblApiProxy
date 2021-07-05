@@ -80,17 +80,29 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         [JsonProperty("State", Order = 15)]
         public string State { get; set; } = string.Empty;
 
-        [JsonProperty("Address1", Order = 16)]
+        [JsonProperty("Province", Order = 16)]
+        public string Province { get; set; } = string.Empty;
+
+        [JsonProperty("County", Order = 17)]
+        public string County { get; set; } = string.Empty;
+
+        [JsonProperty("Address1", Order = 18)]
         public string Address1 { get; set; }
 
-        [JsonProperty("Address2", Order = 17)]
+        [JsonProperty("Address2", Order = 19)]
         public string Address2 { get; set; }
 
-        [JsonProperty("Address3", Order = 18)]
+        [JsonProperty("Address3", Order = 20)]
         public string Address3 { get; set; }
 
-        [JsonProperty("Address4", Order = 19)]
+        [JsonProperty("Address4", Order = 21)]
         public string Address4 { get; set; }
+
+        [JsonProperty("OrgID")]
+        public int OrgID { get; set; } = 259;
+
+        [JsonProperty("OrderTypeID")]
+        public int OrderTypeID { get; set; } = 2940;
 
         public override string ToString() => JsonConvert.SerializeObject(this);
     }
