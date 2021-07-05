@@ -102,7 +102,7 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         public int OrgID { get; set; } = 259;
 
         [JsonProperty("OrderTypeID")]
-        public int OrderTypeID { get; set; } = 2940;
+        public int? OrderTypeID { get; set; } = 2940;
 
         public override string ToString() => JsonConvert.SerializeObject(this);
     }
