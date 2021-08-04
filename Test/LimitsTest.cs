@@ -15,8 +15,12 @@ namespace Filuet.Hrbl.Ordering.Tests
         /// <param name="country">Ship to country</param>
         /// <returns></returns>
         [Theory]
-        [InlineData("7918180560", "ru")]
-        [InlineData("HERB108388", "ru")]
+       // [InlineData("7918180560", "ru")]
+        //[InlineData("HERB108388", "ru")]
+       // [InlineData("MY048647", "my")]
+        [InlineData("D2719997", "my")]
+        //[InlineData("S7131170", "my")]
+       // [InlineData("S7Y0003968", "my")]
         public async Task Test_Get_ds_fop_purchasing_limits(string distributorId, string country)
         {
             // Prepare

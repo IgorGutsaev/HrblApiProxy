@@ -74,7 +74,7 @@ namespace Filuet.Hrbl.Ordering.Abstractions
                 Amount = amount.ToString(),
                 CardHolderName = cardHolderName,
                 CreditCardNumTokenized = cardNumber,
-                ExpiryDate = new DateTime(expiryYear, expiryMonth, 1).AddMonths(1).AddDays(-1).Date,
+                ExpiryDate = new DateTime(expiryYear < 100 ? 2000 + expiryYear : expiryYear, expiryMonth, 1).AddMonths(1).AddDays(-1).Date,
                 CVV2 = cvv2,
                 PayeeID = payeeId,
                 Address1 = address,
