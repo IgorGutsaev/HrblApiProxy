@@ -125,8 +125,8 @@ namespace Filuet.Hrbl.Ordering.Abstractions.Builders
             if (string.IsNullOrWhiteSpace(payment.Paycode))
                 issues.AppendLine($"Paycode is mandatory");
 
-            if (string.IsNullOrWhiteSpace(payment.PaymentType))
-                issues.AppendLine($"Payment type is mandatory");
+            if (string.IsNullOrWhiteSpace(payment.PaymentType) && payment.PaymentMethodName.ToLower().Contains("card"))
+                issues.AppendLine($"Payment type is mandatory for card payments"); // This is just my assumption
 
             if (string.IsNullOrWhiteSpace(payment.CurrencyCode))
                 issues.AppendLine($"Currency code is mandatory");
