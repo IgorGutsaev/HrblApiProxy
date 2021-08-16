@@ -69,10 +69,10 @@ namespace Filuet.Hrbl.Ordering.Abstractions.Builders
             if (string.IsNullOrWhiteSpace(header.City))
                 issues.AppendLine($"City is mandatory");
 
-            if (string.IsNullOrWhiteSpace(header.PostalCode))
+            if (string.IsNullOrWhiteSpace(header.PostalCode) && header.OrderSource == "AAKIOSK")
                 issues.AppendLine($"Postal code is mandatory");
 
-            if (string.IsNullOrWhiteSpace(header.Address1))
+            if (string.IsNullOrWhiteSpace(header.Address1) && header.OrderSource == "AAKIOSK")
                 issues.AppendLine($"Address is mandatory");
 
             if (string.IsNullOrWhiteSpace(header.ProcessingLocation))
