@@ -8,7 +8,8 @@ namespace Filuet.Hrbl.Ordering.Tests
     public class InventoryTest : BaseTest
     {
         [Theory]
-        [InlineData("TW", "0006", 1)]
+        [InlineData("LT", "0006", 1)]
+        //[InlineData("TW", "0006", 1)]
         //[InlineData("5C", "0141", 2)]
         //[InlineData("U7", "0006", 1)]
         //[InlineData("AI", "0006", 1)]
