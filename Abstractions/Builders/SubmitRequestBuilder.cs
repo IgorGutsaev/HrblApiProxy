@@ -139,8 +139,9 @@ namespace Filuet.Hrbl.Ordering.Abstractions.Builders
             if (payment.PaymentReceived <= 0m)
                 issues.AppendLine($"Payment received must be non-negative");
 
+            bool isCashPayment = (payment.PaymentMethodName ?? string.Empty).ToLower().Contains("cash");
 
-            if ((payment.PaymentMethodName ?? string.Empty).ToLower().Contains("card"))
+            if (!isCashPayment)
             {
                 if (payment.CreditCard == null)
                     issues.AppendLine($"Credit card block is mandatory");
