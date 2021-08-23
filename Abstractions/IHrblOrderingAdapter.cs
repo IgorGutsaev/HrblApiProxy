@@ -52,6 +52,8 @@ namespace Filuet.Hrbl.Ordering.Abstractions
 
         Task<string> HpsPaymentGateway(HpsPaymentPayload payload);
 
-        Task<string> SubmitOrder(Action<SubmitRequestBuilder> setupAction);
+        Task<SubmitResponse> SubmitOrder(Action<SubmitRequestBuilder> setupAction);
+
+        Task<SubmitResponse> SubmitOrder(SubmitRequest request);
     }
 }

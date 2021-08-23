@@ -81,8 +81,11 @@ namespace Filuet.Hrbl.Ordering.Adapter
         public async Task<string> HpsPaymentGateway(HpsPaymentPayload payload)
             => Guid.NewGuid().ToString();
 
-        public async Task<string> SubmitOrder(Action<SubmitRequestBuilder> setupAction)
-            => "LRK0123456";
+        public async Task<SubmitResponse> SubmitOrder(Action<SubmitRequestBuilder> setupAction)
+            => new SubmitResponse { OrderStatus = "SUCCESS", OrderNumber = "LRK0123456" };
+
+        public async Task<SubmitResponse> SubmitOrder(SubmitRequest request)
+            => new SubmitResponse { OrderStatus = "SUCCESS", OrderNumber = "LRK0123456" };
         #endregion
 
         #region Common

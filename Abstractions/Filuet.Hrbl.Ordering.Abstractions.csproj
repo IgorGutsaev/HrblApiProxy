@@ -10,6 +10,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Filuet.Hrbl.Ordering.Common\Filuet.Hrbl.Ordering.Common.csproj" />
+    <ProjectReference Include="..\Common\Filuet.Hrbl.Ordering.Common.csproj" />
   </ItemGroup>
 </Project>

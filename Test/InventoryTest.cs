@@ -8,9 +8,8 @@ namespace Filuet.Hrbl.Ordering.Tests
     public class InventoryTest : BaseTest
     {
         [Theory]
-        [InlineData("LT", "0006", 1)]
-        //[InlineData("TW", "0006", 1)]
-        //[InlineData("5C", "0141", 2)]
+       // [InlineData("TW", "0006", 1)]
+        [InlineData("LR", "794N / 795N", 1)]
         //[InlineData("U7", "0006", 1)]
         //[InlineData("AI", "0006", 1)]
         public async Task Test_Valid_sku_remains(string warehouse, string sku, uint quantity)
@@ -55,7 +54,7 @@ namespace Filuet.Hrbl.Ordering.Tests
 
 
         [Theory]
-        [InlineData("RU", "RSO")]
+        [InlineData("IN", "RSO")]
         public async Task Test_Product_Inventory(string country, string orderType)
         {
             // Prepare

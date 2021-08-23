@@ -1563,6 +1563,9 @@
           "OrgId": {
             "type": "string"
           },
+		  "OrderTypeId": {
+            "type": "string"
+          },
           "HoldId": {},
           "CustomerOrderNumber": {},
           "Temp50Flag": {},

@@ -1,8 +1,6 @@
 ﻿using Filuet.Hrbl.Ordering.Abstractions.Serializers;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Filuet.Hrbl.Ordering.Abstractions
 {
@@ -62,6 +60,30 @@ namespace Filuet.Hrbl.Ordering.Abstractions
 
         [JsonProperty("Installments", Order = 22)]
         public uint Installments { get; internal set; }
+
+        public static HpsPaymentPayload Create(string orderNumber, string distributorId, string currency, decimal amount,
+            string cardHolderName, string cardNumber, int expiryMonth, int expiryYear, string cvv2, string country,
+            string processingLocation, string cardType, string payeeId, int installments, string clientRefNum, string address, string city, string postalCode, string orderType)
+            => new HpsPaymentPayload {
+                Country = country,
+                OrderNumber = orderNumber,
+                ClientRefNum = clientRefNum,
+                DistributorId = distributorId,
+                PayCode = cardType,
+                Currency = currency,
+                Amount = amount.ToString(),
+                CardHolderName = cardHolderName,
+                CreditCardNumTokenized = cardNumber,
+                ExpiryDate = new DateTime(expiryYear < 100 ? 2000 + expiryYear : expiryYear, expiryMonth, 1).AddMonths(1).AddDays(-1).Date,
+                CVV2 = cvv2,
+                PayeeID = payeeId,
+                Address1 = address,
+                City = city,
+                PostalCode = postalCode,
+                ProcessingLocation = processingLocation,
+                OrderType = orderType,
+                Installments = (uint)installments
+            };
     }
 
     internal class HpsPaymentBody : HpsPaymentPayload

@@ -125,8 +125,8 @@ namespace Filuet.Hrbl.Ordering.Abstractions.Builders
             if (string.IsNullOrWhiteSpace(payment.Paycode))
                 issues.AppendLine($"Paycode is mandatory");
 
-            if (string.IsNullOrWhiteSpace(payment.PaymentType))
-                issues.AppendLine($"Payment type is mandatory");
+            if (string.IsNullOrWhiteSpace(payment.PaymentType) && payment.PaymentMethodName.ToLower().Contains("card"))
+                issues.AppendLine($"Payment type is mandatory for card payments"); // This is just my assumption
 
             if (string.IsNullOrWhiteSpace(payment.CurrencyCode))
                 issues.AppendLine($"Currency code is mandatory");
@@ -197,8 +197,8 @@ namespace Filuet.Hrbl.Ordering.Abstractions.Builders
                 if (l.Amount <= 0m)
                     issues.AppendLine($"[line {index}] Amount must be non-negative");
 
-                if (l.UnitVolume <= 0m)
-                    issues.AppendLine($"[line {index}] Amount must be non-negative");
+                if (l.UnitVolume < 0m)
+                    issues.AppendLine($"[line {index}] VP must be positive");
             }
 
             if (issues.Length > 0)
@@ -209,6 +209,6 @@ namespace Filuet.Hrbl.Ordering.Abstractions.Builders
             return this;
         }
 
-        internal SubmitRequest Build() => _request;
+        public SubmitRequest Build() => _request;
     }
 }

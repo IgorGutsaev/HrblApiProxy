@@ -41,6 +41,9 @@ namespace Filuet.Hrbl.Ordering.Adapter
         /// <param name="items">collection of goods identifier</param>
         public async Task<SkuInventory[]> GetSkuAvailability(string warehouse, Dictionary<string, uint> items)
         {
+            if (!items.Any())
+                return new SkuInventory[0];
+
             if (string.IsNullOrWhiteSpace(warehouse))
                 throw new ArgumentException("Warehouse must be specified");
 
@@ -238,8 +241,14 @@ namespace Filuet.Hrbl.Ordering.Adapter
             => await GetPriceDetails(setupAction.CreateTargetAndInvoke().AddServiceConsumer(_settings.Consumer).Build());
 
         public async Task<PricingResponse> GetPriceDetails(PricingRequest request)
-            => await _proxy.GetPriceDetails.POSTAsync(request).ContinueWith((x) =>
-                JsonConvert.DeserializeObject<PricingResponse>(JsonConvert.SerializeObject(x.Result)));
+        {
+            request.ServiceConsumer = _settings.Consumer;
+
+            object response = await _proxy.GetPriceDetails.POSTAsync(request);
+                
+            return JsonConvert.DeserializeObject<PricingResponse>(JsonConvert.SerializeObject(response),
+                new HrblNullableResponseConverter<PricingResponse>());
+        }
 
         public async Task<string> HpsPaymentGateway(HpsPaymentPayload payload)
         {
@@ -256,7 +265,7 @@ namespace Filuet.Hrbl.Ordering.Adapter
             return result.PaymentResponse.TransactionID;
         }
 
-        public async Task<string> SubmitOrder(Action<SubmitRequestBuilder> setupAction)
+        public async Task<SubmitResponse> SubmitOrder(Action<SubmitRequestBuilder> setupAction)
         {
             SubmitRequest request = setupAction.CreateTargetAndInvoke()
                 .AddServiceConsumer(_settings.Consumer)
@@ -264,7 +273,16 @@ namespace Filuet.Hrbl.Ordering.Adapter
 
             object response = await _proxy.SubmitOrder.POSTAsync(request);
 
-            return JsonConvert.DeserializeObject<string>(JsonConvert.SerializeObject(response));
+            return JsonConvert.DeserializeObject<SubmitResponse>(JsonConvert.SerializeObject(response));
+        }
+
+        public async Task<SubmitResponse> SubmitOrder(SubmitRequest request)
+        {
+            request.ServiceConsumer = _settings.Consumer;
+
+            object response = await _proxy.SubmitOrder.POSTAsync(request);
+
+            return JsonConvert.DeserializeObject<SubmitResponse>(JsonConvert.SerializeObject(response));
         }
         #endregion
 
