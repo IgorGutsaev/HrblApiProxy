@@ -261,8 +261,8 @@ namespace Filuet.Hrbl.Ordering.Adapter
                 .AddServiceConsumer(_settings.Consumer)
                 .AddPayload(payload).Build();
 
-            HpsPaymentResponse result =
-                JsonConvert.DeserializeObject<HpsPaymentResponse>(JsonConvert.SerializeObject(await _proxy.HPSPaymentGateway.POSTAsync(request)));
+            HpsPaymentResponse result = JsonConvert.DeserializeObject<HpsPaymentResponse>(JsonConvert.SerializeObject(await _proxy.HPSPaymentGateway.POSTAsync(request)),
+              new HrblNullableResponseConverter<HpsPaymentResponse>());
 
             if (result.Errors.HasErrors)
                 throw new HrblRestApiException(result.Errors.ErrorMessage);

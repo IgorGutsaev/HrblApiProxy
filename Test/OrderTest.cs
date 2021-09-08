@@ -50,31 +50,31 @@ namespace Filuet.Hrbl.Ordering.Tests
             Assert.NotNull(_adapter);
 
             // Pre-validate
-          //  Assert.NotEqual(_adapter.Environment, HrblEnvironment.Prod);
+            //  Assert.NotEqual(_adapter.Environment, HrblEnvironment.Prod);
+
+           // HpsPaymentPayload payload = JsonConvert.DeserializeObject<HpsPaymentPayload>("{\"Country\":\"KR\",\"OrderNumber\":\"K6K3994613\",\"ClientRefNum\":\"KRBUSAS1\",\"DistributorId\":\"VA00248957\",\"PayCode\":\"BC\",\"Currency\":\"KRW\",\"Amount\":\"34027.0\",\"CardHolderName\":\"HERB 테 스 트\",\"CreditCardNum\":\"5E99146735510096\",\"ExpiryDate\":\"2024-05\",\"CVV2\":\"11\",\"PayeeID\":\"800101\",\"Address1\":\"111/16 PHUOC LONG - PHUOC LONG\",\"City\":\"KHANH HOA\",\"PostalCode\":\"65\",\"ProcessingLocation\":\"K6\",\"OrderType\":\"\",\"Installments\":0}");
 
             // Perform
-            string result =
-             await _adapter.HpsPaymentGateway(new HpsPaymentPayload
-             {
-                 Country = country,
-                 OrderNumber = orderNumber,
-                 ClientRefNum = clientRefNum,
-                 DistributorId = distributorId,
-                 PayCode = cardType,
-                 Currency = currency,
-                 Amount = amount.ToString(),
-                 CardHolderName = cardHolderName,
-                 CreditCardNumTokenized = cardNumber,
-                 ExpiryDate = cardExpirationMonth,
-                 CVV2 = cvv2,
-                 PayeeID = payeeId,
-                 Address1 = address,
-                 City = city,
-                 PostalCode = postalCode,
-                 ProcessingLocation = processingLocation,
-                 OrderType = orderType,
-                 Installments = installments
-             });
+            string result = await _adapter.HpsPaymentGateway(new HpsPaymentPayload {
+                Country = country,
+                OrderNumber = orderNumber,
+                ClientRefNum = clientRefNum,
+                DistributorId = distributorId,
+                PayCode = cardType,
+                Currency = currency,
+                Amount = amount.ToString(),
+                CardHolderName = cardHolderName,
+                CreditCardNumTokenized = cardNumber,
+                ExpiryDate = cardExpirationMonth,
+                CVV2 = cvv2,
+                PayeeID = payeeId,
+                Address1 = address,
+                City = city,
+                PostalCode = postalCode,
+                ProcessingLocation = processingLocation,
+                OrderType = orderType,
+                Installments = installments
+            });
 
             // Post-validate
             Assert.NotNull(result);

@@ -201,7 +201,7 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         public string AvsResponseMsg { get; private set; }
 
         [JsonProperty("ProcessedTime")]
-        public string ProcessedTime { get; private set; }
+        public DateTime? ProcessedTime { get; private set; }
 
         [JsonProperty("MerchantNum")]
         public string MerchantNum { get; private set; }

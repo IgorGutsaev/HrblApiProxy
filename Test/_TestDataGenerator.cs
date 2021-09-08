@@ -10,8 +10,11 @@ namespace Filuet.Hrbl.Ordering.Tests
     {
         static public IEnumerable<object[]> GetHpsPayloadsWithValidNumber()
         {
-            yield return new object[] { "FR", "FM", "21Y0028945", "FMK1233692", "EUR", 0.1m, "IGOR GUTSAEV", "5B18869635313245", // tst
-                "MC", new DateTime(2023, 12, 31), "xxx", null, 0, "VNHCMAS1", "26 Tran Cao Van, Ward 6", "Ho Chi Minh", "700000", "RSO" };
+            //yield return new object[] { "FR", "FM", "21Y0028945", "FMK1233692", "EUR", 0.1m, "IGOR GUTSAEV", "5B18869635313245", // tst
+            //    "MC", new DateTime(2023, 12, 31), "xxx", null, 0, "VNHCMAS1", "26 Tran Cao Van, Ward 6", "Ho Chi Minh", "700000", "RSO" };
+
+            yield return new object[] { "KR", "KF", "VA00248957", "KFK3994592", "KRW", 1m, "HERB 테 스 트", "4579730441394074", // tst
+                "KB", new DateTime(2023, 12, 31), "11", "800101", 0, "KRSEOAS1", "Kangnam gu, 86-8 Non Hyun-2dong", "Seoul", "135010", "RSO" };
         }
 
         static public IEnumerable<object[]> GetHpsPayloadsWithCorruptedNumber()
