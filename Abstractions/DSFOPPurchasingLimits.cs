@@ -10,11 +10,11 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         [JsonProperty("DSFOPLimits")]
         private DSFOPLimits DSFOPLimits { get; set; }
 
+        [JsonProperty("DSOTLimits")]
+        public DSOTLimits DSOTLimits { get; private set; }
+
         [JsonIgnore]
         public DSFOPLimit FopLimit => DSFOPLimits.DSFOPLimit;
-
-        [JsonProperty("DSOTLimits")]
-        public string DSOTLimits { get; private set; }
 
         [JsonProperty("DSPurchasingLimits")]
         private DSPurchasingLimits _dsPurchasingLimits { get; set; }
@@ -27,6 +27,12 @@ namespace Filuet.Hrbl.Ordering.Abstractions
     {
         [JsonProperty("DSFOPLimit")]
         public DSFOPLimit DSFOPLimit { get; private set; }
+    }
+
+    public class DSOTLimits
+    {
+        [JsonProperty("DSOTLimit")]
+        public DSOTLimit[] DSFOPLimit { get; private set; }
     }
 
     public class DSFOPLimit
@@ -45,6 +51,27 @@ namespace Filuet.Hrbl.Ordering.Abstractions
 
         [JsonProperty("FOPThresholdPeriod")]
         public int? FOPThresholdPeriod { get; private set; }
+    }
+
+    public class DSOTLimit
+    {
+        [JsonProperty("OTOrderMonth")]
+        public string OTOrderMonth { get; private set; }
+
+        [JsonProperty("EarnedOT")]
+        public decimal? EarnedOT { get; private set; }
+
+        [JsonProperty("AvailableOTLimit")]
+        public decimal? AvailableOTLimit { get; private set; }     
+        
+        [JsonProperty("ThresholdOTLimit")]
+        public decimal? ThresholdOTLimit { get; private set; }
+
+        [JsonProperty("OTFirstOrderDate")]
+        public DateTime? OTFirstOrderDate { get; private set; }
+
+        [JsonProperty("OTThresholdPeriod")]
+        public int? OTThresholdPeriod { get; private set; }
     }
 
     public class DSPurchasingLimits
