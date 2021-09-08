@@ -249,7 +249,7 @@ namespace Filuet.Hrbl.Ordering.Adapter
             PricingResponse result = JsonConvert.DeserializeObject<PricingResponse>(JsonConvert.SerializeObject(response),
                 new HrblNullableResponseConverter<PricingResponse>());
 
-            if (!string.IsNullOrWhiteSpace(result.Errors.ErrorMessage))
+            if (!string.IsNullOrWhiteSpace(result.Errors?.ErrorMessage))
                 throw new ArgumentException(result.Errors.ErrorMessage);
 
             return result;
