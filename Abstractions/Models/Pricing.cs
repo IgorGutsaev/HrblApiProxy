@@ -26,6 +26,9 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         [JsonProperty("OrderPriceLines")]
         public PricingResponseLine[] Lines { get; internal set; }
 
+        [JsonProperty("Errors")]
+        internal CommonErrorList Errors { get; private set; }
+
         public override string ToString() => JsonConvert.SerializeObject(this);
     }
 
@@ -116,43 +119,43 @@ namespace Filuet.Hrbl.Ordering.Abstractions
     public class PricingResponseHeader : BasePricingHeader
     {
         [JsonProperty("DiscountPercent")]
-        public int DiscountPercent { get; private set; }
+        public int? DiscountPercent { get; private set; }
 
         [JsonProperty("VolumePoints")]
-        public decimal VolumePoints { get; private set; }
+        public decimal? VolumePoints { get; private set; }
 
         [JsonProperty("TotalFreightCharges")]
-        public decimal TotalFreightCharges { get; private set; }
+        public decimal? TotalFreightCharges { get; private set; }
 
         [JsonProperty("TotalPHCharges")]
-        public decimal TotalPHCharges { get; private set; }
+        public decimal? TotalPHCharges { get; private set; }
 
         [JsonProperty("TotalLogisticCharges")]
-        public decimal TotalLogisticCharges { get; private set; }
+        public decimal? TotalLogisticCharges { get; private set; }
 
         [JsonProperty("TotalOtherCharges")]
-        public decimal TotalOtherCharges { get; private set; }
+        public decimal? TotalOtherCharges { get; private set; }
 
         [JsonProperty("TotalTaxAmount")]
-        public decimal TotalTaxAmount { get; private set; }
+        public decimal? TotalTaxAmount { get; private set; }
 
         [JsonProperty("TotalRetailAmount")]
-        public decimal TotalRetailAmount { get; private set; }
+        public decimal? TotalRetailAmount { get; private set; }
 
         [JsonProperty("TotalOrderAmount")]
-        public decimal TotalOrderAmount { get; private set; }
+        public decimal? TotalOrderAmount { get; private set; }
 
         [JsonProperty("TotalDiscountAmount")]
-        public decimal TotalDiscountAmount { get; private set; }
+        public decimal? TotalDiscountAmount { get; private set; }
 
         [JsonProperty("TotalDue")]
-        public decimal TotalDue { get; private set; }
+        public decimal? TotalDue { get; private set; }
 
         [JsonProperty("TotalProductRetail")]
-        public decimal TotalProductRetail { get; private set; }
+        public decimal? TotalProductRetail { get; private set; }
 
         [JsonProperty("TotalLiteratureRetail")]
-        public decimal TotalLiteratureRetail { get; private set; }
+        public decimal? TotalLiteratureRetail { get; private set; }
 
         /// <summary>
         /// For resubmit purposes
@@ -190,58 +193,58 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         public DateTime PriceDate { get; private set; }
 
         [JsonProperty("LineVolumePoints")]
-        public decimal LineVolumePoints { get; private set; }
+        public decimal? LineVolumePoints { get; private set; }
 
         [JsonProperty("TotalEarnBase")]
-        public decimal TotalEarnBase { get; private set; }
+        public decimal? TotalEarnBase { get; private set; }
 
         [JsonProperty("TotalRetailPrice")]
-        public decimal TotalRetailPrice { get; private set; }
+        public decimal? TotalRetailPrice { get; private set; }
 
         [JsonProperty("UnitRetailPrice")]
-        public decimal UnitRetailPrice { get; private set; }
+        public decimal? UnitRetailPrice { get; private set; }
 
         /// <summary>
         /// Without taxes
         /// </summary>
         [JsonProperty("LineTotalAmount")]
-        public decimal LineTotalAmount { get; private set; }
+        public decimal? LineTotalAmount { get; private set; }
 
         /// <summary>
         /// Final amount (with taxes)
         /// </summary>
         [JsonProperty("LineDueAmount")]
-        public decimal LineDueAmount { get; private set; }
+        public decimal? LineDueAmount { get; private set; }
 
         [JsonProperty("LineFreightCharges")]
-        public decimal LineFreightCharges { get; private set; }
+        public decimal? LineFreightCharges { get; private set; }
 
         [JsonProperty("LinePHCharges")]
-        public decimal LinePHCharges { get; private set; }
+        public decimal? LinePHCharges { get; private set; }
 
         [JsonProperty("LineLogisticCharges")]
-        public decimal LineLogisticCharges { get; private set; }
+        public decimal? LineLogisticCharges { get; private set; }
 
         [JsonProperty("LineOtherCharges")]
-        public decimal LineOtherCharges { get; private set; }
+        public decimal? LineOtherCharges { get; private set; }
 
         [JsonProperty("LineMiscCharges")]
-        public decimal LineMiscCharges { get; private set; }
+        public decimal? LineMiscCharges { get; private set; }
 
         [JsonProperty("LineTaxAmount")]
-        public decimal LineTaxAmount { get; private set; }
+        public decimal? LineTaxAmount { get; private set; }
 
         [JsonProperty("LineDiscountAmount")]
-        public decimal LineDiscountAmount { get; private set; }
+        public decimal? LineDiscountAmount { get; private set; }
 
         [JsonProperty("Earnbase")]
-        public decimal Earnbase { get; private set; }
+        public decimal? Earnbase { get; private set; }
 
         [JsonProperty("UnitVolumePoints")]
-        public decimal UnitVolumePoints { get; private set; }
+        public decimal? UnitVolumePoints { get; private set; }
 
         [JsonProperty("LineDiscountPrice")]
-        public decimal LineDiscountPrice { get; private set; }
+        public decimal? LineDiscountPrice { get; private set; }
     }
     #endregion
 }

@@ -16,7 +16,7 @@ namespace Filuet.Hrbl.Ordering.Abstractions
 
         [JsonIgnore]
         public string ErrorMessage => !HasErrors ? string.Empty :
-            string.Join("\n",Error.Where(x => x.ErrorCode != "0").Select(x => x.ErrorMessage));
+            string.Join("\n",Error.Where(x => x.ErrorCode != "0").Select(x => x.ErrorMessage)).Trim();
     }
 
     internal class CommonError
