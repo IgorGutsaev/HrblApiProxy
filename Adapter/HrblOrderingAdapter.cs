@@ -245,9 +245,14 @@ namespace Filuet.Hrbl.Ordering.Adapter
             request.ServiceConsumer = _settings.Consumer;
 
             object response = await _proxy.GetPriceDetails.POSTAsync(request);
-                
-            return JsonConvert.DeserializeObject<PricingResponse>(JsonConvert.SerializeObject(response),
+
+            PricingResponse result = JsonConvert.DeserializeObject<PricingResponse>(JsonConvert.SerializeObject(response),
                 new HrblNullableResponseConverter<PricingResponse>());
+
+            if (!string.IsNullOrWhiteSpace(result.Errors?.ErrorMessage))
+                throw new ArgumentException(result.Errors.ErrorMessage);
+
+            return result;
         }
 
         public async Task<string> HpsPaymentGateway(HpsPaymentPayload payload)
@@ -256,8 +261,8 @@ namespace Filuet.Hrbl.Ordering.Adapter
                 .AddServiceConsumer(_settings.Consumer)
                 .AddPayload(payload).Build();
 
-            HpsPaymentResponse result =
-                JsonConvert.DeserializeObject<HpsPaymentResponse>(JsonConvert.SerializeObject(await _proxy.HPSPaymentGateway.POSTAsync(request)));
+            HpsPaymentResponse result = JsonConvert.DeserializeObject<HpsPaymentResponse>(JsonConvert.SerializeObject(await _proxy.HPSPaymentGateway.POSTAsync(request)),
+              new HrblNullableResponseConverter<HpsPaymentResponse>());
 
             if (result.Errors.HasErrors)
                 throw new HrblRestApiException(result.Errors.ErrorMessage);
