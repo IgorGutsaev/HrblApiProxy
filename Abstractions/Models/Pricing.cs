@@ -134,7 +134,7 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         public decimal TotalOtherCharges { get; private set; }
 
         [JsonProperty("TotalTaxAmount")]
-        public decimal TotalTaxAmount { get; private set; }
+        public decimal? TotalTaxAmount { get; private set; }
 
         [JsonProperty("TotalRetailAmount")]
         public decimal TotalRetailAmount { get; private set; }
