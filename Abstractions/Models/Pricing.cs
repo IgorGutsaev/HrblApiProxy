@@ -247,4 +247,22 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         public decimal? LineDiscountPrice { get; private set; }
     }
     #endregion
+
+    public class TaxBreakupItem
+    {
+        [JsonProperty("TaxName")]
+        public string Name { get; private set; }
+
+        [JsonProperty("TaxValue")]
+        public decimal? Value { get; private set; }
+
+        [JsonProperty("TaxRate")]
+        public decimal? Rate { get; private set; }
+    }
+
+    public class TaxBreakups
+    {
+        [JsonProperty("TaxBreakup")]
+        public TaxBreakupItem[] Breakups { get; private set; }
+    }
 }

@@ -104,7 +104,7 @@ namespace Filuet.Hrbl.Ordering.Abstractions.Builders
             return this;
         }
 
-        public ProfileUpdateBuilder SetContacts(string type, string value)
+        public ProfileUpdateBuilder SetContacts(string type, string value, string subType = null)
         {
             if (string.IsNullOrWhiteSpace(type))
                 throw new ArgumentException("Contact type must be specified");
@@ -116,6 +116,8 @@ namespace Filuet.Hrbl.Ordering.Abstractions.Builders
                 _request.Contact = new DistributorContactToUpdate();
 
             _request.Contact.Type = type;
+            if (!string.IsNullOrWhiteSpace(subType))
+                _request.Contact.SubType = subType;
             _request.Contact.Value = value;
 
             return this;

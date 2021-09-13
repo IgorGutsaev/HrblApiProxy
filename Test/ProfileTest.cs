@@ -9,7 +9,7 @@ namespace Filuet.Hrbl.Ordering.Tests
     public class ProfileTest : BaseTest
     {
         [Theory]
-        //[InlineData("7918180560")]
+        [InlineData("7918180560")]
         //[InlineData("VA00867877")]
         //[InlineData("7919384588")]
         //[InlineData("U515120144")]
@@ -20,7 +20,6 @@ namespace Filuet.Hrbl.Ordering.Tests
         //[InlineData("MY706332")]
         //[InlineData("MY721834")]
         //[InlineData("95126026")]
-        [InlineData("80X057498")]
         public async Task Test_Get_profile(string distributorId)
         {
             // Prepare
