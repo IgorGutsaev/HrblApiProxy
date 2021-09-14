@@ -157,6 +157,9 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         [JsonProperty("TotalLiteratureRetail")]
         public decimal? TotalLiteratureRetail { get; private set; }
 
+        [JsonProperty("TotalTaxBreakups")]
+        public TaxBreakups TaxBreakup { get; private set; }
+
         /// <summary>
         /// For resubmit purposes
         /// </summary>

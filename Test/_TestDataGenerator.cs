@@ -26,67 +26,67 @@ namespace Filuet.Hrbl.Ordering.Tests
 
         static public IEnumerable<object[]> GetPricingRequest()
         {
-            yield return new object[] { new PricingRequestBuilder()
-                .AddServiceConsumer(BaseTest.SERVICE_CONSUMER).AddHeader(h =>
-                  {
-                      h.ProcessingLocation = "6B";
-                      h.ExternalOrderNumber = null;
-                      h.OrderSource = "KIOSK";
-                      h.CurrencyCode = "RUB";
-                      h.DistributorId = "7918180560";
-                      h.Warehouse = "RI";
-                      h.OrderMonth = DateTime.UtcNow.AddDays(-1);
-                      h.FreightCode = "PU1";
-                      h.CountryCode = "RU";
-                      h.PostalCode = "117042";
-                      h.City = "Москва";
-                      h.OrderCategory = "RSO";
-                      h.OrderType = "RSO";
-                      h.PriceDate = DateTime.UtcNow;
-                      h.OrderDate = DateTime.UtcNow;
-                      h.Address1 = "ул. Краснобогатырская 90 стр.1";
-                  })
-                  .AddItems(() =>
-                       new PricingRequestLine[] {
-                        new PricingRequestLine {
-                            Sku = "0141",
-                            Quantity = 1,
-                            ProcessingLocation = "RI"
-                        }
-                       }).Build() };
-
             //yield return new object[] { new PricingRequestBuilder()
             //    .AddServiceConsumer(BaseTest.SERVICE_CONSUMER).AddHeader(h =>
             //      {
-            //          h.ProcessingLocation = "DA";
+            //          h.ProcessingLocation = "6B";
             //          h.ExternalOrderNumber = null;
             //          h.OrderSource = "KIOSK";
-            //          h.CurrencyCode = "IDR";
-            //          h.DistributorId = "D2440603";
-            //          h.Warehouse = "D1";
+            //          h.CurrencyCode = "RUB";
+            //          h.DistributorId = "7918180560";
+            //          h.Warehouse = "RI";
             //          h.OrderMonth = DateTime.UtcNow.AddDays(-1);
-            //          h.FreightCode = "PU";
-            //          h.CountryCode = "ID";
-            //          h.PostalCode = "12560";
-            //          h.City = "JAKARTA SELATAN";
-            //          h.State = "DKI JAKARTA";
-            //          h.Province = "PASAR MINGGU";
-            //          h.County = "PEKAYON JAYA";
+            //          h.FreightCode = "PU1";
+            //          h.CountryCode = "RU";
+            //          h.PostalCode = "117042";
+            //          h.City = "Москва";
             //          h.OrderCategory = "RSO";
             //          h.OrderType = "RSO";
             //          h.PriceDate = DateTime.UtcNow;
             //          h.OrderDate = DateTime.UtcNow;
-            //          h.Address1 = "CIBIS Nine Building 6th & Ground Floor";
-            //          h.Address2 = "Jl. T.B. Simatupang No. 2, Unit K - N";
+            //          h.Address1 = "ул. Краснобогатырская 90 стр.1";
             //      })
             //      .AddItems(() =>
             //           new PricingRequestLine[] {
             //            new PricingRequestLine {
-            //                Sku = "2631",
+            //                Sku = "0141",
             //                Quantity = 1,
-            //                ProcessingLocation = "DA"
+            //                ProcessingLocation = "RI"
             //            }
             //           }).Build() };
+
+            yield return new object[] { new PricingRequestBuilder()
+                .AddServiceConsumer(BaseTest.SERVICE_CONSUMER).AddHeader(h =>
+                  {
+                      h.ProcessingLocation = "DA";
+                      h.ExternalOrderNumber = null;
+                      h.OrderSource = "KIOSK";
+                      h.CurrencyCode = "IDR";
+                      h.DistributorId = "D2440603";
+                      h.Warehouse = "D1";
+                      h.OrderMonth = DateTime.UtcNow.AddDays(-1);
+                      h.FreightCode = "PU";
+                      h.CountryCode = "ID";
+                      h.PostalCode = "12560";
+                      h.City = "JAKARTA SELATAN";
+                      h.State = "DKI JAKARTA";
+                      h.Province = "PASAR MINGGU";
+                      h.County = "PEKAYON JAYA";
+                      h.OrderCategory = "RSO";
+                      h.OrderType = "RSO";
+                      h.PriceDate = DateTime.UtcNow;
+                      h.OrderDate = DateTime.UtcNow;
+                      h.Address1 = "CIBIS Nine Building 6th & Ground Floor";
+                      h.Address2 = "Jl. T.B. Simatupang No. 2, Unit K - N";
+                  })
+                  .AddItems(() =>
+                       new PricingRequestLine[] {
+                        new PricingRequestLine {
+                            Sku = "2631",
+                            Quantity = 1,
+                            ProcessingLocation = "DA"
+                        }
+                       }).Build() };
 
             //yield return new object[] { new PricingRequestBuilder()
             //    .AddServiceConsumer(BaseTest.SERVICE_CONSUMER).AddHeader(h =>
