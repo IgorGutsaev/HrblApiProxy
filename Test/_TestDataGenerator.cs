@@ -62,7 +62,7 @@ namespace Filuet.Hrbl.Ordering.Tests
                       h.ExternalOrderNumber = null;
                       h.OrderSource = "KIOSK";
                       h.CurrencyCode = "IDR";
-                      h.DistributorId = "D2440603";
+                      h.DistributorId = "MY706332";
                       h.Warehouse = "D1";
                       h.OrderMonth = DateTime.UtcNow.AddDays(-1);
                       h.FreightCode = "PU";
@@ -82,7 +82,7 @@ namespace Filuet.Hrbl.Ordering.Tests
                   .AddItems(() =>
                        new PricingRequestLine[] {
                         new PricingRequestLine {
-                            Sku = "2631",
+                            Sku = "0118",
                             Quantity = 1,
                             ProcessingLocation = "DA"
                         }
