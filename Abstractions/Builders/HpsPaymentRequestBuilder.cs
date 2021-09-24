@@ -74,6 +74,7 @@ namespace Filuet.Hrbl.Ordering.Abstractions.Builders
             _request.PaymentRequest.PostalCode = payload.PostalCode;
             _request.PaymentRequest.ProcessingLocation = payload.ProcessingLocation;
             _request.PaymentRequest.OrderType = payload.OrderType;
+            _request.PaymentRequest.Installments = payload.Installments;
 
             return this;
         }
