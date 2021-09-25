@@ -13,7 +13,7 @@ namespace Filuet.Hrbl.Ordering.Tests
        // [InlineData("RG", "0141", 1)]
         //[InlineData("U7", "0006", 1)]
         //[InlineData("AI", "0006", 1)]
-        [InlineData("FV", "1486", 1)]
+        [InlineData("9O", "0141", 1)]
         public async Task Test_Valid_sku_remains(string warehouse, string sku, uint quantity)
         {
             // Prepare
