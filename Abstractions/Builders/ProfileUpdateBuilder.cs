@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Filuet.Hrbl.Ordering.Abstractions.Builders
@@ -84,18 +85,19 @@ namespace Filuet.Hrbl.Ordering.Abstractions.Builders
             if (building != null)
                 _request.Address.Building = building.Trim();
 
-            if (addressLines != null && addressLines.Length > 0)
+            if (addressLines != null && addressLines.Length > 0 && addressLines.Any(x => !string.IsNullOrWhiteSpace(x)))
             {
-                _request.Address.Line1 = addressLines[0].Trim();
+                if (addressLines.Length > 0 && !string.IsNullOrWhiteSpace(addressLines[0]))
+                    _request.Address.Line1 = addressLines[0]?.Trim();
 
-                if (addressLines.Length > 1)
+                if (addressLines.Length > 1 && !string.IsNullOrWhiteSpace(addressLines[1]))
                     _request.Address.Line2 = addressLines[1].Trim();
 
-                if (addressLines.Length > 2)
-                    _request.Address.Line3 = addressLines[2].Trim();
+                if (addressLines.Length > 2 && !string.IsNullOrWhiteSpace(addressLines[2]))
+                    _request.Address.Line3 = addressLines[2]?.Trim();
 
-                if (addressLines.Length > 3)
-                    _request.Address.Line4 = addressLines[3].Trim();
+                if (addressLines.Length > 3 && !string.IsNullOrWhiteSpace(addressLines[3]))
+                    _request.Address.Line4 = addressLines[3]?.Trim();
             }
 
             if (careOfName != null)
