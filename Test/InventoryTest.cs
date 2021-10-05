@@ -14,7 +14,7 @@ namespace Filuet.Hrbl.Ordering.Tests
         //[InlineData("U7", "0006", 1)]
         //[InlineData("AI", "0006", 1)]
         [InlineData("9O", "0141", 1)]
-        public async Task Test_Valid_sku_remains(string warehouse, string sku, uint quantity)
+        public async Task Test_Valid_sku_remains(string warehouse, string sku, int quantity)
         {
             // Prepare
             Assert.NotNull(_adapter);
@@ -35,7 +35,7 @@ namespace Filuet.Hrbl.Ordering.Tests
         /// TODO: Handle invalid sku remains
         [Theory]
         [InlineData("5C", "0000", 2)]
-        public async Task Test_Inalid_sku_remains(string warehouse, string sku, uint quantity)
+        public async Task Test_Inalid_sku_remains(string warehouse, string sku, int quantity)
         {
             // Prepare
             // Pre-validate
@@ -46,7 +46,7 @@ namespace Filuet.Hrbl.Ordering.Tests
         /// TODO: Handle invalid warehouse remains
         [Theory]
         [InlineData("XX", "0141", 2)]
-        public async Task Test_Inalid_warehouse_remains(string warehouse, string sku, uint quantity)
+        public async Task Test_Inalid_warehouse_remains(string warehouse, string sku, int quantity)
         {
             // Prepare
             // Pre-validate

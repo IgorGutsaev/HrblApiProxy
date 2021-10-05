@@ -53,7 +53,7 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         /// Original AvailableQuantity
         /// </summary>
         [JsonProperty(PropertyName = "AvailableQuantity")]
-        public uint AvailableQuantity { get; set; }
+        public int AvailableQuantity { get; set; }
 
         public override string ToString() => Sku;
     }

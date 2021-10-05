@@ -39,7 +39,7 @@ namespace Filuet.Hrbl.Ordering.Adapter
         /// </summary>
         /// <param name="warehouse">Warehouse to request</param>
         /// <param name="items">collection of goods identifier</param>
-        public async Task<SkuInventory[]> GetSkuAvailability(string warehouse, Dictionary<string, uint> items)
+        public async Task<SkuInventory[]> GetSkuAvailability(string warehouse, Dictionary<string, int> items)
         {
             if (!items.Any())
                 return new SkuInventory[0];
@@ -70,8 +70,8 @@ namespace Filuet.Hrbl.Ordering.Adapter
         /// <param name="warehouse">Warehouse to request</param>
         /// <param name="sku">sku to request</param>
         /// <param name="quantity"></param>
-        public async Task<SkuInventory> GetSkuAvailability(string warehouse, string sku, uint quantity)
-            => await GetSkuAvailability(warehouse, new List<KeyValuePair<string, uint>> { new KeyValuePair<string, uint>(sku, quantity) }
+        public async Task<SkuInventory> GetSkuAvailability(string warehouse, string sku, int quantity)
+            => await GetSkuAvailability(warehouse, new List<KeyValuePair<string, int>> { new KeyValuePair<string, int>(sku, quantity) }
                 .ToDictionary(x => x.Key, x => x.Value)).ContinueWith(x => x.Result.FirstOrDefault());
 
         public async Task<InventoryItem[]> GetProductInventory(string country, string orderType = null)
