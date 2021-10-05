@@ -14,12 +14,12 @@ namespace Filuet.Hrbl.Ordering.Abstractions.Dto
         public bool IsBlocked { get; private set; }
 
         [JsonProperty("qty")]
-        public uint QuantityAvailable { get; private set; }
+        public int QuantityAvailable { get; private set; }
 
         public static InventoryItemDto Create(InventoryItem item)
             => new InventoryItemDto {
                 Sku = item.SKU.ToUpper(),
-                QuantityAvailable = (uint)item.QuantityAvailable,
+                QuantityAvailable = item.QuantityAvailable,
                 Warehouse = item.Warehouse.ToUpper(),
                 IsBlocked = item.IsBlocked
             };
