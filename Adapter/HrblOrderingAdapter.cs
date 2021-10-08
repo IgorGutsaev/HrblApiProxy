@@ -267,7 +267,7 @@ namespace Filuet.Hrbl.Ordering.Adapter
             if (result.Errors.HasErrors)
                 throw new HrblRestApiException(result.Errors.ErrorMessage);
 
-            return result.PaymentResponse.TransactionID;
+            return result.PaymentResponse.ApprovalNum;
         }
 
         public async Task<SubmitResponse> SubmitOrder(Action<SubmitRequestBuilder> setupAction)
