@@ -207,6 +207,5 @@ namespace Filuet.Fusion.SDK
             }
             return _result;
         }
-
     }
 }

@@ -61,7 +61,12 @@ namespace Filuet.Hrbl.Ordering.Adapter
                 }).ToList()
             });
 
-            return JsonConvert.DeserializeObject<SkuInventoryDetailsResult>(JsonConvert.SerializeObject(response)).SkuInventoryDetails.Inventory;
+            SkuInventoryDetailsResult result = JsonConvert.DeserializeObject<SkuInventoryDetailsResult>(JsonConvert.SerializeObject(response));
+
+            if (result.Errors.HasErrors)
+                throw new HrblRestApiException(string.IsNullOrWhiteSpace(result.Errors.ErrorMessage) ? "Unknown error": result.Errors.ErrorMessage);
+
+            return result.SkuInventoryDetails.Inventory;
         }
 
         /// <summary>
