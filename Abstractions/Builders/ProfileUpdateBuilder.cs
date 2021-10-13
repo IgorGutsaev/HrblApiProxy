@@ -95,9 +95,11 @@ namespace Filuet.Hrbl.Ordering.Abstractions.Builders
 
                 if (addressLines.Length > 2 && !string.IsNullOrWhiteSpace(addressLines[2]))
                     _request.Address.Line3 = addressLines[2]?.Trim();
+                else _request.Address.Line3 = string.Empty;
 
                 if (addressLines.Length > 3 && !string.IsNullOrWhiteSpace(addressLines[3]))
                     _request.Address.Line4 = addressLines[3]?.Trim();
+                else _request.Address.Line4 = string.Empty;
             }
 
             if (careOfName != null)

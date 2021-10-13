@@ -47,6 +47,20 @@ namespace Filuet.Hrbl.Ordering.Adapter
             if (string.IsNullOrWhiteSpace(warehouse))
                 throw new ArgumentException("Warehouse must be specified");
 
+            string s = JsonConvert.SerializeObject(new
+            {
+                ServiceConsumer = _settings.Consumer,
+                SkuInquiryDetails = items.Select(x => new
+                {
+                    Sku = new
+                    {
+                        SkuName = x.Key,
+                        Quantity = x.Value.ToString(),
+                        WarehouseCode = warehouse
+                    }
+                }).ToList()
+            });
+
             object response = await _proxy.GetSkuAvailability.POSTAsync(new
             {
                 ServiceConsumer = _settings.Consumer,
@@ -163,7 +177,7 @@ namespace Filuet.Hrbl.Ordering.Adapter
 
             if (request.Contact != null)
             {
-                DistributorContact contactToUpdate = profile.Shipping?.Contacts?.FirstOrDefault(x => x.Type.Equals(request.Contact.Type, StringComparison.InvariantCultureIgnoreCase));
+                DistributorContact contactToUpdate = profile.Shipping?.Contacts?.FirstOrDefault(x => x.Type.Equals(request.Contact.Type, StringComparison.InvariantCultureIgnoreCase) && x.SubType.Equals(request.Contact.SubType, StringComparison.InvariantCultureIgnoreCase));
                 if (contactToUpdate != null)
                     request.Contact.FillInWithUnspecifiedData(contactToUpdate);
                 else request.Contact = null; // We're not allowed to create new contact

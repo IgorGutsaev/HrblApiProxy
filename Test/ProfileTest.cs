@@ -20,7 +20,7 @@ namespace Filuet.Hrbl.Ordering.Tests
         //[InlineData("D1040636")]
         //[InlineData("MY721834")]
         //[InlineData("95126026")]
-        [InlineData("80X002671")]
+        [InlineData("16111444")]
         public async Task Test_Get_profile(string distributorId)
         {
             // Prepare
@@ -72,7 +72,7 @@ namespace Filuet.Hrbl.Ordering.Tests
         }
 
         [Theory]
-        [InlineData("7918180560")]
+        [InlineData("16111444")]
         public async Task Test_Update_Distributor_address_and_contacts(string distributorId)
         {
             // Prepare
@@ -82,11 +82,16 @@ namespace Filuet.Hrbl.Ordering.Tests
             Assert.False(string.IsNullOrWhiteSpace(distributorId));
 
             // Perform
-            await _adapter.UpdateAddressAndContacts((b) =>
-                b.SetDistributorId(distributorId)
-                .SetAddress(addressType: "SHIP_TO", country: "RU", zipCode: "170043", city: "????? ?", addressLines: new string[] { "??????????? ??-??", "??? 95, ??? 4, ?? 159", "", "VALENTINA VASILEVA" }, careOfName: "VALENTINA VASILEVA")
-                .SetContacts("PHONE", "90-40239208")
-            );
+            //await _adapter.UpdateAddressAndContacts((b) =>
+            //    b.SetDistributorId(distributorId)
+            //    .SetAddress(addressType: "SHIP_TO", country: "IL", zipCode: "", city: "NESHER", addressLines: new string[] { "1LILACH 9 RAMOT IZHAK", "", "", "" }, careOfName: "ערן פלג!")
+            //    .SetContacts("PHONE", "---", "MOBILE"));
+
+            await _adapter.UpdateAddressAndContacts(b =>
+                        b.SetDistributorId(distributorId)
+                        .SetAddress(addressType: "SHIP_TO", city: "NESHER", building: null, addressLines: new string[] { "LILACH 9 RAMOT IZHAK", "" }, careOfName: "ערן פלג")
+                        .SetContacts("PHONE", "774400191", "MOBILE"));
+            
 
             // Post-validate
             DistributorProfile profile = await _adapter.GetProfile(distributorId);
