@@ -123,6 +123,9 @@ namespace Filuet.Hrbl.Ordering.Abstractions.Builders
             if (!string.IsNullOrWhiteSpace(subType))
                 _request.Contact.SubType = subType;
             _request.Contact.Value = value;
+            _request.Contact._isActive = "A";
+            _request.Contact._isPrimary = "N";
+            _request.Contact.LastUpdateDate = DateTime.UtcNow;
 
             return this;
         }

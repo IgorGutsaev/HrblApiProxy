@@ -446,7 +446,7 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         public string Value { get; internal set; }
 
         [JsonProperty("OldValue")]
-        public string OldValue { get; internal set; }
+        public string OldValue { get; internal set; } = string.Empty;
 
         [JsonProperty("IsPrimary")]
         internal string _isPrimary { get; set; }

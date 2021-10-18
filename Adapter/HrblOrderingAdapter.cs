@@ -180,7 +180,7 @@ namespace Filuet.Hrbl.Ordering.Adapter
                 DistributorContact contactToUpdate = profile.Shipping?.Contacts?.FirstOrDefault(x => x.Type.Equals(request.Contact.Type, StringComparison.InvariantCultureIgnoreCase) && x.SubType.Equals(request.Contact.SubType, StringComparison.InvariantCultureIgnoreCase));
                 if (contactToUpdate != null)
                     request.Contact.FillInWithUnspecifiedData(contactToUpdate);
-                else request.Contact = null; // We're not allowed to create new contact
+               // else request.Contact = null; // We're not allowed to create new contact
             }
 
             object response = await _proxy.UpdateDsAddressContacts.POSTAsync(request);
