@@ -95,6 +95,8 @@ namespace Filuet.Hrbl.Ordering.Adapter
             => null;
 
         public async Task<WHFreightCode[]> GetShippingWhseAndFreightCodes(string postalCode, bool expressDeliveryFlag = true) => null;
+
+        public Task<ConversionRateResponse> GetConversionRate(ConversionRateRequest request) => null;
         #endregion
     }
 }
