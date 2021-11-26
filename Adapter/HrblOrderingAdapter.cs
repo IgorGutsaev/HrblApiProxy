@@ -308,6 +308,13 @@ namespace Filuet.Hrbl.Ordering.Adapter
 
             return JsonConvert.DeserializeObject<SubmitResponse>(JsonConvert.SerializeObject(response));
         }
+
+        public async Task<ConversionRateResponse> GetConversionRate(ConversionRateRequest request)
+        {
+            object response = await _proxy.GetConversionRate.POSTAsync(request);
+
+            return JsonConvert.DeserializeObject<ConversionRateResponse>(JsonConvert.SerializeObject(response));
+        }
         #endregion
 
         #region Common
