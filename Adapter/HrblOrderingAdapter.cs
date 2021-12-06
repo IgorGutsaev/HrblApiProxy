@@ -263,10 +263,12 @@ namespace Filuet.Hrbl.Ordering.Adapter
         {
             request.ServiceConsumer = _settings.Consumer;
 
-            if (request.Header.CountryCode == "ID") // A stab: Our assumption is that Oracle has invalid timeshift for ID
+            if (string.Equals(request.Header.CountryCode, "ID")) // A stab: Our assumption is that Oracle has invalid timeshift for ID
             {
-                request.Header.OrderDate = request.Header.OrderDate.AddHours(-1);
-                request.Header.PriceDate = request.Header.PriceDate.AddHours(-1);
+                DateTime newOrderTime = request.Header.OrderDate.AddHours(-1);
+                DateTime newPriceTime = request.Header.PriceDate.AddHours(-1);
+                request.Header.OrderDate = newOrderTime;
+                request.Header.PriceDate = newPriceTime;
             }
 
             object response = await _proxy.GetPriceDetails.POSTAsync(request);
