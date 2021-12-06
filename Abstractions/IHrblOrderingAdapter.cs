@@ -55,5 +55,7 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         Task<SubmitResponse> SubmitOrder(Action<SubmitRequestBuilder> setupAction);
 
         Task<SubmitResponse> SubmitOrder(SubmitRequest request);
+
+        Task<ConversionRateResponse> GetConversionRate(ConversionRateRequest request);
     }
 }

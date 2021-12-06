@@ -117,6 +117,11 @@ namespace Filuet.Fusion.SDK
         public virtual IGetDistributorVolumePoints GetDistributorVolumePoints { get; private set; }
 
         /// <summary>
+        /// Gets the IGetConversionRate.
+        /// </summary>
+        public virtual IGetConversionRate GetConversionRate { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the HLOnlineOrderingRS class.
         /// </summary>
         /// <param name='httpClient'>
@@ -389,6 +394,7 @@ namespace Filuet.Fusion.SDK
             GetProductInventory = new GetProductInventory(this);
             GetProductCatalog = new GetProductCatalog(this);
             GetDistributorVolumePoints = new GetDistributorVolumePoints(this);
+            GetConversionRate = new GetConversionRate(this);
             BaseUri = new System.Uri("http://localhost");
             SerializationSettings = new JsonSerializerSettings
             {
