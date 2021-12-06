@@ -263,6 +263,12 @@ namespace Filuet.Hrbl.Ordering.Adapter
         {
             request.ServiceConsumer = _settings.Consumer;
 
+            if (request.Header.CountryCode == "ID") // A stab: Our assumption is that Oracle has invalid timeshift for ID
+            {
+                request.Header.OrderDate = request.Header.OrderDate.AddHours(-1);
+                request.Header.PriceDate = request.Header.PriceDate.AddHours(-1);
+            }
+
             object response = await _proxy.GetPriceDetails.POSTAsync(request);
 
             PricingResponse result = JsonConvert.DeserializeObject<PricingResponse>(JsonConvert.SerializeObject(response),
