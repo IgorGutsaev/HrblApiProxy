@@ -141,7 +141,7 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         public object DsTrainings { get; private set; }
 
         [JsonProperty("TrainingsHold")]
-        public string TrainingsHold { get; private set; }
+        public object TrainingsHold { get; private set; }
 
         [JsonProperty("LifePartnerLastName")]
         public string LifePartnerLastName { get; private set; }
