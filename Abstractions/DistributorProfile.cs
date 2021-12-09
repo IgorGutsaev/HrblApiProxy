@@ -138,7 +138,7 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         public CantBuyReasons CantBuyReasons { get; private set; }
 
         [JsonProperty("DsTrainings")]
-        public string DsTrainings { get; private set; }
+        public object DsTrainings { get; private set; }
 
         [JsonProperty("TrainingsHold")]
         public string TrainingsHold { get; private set; }
