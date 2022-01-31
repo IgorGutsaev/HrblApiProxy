@@ -186,6 +186,25 @@ namespace Filuet.Hrbl.Ordering.Adapter
                 , new HrblNullableResponseConverter<FOPPurchasingLimitsResult>());
         }
 
+        public async Task<TinDetails> GetDistributorTins(string distributorId, string country)
+        {
+            if (string.IsNullOrWhiteSpace(distributorId))
+                throw new ArgumentException("Distributor ID is mandatory");
+
+            if (string.IsNullOrWhiteSpace(country))
+                throw new ArgumentException("Country is mandatory");
+
+            object response = await _proxy.DistributorTins.POSTAsync(new
+            {
+                ServiceConsumer = _settings.Consumer,
+                DistributorId = distributorId,
+                CountryCode = country.ToUpper()
+            });
+
+            return JsonConvert.DeserializeObject<GetDistributorTinsResult>(JsonConvert.SerializeObject(response)
+                , new HrblNullableResponseConverter<GetDistributorTinsResult>())?.TinDetails;
+        }
+
         public async Task<DistributorVolumePoints[]> GetVolumePoints(string distributorId, DateTime month, DateTime? monthTo = null)
         {
             if (string.IsNullOrWhiteSpace(distributorId))
@@ -352,5 +371,6 @@ namespace Filuet.Hrbl.Ordering.Adapter
         #endregion
 
         public override string ToString() => Environment.ToString();
+
     }
 }

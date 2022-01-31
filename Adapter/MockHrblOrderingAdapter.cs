@@ -57,6 +57,10 @@ namespace Filuet.Hrbl.Ordering.Adapter
             => JsonConvert.DeserializeObject<FOPPurchasingLimitsResult>(Properties.Resources.MockDSFOPPurchasingLimit
                 , new HrblNullableResponseConverter<FOPPurchasingLimitsResult>());
 
+        public async Task<TinDetails> GetDistributorTins(string distributorId, string country)
+            => JsonConvert.DeserializeObject<GetDistributorTinsResult>(Properties.Resources.MockMemberTins
+                , new HrblNullableResponseConverter<GetDistributorTinsResult>()).TinDetails;
+
         public async Task<DistributorVolumePoints[]> GetVolumePoints(string distributorId, DateTime month, DateTime? monthTo = null)
             => JsonConvert.DeserializeObject<DistributorVolumePointsDetailsResult>(Properties.Resources.MockVP.Replace("yyyy/MM", month.ToString("yyyy/MM"))).DistributorVolumeDetails.DistributorVolume;
 

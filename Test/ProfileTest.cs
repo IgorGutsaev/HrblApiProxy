@@ -20,7 +20,7 @@ namespace Filuet.Hrbl.Ordering.Tests
         //[InlineData("MY706332")]
         //[InlineData("MY721834")]
         //[InlineData("95126026")]
-        [InlineData("24Y0500055")]
+        [InlineData("D2655218")]
         public async Task Test_Get_profile(string distributorId)
         {
             // Prepare
@@ -35,6 +35,23 @@ namespace Filuet.Hrbl.Ordering.Tests
             // Post-validate
             Assert.NotNull(result);
             Assert.Equal(distributorId, result.Id);
+        }
+
+        [Theory]
+        [InlineData("MY660642", "MY")]
+        public async Task Test_Get_profile_Tin(string distributorId, string country)
+        {
+            // Prepare
+            Assert.NotNull(_adapter);
+
+            // Pre-validate
+            Assert.False(string.IsNullOrWhiteSpace(distributorId));
+
+            // Perform
+            TinDetails result = await _adapter.GetDistributorTins(distributorId, country);
+
+            // Post-validate
+            Assert.NotNull(result);
         }
 
         [Theory]

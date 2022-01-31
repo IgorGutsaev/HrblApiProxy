@@ -76,6 +76,8 @@ namespace Filuet.Fusion.SDK
         /// </summary>
         public virtual IDSFOPPurchasingLimits DSFOPPurchasingLimits { get; private set; }
 
+        public virtual IGetDistributorTins DistributorTins { get; private set; }
+
         /// <summary>
         /// Gets the IDsCashLimit.
         /// </summary>
@@ -381,6 +383,7 @@ namespace Filuet.Fusion.SDK
             SubmitOrder = new SubmitOrder(this);
             GetDistributorDiscount = new GetDistributorDiscount(this);
             DSFOPPurchasingLimits = new DSFOPPurchasingLimits(this);
+            DistributorTins = new GetDistributorTins(this);
             DsCashLimit = new DsCashLimit(this);
             GetOrderDualMonthStatus = new GetOrderDualMonthStatus(this);
             UpdateDsAddressContacts = new UpdateDsAddressContacts(this);

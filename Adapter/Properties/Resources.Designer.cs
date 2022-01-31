@@ -107,6 +107,33 @@ namespace Filuet.Hrbl.Ordering.Adapter.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {
+        ///    &quot;DistributorId&quot;: &quot;MY660642&quot;,
+        ///    &quot;TinDetails&quot;: {
+        ///        &quot;DistributorTin&quot;: [
+        ///            {
+        ///                &quot;TinCode&quot;: &quot;MYID&quot;,
+        ///                &quot;TinNumber&quot;: null,
+        ///                &quot;TinCountry&quot;: &quot;MY&quot;,
+        ///                &quot;EffectiveDate&quot;: &quot;2020-07-01T07:23:12.000-07:00&quot;,
+        ///                &quot;ExpirationDate&quot;: &quot;2070-06-30T00:00:00.000-07:00&quot;,
+        ///                &quot;ActiveFlag&quot;: &quot;Y&quot;
+        ///            }
+        ///        ]
+        ///    },
+        ///    &quot;Errors&quot;: {
+        ///        &quot;Error&quot;: [
+        ///            {
+        ///                &quot;ErrorCode&quot;: &quot;0&quot;,
+        ///           [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string MockMemberTins {
+            get {
+                return ResourceManager.GetString("MockMemberTins", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {&quot;OrderPriceHeader&quot;:{&quot;DiscountPercent&quot;:50,&quot;VolumePoints&quot;:12.5,&quot;TotalFreightCharges&quot;:0.64,&quot;TotalPHCharges&quot;:0.0,&quot;TotalLogisticCharges&quot;:0.0,&quot;TotalOtherCharges&quot;:0.0,&quot;TotalTaxAmount&quot;:1.62,&quot;TotalRetailAmount&quot;:13.05,&quot;TotalOrderAmount&quot;:7.74,&quot;TotalDiscountAmount&quot;:5.95,&quot;TotalDue&quot;:9.36,&quot;TotalProductRetail&quot;:7.1,&quot;TotalLiteratureRetail&quot;:0.0,&quot;ExternalOrderNumber&quot;:&quot;LRK1350572&quot;,&quot;DistributorId&quot;:&quot;U515170226&quot;,&quot;Warehouse&quot;:&quot;LR&quot;,&quot;ProcessingLocation&quot;:&quot;LR&quot;,&quot;FreightCode&quot;:&quot;PU1&quot;,&quot;CountryCode&quot;:&quot;LV&quot;,&quot;OrderMonth&quot;:&quot;2102&quot;,&quot;OrderCategory&quot;:&quot; [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string MockPricingResponse {

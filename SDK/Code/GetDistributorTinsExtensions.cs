@@ -12,7 +12,7 @@ namespace Filuet.Fusion.SDK
     /// <summary>
     /// Extension methods for DSFOPPurchasingLimits.
     /// </summary>
-    public static partial class GetDistributorTinsExtensions
+    public static partial class DSFOPPurchasingLimitsExtensions
     {
             /// <summary>
             /// DSFOPPurchasingLimits_POST
@@ -22,7 +22,7 @@ namespace Filuet.Fusion.SDK
             /// </param>
             /// <param name='body'>
             /// </param>
-            public static object POST(this IGetDistributorTins operations, object body)
+            public static object POST(this IDSFOPPurchasingLimits operations, object body)
             {
                 return operations.POSTAsync(body).GetAwaiter().GetResult();
             }
@@ -38,7 +38,7 @@ namespace Filuet.Fusion.SDK
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> POSTAsync(this IGetDistributorTins operations, object body, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> POSTAsync(this IDSFOPPurchasingLimits operations, object body, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.POSTWithHttpMessagesAsync(body, null, cancellationToken).ConfigureAwait(false))
                 {

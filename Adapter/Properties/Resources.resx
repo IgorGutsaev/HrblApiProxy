@@ -217,6 +217,31 @@
    }
 }</value>
   </data>
+  <data name="MockMemberTins" xml:space="preserve">
+    <value>{
+    "DistributorId": "MY660642",
+    "TinDetails": {
+        "DistributorTin": [
+            {
+                "TinCode": "MYID",
+                "TinNumber": null,
+                "TinCountry": "MY",
+                "EffectiveDate": "2020-07-01T07:23:12.000-07:00",
+                "ExpirationDate": "2070-06-30T00:00:00.000-07:00",
+                "ActiveFlag": "Y"
+            }
+        ]
+    },
+    "Errors": {
+        "Error": [
+            {
+                "ErrorCode": "0",
+                "ErrorMessage": "0"
+            }
+        ]
+    }
+}</value>
+  </data>
   <data name="MockPricingResponse" xml:space="preserve">
     <value>{"OrderPriceHeader":{"DiscountPercent":50,"VolumePoints":12.5,"TotalFreightCharges":0.64,"TotalPHCharges":0.0,"TotalLogisticCharges":0.0,"TotalOtherCharges":0.0,"TotalTaxAmount":1.62,"TotalRetailAmount":13.05,"TotalOrderAmount":7.74,"TotalDiscountAmount":5.95,"TotalDue":9.36,"TotalProductRetail":7.1,"TotalLiteratureRetail":0.0,"ExternalOrderNumber":"LRK1350572","DistributorId":"U515170226","Warehouse":"LR","ProcessingLocation":"LR","FreightCode":"PU1","CountryCode":"LV","OrderMonth":"2102","OrderCategory":"RSO","OrderType":"RSO","PriceDate":"2021-02-20T02:03:22","OrderDate":"2021-02-20T02:03:22","CurrencyCode":"EUR","PostalCode":"LV-1073","City":"Riga","State":null,"Address1":"Piedrujas street, 7a","Address2":null,"Address3":null,"Address4":null},"OrderPriceLines":[{"PriceDate":"2021-02-20T02:03:22","LineVolumePoints":12.5,"TotalEarnBase":11.9,"TotalRetailPrice":13.05,"UnitRetailPrice":13.05,"LineTotalAmount":7.7368,"LineDueAmount":9.3568,"LineFreightCharges":0.6368,"LinePHCharges":0.0,"LineLogisticCharges":0.0,"LineOtherCharges":0.0,"LineMiscCharges":0.0,"LineTaxAmount":1.62,"LineDiscountAmount":5.95,"Earnbase":11.9,"UnitVolumePoints":12.5,"LineDiscountPrice":7.1,"ProcessingLocation":"LR","SellingSKU":"0003","ProductType":"P","OrderedQty":1.0}]}</value>
   </data>

@@ -30,6 +30,8 @@ namespace Filuet.Hrbl.Ordering.Abstractions
 
         Task<FOPPurchasingLimitsResult> GetDSFOPPurchasingLimits(string distributorId, string country);
 
+        Task<TinDetails> GetDistributorTins(string distributorId, string country);
+
         Task<DistributorVolumePoints[]> GetVolumePoints(string distributorId, DateTime month, DateTime? monthTo = null);
 
         Task<bool> GetOrderDualMonthStatus(string country);

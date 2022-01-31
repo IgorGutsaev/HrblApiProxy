@@ -26,6 +26,35 @@ namespace Filuet.Hrbl.Ordering.Tests
 
         static public IEnumerable<object[]> GetPricingRequest()
         {
+            yield return new object[] { new PricingRequestBuilder()
+                .AddServiceConsumer(BaseTest.SERVICE_CONSUMER).AddHeader(h =>
+                  {
+                      h.ProcessingLocation = "9O";
+                      h.ExternalOrderNumber = null;
+                      h.OrderSource = "KIOSK";
+                      h.CurrencyCode = "RUB";
+                      h.DistributorId = "7918180560";
+                      h.Warehouse = "9O";
+                      h.OrderMonth = DateTime.UtcNow.AddDays(-1);
+                      h.FreightCode = "PU1";
+                      h.CountryCode = "RU";
+                      h.PostalCode = "198216";
+                      h.City = "Санкт-Петербург";
+                      h.OrderCategory = "RSO";
+                      h.OrderType = "RSO";
+                      h.PriceDate = DateTime.UtcNow;
+                      h.OrderDate = DateTime.UtcNow;
+                      h.Address1 = "пр-т Народного ополчения, д. 10А, пом. 24Н";
+                  })
+                  .AddItems(() =>
+                       new PricingRequestLine[] {
+                        new PricingRequestLine {
+                            Sku = "0141",
+                            Quantity = 1,
+                            ProcessingLocation = "9O"
+                        }
+                       }).Build() };
+
             //yield return new object[] { new PricingRequestBuilder()
             //    .AddServiceConsumer(BaseTest.SERVICE_CONSUMER).AddHeader(h =>
             //      {
@@ -177,7 +206,7 @@ namespace Filuet.Hrbl.Ordering.Tests
             //            }
             //           }).Build() };
 
-             yield return new PricingRequest[] { JsonConvert.DeserializeObject<PricingRequest>("{\"ServiceConsumer\":null,\"OrderPriceHeader\":{\"OrderSource\":\"Internet\",\"OrgID\":259,\"OrderTypeID\":2940,\"ExternalOrderNumber\":null,\"DistributorId\":\"UZ20102558\",\"Warehouse\":\"LR\",\"ProcessingLocation\":\"IL\",\"FreightCode\":\"PU\",\"CountryCode\":\"LV\",\"OrderMonth\":\"2109\",\"OrderCategory\":\"RSO\",\"OrderType\":\"IE\",\"PriceDate\":\"2021-09-08T10:31:05\",\"OrderDate\":\"2021-09-08T10:31:05\",\"CurrencyCode\":\"EUR\",\"PostalCode\":null,\"City\":\"Riga\",\"State\":\"\",\"Province\":\"\",\"County\":\"\",\"Address1\":\"Piedrujas 7A, LV-1073\",\"Address2\":\"\",\"Address3\":null,\"Address4\":null},\"OrderPriceLines\":[{\"ProcessingLocation\":\"IL\",\"SellingSKU\":\"N345\",\"ProductType\":\"P\",\"OrderedQty\":1.0},{\"ProcessingLocation\":\"IL\",\"SellingSKU\":\"6473\",\"ProductType\":\"P\",\"OrderedQty\":1.0},{\"ProcessingLocation\":\"IL\",\"SellingSKU\":\"N338\",\"ProductType\":\"P\",\"OrderedQty\":1.0},{\"ProcessingLocation\":\"IL\",\"SellingSKU\":\"003U\",\"ProductType\":\"P\",\"OrderedQty\":1.0},{\"ProcessingLocation\":\"IL\",\"SellingSKU\":\"5451\",\"ProductType\":\"P\",\"OrderedQty\":1.0}]}") };
+            //yield return new PricingRequest[] { JsonConvert.DeserializeObject<PricingRequest>("{\"ServiceConsumer\":null,\"OrderPriceHeader\":{\"OrderSource\":\"Internet\",\"OrgID\":259,\"OrderTypeID\":2940,\"ExternalOrderNumber\":null,\"DistributorId\":\"UZ20102558\",\"Warehouse\":\"LR\",\"ProcessingLocation\":\"IL\",\"FreightCode\":\"PU\",\"CountryCode\":\"LV\",\"OrderMonth\":\"2109\",\"OrderCategory\":\"RSO\",\"OrderType\":\"IE\",\"PriceDate\":\"2021-09-08T10:31:05\",\"OrderDate\":\"2021-09-08T10:31:05\",\"CurrencyCode\":\"EUR\",\"PostalCode\":null,\"City\":\"Riga\",\"State\":\"\",\"Province\":\"\",\"County\":\"\",\"Address1\":\"Piedrujas 7A, LV-1073\",\"Address2\":\"\",\"Address3\":null,\"Address4\":null},\"OrderPriceLines\":[{\"ProcessingLocation\":\"IL\",\"SellingSKU\":\"N345\",\"ProductType\":\"P\",\"OrderedQty\":1.0},{\"ProcessingLocation\":\"IL\",\"SellingSKU\":\"6473\",\"ProductType\":\"P\",\"OrderedQty\":1.0},{\"ProcessingLocation\":\"IL\",\"SellingSKU\":\"N338\",\"ProductType\":\"P\",\"OrderedQty\":1.0},{\"ProcessingLocation\":\"IL\",\"SellingSKU\":\"003U\",\"ProductType\":\"P\",\"OrderedQty\":1.0},{\"ProcessingLocation\":\"IL\",\"SellingSKU\":\"5451\",\"ProductType\":\"P\",\"OrderedQty\":1.0}]}") };
         }
     }
 }

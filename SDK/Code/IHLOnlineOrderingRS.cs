@@ -79,6 +79,8 @@ namespace Filuet.Fusion.SDK
         /// </summary>
         IDSFOPPurchasingLimits DSFOPPurchasingLimits { get; }
 
+        IGetDistributorTins DistributorTins { get; }
+
         /// <summary>
         /// Gets the IDsCashLimit.
         /// </summary>
