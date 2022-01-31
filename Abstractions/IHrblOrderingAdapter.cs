@@ -9,7 +9,7 @@ namespace Filuet.Hrbl.Ordering.Abstractions
     {
         Task<(bool isValid, string memberId)> ValidateSsoBearerToken(string token);
 
-        Task<SkuInventory[]> GetSkuAvailability(string warehouse, Dictionary<string, uint> items);
+        Task<SkuInventory[]> GetSkuAvailability(string warehouse, Dictionary<string, int> items);
 
         /// <summary>
         /// Get remains of goods
@@ -17,7 +17,7 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         /// <param name="warehouse">Warehouse to request</param>
         /// <param name="sku">sku to request</param>
         /// <param name="quantity"></param>
-        Task<SkuInventory> GetSkuAvailability(string warehouse, string sku, uint quantity);
+        Task<SkuInventory> GetSkuAvailability(string warehouse, string sku, int quantity);
 
         /// <summary>
         /// Get distributor (customer) profile
@@ -57,5 +57,7 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         Task<SubmitResponse> SubmitOrder(Action<SubmitRequestBuilder> setupAction);
 
         Task<SubmitResponse> SubmitOrder(SubmitRequest request);
+
+        Task<ConversionRateResponse> GetConversionRate(ConversionRateRequest request);
     }
 }

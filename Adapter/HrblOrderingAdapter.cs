@@ -39,13 +39,27 @@ namespace Filuet.Hrbl.Ordering.Adapter
         /// </summary>
         /// <param name="warehouse">Warehouse to request</param>
         /// <param name="items">collection of goods identifier</param>
-        public async Task<SkuInventory[]> GetSkuAvailability(string warehouse, Dictionary<string, uint> items)
+        public async Task<SkuInventory[]> GetSkuAvailability(string warehouse, Dictionary<string, int> items)
         {
             if (!items.Any())
                 return new SkuInventory[0];
 
             if (string.IsNullOrWhiteSpace(warehouse))
                 throw new ArgumentException("Warehouse must be specified");
+
+            string s = JsonConvert.SerializeObject(new
+            {
+                ServiceConsumer = _settings.Consumer,
+                SkuInquiryDetails = items.Select(x => new
+                {
+                    Sku = new
+                    {
+                        SkuName = x.Key,
+                        Quantity = x.Value.ToString(),
+                        WarehouseCode = warehouse
+                    }
+                }).ToList()
+            });
 
             object response = await _proxy.GetSkuAvailability.POSTAsync(new
             {
@@ -61,7 +75,12 @@ namespace Filuet.Hrbl.Ordering.Adapter
                 }).ToList()
             });
 
-            return JsonConvert.DeserializeObject<SkuInventoryDetailsResult>(JsonConvert.SerializeObject(response)).SkuInventoryDetails.Inventory;
+            SkuInventoryDetailsResult result = JsonConvert.DeserializeObject<SkuInventoryDetailsResult>(JsonConvert.SerializeObject(response));
+
+            if (result.Errors != null && result.Errors.HasErrors)
+                throw new HrblRestApiException(string.IsNullOrWhiteSpace(result.Errors.ErrorMessage) ? "Unknown error": result.Errors.ErrorMessage);
+
+            return result.SkuInventoryDetails.Inventory;
         }
 
         /// <summary>
@@ -70,8 +89,8 @@ namespace Filuet.Hrbl.Ordering.Adapter
         /// <param name="warehouse">Warehouse to request</param>
         /// <param name="sku">sku to request</param>
         /// <param name="quantity"></param>
-        public async Task<SkuInventory> GetSkuAvailability(string warehouse, string sku, uint quantity)
-            => await GetSkuAvailability(warehouse, new List<KeyValuePair<string, uint>> { new KeyValuePair<string, uint>(sku, quantity) }
+        public async Task<SkuInventory> GetSkuAvailability(string warehouse, string sku, int quantity)
+            => await GetSkuAvailability(warehouse, new List<KeyValuePair<string, int>> { new KeyValuePair<string, int>(sku, quantity) }
                 .ToDictionary(x => x.Key, x => x.Value)).ContinueWith(x => x.Result.FirstOrDefault());
 
         public async Task<InventoryItem[]> GetProductInventory(string country, string orderType = null)
@@ -158,10 +177,10 @@ namespace Filuet.Hrbl.Ordering.Adapter
 
             if (request.Contact != null)
             {
-                DistributorContact contactToUpdate = profile.Shipping?.Contacts?.FirstOrDefault(x => x.Type.Equals(request.Contact.Type, StringComparison.InvariantCultureIgnoreCase));
+                DistributorContact contactToUpdate = profile.Shipping?.Contacts?.FirstOrDefault(x => x.Type.Equals(request.Contact.Type, StringComparison.InvariantCultureIgnoreCase) && x.SubType.Equals(request.Contact.SubType, StringComparison.InvariantCultureIgnoreCase));
                 if (contactToUpdate != null)
                     request.Contact.FillInWithUnspecifiedData(contactToUpdate);
-                else request.Contact = null; // We're not allowed to create new contact
+               // else request.Contact = null; // We're not allowed to create new contact
             }
 
             object response = await _proxy.UpdateDsAddressContacts.POSTAsync(request);
@@ -263,6 +282,14 @@ namespace Filuet.Hrbl.Ordering.Adapter
         {
             request.ServiceConsumer = _settings.Consumer;
 
+            if (string.Equals(request.Header.CountryCode, "ID")) // A stab: Our assumption is that Oracle has invalid timeshift for ID
+            {
+                DateTime newOrderTime = request.Header.OrderDate.AddHours(-1);
+                DateTime newPriceTime = request.Header.PriceDate.AddHours(-1);
+                request.Header.OrderDate = newOrderTime;
+                request.Header.PriceDate = newPriceTime;
+            }
+
             object response = await _proxy.GetPriceDetails.POSTAsync(request);
 
             PricingResponse result = JsonConvert.DeserializeObject<PricingResponse>(JsonConvert.SerializeObject(response),
@@ -286,7 +313,7 @@ namespace Filuet.Hrbl.Ordering.Adapter
             if (result.Errors.HasErrors)
                 throw new HrblRestApiException(result.Errors.ErrorMessage);
 
-            return result.PaymentResponse.TransactionID;
+            return result.PaymentResponse.ApprovalNum;
         }
 
         public async Task<SubmitResponse> SubmitOrder(Action<SubmitRequestBuilder> setupAction)
@@ -307,6 +334,13 @@ namespace Filuet.Hrbl.Ordering.Adapter
             object response = await _proxy.SubmitOrder.POSTAsync(request);
 
             return JsonConvert.DeserializeObject<SubmitResponse>(JsonConvert.SerializeObject(response));
+        }
+
+        public async Task<ConversionRateResponse> GetConversionRate(ConversionRateRequest request)
+        {
+            object response = await _proxy.GetConversionRate.POSTAsync(request);
+
+            return JsonConvert.DeserializeObject<ConversionRateResponse>(JsonConvert.SerializeObject(response));
         }
         #endregion
 

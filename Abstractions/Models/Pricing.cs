@@ -74,37 +74,40 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         [JsonProperty("CurrencyCode", Order = 12)]
         public string CurrencyCode { get; set; }
 
-        [JsonProperty("PostalCode", Order = 13)]
+        [JsonProperty("OrderSubType", Order = 13)]
+        public string OrderSubType { get; set; }
+
+        [JsonProperty("PostalCode", Order = 14)]
         public string PostalCode { get; set; }
 
-        [JsonProperty("City", Order = 14)]
+        [JsonProperty("City", Order = 15)]
         public string City { get; set; }
 
-        [JsonProperty("State", Order = 15)]
+        [JsonProperty("State", Order = 16)]
         public string State { get; set; } = string.Empty;
 
-        [JsonProperty("Province", Order = 16)]
+        [JsonProperty("Province", Order = 17)]
         public string Province { get; set; } = string.Empty;
 
-        [JsonProperty("County", Order = 17)]
+        [JsonProperty("County", Order = 18)]
         public string County { get; set; } = string.Empty;
 
-        [JsonProperty("Address1", Order = 18)]
+        [JsonProperty("Address1", Order = 19)]
         public string Address1 { get; set; }
 
-        [JsonProperty("Address2", Order = 19)]
+        [JsonProperty("Address2", Order = 20)]
         public string Address2 { get; set; }
 
-        [JsonProperty("Address3", Order = 20)]
+        [JsonProperty("Address3", Order = 21)]
         public string Address3 { get; set; }
 
-        [JsonProperty("Address4", Order = 21)]
+        [JsonProperty("Address4", Order = 22)]
         public string Address4 { get; set; }
 
-        [JsonProperty("OrgID")]
+        [JsonProperty("OrgID", Order = 23)]
         public int OrgID { get; set; } = 259;
 
-        [JsonProperty("OrderTypeID")]
+        [JsonProperty("OrderTypeID", Order = 24)]
         public int? OrderTypeID { get; set; } = 2940;
 
         public override string ToString() => JsonConvert.SerializeObject(this);
@@ -156,6 +159,9 @@ namespace Filuet.Hrbl.Ordering.Abstractions
 
         [JsonProperty("TotalLiteratureRetail")]
         public decimal? TotalLiteratureRetail { get; private set; }
+
+        [JsonProperty("TotalTaxBreakups")]
+        public TaxBreakups TaxBreakup { get; private set; }
 
         /// <summary>
         /// For resubmit purposes
@@ -247,4 +253,22 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         public decimal? LineDiscountPrice { get; private set; }
     }
     #endregion
+
+    public class TaxBreakupItem
+    {
+        [JsonProperty("TaxName")]
+        public string Name { get; private set; }
+
+        [JsonProperty("TaxValue")]
+        public decimal? Value { get; private set; }
+
+        [JsonProperty("TaxRate")]
+        public decimal? Rate { get; private set; }
+    }
+
+    public class TaxBreakups
+    {
+        [JsonProperty("TaxBreakup")]
+        public TaxBreakupItem[] Breakups { get; private set; }
+    }
 }

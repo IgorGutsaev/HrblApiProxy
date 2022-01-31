@@ -19,7 +19,7 @@ namespace Filuet.Hrbl.Ordering.Adapter
         /// </summary>
         /// <param name="warehouse">Warehouse to request</param>
         /// <param name="items">collection of goods identifier</param>
-        public async Task<SkuInventory[]> GetSkuAvailability(string warehouse, Dictionary<string, uint> items)
+        public async Task<SkuInventory[]> GetSkuAvailability(string warehouse, Dictionary<string, int> items)
             => items.Select(x => new SkuInventory { Sku = x.Key, AvailableQuantity = x.Value + 1 }).ToArray();
 
         /// <summary>
@@ -28,7 +28,7 @@ namespace Filuet.Hrbl.Ordering.Adapter
         /// <param name="warehouse">Warehouse to request</param>
         /// <param name="sku">sku to request</param>
         /// <param name="quantity"></param>
-        public async Task<SkuInventory> GetSkuAvailability(string warehouse, string sku, uint quantity)
+        public async Task<SkuInventory> GetSkuAvailability(string warehouse, string sku, int quantity)
             => new SkuInventory { Sku = sku, AvailableQuantity = quantity++ };
 
         public async Task<InventoryItem[]> GetProductInventory(string country, string orderType = null)
@@ -99,6 +99,8 @@ namespace Filuet.Hrbl.Ordering.Adapter
             => null;
 
         public async Task<WHFreightCode[]> GetShippingWhseAndFreightCodes(string postalCode, bool expressDeliveryFlag = true) => null;
+
+        public Task<ConversionRateResponse> GetConversionRate(ConversionRateRequest request) => null;
         #endregion
     }
 }

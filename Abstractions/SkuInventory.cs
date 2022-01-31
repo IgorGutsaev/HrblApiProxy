@@ -1,14 +1,15 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Filuet.Hrbl.Ordering.Abstractions
 {
     internal class SkuInventoryDetailsResult
     {
-        [JsonProperty(PropertyName = "SkuInventoryDetails")]
+        [JsonProperty("SkuInventoryDetails")]
         public SkuInventoryDetails SkuInventoryDetails { get; set; }
+
+        [JsonProperty("Errors")]
+        internal CommonErrorList Errors { get; private set; }
     }
 
     internal class SkuInventoryDetails
@@ -53,7 +54,7 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         /// Original AvailableQuantity
         /// </summary>
         [JsonProperty(PropertyName = "AvailableQuantity")]
-        public uint AvailableQuantity { get; set; }
+        public int AvailableQuantity { get; set; }
 
         public override string ToString() => Sku;
     }

@@ -18,12 +18,12 @@ namespace Filuet.Fusion.SDK
     using System.Threading.Tasks;
 
     /// <summary>
-    /// GetDistributorProfile operations.
+    /// GetConversionRate operations.
     /// </summary>
-    public partial class GetDistributorProfile : IServiceOperations<HLOnlineOrderingRS>, IGetDistributorProfile
+    public partial class GetConversionRate : IServiceOperations<HLOnlineOrderingRS>, IGetConversionRate
     {
         /// <summary>
-        /// Initializes a new instance of the GetDistributorProfile class.
+        /// Initializes a new instance of the GetConversionRate class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -31,7 +31,7 @@ namespace Filuet.Fusion.SDK
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public GetDistributorProfile(HLOnlineOrderingRS client)
+        public GetConversionRate(HLOnlineOrderingRS client)
         {
             if (client == null)
             {
@@ -46,7 +46,7 @@ namespace Filuet.Fusion.SDK
         public HLOnlineOrderingRS Client { get; private set; }
 
         /// <summary>
-        /// GetDistributorProfile_POST
+        /// GetConversionRate_POST
         /// </summary>
         /// <param name='body'>
         /// </param>
@@ -90,7 +90,7 @@ namespace Filuet.Fusion.SDK
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "GetDistributorProfile").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "GetConversionRate").ToString();
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -207,5 +207,6 @@ namespace Filuet.Fusion.SDK
             }
             return _result;
         }
+
     }
 }

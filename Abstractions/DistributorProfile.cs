@@ -138,10 +138,10 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         public CantBuyReasons CantBuyReasons { get; private set; }
 
         [JsonProperty("DsTrainings")]
-        public string DsTrainings { get; private set; }
+        public object DsTrainings { get; private set; }
 
         [JsonProperty("TrainingsHold")]
-        public string TrainingsHold { get; private set; }
+        public object TrainingsHold { get; private set; }
 
         [JsonProperty("LifePartnerLastName")]
         public string LifePartnerLastName { get; private set; }
@@ -446,7 +446,7 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         public string Value { get; internal set; }
 
         [JsonProperty("OldValue")]
-        public string OldValue { get; internal set; }
+        public string OldValue { get; internal set; } = string.Empty;
 
         [JsonProperty("IsPrimary")]
         internal string _isPrimary { get; set; }
