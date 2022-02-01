@@ -38,6 +38,23 @@ namespace Filuet.Hrbl.Ordering.Tests
         }
 
         [Theory]
+        [InlineData("D1040636", "ID")]
+        public async Task Test_Get_TIN(string distributorId, string country)
+        {
+            // Prepare
+            Assert.NotNull(_adapter);
+
+            // Pre-validate
+            Assert.False(string.IsNullOrWhiteSpace(distributorId));
+
+            // Perform
+            TinDetails result = await _adapter.GetDistributorTins(distributorId, country);
+
+            // Post-validate
+            Assert.NotNull(result);
+        }
+
+        [Theory]
         [InlineData("7918180560")]
         public async Task Test_Get_volume_points(string distributorId)
         {
