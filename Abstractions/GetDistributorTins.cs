@@ -24,19 +24,19 @@ namespace Filuet.Hrbl.Ordering.Abstractions
     public class DistributorTin
     {
         [JsonProperty("TinCode")]
-        private string Code { get; set; }
+        public string Code { get; set; }
                 
         [JsonProperty("TinNumber")]
-        private string Number { get; set; }
+        public string Number { get; set; }
 
         [JsonProperty("TinCountry")]
-        private string Country { get; set; }
+        public string Country { get; set; }
 
         [JsonProperty("EffectiveDate")]
-        private string TinNumber { get; set; }
+        public string TinNumber { get; set; }
 
         [JsonProperty("ExpirationDate")]
-        private string ExpirationDate { get; set; }
+        public string ExpirationDate { get; set; }
 
 
         [JsonProperty("ActiveFlag")]
