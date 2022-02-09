@@ -33,7 +33,7 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         public string Country { get; set; }
 
         [JsonProperty("EffectiveDate")]
-        public string TinNumber { get; set; }
+        public string EffectiveDate { get; set; }
 
         [JsonProperty("ExpirationDate")]
         public string ExpirationDate { get; set; }
