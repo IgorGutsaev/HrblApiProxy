@@ -78,7 +78,7 @@ namespace Filuet.Hrbl.Ordering.Adapter
             SkuInventoryDetailsResult result = JsonConvert.DeserializeObject<SkuInventoryDetailsResult>(JsonConvert.SerializeObject(response));
 
             if (result.Errors != null && result.Errors.HasErrors)
-                throw new HrblRestApiException(string.IsNullOrWhiteSpace(result.Errors.ErrorMessage) ? "Unknown error": result.Errors.ErrorMessage);
+                throw new HrblRestApiException(string.IsNullOrWhiteSpace(result.Errors.ErrorMessage) ? "Unknown error" : result.Errors.ErrorMessage);
 
             return result.SkuInventoryDetails.Inventory;
         }
@@ -180,7 +180,7 @@ namespace Filuet.Hrbl.Ordering.Adapter
                 DistributorContact contactToUpdate = profile.Shipping?.Contacts?.FirstOrDefault(x => x.Type.Equals(request.Contact.Type, StringComparison.InvariantCultureIgnoreCase) && x.SubType.Equals(request.Contact.SubType, StringComparison.InvariantCultureIgnoreCase));
                 if (contactToUpdate != null)
                     request.Contact.FillInWithUnspecifiedData(contactToUpdate);
-               // else request.Contact = null; // We're not allowed to create new contact
+                // else request.Contact = null; // We're not allowed to create new contact
             }
 
             object response = await _proxy.UpdateDsAddressContacts.POSTAsync(request);
@@ -213,15 +213,31 @@ namespace Filuet.Hrbl.Ordering.Adapter
             if (string.IsNullOrWhiteSpace(country))
                 throw new ArgumentException("Country is mandatory");
 
-            object response = await _proxy.DistributorTins.POSTAsync(new
+            try // Stub: we should get some default tin details
             {
-                ServiceConsumer = _settings.Consumer,
-                DistributorId = distributorId,
-                CountryCode = country.ToUpper()
-            });
+                object response = await _proxy.DistributorTins.POSTAsync(new
+                {
+                    ServiceConsumer = _settings.Consumer,
+                    DistributorId = distributorId,
+                    CountryCode = country.ToUpper()
+                });
 
-            return JsonConvert.DeserializeObject<GetDistributorTinsResult>(JsonConvert.SerializeObject(response)
-                , new HrblNullableResponseConverter<GetDistributorTinsResult>())?.TinDetails;
+                return JsonConvert.DeserializeObject<GetDistributorTinsResult>(JsonConvert.SerializeObject(response)
+                    , new HrblNullableResponseConverter<GetDistributorTinsResult>())?.TinDetails;
+            }
+            catch
+            {
+                return new TinDetails
+                {
+                    DistributorTins = new DistributorTin[] {
+                    new DistributorTin { Country = country,
+                    Code = country + country,
+                    ExpirationDate = DateTime.MaxValue.ToString("yyyy-MM-dd HH:mm:ss+zzz"),
+                    Number= string.Empty,
+                    TinNumber = DateTime.Now.AddYears(-2).ToString("yyyy-MM-dd HH:mm:ss+zzz"),
+                    _isActive = "Y"
+                } } };
+            }
         }
 
         public async Task<DistributorVolumePoints[]> GetVolumePoints(string distributorId, DateTime month, DateTime? monthTo = null)

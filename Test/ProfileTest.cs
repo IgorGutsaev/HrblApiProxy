@@ -20,7 +20,7 @@ namespace Filuet.Hrbl.Ordering.Tests
         //[InlineData("D1040636")]
         //[InlineData("MY721834")]
         //[InlineData("95126026")]
-        [InlineData("U521150142")]
+        [InlineData("VNTESTID")]
         public async Task Test_Get_profile(string distributorId)
         {
             // Prepare
@@ -49,6 +49,23 @@ namespace Filuet.Hrbl.Ordering.Tests
 
             // Perform
             DistributorVolumePoints[] result = await _adapter.GetVolumePoints(distributorId, DateTime.Now);
+
+            // Post-validate
+            Assert.NotNull(result);
+        }
+
+        [Theory]
+        [InlineData("D2442080", "ID")]
+        public async Task Test_Get_distributor_TIN(string distributorId, string country)
+        {
+            // Prepare
+            Assert.NotNull(_adapter);
+
+            // Pre-validate
+            Assert.False(string.IsNullOrWhiteSpace(distributorId));
+
+            // Perform
+            TinDetails result = await _adapter.GetDistributorTins(distributorId, country);
 
             // Post-validate
             Assert.NotNull(result);
