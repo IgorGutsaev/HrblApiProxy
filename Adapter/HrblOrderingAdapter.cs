@@ -233,8 +233,7 @@ namespace Filuet.Hrbl.Ordering.Adapter
                     new DistributorTin { Country = country,
                     Code = country + country,
                     ExpirationDate = DateTime.MaxValue.ToString("yyyy-MM-dd HH:mm:ss+zzz"),
-                    Number= string.Empty,
-                    TinNumber = DateTime.Now.AddYears(-2).ToString("yyyy-MM-dd HH:mm:ss+zzz"),
+                    EffectiveDate = DateTime.Now.AddYears(-2).ToString("yyyy-MM-dd HH:mm:ss+zzz"),
                     _isActive = "Y"
                 } } };
             }
