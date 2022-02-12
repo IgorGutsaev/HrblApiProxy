@@ -47,40 +47,78 @@ namespace Filuet.Hrbl.Ordering.Adapter
             if (string.IsNullOrWhiteSpace(warehouse))
                 throw new ArgumentException("Warehouse must be specified");
 
-            string s = JsonConvert.SerializeObject(new
+            List<SkuInventory> _inventory = new List<SkuInventory>();
+            int skip = 0;
+            decimal take = 10;
+
+            List<IEnumerable<KeyValuePair<string, int>>> blocks = new List<IEnumerable<KeyValuePair<string, int>>>();
+            for (int i = 0; i < (int)Math.Ceiling(items.Count / take); i++)
             {
-                ServiceConsumer = _settings.Consumer,
-                SkuInquiryDetails = items.Select(x => new
+                blocks.Add(items.Skip(skip).Take((int)take));
+                skip += (int)take;
+            }
+
+            bool isError = false;
+            string error = string.Empty;
+
+            Parallel.ForEach(blocks, b => {
+                object response = _proxy.GetSkuAvailability.POST(new
                 {
-                    Sku = new
+                    ServiceConsumer = _settings.Consumer,
+                    SkuInquiryDetails = b.Select(x => new
                     {
-                        SkuName = x.Key,
-                        Quantity = x.Value.ToString(),
-                        WarehouseCode = warehouse
-                    }
-                }).ToList()
+                        Sku = new
+                        {
+                            SkuName = x.Key,
+                            Quantity = x.Value.ToString(),
+                            WarehouseCode = warehouse
+                        }
+                    }).ToList()
+                });
+
+                SkuInventoryDetailsResult result = JsonConvert.DeserializeObject<SkuInventoryDetailsResult>(JsonConvert.SerializeObject(response));
+
+                if (result.Errors != null && result.Errors.HasErrors)
+                {
+                    isError = true;
+                    error = string.IsNullOrWhiteSpace(result.Errors.ErrorMessage) ? "Unknown error" : result.Errors.ErrorMessage;
+                }
+
+                _inventory.AddRange(result.SkuInventoryDetails.Inventory);
             });
 
-            object response = await _proxy.GetSkuAvailability.POSTAsync(new
-            {
-                ServiceConsumer = _settings.Consumer,
-                SkuInquiryDetails = items.Select(x => new
-                {
-                    Sku = new
-                    {
-                        SkuName = x.Key,
-                        Quantity = x.Value.ToString(),
-                        WarehouseCode = warehouse
-                    }
-                }).ToList()
-            });
+            //    for (int i = 0; i < (int)Math.Ceiling(items.Count / take); i++)
+            //{
+            //    object response = await _proxy.GetSkuAvailability.POSTAsync(new
+            //    {
+            //        ServiceConsumer = _settings.Consumer,
+            //        SkuInquiryDetails = items.Skip(skip).Take((int)take).Select(x => new
+            //        {
+            //            Sku = new
+            //            {
+            //                SkuName = x.Key,
+            //                Quantity = x.Value.ToString(),
+            //                WarehouseCode = warehouse
+            //            }
+            //        }).ToList()
+            //    });
 
-            SkuInventoryDetailsResult result = JsonConvert.DeserializeObject<SkuInventoryDetailsResult>(JsonConvert.SerializeObject(response));
+            //    skip += (int)take;
 
-            if (result.Errors != null && result.Errors.HasErrors)
-                throw new HrblRestApiException(string.IsNullOrWhiteSpace(result.Errors.ErrorMessage) ? "Unknown error" : result.Errors.ErrorMessage);
+            //    SkuInventoryDetailsResult result = JsonConvert.DeserializeObject<SkuInventoryDetailsResult>(JsonConvert.SerializeObject(response));
 
-            return result.SkuInventoryDetails.Inventory;
+            //    if (result.Errors != null && result.Errors.HasErrors)
+            //        throw new HrblRestApiException(string.IsNullOrWhiteSpace(result.Errors.ErrorMessage) ? "Unknown error" : result.Errors.ErrorMessage);
+
+            //    _inventory.AddRange(result.SkuInventoryDetails.Inventory);
+            //}
+
+
+            if (isError)
+                throw new HrblRestApiException(error);
+
+
+            return _inventory.ToArray();
         }
 
         /// <summary>

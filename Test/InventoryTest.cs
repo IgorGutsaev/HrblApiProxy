@@ -28,10 +28,10 @@ namespace Filuet.Hrbl.Ordering.Tests
         [Theory]
        // [InlineData("TW", "0006", 1)]
         //[InlineData("LR", "794N / 795N", 1)]]
-        [InlineData("C5", "522U", 1)]
+        [InlineData("5C", "522U", 1)]
         //[InlineData("U7", "0006", 1)]
         //[InlineData("AI", "0006", 1)]
-        [InlineData("LV", "5438", 1)]
+       // [InlineData("LV", "5438", 1)]
         public async Task Test_Valid_sku_remains(string warehouse, string sku, int quantity)
         {
             // Prepare
@@ -48,7 +48,25 @@ namespace Filuet.Hrbl.Ordering.Tests
             // Post-validate
             Assert.NotNull(result);
             Assert.True(result.Sku == sku);
+        }        
+        
+        [Theory]
+        [MemberData(nameof(TestDataGenerator.GetProductCatalog), MemberType = typeof(TestDataGenerator))]
+        public async Task Test_Valid_sku_remains_scope(string warehouse, Dictionary<string, int> items)
+        {
+            // Prepare
+            Assert.NotNull(_adapter);
+
+            // Pre-validate
+            Assert.False(string.IsNullOrWhiteSpace(warehouse));
+
+            // Perform
+            SkuInventory[] result = await _adapter.GetSkuAvailability(warehouse, items);
+
+            // Post-validate
+            Assert.NotNull(result);
         }
+
 
         /// TODO: Handle invalid sku remains
         [Theory]

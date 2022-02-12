@@ -6,7 +6,7 @@ namespace Filuet.Hrbl.Ordering.Abstractions
     internal class CommonErrorList
     {
         [JsonProperty("Error")]
-        public CommonError[] Error { get; private set; }
+        public CommonError[] Error { get; private set; } = new CommonError[0];
 
         [JsonIgnore]
         public bool HasErrors => Error.Any(x => x.ErrorCode != "0");
