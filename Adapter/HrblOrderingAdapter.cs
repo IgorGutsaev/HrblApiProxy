@@ -84,7 +84,8 @@ namespace Filuet.Hrbl.Ordering.Adapter
                     error = string.IsNullOrWhiteSpace(result.Errors.ErrorMessage) ? "Unknown error" : result.Errors.ErrorMessage;
                 }
 
-                _inventory.AddRange(result.SkuInventoryDetails.Inventory);
+                lock(_inventory)
+                    _inventory.AddRange(result.SkuInventoryDetails.Inventory);
             });
 
             //    for (int i = 0; i < (int)Math.Ceiling(items.Count / take); i++)

@@ -194,7 +194,7 @@ namespace Filuet.Hrbl.Ordering.Abstractions.Builders
                 if (l.Quantity <= 0)
                     issues.AppendLine($"[line {index}] Quantity must be positive");
 
-                if (l.Amount <= 0m)
+                if (l.Amount <= 0m && l.UnitVolume > 0m)
                     issues.AppendLine($"[line {index}] Amount must be non-negative");
 
                 if (l.UnitVolume < 0m)
