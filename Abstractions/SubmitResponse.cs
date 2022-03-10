@@ -17,7 +17,7 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         public bool IsSuccess => string.Equals(OrderStatus, "SUCCESS", StringComparison.InvariantCultureIgnoreCase);
 
         [JsonIgnore]
-        public string ErrorMessage => Errors.ErrorMessage;
+        public string ErrorMessage => Errors == null || !Errors.HasErrors ? string.Empty : Errors.ErrorMessage;
 
         [JsonIgnore]
         public bool IsAlreadyImported => Errors == null || !Errors.HasErrors ? false : Errors.ErrorMessage.ToLower().Contains("importing or imported");
