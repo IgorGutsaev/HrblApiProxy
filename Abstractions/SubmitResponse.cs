@@ -20,6 +20,6 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         public string ErrorMessage => Errors.ErrorMessage;
 
         [JsonIgnore]
-        public bool IsAlreadyImported => Errors.ErrorMessage.ToLower().Contains("importing or imported");
+        public bool IsAlreadyImported => Errors == null || !Errors.HasErrors ? false : Errors.ErrorMessage.ToLower().Contains("importing or imported");
     }
 }

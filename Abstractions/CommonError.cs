@@ -9,7 +9,7 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         public CommonError[] Error { get; private set; } = new CommonError[0];
 
         [JsonIgnore]
-        public bool HasErrors => Error.Any(x => x.ErrorCode != "0");
+        public bool HasErrors => Error != null && Error.Any(x => x.ErrorCode != "0");
 
         [JsonIgnore]
         public string ErrorMessage => !HasErrors ? string.Empty :

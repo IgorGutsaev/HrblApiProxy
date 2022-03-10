@@ -23,7 +23,7 @@ namespace Filuet.Hrbl.Ordering.Tests
         // [InlineData("S7Y0003968", "my")]
         //[InlineData("MY048647", "my")]
         //[InlineData("D2442080", "id")]
-        [InlineData("D2495480", "id")]
+        [InlineData("VNY0077803", "vn")]
         public async Task Test_Get_ds_fop_purchasing_limits(string distributorId, string country)
         {
             //// Prepare
