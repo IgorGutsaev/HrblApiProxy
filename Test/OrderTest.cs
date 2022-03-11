@@ -52,10 +52,11 @@ namespace Filuet.Hrbl.Ordering.Tests
             // Pre-validate
             //  Assert.NotEqual(_adapter.Environment, HrblEnvironment.Prod);
 
-           // HpsPaymentPayload payload = JsonConvert.DeserializeObject<HpsPaymentPayload>("{\"Country\":\"KR\",\"OrderNumber\":\"K6K3994613\",\"ClientRefNum\":\"KRBUSAS1\",\"DistributorId\":\"VA00248957\",\"PayCode\":\"BC\",\"Currency\":\"KRW\",\"Amount\":\"34027.0\",\"CardHolderName\":\"HERB 테 스 트\",\"CreditCardNum\":\"5E99146735510096\",\"ExpiryDate\":\"2024-05\",\"CVV2\":\"11\",\"PayeeID\":\"800101\",\"Address1\":\"111/16 PHUOC LONG - PHUOC LONG\",\"City\":\"KHANH HOA\",\"PostalCode\":\"65\",\"ProcessingLocation\":\"K6\",\"OrderType\":\"\",\"Installments\":0}");
+            // HpsPaymentPayload payload = JsonConvert.DeserializeObject<HpsPaymentPayload>("{\"Country\":\"KR\",\"OrderNumber\":\"K6K3994613\",\"ClientRefNum\":\"KRBUSAS1\",\"DistributorId\":\"VA00248957\",\"PayCode\":\"BC\",\"Currency\":\"KRW\",\"Amount\":\"34027.0\",\"CardHolderName\":\"HERB 테 스 트\",\"CreditCardNum\":\"5E99146735510096\",\"ExpiryDate\":\"2024-05\",\"CVV2\":\"11\",\"PayeeID\":\"800101\",\"Address1\":\"111/16 PHUOC LONG - PHUOC LONG\",\"City\":\"KHANH HOA\",\"PostalCode\":\"65\",\"ProcessingLocation\":\"K6\",\"OrderType\":\"\",\"Installments\":0}");
 
             // Perform
-            string result = await _adapter.HpsPaymentGateway(new HpsPaymentPayload {
+            string result = await _adapter.HpsPaymentGateway(new HpsPaymentPayload
+            {
                 Country = country,
                 OrderNumber = orderNumber,
                 ClientRefNum = clientRefNum,
@@ -78,7 +79,7 @@ namespace Filuet.Hrbl.Ordering.Tests
 
             // Post-validate
             Assert.NotNull(result);
-           // Assert.Equal("Invalid card number", ex.Message);
+            // Assert.Equal("Invalid card number", ex.Message);
         }
 
         /// <summary>
@@ -101,26 +102,26 @@ namespace Filuet.Hrbl.Ordering.Tests
             // Perform
             HrblRestApiException ex = await Assert.ThrowsAsync<HrblRestApiException>(async () =>
              await _adapter.HpsPaymentGateway(new HpsPaymentPayload
-            {
-                Country = country,
-                OrderNumber = orderNumber,
-                ClientRefNum = clientRefNum,
-                DistributorId = distributorId,
-                PayCode = cardType,
-                Currency = currency,
-                Amount = amount.ToString(),
-                CardHolderName = cardHolderName,
-                CreditCardNumTokenized = cardNumber,
-                ExpiryDate = cardExpirationMonth,
-                CVV2 = cvv2,
-                PayeeID = payeeId,
-                Address1 = address,
-                City = city,
-                PostalCode = postalCode,
-                ProcessingLocation = processingLocation,
-                OrderType = orderType,
-                Installments = installments
-            }));
+             {
+                 Country = country,
+                 OrderNumber = orderNumber,
+                 ClientRefNum = clientRefNum,
+                 DistributorId = distributorId,
+                 PayCode = cardType,
+                 Currency = currency,
+                 Amount = amount.ToString(),
+                 CardHolderName = cardHolderName,
+                 CreditCardNumTokenized = cardNumber,
+                 ExpiryDate = cardExpirationMonth,
+                 CVV2 = cvv2,
+                 PayeeID = payeeId,
+                 Address1 = address,
+                 City = city,
+                 PostalCode = postalCode,
+                 ProcessingLocation = processingLocation,
+                 OrderType = orderType,
+                 Installments = installments
+             }));
 
             // Post-validate
             Assert.NotNull(ex);
@@ -271,12 +272,12 @@ namespace Filuet.Hrbl.Ordering.Tests
 
             // Pre-validate
             //Assert.NotNull(_adapter);
-           // SubmitRequest request = setupAction.CreateTargetAndInvoke().Build();
+            // SubmitRequest request = setupAction.CreateTargetAndInvoke().Build();
             //Assert.NotNull(request);
             //SubmitRequest request = JsonConvert.DeserializeObject<SubmitRequest>("{\"ServiceConsumer\":\"AAKIOSK\",\"OrderHeaders\":{\"DistributorId\":\"80112512\",\"CustomerName\":\"ЕКАТЕРИНА КОВАЛЕВА\",\"ExternalOrderNumber\":\"RGK7257708\",\"TotalDue\":6612.78,\"OrderMonth\":\"2109\",\"SalesChannelCode\":\"AUTOSTORE\",\"OrderDate\":\"2021-09-07T09:26:31\",\"PricingDate\":\"2021-09-07T13:26:26\",\"TotalVolume\":117.6,\"OrderTypeCode\":\"RSO\",\"TotalAmountPaid\":6612.78,\"OrderPaymentStatus\":\"PAID\",\"OrderDiscount\":50.0,\"CountryCode\":\"RU\",\"WareHouseCode\":\"RG\",\"ProcessingLocation\":\"RG\",\"ShippingMethodCode\":\"PU1\",\"City\":\"Москва\",\"InvShipFlag\":\"Y\",\"OrgId\":\"178\",\"OrderTypeId\":\"5836\",\"PostalCode\":\"108811\",\"Province\":null,\"Address1\":\"п. Московский, Киевское шоссе, 22й км, д. 6, стр. 1\",\"Address2\":\"\",\"State\":null,\"ShippingInstructions\":\"Order from ASC\",\"PickupName\":null,\"TaxAmount\":1102.14,\"DiscountAmount\":4107.39,\"OrderConfirmEmail\":\"KATERINA_VK@LIST.RU\",\"WillCallFlag\":\"N\",\"OrderPurpose\":\"\",\"SlidingDiscount\":0.0,\"OrderSource\":\"KIOSK\",\"Balance\":0.0,\"TotalRetailPrice\":\"0\",\"ChrAttribute4\":null,\"ChrAttribute3\":\"N\",\"ChrAttribute6\":\"QR\",\"ChrAttribute5\":null,\"Phone\":null,\"Notes\":null,\"SMSNumber\":\"9104393139\",\"SMSAction\":null,\"SMSRole\":null,\"OrderSubType\":null},\"OrderLine\":[{\"SKU\":\"0003\",\"Quantity\":1.0,\"LineAmount\":605.47,\"UnitVolume\":12.5,\"EarnBase\":992.32,\"TotalRetailPrice\":1101.63,\"TotalDiscountedPrice\":496.16,\"ProductType\":\"P\"},{\"SKU\":\"0006\",\"Quantity\":1.0,\"LineAmount\":983.86,\"UnitVolume\":24.95,\"EarnBase\":1612.58,\"TotalRetailPrice\":1790.15,\"TotalDiscountedPrice\":806.29,\"ProductType\":\"P\"},{\"SKU\":\"0022\",\"Quantity\":1.0,\"LineAmount\":650.79,\"UnitVolume\":15.5,\"EarnBase\":1066.67,\"TotalRetailPrice\":1184.13,\"TotalDiscountedPrice\":533.34,\"ProductType\":\"P\"},{\"SKU\":\"0260\",\"Quantity\":1.0,\"LineAmount\":807.78,\"UnitVolume\":7.7,\"EarnBase\":506.59,\"TotalRetailPrice\":1061.08,\"TotalDiscountedPrice\":253.3,\"ProductType\":\"P\"},{\"SKU\":\"1171\",\"Quantity\":1.0,\"LineAmount\":1085.37,\"UnitVolume\":23.95,\"EarnBase\":1778.95,\"TotalRetailPrice\":1974.85,\"TotalDiscountedPrice\":889.48,\"ProductType\":\"P\"},{\"SKU\":\"2273\",\"Quantity\":2.0,\"LineAmount\":858.88,\"UnitVolume\":9.5,\"EarnBase\":1407.8,\"TotalRetailPrice\":1562.78,\"TotalDiscountedPrice\":703.9,\"ProductType\":\"P\"},{\"SKU\":\"2669\",\"Quantity\":1.0,\"LineAmount\":518.49,\"UnitVolume\":14.0,\"EarnBase\":849.83,\"TotalRetailPrice\":943.41,\"TotalDiscountedPrice\":424.92,\"ProductType\":\"P\"}],\"OrderPayment\":{\"PaymentMethodName\":\"CARD\",\"PaymentStatus\":\"PAID\",\"PaymentMethodId\":null,\"PaymentAmount\":6612.78,\"PaymentDate\":\"2021-09-07T09:26:31\",\"Paycode\":\"MC\",\"PaymentType\":\"SALE\",\"CurrencyCode\":\"RUB\",\"AppliedDate\":\"2021-09-07T09:26:31\",\"ApprovalNumber\":\"53e1fa81-925e-4c3e-9b67-765578f70774\",\"PaymentReceived\":\"6612.78\",\"CreditCard\":{\"CardNumber\":\"4H58265476741111\",\"TrxApprovalNumber\":\"53e1fa81-925e-4c3e-9b67-765578\",\"CardType\":\"MC\",\"CardExpiryDate\":\"2022-09-30T23:59:59\",\"CardHolderName\":\"CARD HOLDER\",\"CardValidationType\":\"ONLINE\",\"CardHolderRelation\":\"SELF\"},\"AuthorizationType\":\"ONLINE\",\"VoidFlag\":\"N\",\"ClientRefNumber\":\"RUMSKRUMAS1\"},\"OrderNotes\":null,\"OrderAddress\":null,\"OrderPromotionLine\":null}");
             SubmitRequest request = JsonConvert.DeserializeObject<SubmitRequest>("{\"ServiceConsumer\":\"AAKIOSK\",\"OrderHeaders\":{\"DistributorId\":\"79275116\",\"CustomerName\":\"ЕВГЕНИЙ ЛОБАНОВ\",\"ExternalOrderNumber\":\"5EK7490867\",\"TotalDue\":2072.4,\"OrderMonth\":\"2202\",\"SalesChannelCode\":\"AUTOSTORE\",\"OrderDate\":\"2022-02-21T07:19:11\",\"PricingDate\":\"2022-02-21T08:19:09\",\"TotalVolume\":38.7,\"OrderTypeCode\":\"AAO\",\"TotalAmountPaid\":2072.4,\"OrderPaymentStatus\":\"PAID\",\"OrderDiscount\":50.0,\"CountryCode\":\"RU\",\"WareHouseCode\":\"5E\",\"ProcessingLocation\":\"5E\",\"ShippingMethodCode\":\"WI\",\"City\":\"г. Новосибирск\",\"InvShipFlag\":\"Y\",\"OrgId\":\"178\",\"OrderTypeId\":\"7183\",\"PostalCode\":\"630005\",\"Province\":null,\"Address1\":\"ул. Фрунзе дом.86\",\"Address2\":\"\",\"State\":\"\",\"ShippingInstructions\":\"Order from ASC\",\"PickupName\":null,\"TaxAmount\":345.4,\"DiscountAmount\":1415.0,\"OrderConfirmEmail\":\"BONDAREVANAST@GMAIL.COM\",\"WillCallFlag\":\"N\",\"OrderPurpose\":\"\",\"SlidingDiscount\":0.0,\"OrderSource\":\"KIOSK\",\"Balance\":0.0,\"TotalRetailPrice\":\"0\",\"ChrAttribute4\":null,\"ChrAttribute3\":\"N\",\"ChrAttribute6\":\"QR\",\"ChrAttribute5\":null,\"Phone\":null,\"Notes\":null,\"SMSNumber\":\"9130021675\",\"SMSAction\":null,\"SMSRole\":null,\"OrderSubType\":null},\"OrderLine\":[{\"SKU\":\"0102\",\"Quantity\":1.0,\"LineAmount\":717.6,\"UnitVolume\":14.75,\"EarnBase\":980.0,\"TotalRetailPrice\":1088.0,\"TotalDiscountedPrice\":490.0,\"ProductType\":\"P\"},{\"SKU\":\"1171\",\"Quantity\":1.0,\"LineAmount\":1354.8,\"UnitVolume\":23.95,\"EarnBase\":1850.0,\"TotalRetailPrice\":2054.0,\"TotalDiscountedPrice\":925.0,\"ProductType\":\"P\"}],\"OrderPayment\":{\"PaymentMethodName\":\"CARD\",\"PaymentStatus\":\"PAID\",\"PaymentMethodId\":null,\"PaymentAmount\":2072.4,\"PaymentDate\":\"2022-02-21T07:19:11\",\"Paycode\":\"CARD\",\"PaymentType\":\"SALE\",\"CurrencyCode\":\"RUB\",\"AppliedDate\":\"2022-02-21T07:19:11\",\"ApprovalNumber\":\"0a1e39ad-b0f6-4443-ac50-356d9e7bc7a6\",\"PaymentReceived\":\"2072.4\",\"CreditCard\":{\"CardNumber\":\"4H58265476741111\",\"TrxApprovalNumber\":\"0a1e39ad-b0f6-4443-ac50-356d9e\",\"CardType\":\"MC\",\"CardExpiryDate\":\"2023-02-28T23:59:59\",\"CardHolderName\":\"CARD HOLDER\",\"CardValidationType\":\"ONLINE\",\"CardHolderRelation\":\"SELF\"},\"AuthorizationType\":\"ONLINE\",\"VoidFlag\":\"N\",\"ClientRefNumber\":\"RUNSKAS3\"},\"OrderNotes\":null,\"OrderAddress\":null,\"OrderPromotionLine\":null}");
-          //  string data = JsonConvert.SerializeObject(request);
-          // Perform
+            //  string data = JsonConvert.SerializeObject(request);
+            // Perform
             SubmitResponse result = await _adapter.SubmitOrder(request); //setupAction);
 
             //Post-validate
@@ -386,6 +387,12 @@ namespace Filuet.Hrbl.Ordering.Tests
 
             // Post-validate
             Assert.Equal(expected, fact);
+        }
+
+        [Fact]
+        public async Task Test_ConversionRate()
+        {
+            var response = await _adapter.GetConversionRate(new ConversionRateRequest { ConversionDate = "2022-03-11T12:15:11.4366", ExchangeRateType = "HL Cambodia NTS FX",  FromCurrency = "USD", ToCurrency = "KHR" });
         }
     }
 }

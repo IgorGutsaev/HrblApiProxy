@@ -8,6 +8,6 @@ namespace Filuet.Hrbl.Ordering.Abstractions
     public class ConversionRateResponse
     {
         [JsonProperty("ConversionRate")]
-        public decimal ConversionRate { get; set; }
+        public decimal? ConversionRate { get; set; }
     }
 }
