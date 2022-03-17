@@ -20,7 +20,7 @@ namespace Filuet.Hrbl.Ordering.Tests
         //[InlineData("D1040636")]
         //[InlineData("MY721834")]
         //[InlineData("95126026")]
-        [InlineData("VNY0077803")]
+        [InlineData("20168088")]
         public async Task Test_Get_profile(string distributorId)
         {
             // Prepare

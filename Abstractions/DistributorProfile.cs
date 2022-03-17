@@ -275,7 +275,7 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         public string SpouseMiddleNameLocal { get; private set; }
 
         [JsonProperty("DateofBirth")]
-        public DateTime DateofBirth { get; private set; }
+        public DateTime? DateofBirth { get; private set; }
 
         [JsonProperty("Gender")]
         public string Gender { get; private set; }
