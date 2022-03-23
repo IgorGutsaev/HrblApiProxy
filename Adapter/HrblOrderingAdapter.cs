@@ -69,7 +69,7 @@ namespace Filuet.Hrbl.Ordering.Adapter
                     {
                         Sku = new
                         {
-                            SkuName = x.Key,
+                            SkuName = x.Key.ToNormalSku(),
                             Quantity = x.Value.ToString(),
                             WarehouseCode = warehouse
                         }
@@ -87,33 +87,6 @@ namespace Filuet.Hrbl.Ordering.Adapter
                 lock(_inventory)
                     _inventory.AddRange(result.SkuInventoryDetails.Inventory);
             });
-
-            //    for (int i = 0; i < (int)Math.Ceiling(items.Count / take); i++)
-            //{
-            //    object response = await _proxy.GetSkuAvailability.POSTAsync(new
-            //    {
-            //        ServiceConsumer = _settings.Consumer,
-            //        SkuInquiryDetails = items.Skip(skip).Take((int)take).Select(x => new
-            //        {
-            //            Sku = new
-            //            {
-            //                SkuName = x.Key,
-            //                Quantity = x.Value.ToString(),
-            //                WarehouseCode = warehouse
-            //            }
-            //        }).ToList()
-            //    });
-
-            //    skip += (int)take;
-
-            //    SkuInventoryDetailsResult result = JsonConvert.DeserializeObject<SkuInventoryDetailsResult>(JsonConvert.SerializeObject(response));
-
-            //    if (result.Errors != null && result.Errors.HasErrors)
-            //        throw new HrblRestApiException(string.IsNullOrWhiteSpace(result.Errors.ErrorMessage) ? "Unknown error" : result.Errors.ErrorMessage);
-
-            //    _inventory.AddRange(result.SkuInventoryDetails.Inventory);
-            //}
-
 
             if (isError)
                 throw new HrblRestApiException(error);

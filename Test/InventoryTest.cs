@@ -1,4 +1,4 @@
-using Filuet.Hrbl.Ordering.Abstractions;
+﻿using Filuet.Hrbl.Ordering.Abstractions;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -28,7 +28,7 @@ namespace Filuet.Hrbl.Ordering.Tests
         [Theory]
        // [InlineData("TW", "0006", 1)]
         //[InlineData("LR", "794N / 795N", 1)]]
-        [InlineData("5C", "522U", 1)]
+        [InlineData("5C", "291А", 1)]
         //[InlineData("U7", "0006", 1)]
         //[InlineData("AI", "0006", 1)]
        // [InlineData("LV", "5438", 1)]

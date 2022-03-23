@@ -103,6 +103,8 @@ namespace Filuet.Hrbl.Ordering.Abstractions.Builders
                 if (string.IsNullOrWhiteSpace(l.Sku))
                     issues.AppendLine($"[line {index}] Sku is mandatory");
 
+                l.Sku = l.Sku.ToNormalSku();
+
                 if (string.IsNullOrWhiteSpace(l.ProcessingLocation))
                     issues.AppendLine($"[line {index}] Processing location is mandatory");
 

@@ -35,8 +35,10 @@ namespace Filuet.Hrbl.Ordering.Abstractions.Builders
                 issues.AppendLine("Currency is mandatory");
 
             decimal amount = 0m;
+
             if (!decimal.TryParse(payload.Amount.Replace(",", "."), out amount))
                 issues.AppendLine("Invalid order total due");
+
             else if (amount <= 0)
                 issues.AppendLine("Amount must be positive");
 

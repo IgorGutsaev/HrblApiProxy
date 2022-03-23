@@ -191,6 +191,8 @@ namespace Filuet.Hrbl.Ordering.Abstractions.Builders
                 if (string.IsNullOrWhiteSpace(l.Sku))
                     issues.AppendLine($"[line {index}] Sku is mandatory");
 
+                l.Sku = l.Sku.ToNormalSku();
+
                 if (l.Quantity <= 0)
                     issues.AppendLine($"[line {index}] Quantity must be positive");
 
