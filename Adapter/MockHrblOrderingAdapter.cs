@@ -6,6 +6,7 @@ using Filuet.Hrbl.Ordering.Abstractions;
 using Filuet.Hrbl.Ordering.Abstractions.Builders;
 using Newtonsoft.Json;
 using Filuet.Hrbl.Ordering.Common;
+using Filuet.Hrbl.Ordering.Abstractions.Dto;
 
 namespace Filuet.Hrbl.Ordering.Adapter
 {
@@ -101,6 +102,11 @@ namespace Filuet.Hrbl.Ordering.Adapter
         public async Task<WHFreightCode[]> GetShippingWhseAndFreightCodes(string postalCode, bool expressDeliveryFlag = true) => null;
 
         public Task<ConversionRateResponse> GetConversionRate(ConversionRateRequest request) => null;
+
+        public Task<GetDSEligiblePromoSKUResponseDTO> GetDSEligiblePromoSKU(GetDSEligiblePromoSKURequestDTO request)
+        {
+            throw new NotImplementedException();
+        }
         #endregion
     }
 }

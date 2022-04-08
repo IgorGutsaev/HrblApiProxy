@@ -1,4 +1,5 @@
 ﻿using Filuet.Hrbl.Ordering.Abstractions.Builders;
+using Filuet.Hrbl.Ordering.Abstractions.Dto;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -59,5 +60,7 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         Task<SubmitResponse> SubmitOrder(SubmitRequest request);
 
         Task<ConversionRateResponse> GetConversionRate(ConversionRateRequest request);
+
+        Task<GetDSEligiblePromoSKUResponseDTO> GetDSEligiblePromoSKU(GetDSEligiblePromoSKURequestDTO request);
     }
 }

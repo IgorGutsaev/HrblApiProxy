@@ -1,9 +1,11 @@
 ﻿using Filuet.Hrbl.Ordering.Abstractions;
 using Filuet.Hrbl.Ordering.Abstractions.Builders;
+using Filuet.Hrbl.Ordering.Abstractions.Dto;
 using Filuet.Hrbl.Ordering.Common;
 using Filuet.Hrbl.Ordering.Test;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -393,6 +395,54 @@ namespace Filuet.Hrbl.Ordering.Tests
         public async Task Test_ConversionRate()
         {
             var response = await _adapter.GetConversionRate(new ConversionRateRequest { ConversionDate = "2022-03-11T12:15:11.4366", ExchangeRateType = "HL Cambodia NTS FX",  FromCurrency = "USD", ToCurrency = "KHR" });
+        }
+
+        [Fact]
+        public async Task Test_GetDSEligiblePromoSKU()
+        {
+            // Prepare
+            Assert.NotNull(_adapter);
+
+            var request = new GetDSEligiblePromoSKURequestDTO()
+            {
+                ServiceConsumer = "AAKIOSK",
+                RequestingService = "AAKIOSK",
+                DistributorId = "38008946",
+                Country = "RU",
+                OrderMonth = "2022/03",
+                OrderDate = DateTime.Now,
+                OrderType = "RSO",
+                VolumePoints = "100",
+                Promotion = new List<ReqPromotion>()
+                {
+                    new ReqPromotion()
+                    {
+                        SKU = "0141",
+                        FreightCode = "PU1",
+                        OrderedQuantity = 1,
+                        ChrAttribute1 = "PC",
+                        ChrAttribute2 = "AAKIOSK",
+                        ChrAttribute3 = "9O",
+                        ChrAttribute5 = "P",
+                        TotalRetail = 1300
+                    },
+                    new ReqPromotion()
+                    {
+                        SKU = "0006",
+                        FreightCode = "PU1",
+                        OrderedQuantity = 1,
+                        ChrAttribute1 = "PC",
+                        ChrAttribute2 = "AAKIOSK",
+                        ChrAttribute3 = "9O",
+                        ChrAttribute5 = "P",
+                        TotalRetail = 5000
+                    },
+                }
+            };
+            var result = await _adapter.GetDSEligiblePromoSKU(request);
+
+            // Post-validate
+            Assert.Equal(result.IsPromoOrder, "Y");
         }
     }
 }

@@ -9,6 +9,8 @@ using Filuet.Hrbl.Ordering.Abstractions;
 using System.Text;
 using Filuet.Hrbl.Ordering.Common;
 using Filuet.Hrbl.Ordering.Abstractions.Builders;
+using Filuet.Hrbl.Ordering.Abstractions.Dto;
+using System.Net.Http;
 
 namespace Filuet.Hrbl.Ordering.Adapter
 {
@@ -431,7 +433,21 @@ namespace Filuet.Hrbl.Ordering.Adapter
         }
         #endregion
 
-        public override string ToString() => Environment.ToString();
+        public async Task<GetDSEligiblePromoSKUResponseDTO> GetDSEligiblePromoSKU(GetDSEligiblePromoSKURequestDTO request)
+        {
+            
+            HttpRequestMessage httpRequestMessage = new HttpRequestMessage(HttpMethod.Post, _proxy.BaseUri.AbsoluteUri + "/GetDSEligiblePromoSKU");
 
+            var json = JsonConvert.SerializeObject(request);
+            //construct content to send
+            httpRequestMessage.Content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var repsonse = await _proxy.HttpClient.SendAsync(httpRequestMessage);
+            string responseStr = await repsonse.Content.ReadAsStringAsync();
+
+            return JsonConvert.DeserializeObject<GetDSEligiblePromoSKUResponseDTO>(responseStr);
+        }
+
+        public override string ToString() => Environment.ToString();
     }
 }
