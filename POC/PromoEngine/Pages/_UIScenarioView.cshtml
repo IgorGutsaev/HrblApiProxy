@@ -1,0 +1,58 @@
+﻿@model Filuet.Hrbl.Ordering.Abstractions.Dto.GetDSEligiblePromoSKUResponseDTO
+
+<style>
+    .promoFoundPopup {
+        border: 1px solid #0094ff;
+        background-color: #dbf2ff;
+        max-width: 500px;
+        text-align: left;
+        margin: auto;
+        width: 500px;
+        padding: 5px;
+    }
+</style>
+
+<script type="text/javascript">
+    $(function () {
+        $('#ClickMe').click(function () {
+            alert('Fffffuuuu')
+            window.open('/Home/Create/', 'CustomerSearch', 'height=' + (window.screen.height - 100) + ',width=200,left=' + (window.screen.width - 250) + ',top=10,status=no,toolbar=no,resizable=yes,scrollbars=yes');
+        });
+    });
+</script>
+
+@{
+    <div class="promoFoundPopup">
+        <b>Congratulations!</b><br>
+        Gifts for <b>@Model.Promotions.Promotion.Count promotion@(@Model.Promotions.Promotion.Count == 1 ? string.Empty : "s")</b> are available to you.<br>
+        Select gifts to add to your order.
+        <br>
+        <br>
+
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+            Launch demo modal
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        ...
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+}

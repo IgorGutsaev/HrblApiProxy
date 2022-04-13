@@ -195,13 +195,13 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         public string CnSubType { get; private set; }
 
         [JsonIgnore]
-        public string Email => Shipping.Contacts?.FirstOrDefault(x => x.IsActive && string.Equals(x.Type, "email", StringComparison.InvariantCultureIgnoreCase))?.Value ?? null;
+        public string Email => Shipping.Contacts?.Where(x => x.IsActive && string.Equals(x.Type, "email", StringComparison.InvariantCultureIgnoreCase) && !string.IsNullOrEmpty(x.Value))?.OrderByDescending(x=>x.LastUpdateDate)?.FirstOrDefault()?.Value ?? null;
 
         /// <summary>
         /// Mobile phone number
         /// </summary>
         [JsonIgnore]
-        public string MobileNumber => Shipping.Contacts?.FirstOrDefault(x => x.IsActive && string.Equals(x.Type, "phone", StringComparison.InvariantCultureIgnoreCase))?.Value ?? null;
+        public string MobileNumber => Shipping.Contacts?.FirstOrDefault(x => x.IsActive && string.Equals(x.Type, "phone", StringComparison.InvariantCultureIgnoreCase) && string.IsNullOrEmpty(x.Value))?.Value ?? null;
 
         public override string ToString() => Name.Trim();
     }

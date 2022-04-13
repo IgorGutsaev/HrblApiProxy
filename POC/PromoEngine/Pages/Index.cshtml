@@ -1,0 +1,119 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+@using System.Linq;
+
+<div class="text-center">
+    <h1 class="display-4">Welcome to PromoEngine POC</h1>
+
+    <br />
+    <br />
+    <br />
+
+    <form asp-page-handler="button" method="post">
+        @*<div>
+            <label>Payment amount:</label>
+            @Html.EditorFor(model => model.Amount, new { htmlAttributes = new { @type = "number", @min = "0.01", @max = Model.Country == "10", @step = "0.01", @value = "0.01" } })
+            <label style="color: red"> * Uzbekistan min amount is 1</label>
+        </div>*@
+        @{
+            List<SelectListItem> listItems = new List<SelectListItem>();
+            listItems.Add(new SelectListItem
+            {
+                Text = "Cyprus",
+                Value = "CY"
+            });
+            listItems.Add(new SelectListItem
+            {
+                Text = "Russia",
+                Value = "RU"
+            });
+            listItems.Add(new SelectListItem
+            {
+                Text = "Latvia",
+                Value = "LV"
+            });
+        }
+
+        <table style="width: 100%">
+            <tr>
+                <td class="text-right">Distributor ID</td>
+                <td>@Html.EditorFor(model => model.DistributorId)</td>
+                <td class="text-right">Country</td>
+                <td>@Html.DropDownListFor(model => model.Country, listItems)</td>
+            </tr>
+            <tr>
+                <td class="text-right">OrderMonth</td>
+                <td>@Html.EditorFor(model => model.OrderMonth, new { style = "width:100%" })</td>
+                <td class="text-right">OrderType</td>
+                <td>@Html.EditorFor(model => model.OrderType)</td>
+            </tr>
+            <tr>
+                <td class="text-right">Cart (Sku x Qty)</td>
+                <td>@Html.EditorFor(model => model.Cart)</td>
+                <td class="text-right">OrderCategory</td>
+                <td>@Html.EditorFor(model => model.OrderCategory)</td>
+            </tr>
+            <tr>
+                <td class="text-right">Warehouse</td>
+                <td>@Html.EditorFor(model => model.Warehouse)</td>
+                <td class="text-right">ProcessingLocation</td>
+                <td>@Html.EditorFor(model => model.ProcessingLocation)</td>
+            </tr>
+            <tr>
+                <td class="text-right">FreightCode</td>
+                <td> @Html.EditorFor(model => model.FreightCode)</td>
+                <td></td>
+                <td></td>
+            </tr>
+        </table>
+
+        <br />
+
+        <button class="btn btn-secondary btn-success">Calculate</button>
+
+        <br />
+        <br />
+        <br />
+
+        @if (Model.Pricing != null)
+            if (string.IsNullOrWhiteSpace(Model.PricingErrors))
+            {
+                <div>
+                    <p class="h2">Pricing operation result</p>
+                    <br />
+                    <div>VP: @Model.Pricing.Header.VolumePoints</div>
+                    <div>TotalDue: @Model.Pricing.Header.TotalDue</div>
+                </div>
+
+                if (Model.PromoResult != null && Model.PromoResult.IsPromo)
+                {
+                    <div>
+                        <label style="color: darkseagreen; font-weight: 600">Number of promotions found: @Model.PromoResult.Promotions.Promotion.Count.ToString()</label>
+                    </div>
+                    <div>DS Type: @Model.PromoResult.Promotions.Promotion.First().DistributorType</div>
+                    <div>DS Subtype: @Model.PromoResult.Promotions.Promotion.First().DistributorSubType</div>
+                    <div>DS Status: @Model.PromoResult.Promotions.Promotion.First().DistributorStatus</div>
+                    <br />
+                    @Html.Partial("_PromoView", Model.PromoResult)
+                    <br />
+                    @Html.Partial("_UIScenarioView", Model.PromoResult)
+                }
+                else
+                {
+                    <div>
+                        <label style="color: tomato; font-weight: 600">This is not a promo order</label>
+                    </div>
+                }
+            }
+            else
+            {
+                <div>
+                    <label style="color: tomato; font-weight: 600">Failed to calculate cart @Model.PricingErrors</label>
+                </div>
+            }
+    </form>
+</div>

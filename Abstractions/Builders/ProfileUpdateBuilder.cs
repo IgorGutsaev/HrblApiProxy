@@ -118,7 +118,7 @@ namespace Filuet.Hrbl.Ordering.Abstractions.Builders
             if (_request.Contact == null)
                 _request.Contact = new DistributorContactToUpdate();
 
-            _request.Contact.Type = type;
+            _request.Contact.Type = type.ToUpper();
             if (!string.IsNullOrWhiteSpace(subType))
                 _request.Contact.SubType = subType;
             _request.Contact.Value = value;

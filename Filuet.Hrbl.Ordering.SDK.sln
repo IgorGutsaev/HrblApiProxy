@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.0.31912.275
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32228.343
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Filuet.Hrbl.Ordering.Abstractions", "Abstractions\Filuet.Hrbl.Ordering.Abstractions.csproj", "{C6BD87B1-E02D-498B-8D72-6B896DB39A3F}"
 EndProject
@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Filuet.Hrbl.Ordering.Common
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Filuet.Hrbl.Ordering.Test", "Test\Filuet.Hrbl.Ordering.Test.csproj", "{227B01ED-938A-4481-A760-B8F6CC28D1DD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Filuet.Hrbl.Promo.SDK", "Promo\Filuet.Hrbl.Promo.SDK\Filuet.Hrbl.Promo.SDK.csproj", "{628EE2AC-B976-4384-943A-AA9679219C96}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "POC", "POC", "{C8D66225-D11C-4095-A9CE-936E0CE0F4AA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Filuet.Hrbl.Ordering.POC.PromoEngine", "POC\PromoEngine\Filuet.Hrbl.Ordering.POC.PromoEngine.csproj", "{2CE61DE6-B47E-4FBB-9644-69257061AD2D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -85,21 +87,24 @@ Global
 		{227B01ED-938A-4481-A760-B8F6CC28D1DD}.Release|x64.Build.0 = Release|Any CPU
 		{227B01ED-938A-4481-A760-B8F6CC28D1DD}.Release|x86.ActiveCfg = Release|Any CPU
 		{227B01ED-938A-4481-A760-B8F6CC28D1DD}.Release|x86.Build.0 = Release|Any CPU
-		{628EE2AC-B976-4384-943A-AA9679219C96}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{628EE2AC-B976-4384-943A-AA9679219C96}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{628EE2AC-B976-4384-943A-AA9679219C96}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{628EE2AC-B976-4384-943A-AA9679219C96}.Debug|x64.Build.0 = Debug|Any CPU
-		{628EE2AC-B976-4384-943A-AA9679219C96}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{628EE2AC-B976-4384-943A-AA9679219C96}.Debug|x86.Build.0 = Debug|Any CPU
-		{628EE2AC-B976-4384-943A-AA9679219C96}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{628EE2AC-B976-4384-943A-AA9679219C96}.Release|Any CPU.Build.0 = Release|Any CPU
-		{628EE2AC-B976-4384-943A-AA9679219C96}.Release|x64.ActiveCfg = Release|Any CPU
-		{628EE2AC-B976-4384-943A-AA9679219C96}.Release|x64.Build.0 = Release|Any CPU
-		{628EE2AC-B976-4384-943A-AA9679219C96}.Release|x86.ActiveCfg = Release|Any CPU
-		{628EE2AC-B976-4384-943A-AA9679219C96}.Release|x86.Build.0 = Release|Any CPU
+		{2CE61DE6-B47E-4FBB-9644-69257061AD2D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2CE61DE6-B47E-4FBB-9644-69257061AD2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2CE61DE6-B47E-4FBB-9644-69257061AD2D}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{2CE61DE6-B47E-4FBB-9644-69257061AD2D}.Debug|x64.Build.0 = Debug|Any CPU
+		{2CE61DE6-B47E-4FBB-9644-69257061AD2D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{2CE61DE6-B47E-4FBB-9644-69257061AD2D}.Debug|x86.Build.0 = Debug|Any CPU
+		{2CE61DE6-B47E-4FBB-9644-69257061AD2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2CE61DE6-B47E-4FBB-9644-69257061AD2D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2CE61DE6-B47E-4FBB-9644-69257061AD2D}.Release|x64.ActiveCfg = Release|Any CPU
+		{2CE61DE6-B47E-4FBB-9644-69257061AD2D}.Release|x64.Build.0 = Release|Any CPU
+		{2CE61DE6-B47E-4FBB-9644-69257061AD2D}.Release|x86.ActiveCfg = Release|Any CPU
+		{2CE61DE6-B47E-4FBB-9644-69257061AD2D}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{2CE61DE6-B47E-4FBB-9644-69257061AD2D} = {C8D66225-D11C-4095-A9CE-936E0CE0F4AA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {05D61E69-9ADB-498D-B87A-7152D6533DE5}

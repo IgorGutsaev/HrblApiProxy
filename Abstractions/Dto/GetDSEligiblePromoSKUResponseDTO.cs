@@ -15,6 +15,9 @@ namespace Filuet.Hrbl.Ordering.Abstractions.Dto
 
         [JsonProperty("Errors")]
         public string Errors { get; set; }
+
+        [JsonIgnore]
+        public bool IsPromo => string.Equals(IsPromoOrder, "Y", StringComparison.InvariantCultureIgnoreCase) && Promotions.Promotion.Count > 0;
     }
 
     public class RespPromotion
@@ -89,7 +92,7 @@ namespace Filuet.Hrbl.Ordering.Abstractions.Dto
         public string ChrAttribute5 { get; set; }
 
         [JsonProperty("DateAttribute1")]
-        public DateTime DateAttribute1 { get; set; }
+        public DateTime? DateAttribute1 { get; set; }
 
         [JsonProperty("DateAttribute2")]
         public object DateAttribute2 { get; set; }
@@ -104,13 +107,13 @@ namespace Filuet.Hrbl.Ordering.Abstractions.Dto
         public object DateAttribute5 { get; set; }
 
         [JsonProperty("NumAttribute1")]
-        public int NumAttribute1 { get; set; }
+        public int? NumAttribute1 { get; set; }
 
         [JsonProperty("NumAttribute2")]
-        public int NumAttribute2 { get; set; }
+        public int? NumAttribute2 { get; set; }
 
         [JsonProperty("NumAttribute3")]
-        public int NumAttribute3 { get; set; }
+        public int? NumAttribute3 { get; set; }
 
         [JsonProperty("NumAttribute4")]
         public object NumAttribute4 { get; set; }

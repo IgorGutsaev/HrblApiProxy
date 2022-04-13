@@ -1,7 +1,10 @@
 ﻿using Filuet.Hrbl.Ordering.Common;
 using System;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
+
+[assembly: InternalsVisibleTo("Filuet.Hrbl.Ordering.POC.PromoEngine")]
 
 namespace Filuet.Hrbl.Ordering.Abstractions.Builders
 {

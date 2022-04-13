@@ -191,7 +191,10 @@ namespace Filuet.Hrbl.Ordering.Adapter
 
             if (request.Contact != null)
             {
-                DistributorContact contactToUpdate = profile.Shipping?.Contacts?.FirstOrDefault(x => x.Type.Equals(request.Contact.Type, StringComparison.InvariantCultureIgnoreCase) && x.SubType.Equals(request.Contact.SubType, StringComparison.InvariantCultureIgnoreCase));
+                DistributorContact contactToUpdate = profile.Shipping?.Contacts?.FirstOrDefault(x => x.Type.Equals(request.Contact.Type, StringComparison.InvariantCultureIgnoreCase) 
+                    && (x.SubType.Equals(request.Contact.SubType, StringComparison.InvariantCultureIgnoreCase)
+                        || (string.IsNullOrEmpty(request.Contact.SubType) && x.IsActive)));
+
                 if (contactToUpdate != null)
                     request.Contact.FillInWithUnspecifiedData(contactToUpdate);
                 // else request.Contact = null; // We're not allowed to create new contact
@@ -445,7 +448,8 @@ namespace Filuet.Hrbl.Ordering.Adapter
             var repsonse = await _proxy.HttpClient.SendAsync(httpRequestMessage);
             string responseStr = await repsonse.Content.ReadAsStringAsync();
 
-            return JsonConvert.DeserializeObject<GetDSEligiblePromoSKUResponseDTO>(responseStr);
+            return JsonConvert.DeserializeObject<GetDSEligiblePromoSKUResponseDTO>(responseStr,
+              new HrblNullableResponseConverter<GetDSEligiblePromoSKUResponseDTO>());
         }
 
         public override string ToString() => Environment.ToString();

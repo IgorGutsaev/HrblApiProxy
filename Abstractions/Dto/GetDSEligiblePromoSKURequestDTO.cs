@@ -51,9 +51,15 @@ namespace Filuet.Hrbl.Ordering.Abstractions.Dto
         [JsonProperty("ChrAttribute2")]
         public string ChrAttribute2 { get; set; }
 
+        /// <summary>
+        /// Warehouse code
+        /// </summary>
         [JsonProperty("ChrAttribute3")]
         public string ChrAttribute3 { get; set; }
 
+        /// <summary>
+        /// Product type P/A/L
+        /// </summary>
         [JsonProperty("ChrAttribute5")]
         public string ChrAttribute5 { get; set; }
 

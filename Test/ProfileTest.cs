@@ -9,7 +9,7 @@ namespace Filuet.Hrbl.Ordering.Tests
     public class ProfileTest : BaseTest
     {
         [Theory]
-        //[InlineData("7918180560")]
+        [InlineData("7918180560")]
         //[InlineData("VA00867877")]
         //[InlineData("7919384588")]
         //[InlineData("U515120144")]
@@ -20,7 +20,7 @@ namespace Filuet.Hrbl.Ordering.Tests
         //[InlineData("D1040636")]
         //[InlineData("MY721834")]
         //[InlineData("95126026")]
-        [InlineData("20168088")]
+        //[InlineData("20168088")]
         public async Task Test_Get_profile(string distributorId)
         {
             // Prepare
@@ -35,6 +35,23 @@ namespace Filuet.Hrbl.Ordering.Tests
             // Post-validate
             Assert.NotNull(result);
             Assert.Equal(distributorId, result.Id);
+        }
+
+        [Theory]
+        [InlineData("7918180560", "igorgy@bk.ru")]
+        public async Task Test_Change_profile_Email(string distributorId, string email)
+        {
+            Assert.NotNull(_adapter);
+
+            // Pre-validate
+            Assert.False(string.IsNullOrWhiteSpace(distributorId));
+
+            // Perform
+            await _adapter.UpdateAddressAndContacts(b => b.SetDistributorId(distributorId).SetContacts("EMAIL", email));
+
+            // Post-validate
+            DistributorProfile result = await _adapter.GetProfile(distributorId);
+            Assert.Equal(email, result.Email);
         }
 
         [Theory]
