@@ -1,0 +1,51 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@model Filuet.Hrbl.Ordering.Abstractions.Models.Promotions
+
+<style>
+    .promoTableFinal {
+        border-style: solid;
+        border-color: #128012;
+    }
+</style>
+
+@{
+    <table class="promoTableFinal">
+        <tr class="promoTableFinal">
+            <th class="promoTableFinal">RuleId</th>
+            <th class="promoTableFinal">Rule name</th>
+            <th class="promoTableFinal">Reward item</th>
+            <th class="promoTableFinal">Type</th>
+            <th class="promoTableFinal">Redemption type</th>
+            <th class="promoTableFinal">Redemption limit</th>
+            <th class="promoTableFinal">Max SKU Qty to redeem</th>
+            <th class="promoTableFinal">Notification</th>
+        </tr>
+        @foreach (var t in Model.Promo)
+        {
+            string totalReward = string.Empty;
+            int? maxSkuToRedeem = null;
+            foreach (var x in t.RewardGroups)
+            {
+                totalReward += $"{x.Type}: {x.RewardItem} {(string.IsNullOrWhiteSpace(x.ValidUntil) ? string.Empty : ($"valid until {x.ValidUntil}"))}".Trim() + ", ";
+                maxSkuToRedeem = x.MaxOrderedQuantity ?? maxSkuToRedeem;
+            }
+            totalReward = totalReward.Trim();
+            if (totalReward.EndsWith(','))
+                totalReward = totalReward.Substring(0, totalReward.Length - 1);
+
+            <tr class="promoTableFinal">
+                <td class="promoTableFinal">@t.RuleId</td>
+                <td class="promoTableFinal">@t.RuleName</td>
+                <td class="promoTableFinal">@totalReward</td>
+                <td class="promoTableFinal">@t.Type</td>
+                <td class="promoTableFinal">@t.RedemptionType</td>
+                <td class="promoTableFinal">@t.RedemptionLimit</td>
+                <td class="promoTableFinal">@maxSkuToRedeem</td>
+                <td class="promoTableFinal">@t.Notification</td>
+            </tr>
+        }
+    </table>
+}

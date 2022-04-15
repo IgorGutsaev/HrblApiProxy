@@ -1,0 +1,36 @@
+﻿
+@model Filuet.Hrbl.Ordering.Abstractions.Models.Promotion
+@using Filuet.Hrbl.Ordering.Abstractions.Enums
+
+<script type="text/javascript">
+    function updateInput(ish) {
+        if (ish === "on")
+            $('#saveSelection').removeClass('disabled');
+    }
+
+    function applySel() {
+        $('#saveSelection').removeClass('disabled');
+        $('#saveSelection').addClass('disabled');
+    }
+</script>
+
+@{
+    if (Model.RedemptionLimit == PromotionRedemptionLimit.One)
+    {
+        foreach (var group in Model.RewardGroups)
+        {
+            foreach (var reward in group.Rewards)
+            {
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked value="@reward.IsSelected" onchange="updateInput(this.value)">
+                    <label class="form-check-label" for="flexRadioDefault2">
+                        @reward.Description
+                    </label>
+                </div>
+            }
+        }
+
+        <br>
+        <button type="button" id="saveSelection" class="btn btn-primary disabled" onclick="applySel()">Save selection</button>
+    }
+}

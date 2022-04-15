@@ -21,6 +21,7 @@
             <th class="promoTable">Valid until</th>
             <th class="promoTable">Type</th>
             <th class="promoTable">Rule</th>
+            <th class="promoTable">RuleID</th>
             <th class="promoTable">
                 Reward item
             </th>
@@ -28,6 +29,7 @@
             <th class="promoTable">OrderedQuantity</th>
             <th class="promoTable">Reward redemption type</th>
             <th class="promoTable">RedemptionType</th>
+            <th class="promoTable">Notification</th>
         </tr>
         @foreach (var t in Model.Promotions.Promotion)
         {
@@ -38,11 +40,13 @@
         <td class="promoTable">@(isCash ? t.DateAttribute1?.ToLongDateString() : "-")</td>
         <td class="promoTable">@t.PromotionType</td>
         <td class="promoTable">@t.PromotionRuleName</td>
+        <td class="promoTable">@t.RuleID</td>
         <td class="promoTable">@t.PromotionProp1</td>
         @*<td class="promoTable">@(isCash ? t.NumAttribute1.ToString("n2") : t.SKU)</td>*@
         <td class="promoTable">@t.OrderedQuantity</td>
         <td class="promoTable">@t.ChrAttribute1</td>
         <td class="promoTable">@t.RedemptionType</td>
+        <td class="promoTable">@t.PromoNotification</td>
     </tr>
         }
     </table>

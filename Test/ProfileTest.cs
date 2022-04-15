@@ -37,7 +37,7 @@ namespace Filuet.Hrbl.Ordering.Tests
             Assert.Equal(distributorId, result.Id);
         }
 
-        [Theory]
+        [Theory] 
         [InlineData("7918180560", "igorgy@bk.ru")]
         public async Task Test_Change_profile_Email(string distributorId, string email)
         {

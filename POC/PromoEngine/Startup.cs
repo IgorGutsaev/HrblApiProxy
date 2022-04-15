@@ -1,3 +1,5 @@
+using AspNetCoreHero.ToastNotification;
+using AspNetCoreHero.ToastNotification.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -24,6 +26,13 @@ namespace Filuet.Hrbl.Ordering.POC.PromoEngine
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
+
+            services.AddNotyf(config =>
+            {
+                config.DurationInSeconds = 5;
+                config.IsDismissable = true;
+                config.Position = NotyfPosition.TopRight;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -46,6 +55,8 @@ namespace Filuet.Hrbl.Ordering.POC.PromoEngine
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseNotyf();
 
             app.UseEndpoints(endpoints =>
             {

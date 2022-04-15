@@ -1,7 +1,11 @@
-﻿using Filuet.Hrbl.Ordering.Abstractions;
+﻿using AspNetCoreHero.ToastNotification.Abstractions;
+using Filuet.Hrbl.Ordering.Abstractions;
 using Filuet.Hrbl.Ordering.Abstractions.Builders;
 using Filuet.Hrbl.Ordering.Abstractions.Dto;
+using Filuet.Hrbl.Ordering.Abstractions.Enums;
+using Filuet.Hrbl.Ordering.Abstractions.Models;
 using Filuet.Hrbl.Ordering.Adapter;
+using Filuet.Hrbl.Ordering.Common;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
@@ -11,12 +15,14 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
+
 namespace PromoEngine.Pages
 {
     [BindProperties]
     public class IndexModel : PageModel
     {
         private readonly ILogger<IndexModel> _logger;
+        private readonly INotyfService _toastNotification;
 
         private HrblOrderingAdapter Adapter => new HrblOrderingAdapter(new HrblOrderingAdapterSettingsBuilder()
                 .WithUri("https://herbalife-oegdevws.hrbl.com/Order/HLOnlineOrdering/ts3/")
@@ -24,14 +30,16 @@ namespace PromoEngine.Pages
                 .WithOrganizationId(73)
                 .WithCredentials("hlfnord", "welcome123").Build());
 
-        public IndexModel(ILogger<IndexModel> logger)
+        public IndexModel(ILogger<IndexModel> logger, INotyfService toastNotification)
         {
             _logger = logger;
+            _toastNotification = toastNotification;
         }
 
         public void OnGet()
         {
-
+            // Success Toast
+            _toastNotification.Success("A success for christian-schou.dk");
         }
 
         public async Task<IActionResult> OnPostButton()
@@ -99,7 +107,8 @@ namespace PromoEngine.Pages
 
                     foreach (var line in Pricing.Lines)
                     {
-                        promoRequest.Promotion.Add(new ReqPromotion  {
+                        promoRequest.Promotion.Add(new ReqPromotion
+                        {
                             SKU = line.Sku,
                             FreightCode = FreightCode,
                             OrderedQuantity = (int)line.Quantity,
@@ -113,7 +122,71 @@ namespace PromoEngine.Pages
                 }
 
                 PromoResult = await Adapter.GetDSEligiblePromoSKU(promoRequest);
+                if (PromoResult.IsPromo)
+                {
+                    Promotions = new Promotions();
 
+                    var realPromos = PromoResult.Promotions.Promotion.GroupBy(x => x.RuleID);
+                    foreach (var g in realPromos)
+                    {
+                        Promotion promotion = new Promotion
+                        {
+                            RuleId = g.Key,
+                            RuleName = g.First().PromotionRuleName,
+                            RedemptionType = EnumHelper.GetValueFromDescription<PromotionRedemptionType>(g.First().RedemptionType),
+                            RedemptionLimit = EnumHelper.GetValueFromDescription<PromotionRedemptionLimit>(g.First().ChrAttribute1),
+                            Notification = g.First().PromoNotification
+                        };
+
+                        var groupByTypes = g.ToList().GroupBy(x => x.PromotionType);
+
+                        foreach (var x in groupByTypes)
+                        {
+                            var head = x.First();
+                            if (head.PromotionType.Equals("CASH VOUCHER", StringComparison.InvariantCultureIgnoreCase))
+                            {
+                                foreach (var fs in x)
+                                {
+                                    promotion.RewardGroups.Add(new RewardGroup // With reward group
+                                    {
+                                        RewardItem = fs.PromotionProp1,
+                                        OrderedQuantity = fs.OrderedQuantity,
+                                        Type = fs.PromotionType,
+                                        RuleName = fs.PromotionRuleName,
+                                        ValidUntil = fs.DateAttribute1?.ToLongDateString() ?? string.Empty
+                                    }
+                                    .AddReward(new Reward { // With reward lines
+                                        Type = fs.PromotionType,
+                                        Description = fs.ChrAttribute3,
+                                        RewardItem = fs.PromotionProp1,
+                                        RuleName = fs.PromotionRuleName,
+                                        ValidUntil = fs.DateAttribute1?.ToLongDateString() ?? string.Empty
+                                    }));
+                                }
+                            }
+                            else if (head.PromotionType.Equals("FREE SKU", StringComparison.InvariantCultureIgnoreCase))
+                            {
+                                promotion.RewardGroups.Add(new RewardGroup // With reward group
+                                {
+                                    RewardItem = string.Join(", ", x.Select(r => $"{r.PromotionProp1}x{r.OrderedQuantity}")),
+                                    OrderedQuantity = head.OrderedQuantity,
+                                    Type = head.PromotionType,
+                                    RuleName = head.PromotionRuleName,
+                                    MaxOrderedQuantity = head.ChrAttribute2
+                                }
+                                .AddRewards(() => x.Select(y => new Reward { // With reward lines
+                                    Type = y.PromotionType,
+                                    Description = y.ChrAttribute3,
+                                    RewardItem = y.PromotionProp1,
+                                    RuleName = y.PromotionRuleName,
+                                    ValidUntil = y.DateAttribute1?.ToLongDateString() ?? string.Empty
+                                })));
+                            }
+                        }
+
+                        Promotions.Promo.Add(promotion);
+                    }
+                }
             }
             catch (ArgumentException ex)
             {
@@ -125,15 +198,15 @@ namespace PromoEngine.Pages
 
 
         [Required]
-        public string DistributorId { get; set; } = "38008946";
+        public string DistributorId { get; set; } = "V7003827";
 
         [Required]
-        public string Country { get; set; } = "RU";
+        public string Country { get; set; } = "CY";
 
         [DataType(DataType.Date, ErrorMessage = "Date only")]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [Required]
-        public DateTime OrderMonth { get; set; } = DateTime.UtcNow;
+        public DateTime OrderMonth { get; set; } = DateTime.Parse("2022-01-20");
 
         [Required]
         public string OrderCategory { get; set; } = "RSO";
@@ -142,20 +215,22 @@ namespace PromoEngine.Pages
         public string OrderType { get; set; } = "RSO";
 
         [Required]
-        public string Warehouse { get; set; } = "9O";
+        public string Warehouse { get; set; } = "U7";
 
         [Required]
-        public string ProcessingLocation { get; set; } = "9O";
+        public string ProcessingLocation { get; set; } = "U7";
 
         [Required]
-        public string FreightCode { get; set; } = "PU1";
+        public string FreightCode { get; set; } = "PU";
 
         [Required]
-        public string Cart { get; set; } = "0242x3;1171x2";
+        public string Cart { get; set; } = "0106x10";
 
         public PricingResponse Pricing = null;
 
         public GetDSEligiblePromoSKUResponseDTO PromoResult = null;
+
+        public Promotions Promotions = null;
 
         public string PricingErrors { get; set; } = string.Empty;
 
