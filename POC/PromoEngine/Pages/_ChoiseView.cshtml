@@ -3,34 +3,59 @@
 @using Filuet.Hrbl.Ordering.Abstractions.Enums
 
 <script type="text/javascript">
-    function updateInput(ish) {
-        if (ish === "on")
-            $('#saveSelection').removeClass('disabled');
+    function onONEChanged(buttonId, value) {
+        if (value === "on") {
+            $(buttonId).removeClass('disabled');
+        }
+    }
+
+    function onMultiplyChanged(maxQty) {
+        qty = 0;
+        $("input:checkbox[name=flexCheckbox]:checked").each(function () {
+            qty += 1;
+        });
+
+        if (qty === maxQty)
+            $('#saveSelection_@Model.RuleId').removeClass('disabled');
     }
 
     function applySel() {
-        $('#saveSelection').removeClass('disabled');
-        $('#saveSelection').addClass('disabled');
+        $('#saveSelection_@Model.RuleId').removeClass('disabled');
+        $('#saveSelection_@Model.RuleId').addClass('disabled');
     }
 </script>
 
 @{
-    if (Model.RedemptionLimit == PromotionRedemptionLimit.One)
+
+    foreach (var group in Model.RewardGroups)
     {
-        foreach (var group in Model.RewardGroups)
+        if (Model.RedemptionLimit == PromotionRedemptionLimit.One)
         {
             foreach (var reward in group.Rewards)
             {
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked value="@reward.IsSelected" onchange="updateInput(this.value)">
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked value="@reward.IsSelected" onchange="onONEChanged('#saveSelection_@Model.RuleId', this.value)">
                     <label class="form-check-label" for="flexRadioDefault2">
                         @reward.Description
                     </label>
                 </div>
             }
         }
-
-        <br>
-        <button type="button" id="saveSelection" class="btn btn-primary disabled" onclick="applySel()">Save selection</button>
+        else if (Model.RedemptionLimit == PromotionRedemptionLimit.Multiple)
+        {
+            foreach (var reward in group.Rewards)
+            {
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="flexCheckbox" id="flexCheckbox2" checked value="@reward.IsSelected" onchange="onMultiplyChanged(@(group.MaxOrderedQuantity ?? group.Rewards.Count))">
+                    <label class="form-check-label" for="flexCheckbox2">
+                        @reward.Description
+                    </label>
+                </div>
+            }
+        }
     }
+
+    <br>
+
+    <button type="button" id="saveSelection_@Model.RuleId" class="btn btn-primary disabled" onclick="applySel()">Save selection</button>
 }

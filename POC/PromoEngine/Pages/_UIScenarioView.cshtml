@@ -25,7 +25,7 @@
 @{
     <div class="promoFoundPopup">
         <b>Congratulations!</b><br>
-        Gifts for <b>@Model.Promo.Count promotion@(@Model.Promo.Count == 1 ? string.Empty : "s")</b> are available to you.<br>
+        Gifts for <b>@Model.Promo.Count() promotion@(@Model.Promo.Count() == 1 ? string.Empty : "s")</b> are available to you.<br>
         Select gifts to add to your order.
         <br>
         <br>
@@ -58,7 +58,7 @@
                             <div class="carousel-inner">
                                 @foreach (var x in Model.Promo)
                                 {
-                                <div class="carousel-item @(x == Model.Promo.First() ? "active" : string.Empty)" style="padding: 30px 70px 150px 70px">
+                                <div class="carousel-item @(x == Model.Promo.First() ? "active" : string.Empty)" style="padding: 30px 70px 150px 70px; margin: 0 50px 0 50px">
                                     <p class="h6">@x.Notification</p>
                                     @Html.Partial("_ChoiseView", x)
 

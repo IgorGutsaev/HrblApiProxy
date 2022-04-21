@@ -7,9 +7,16 @@ namespace Filuet.Hrbl.Ordering.Abstractions.Models
 {
     public class Promotions
     {
-        public IList<Promotion> Promo { get; set; } = new List<Promotion>();
+        private IList<Promotion> _promo { get; set; } = new List<Promotion>();
 
-        public override string ToString() => $"{Promo.Count} promotions";
+        public IEnumerable<Promotion> Promo => _promo;
+
+        public void AddPromo(Promotion promo)
+        {
+            _promo.Add(promo);
+        }
+
+        public override string ToString() => $"{Promo.Count()} promotions";
     }
 
     public class RewardGroup
@@ -19,7 +26,7 @@ namespace Filuet.Hrbl.Ordering.Abstractions.Models
         public string RuleName { get; set; }
         public string RewardItem { get; set; }
         public int OrderedQuantity { get; set; }
-        public int? MaxOrderedQuantity { get; set; } // ChrAttribute2
+        public int? MaxOrderedQuantity { get; set; } // ChrAttribute2 Such value corresponds to the maximum number of free SKUs user can redeem as part of t
 
         public IList<Reward> Rewards { get; private set; } = new List<Reward>();
 
@@ -90,6 +97,10 @@ namespace Filuet.Hrbl.Ordering.Abstractions.Models
         /// </summary>
         /// <example>Congrats![Popup Notification message</example>
         public string Notification { get; set; } // PromoNotification
+
+        public Promotion()
+        {
+        }
 
         public override string ToString() => RuleName;
     }

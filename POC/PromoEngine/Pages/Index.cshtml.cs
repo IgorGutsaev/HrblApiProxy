@@ -184,7 +184,7 @@ namespace PromoEngine.Pages
                             }
                         }
 
-                        Promotions.Promo.Add(promotion);
+                        Promotions.AddPromo(promotion);
                     }
                 }
             }
