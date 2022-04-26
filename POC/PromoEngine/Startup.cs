@@ -26,7 +26,8 @@ namespace Filuet.Hrbl.Ordering.POC.PromoEngine
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
-
+            services.AddControllers();
+            services.AddControllersWithViews();
             services.AddNotyf(config =>
             {
                 config.DurationInSeconds = 5;
@@ -55,12 +56,15 @@ namespace Filuet.Hrbl.Ordering.POC.PromoEngine
             app.UseRouting();
 
             app.UseAuthorization();
-
+            
             app.UseNotyf();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

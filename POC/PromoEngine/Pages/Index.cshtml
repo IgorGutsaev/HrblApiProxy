@@ -6,6 +6,33 @@
 
 @using System.Linq;
 
+<script>
+    function RunMocked() {
+        $.ajax({
+            type: "POST",
+            url: '/Home/RunMocked',
+            data: '',
+            contentType: "application/json; charset=utf-8",
+            dataType: "text",
+            success: function (r) {
+
+            }
+        });
+    }
+
+    function RunCached() {
+        $.ajax({
+            type: "POST",
+            url: '/Home/RunCached',
+            data: '',
+            contentType: "application/json; charset=utf-8",
+            dataType: "text",
+            success: function (r) {
+
+            }
+        });
+    }
+</script>
 <div class="text-center">
     <h1 class="display-4">Welcome to PromoEngine POC</h1>
 
@@ -37,6 +64,8 @@
                 Value = "LV"
             });
         }
+
+        @Html.HiddenFor(model => model.Promotions)
 
         <table style="width: 100%">
             <tr>
@@ -73,6 +102,8 @@
 
         <br />
 
+        <button class="btn btn-secondary btn-info" onclick="RunMocked()">Run mocked</button>
+        <button class="btn btn-secondary btn-dark" onclick="RunCached()">Run saved</button>
         <button class="btn btn-secondary btn-success">Calculate</button>
 
         <br />
@@ -97,18 +128,19 @@
                     <div>DS Type: @Model.PromoResult.Promotions.Promotion.First().DistributorType</div>
                     <div>DS Subtype: @Model.PromoResult.Promotions.Promotion.First().DistributorSubType</div>
                     <div>DS Status: @Model.PromoResult.Promotions.Promotion.First().DistributorStatus</div>
+                }
+
+                if (Model.Promotions.Promo.Any())
+                {
                     <br />
                     @Html.Partial("_UIScenarioView", Model.Promotions)
-                    <br />
-                    @Html.Partial("_PromoView", Model.PromoResult)
+                    if (Model.PromoResult != null) // If is not mocked result
+                    {
+                        <br />
+                        @Html.Partial("_PromoView", Model.PromoResult)
+                    }
                     <br />
                     @Html.Partial("_PromoViewGrouped", Model.Promotions)
-                }
-                else
-                {
-                    <div>
-                        <label style="color: tomato; font-weight: 600">This is not a promo order</label>
-                    </div>
                 }
             }
             else

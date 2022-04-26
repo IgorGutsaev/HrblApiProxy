@@ -2,33 +2,40 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 
 namespace Filuet.Hrbl.Ordering.Abstractions.Models
 {
     public class Promotions
     {
-        private IList<Promotion> _promo { get; set; } = new List<Promotion>();
-
-        public IEnumerable<Promotion> Promo => _promo;
-
-        public void AddPromo(Promotion promo)
-        {
-            _promo.Add(promo);
-        }
+        [JsonPropertyName("promotions")]
+        public IList<Promotion> Promo { get; set; } = new List<Promotion>();
 
         public override string ToString() => $"{Promo.Count()} promotions";
     }
 
     public class RewardGroup
     {
+        [JsonPropertyName("validity")]
         public string ValidUntil { get; set; }
+
+        [JsonPropertyName("type")]
         public string Type { get; set; }
+
+        [JsonPropertyName("ruleName")]
         public string RuleName { get; set; }
+
+        [JsonPropertyName("reward")]
         public string RewardItem { get; set; }
+
+        [JsonPropertyName("qty")]
         public int OrderedQuantity { get; set; }
+
+        [JsonPropertyName("maxQty")]
         public int? MaxOrderedQuantity { get; set; } // ChrAttribute2 Such value corresponds to the maximum number of free SKUs user can redeem as part of t
 
-        public IList<Reward> Rewards { get; private set; } = new List<Reward>();
+        [JsonPropertyName("rewards")]
+        public IList<Reward> Rewards { get; set; } = new List<Reward>();
 
         public RewardGroup AddReward(Reward reward)
         {
@@ -57,9 +64,13 @@ namespace Filuet.Hrbl.Ordering.Abstractions.Models
 
     public class Promotion
     {
+        [JsonPropertyName("ruleId")]
         public string RuleId { get; set; }
+
+        [JsonPropertyName("ruleName")]
         public string RuleName { get; set; }
 
+        [JsonIgnore]
         public PromotionType Type
         {
             get
@@ -78,42 +89,61 @@ namespace Filuet.Hrbl.Ordering.Abstractions.Models
             }
         }
 
+        [JsonPropertyName("redemptionType")]
         /// <summary>
         /// RedemptionType 
         /// </summary>
         /// <example>Automatic/Optional</example>
         public PromotionRedemptionType RedemptionType { get; set; }
 
+        [JsonPropertyName("redemptionLimit")]
         /// <summary>
         /// A.k.a. ChrAttribute1
         /// </summary>
         /// <example>MULTIPLE/ALL/ONE</example>
         public PromotionRedemptionLimit RedemptionLimit { get; set; }
 
+
+        [JsonPropertyName("groups")]
         public IList<RewardGroup> RewardGroups { get; set; } = new List<RewardGroup>();
 
+        [JsonIgnore]
+        public int RewardCount => RewardGroups.SelectMany(x => x.Rewards).Count();
+
+        [JsonPropertyName("notification")]
         /// <summary>
         /// 
         /// </summary>
         /// <example>Congrats![Popup Notification message</example>
         public string Notification { get; set; } // PromoNotification
 
-        public Promotion()
-        {
-        }
-
         public override string ToString() => RuleName;
     }
 
     public class Reward
     {
+        private string _uid = Guid.NewGuid().ToString();
+        public string Uid => _uid;
+
+        [JsonIgnore]
         public bool IsSelected { get; set; }
+
+        [JsonPropertyName("validity")]
         public string ValidUntil { get; set; }
+
+        [JsonPropertyName("type")]
         public string Type { get; set; }
+
+        [JsonPropertyName("ruleName")]
         public string RuleName { get; set; }
+
+        [JsonPropertyName("reward")]
         public string RewardItem { get; set; }
+
+        [JsonPropertyName("description")]
         public string Description { get; set; }
 
+        [JsonIgnore]
         public RewardGroup Group { get; set; }
 
         public override string ToString() => $"{Type} {RewardItem}";

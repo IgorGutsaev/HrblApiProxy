@@ -1,0 +1,347 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="cachedPromotions" xml:space="preserve">
+    <value>{"IsPromoOrder":"Y","Promotions":{"Promotion":[{"DistributorId":"V7003827","OrderMonth":"2022/01","OrderCount":0,"DistributorStatus":"COMPLETE","DOB":null,"Country":"CY","DistributorType":"SP","DistributorSubType":"MT","SKU":"0144","ShippingInstructions":null,"SKUReward":"Y","ApplicationDate":null,"AnniversaryMonth":null,"FreightCode":null,"PromotionRule":"Mandatory Mixed Promotion SKU\u002BCV, ONE item to be reedem[Promotion name]","Precedence":null,"OrderType":null,"OrderedQuantity":3,"ChrAttribute1":"ONE","ChrAttribute2":1,"ChrAttribute3":"0144 Reward description","ChrAttribute4":null,"ChrAttribute5":null,"DateAttribute1":null,"DateAttribute2":null,"DateAttribute3":null,"DateAttribute4":null,"DateAttribute5":null,"NumAttribute1":null,"NumAttribute2":0,"NumAttribute3":6944,"NumAttribute4":null,"NumAttribute5":null,"TotalRetail":null,"TotalDiscount":null,"TotalDiscountRetail":null,"TotalTax":null,"TotalVolume":null,"ShippingHandling":null,"TotalDue":null,"ReferencePMTAmount":null,"ReferencePMTCheckNo":null,"RedemptionType":"AUTOMATIC","RuleID":"4869","PromotionItem":null,"PromotionRuleName":"Mandatory Mixed Promotion SKU\u002BCV, ONE item to be reedem[Promotion name]","PromotionType":"FREE SKU","PromotionProp1":"0144","PromotionProp2":null,"RedemptionFlag":null,"EligibleFlag":null,"PromoNotification":"Congratulations! [Popup Notification messgae]","ChrAttribute6":null,"ChrAttribute7":"N","ChrAttribute8":null,"ChrAttribute9":null,"ChrAttribute10":null,"ChrAttribute11":null,"ChrAttribute12":null,"ChrAttribute13":null,"ChrAttribute14":null,"ChrAttribute15":null,"DateAttribute6":null,"DateAttribute7":null,"DateAttribute8":null,"DateAttribute9":null,"DateAttribute10":null,"NumAttribute6":null,"NumAttribute7":null,"NumAttribute8":null,"NumAttribute9":null,"NumAttribute10":null,"NumAttribute11":null,"NumAttribute12":null,"NumAttribute13":null,"NumAttribute14":null,"NumAttribute15":null},{"DistributorId":"V7003827","OrderMonth":"2022/01","OrderCount":0,"DistributorStatus":"COMPLETE","DOB":null,"Country":"CY","DistributorType":"SP","DistributorSubType":"MT","SKU":" ","ShippingInstructions":null,"SKUReward":"Y","ApplicationDate":null,"AnniversaryMonth":null,"FreightCode":null,"PromotionRule":"Mandatory Mixed Promotion SKU\u002BCV, ONE item to be reedem[Promotion name]","Precedence":null,"OrderType":null,"OrderedQuantity":1,"ChrAttribute1":"ONE","ChrAttribute2":1,"ChrAttribute3":"CV reward description","ChrAttribute4":"CASH VOUCHER","ChrAttribute5":"EUR","DateAttribute1":null,"DateAttribute2":null,"DateAttribute3":null,"DateAttribute4":null,"DateAttribute5":null,"NumAttribute1":10,"NumAttribute2":10,"NumAttribute3":7081,"NumAttribute4":null,"NumAttribute5":null,"TotalRetail":null,"TotalDiscount":null,"TotalDiscountRetail":null,"TotalTax":null,"TotalVolume":null,"ShippingHandling":null,"TotalDue":null,"ReferencePMTAmount":null,"ReferencePMTCheckNo":null,"RedemptionType":"AUTOMATIC","RuleID":"4869","PromotionItem":null,"PromotionRuleName":"Mandatory Mixed Promotion SKU\u002BCV, ONE item to be reedem[Promotion name]","PromotionType":"CASH VOUCHER","PromotionProp1":"10","PromotionProp2":null,"RedemptionFlag":null,"EligibleFlag":null,"PromoNotification":"Congratulations! [Popup Notification messgae]","ChrAttribute6":"CY_VOUCHER_477413","ChrAttribute7":"N","ChrAttribute8":null,"ChrAttribute9":null,"ChrAttribute10":null,"ChrAttribute11":null,"ChrAttribute12":null,"ChrAttribute13":null,"ChrAttribute14":null,"ChrAttribute15":null,"DateAttribute6":null,"DateAttribute7":null,"DateAttribute8":null,"DateAttribute9":null,"DateAttribute10":null,"NumAttribute6":null,"NumAttribute7":null,"NumAttribute8":null,"NumAttribute9":null,"NumAttribute10":null,"NumAttribute11":null,"NumAttribute12":null,"NumAttribute13":null,"NumAttribute14":null,"NumAttribute15":null},{"DistributorId":"V7003827","OrderMonth":"2022/01","OrderCount":0,"DistributorStatus":"COMPLETE","DOB":null,"Country":"CY","DistributorType":"SP","DistributorSubType":"MT","SKU":"0043","ShippingInstructions":null,"SKUReward":"Y","ApplicationDate":null,"AnniversaryMonth":null,"FreightCode":null,"PromotionRule":"Optional Free sku promotion, MULTIPLE 2 from 3 available SKUs [promotion name]","Precedence":null,"OrderType":null,"OrderedQuantity":1,"ChrAttribute1":"MULTIPLE","ChrAttribute2":2,"ChrAttribute3":"0043 SKU Reward Description","ChrAttribute4":null,"ChrAttribute5":null,"DateAttribute1":null,"DateAttribute2":null,"DateAttribute3":null,"DateAttribute4":null,"DateAttribute5":null,"NumAttribute1":null,"NumAttribute2":0,"NumAttribute3":7245,"NumAttribute4":null,"NumAttribute5":null,"TotalRetail":null,"TotalDiscount":null,"TotalDiscountRetail":null,"TotalTax":null,"TotalVolume":null,"ShippingHandling":null,"TotalDue":null,"ReferencePMTAmount":null,"ReferencePMTCheckNo":null,"RedemptionType":"OPTIONAL","RuleID":"5030","PromotionItem":null,"PromotionRuleName":"Optional Free sku promotion, MULTIPLE 2 from 3 available SKUs [promotion name]","PromotionType":"FREE SKU","PromotionProp1":"0043","PromotionProp2":null,"RedemptionFlag":null,"EligibleFlag":null,"PromoNotification":"Congrats![Popup Notification message]","ChrAttribute6":"CY_VOUCHER_477413","ChrAttribute7":"N","ChrAttribute8":null,"ChrAttribute9":null,"ChrAttribute10":null,"ChrAttribute11":null,"ChrAttribute12":null,"ChrAttribute13":null,"ChrAttribute14":null,"ChrAttribute15":null,"DateAttribute6":null,"DateAttribute7":null,"DateAttribute8":null,"DateAttribute9":null,"DateAttribute10":null,"NumAttribute6":null,"NumAttribute7":null,"NumAttribute8":null,"NumAttribute9":null,"NumAttribute10":null,"NumAttribute11":null,"NumAttribute12":null,"NumAttribute13":null,"NumAttribute14":null,"NumAttribute15":null},{"DistributorId":"V7003827","OrderMonth":"2022/01","OrderCount":0,"DistributorStatus":"COMPLETE","DOB":null,"Country":"CY","DistributorType":"SP","DistributorSubType":"MT","SKU":"0104","ShippingInstructions":null,"SKUReward":"Y","ApplicationDate":null,"AnniversaryMonth":null,"FreightCode":null,"PromotionRule":"Optional Free sku promotion, MULTIPLE 2 from 3 available SKUs [promotion name]","Precedence":null,"OrderType":null,"OrderedQuantity":1,"ChrAttribute1":"MULTIPLE","ChrAttribute2":2,"ChrAttribute3":"0104 SKU Reward Description ","ChrAttribute4":null,"ChrAttribute5":null,"DateAttribute1":null,"DateAttribute2":null,"DateAttribute3":null,"DateAttribute4":null,"DateAttribute5":null,"NumAttribute1":null,"NumAttribute2":0,"NumAttribute3":7247,"NumAttribute4":null,"NumAttribute5":null,"TotalRetail":null,"TotalDiscount":null,"TotalDiscountRetail":null,"TotalTax":null,"TotalVolume":null,"ShippingHandling":null,"TotalDue":null,"ReferencePMTAmount":null,"ReferencePMTCheckNo":null,"RedemptionType":"OPTIONAL","RuleID":"5030","PromotionItem":null,"PromotionRuleName":"Optional Free sku promotion, MULTIPLE 2 from 3 available SKUs [promotion name]","PromotionType":"FREE SKU","PromotionProp1":"0104","PromotionProp2":null,"RedemptionFlag":null,"EligibleFlag":null,"PromoNotification":"Congrats![Popup Notification message]","ChrAttribute6":"CY_VOUCHER_477413","ChrAttribute7":"N","ChrAttribute8":null,"ChrAttribute9":null,"ChrAttribute10":null,"ChrAttribute11":null,"ChrAttribute12":null,"ChrAttribute13":null,"ChrAttribute14":null,"ChrAttribute15":null,"DateAttribute6":null,"DateAttribute7":null,"DateAttribute8":null,"DateAttribute9":null,"DateAttribute10":null,"NumAttribute6":null,"NumAttribute7":null,"NumAttribute8":null,"NumAttribute9":null,"NumAttribute10":null,"NumAttribute11":null,"NumAttribute12":null,"NumAttribute13":null,"NumAttribute14":null,"NumAttribute15":null},{"DistributorId":"V7003827","OrderMonth":"2022/01","OrderCount":0,"DistributorStatus":"COMPLETE","DOB":null,"Country":"CY","DistributorType":"SP","DistributorSubType":"MT","SKU":"0006","ShippingInstructions":null,"SKUReward":"Y","ApplicationDate":null,"AnniversaryMonth":null,"FreightCode":null,"PromotionRule":"Optional Free sku promotion, MULTIPLE 2 from 3 available SKUs [promotion name]","Precedence":null,"OrderType":null,"OrderedQuantity":1,"ChrAttribute1":"MULTIPLE","ChrAttribute2":2,"ChrAttribute3":"0006 SKU Reward Description ","ChrAttribute4":null,"ChrAttribute5":null,"DateAttribute1":null,"DateAttribute2":null,"DateAttribute3":null,"DateAttribute4":null,"DateAttribute5":null,"NumAttribute1":null,"NumAttribute2":0,"NumAttribute3":7246,"NumAttribute4":null,"NumAttribute5":null,"TotalRetail":null,"TotalDiscount":null,"TotalDiscountRetail":null,"TotalTax":null,"TotalVolume":null,"ShippingHandling":null,"TotalDue":null,"ReferencePMTAmount":null,"ReferencePMTCheckNo":null,"RedemptionType":"OPTIONAL","RuleID":"5030","PromotionItem":null,"PromotionRuleName":"Optional Free sku promotion, MULTIPLE 2 from 3 available SKUs [promotion name]","PromotionType":"FREE SKU","PromotionProp1":"0006","PromotionProp2":null,"RedemptionFlag":null,"EligibleFlag":null,"PromoNotification":"Congrats![Popup Notification message]","ChrAttribute6":"CY_VOUCHER_477413","ChrAttribute7":"N","ChrAttribute8":null,"ChrAttribute9":null,"ChrAttribute10":null,"ChrAttribute11":null,"ChrAttribute12":null,"ChrAttribute13":null,"ChrAttribute14":null,"ChrAttribute15":null,"DateAttribute6":null,"DateAttribute7":null,"DateAttribute8":null,"DateAttribute9":null,"DateAttribute10":null,"NumAttribute6":null,"NumAttribute7":null,"NumAttribute8":null,"NumAttribute9":null,"NumAttribute10":null,"NumAttribute11":null,"NumAttribute12":null,"NumAttribute13":null,"NumAttribute14":null,"NumAttribute15":null},{"DistributorId":"V7003827","OrderMonth":"2022/01","OrderCount":0,"DistributorStatus":"COMPLETE","DOB":null,"Country":"CY","DistributorType":"SP","DistributorSubType":"MT","SKU":" ","ShippingInstructions":null,"SKUReward":"Y","ApplicationDate":null,"AnniversaryMonth":null,"FreightCode":null,"PromotionRule":"Optional Cash Voucher Promotion [Promotion name]","Precedence":null,"OrderType":null,"OrderedQuantity":1,"ChrAttribute1":"ONE","ChrAttribute2":1,"ChrAttribute3":"Cash Voucher [Reward Description]","ChrAttribute4":"CASH VOUCHER","ChrAttribute5":"EUR","DateAttribute1":null,"DateAttribute2":null,"DateAttribute3":null,"DateAttribute4":null,"DateAttribute5":null,"NumAttribute1":12,"NumAttribute2":12,"NumAttribute3":7248,"NumAttribute4":null,"NumAttribute5":null,"TotalRetail":null,"TotalDiscount":null,"TotalDiscountRetail":null,"TotalTax":null,"TotalVolume":null,"ShippingHandling":null,"TotalDue":null,"ReferencePMTAmount":null,"ReferencePMTCheckNo":null,"RedemptionType":"OPTIONAL","RuleID":"5031","PromotionItem":null,"PromotionRuleName":"Optional Cash Voucher Promotion [Promotion name]","PromotionType":"CASH VOUCHER","PromotionProp1":"12","PromotionProp2":null,"RedemptionFlag":null,"EligibleFlag":null,"PromoNotification":"Congrats![Popup Notification Message]","ChrAttribute6":"CY_VOUCHER_478735","ChrAttribute7":"N","ChrAttribute8":null,"ChrAttribute9":null,"ChrAttribute10":null,"ChrAttribute11":null,"ChrAttribute12":null,"ChrAttribute13":null,"ChrAttribute14":null,"ChrAttribute15":null,"DateAttribute6":null,"DateAttribute7":null,"DateAttribute8":null,"DateAttribute9":null,"DateAttribute10":null,"NumAttribute6":null,"NumAttribute7":null,"NumAttribute8":null,"NumAttribute9":null,"NumAttribute10":null,"NumAttribute11":null,"NumAttribute12":null,"NumAttribute13":null,"NumAttribute14":null,"NumAttribute15":null},{"DistributorId":"V7003827","OrderMonth":"2022/01","OrderCount":0,"DistributorStatus":"COMPLETE","DOB":null,"Country":"CY","DistributorType":"SP","DistributorSubType":"MT","SKU":"0155","ShippingInstructions":null,"SKUReward":"Y","ApplicationDate":null,"AnniversaryMonth":null,"FreightCode":null,"PromotionRule":"Optional Mixed Promotion SKU\u002BCV, ALL item to be reedem [Promotion name]","Precedence":null,"OrderType":null,"OrderedQuantity":1,"ChrAttribute1":"ALL","ChrAttribute2":null,"ChrAttribute3":"0155 SKU Reward Description ","ChrAttribute4":null,"ChrAttribute5":null,"DateAttribute1":null,"DateAttribute2":null,"DateAttribute3":null,"DateAttribute4":null,"DateAttribute5":null,"NumAttribute1":null,"NumAttribute2":0,"NumAttribute3":7250,"NumAttribute4":null,"NumAttribute5":null,"TotalRetail":null,"TotalDiscount":null,"TotalDiscountRetail":null,"TotalTax":null,"TotalVolume":null,"ShippingHandling":null,"TotalDue":null,"ReferencePMTAmount":null,"ReferencePMTCheckNo":null,"RedemptionType":"OPTIONAL","RuleID":"5032","PromotionItem":null,"PromotionRuleName":"Optional Mixed Promotion SKU\u002BCV, ALL item to be reedem [Promotion name]","PromotionType":"FREE SKU","PromotionProp1":"0155","PromotionProp2":null,"RedemptionFlag":null,"EligibleFlag":null,"PromoNotification":"Congrats![Popup Notification message]","ChrAttribute6":"CY_VOUCHER_478735","ChrAttribute7":"N","ChrAttribute8":null,"ChrAttribute9":null,"ChrAttribute10":null,"ChrAttribute11":null,"ChrAttribute12":null,"ChrAttribute13":null,"ChrAttribute14":null,"ChrAttribute15":null,"DateAttribute6":null,"DateAttribute7":null,"DateAttribute8":null,"DateAttribute9":null,"DateAttribute10":null,"NumAttribute6":null,"NumAttribute7":null,"NumAttribute8":null,"NumAttribute9":null,"NumAttribute10":null,"NumAttribute11":null,"NumAttribute12":null,"NumAttribute13":null,"NumAttribute14":null,"NumAttribute15":null},{"DistributorId":"V7003827","OrderMonth":"2022/01","OrderCount":0,"DistributorStatus":"COMPLETE","DOB":null,"Country":"CY","DistributorType":"SP","DistributorSubType":"MT","SKU":" ","ShippingInstructions":null,"SKUReward":"Y","ApplicationDate":null,"AnniversaryMonth":null,"FreightCode":null,"PromotionRule":"Optional Mixed Promotion SKU\u002BCV, ALL item to be reedem [Promotion name]","Precedence":null,"OrderType":null,"OrderedQuantity":1,"ChrAttribute1":"ALL","ChrAttribute2":null,"ChrAttribute3":"19 Cash Voucher Reward Description","ChrAttribute4":"CASH VOUCHER","ChrAttribute5":"EUR","DateAttribute1":null,"DateAttribute2":null,"DateAttribute3":null,"DateAttribute4":null,"DateAttribute5":null,"NumAttribute1":19,"NumAttribute2":19,"NumAttribute3":7249,"NumAttribute4":null,"NumAttribute5":null,"TotalRetail":null,"TotalDiscount":null,"TotalDiscountRetail":null,"TotalTax":null,"TotalVolume":null,"ShippingHandling":null,"TotalDue":null,"ReferencePMTAmount":null,"ReferencePMTCheckNo":null,"RedemptionType":"OPTIONAL","RuleID":"5032","PromotionItem":null,"PromotionRuleName":"Optional Mixed Promotion SKU\u002BCV, ALL item to be reedem [Promotion name]","PromotionType":"CASH VOUCHER","PromotionProp1":"19","PromotionProp2":null,"RedemptionFlag":null,"EligibleFlag":null,"PromoNotification":"Congrats![Popup Notification message]","ChrAttribute6":"CY_VOUCHER_478737","ChrAttribute7":"N","ChrAttribute8":null,"ChrAttribute9":null,"ChrAttribute10":null,"ChrAttribute11":null,"ChrAttribute12":null,"ChrAttribute13":null,"ChrAttribute14":null,"ChrAttribute15":null,"DateAttribute6":null,"DateAttribute7":null,"DateAttribute8":null,"DateAttribute9":null,"DateAttribute10":null,"NumAttribute6":null,"NumAttribute7":null,"NumAttribute8":null,"NumAttribute9":null,"NumAttribute10":null,"NumAttribute11":null,"NumAttribute12":null,"NumAttribute13":null,"NumAttribute14":null,"NumAttribute15":null},{"DistributorId":"V7003827","OrderMonth":"2022/01","OrderCount":0,"DistributorStatus":"COMPLETE","DOB":null,"Country":"CY","DistributorType":"SP","DistributorSubType":"MT","SKU":"0043","ShippingInstructions":null,"SKUReward":"Y","ApplicationDate":null,"AnniversaryMonth":null,"FreightCode":null,"PromotionRule":"Optional Free sku promotion, ALL","Precedence":null,"OrderType":null,"OrderedQuantity":1,"ChrAttribute1":"ALL","ChrAttribute2":null,"ChrAttribute3":"0043 SKU Reward Description","ChrAttribute4":null,"ChrAttribute5":null,"DateAttribute1":null,"DateAttribute2":null,"DateAttribute3":null,"DateAttribute4":null,"DateAttribute5":null,"NumAttribute1":null,"NumAttribute2":0,"NumAttribute3":7364,"NumAttribute4":null,"NumAttribute5":null,"TotalRetail":null,"TotalDiscount":null,"TotalDiscountRetail":null,"TotalTax":null,"TotalVolume":null,"ShippingHandling":null,"TotalDue":null,"ReferencePMTAmount":null,"ReferencePMTCheckNo":null,"RedemptionType":"OPTIONAL","RuleID":"5134","PromotionItem":null,"PromotionRuleName":"Optional Free sku promotion, ALL","PromotionType":"FREE SKU","PromotionProp1":"0043","PromotionProp2":null,"RedemptionFlag":null,"EligibleFlag":null,"PromoNotification":"Congrats! [Popup Notification Message]","ChrAttribute6":"CY_VOUCHER_478737","ChrAttribute7":"N","ChrAttribute8":null,"ChrAttribute9":null,"ChrAttribute10":null,"ChrAttribute11":null,"ChrAttribute12":null,"ChrAttribute13":null,"ChrAttribute14":null,"ChrAttribute15":null,"DateAttribute6":null,"DateAttribute7":null,"DateAttribute8":null,"DateAttribute9":null,"DateAttribute10":null,"NumAttribute6":null,"NumAttribute7":null,"NumAttribute8":null,"NumAttribute9":null,"NumAttribute10":null,"NumAttribute11":null,"NumAttribute12":null,"NumAttribute13":null,"NumAttribute14":null,"NumAttribute15":null},{"DistributorId":"V7003827","OrderMonth":"2022/01","OrderCount":0,"DistributorStatus":"COMPLETE","DOB":null,"Country":"CY","DistributorType":"SP","DistributorSubType":"MT","SKU":"0104","ShippingInstructions":null,"SKUReward":"Y","ApplicationDate":null,"AnniversaryMonth":null,"FreightCode":null,"PromotionRule":"Optional Free sku promotion, ALL","Precedence":null,"OrderType":null,"OrderedQuantity":1,"ChrAttribute1":"ALL","ChrAttribute2":null,"ChrAttribute3":"0104 SKU Reward Description","ChrAttribute4":null,"ChrAttribute5":null,"DateAttribute1":null,"DateAttribute2":null,"DateAttribute3":null,"DateAttribute4":null,"DateAttribute5":null,"NumAttribute1":null,"NumAttribute2":0,"NumAttribute3":7366,"NumAttribute4":null,"NumAttribute5":null,"TotalRetail":null,"TotalDiscount":null,"TotalDiscountRetail":null,"TotalTax":null,"TotalVolume":null,"ShippingHandling":null,"TotalDue":null,"ReferencePMTAmount":null,"ReferencePMTCheckNo":null,"RedemptionType":"OPTIONAL","RuleID":"5134","PromotionItem":null,"PromotionRuleName":"Optional Free sku promotion, ALL","PromotionType":"FREE SKU","PromotionProp1":"0104","PromotionProp2":null,"RedemptionFlag":null,"EligibleFlag":null,"PromoNotification":"Congrats! [Popup Notification Message]","ChrAttribute6":"CY_VOUCHER_478737","ChrAttribute7":"N","ChrAttribute8":null,"ChrAttribute9":null,"ChrAttribute10":null,"ChrAttribute11":null,"ChrAttribute12":null,"ChrAttribute13":null,"ChrAttribute14":null,"ChrAttribute15":null,"DateAttribute6":null,"DateAttribute7":null,"DateAttribute8":null,"DateAttribute9":null,"DateAttribute10":null,"NumAttribute6":null,"NumAttribute7":null,"NumAttribute8":null,"NumAttribute9":null,"NumAttribute10":null,"NumAttribute11":null,"NumAttribute12":null,"NumAttribute13":null,"NumAttribute14":null,"NumAttribute15":null},{"DistributorId":"V7003827","OrderMonth":"2022/01","OrderCount":0,"DistributorStatus":"COMPLETE","DOB":null,"Country":"CY","DistributorType":"SP","DistributorSubType":"MT","SKU":"0006","ShippingInstructions":null,"SKUReward":"Y","ApplicationDate":null,"AnniversaryMonth":null,"FreightCode":null,"PromotionRule":"Optional Free sku promotion, ALL","Precedence":null,"OrderType":null,"OrderedQuantity":1,"ChrAttribute1":"ALL","ChrAttribute2":null,"ChrAttribute3":"0006 SKU Reward Description","ChrAttribute4":null,"ChrAttribute5":null,"DateAttribute1":null,"DateAttribute2":null,"DateAttribute3":null,"DateAttribute4":null,"DateAttribute5":null,"NumAttribute1":null,"NumAttribute2":0,"NumAttribute3":7365,"NumAttribute4":null,"NumAttribute5":null,"TotalRetail":null,"TotalDiscount":null,"TotalDiscountRetail":null,"TotalTax":null,"TotalVolume":null,"ShippingHandling":null,"TotalDue":null,"ReferencePMTAmount":null,"ReferencePMTCheckNo":null,"RedemptionType":"OPTIONAL","RuleID":"5134","PromotionItem":null,"PromotionRuleName":"Optional Free sku promotion, ALL","PromotionType":"FREE SKU","PromotionProp1":"0006","PromotionProp2":null,"RedemptionFlag":null,"EligibleFlag":null,"PromoNotification":"Congrats! [Popup Notification Message]","ChrAttribute6":"CY_VOUCHER_478737","ChrAttribute7":"N","ChrAttribute8":null,"ChrAttribute9":null,"ChrAttribute10":null,"ChrAttribute11":null,"ChrAttribute12":null,"ChrAttribute13":null,"ChrAttribute14":null,"ChrAttribute15":null,"DateAttribute6":null,"DateAttribute7":null,"DateAttribute8":null,"DateAttribute9":null,"DateAttribute10":null,"NumAttribute6":null,"NumAttribute7":null,"NumAttribute8":null,"NumAttribute9":null,"NumAttribute10":null,"NumAttribute11":null,"NumAttribute12":null,"NumAttribute13":null,"NumAttribute14":null,"NumAttribute15":null}]},"Errors":null,"IsPromo":true}</value>
+  </data>
+  <data name="mockedPromotions" xml:space="preserve">
+    <value>{
+   "promotions":[
+      {
+         "ruleId":"0001",
+         "ruleName":"Automatic Cash Voucher Promotion [Promotion name]",
+         "redemptionType":"AUTOMATIC",
+         "redemptionLimit":"ONE",
+         "groups":[
+            {
+               "validity":"",
+               "type":"CASH VOUCHER",
+               "ruleName":"Optional Cash Voucher Promotion [Promotion name]",
+               "reward":"10",
+               "qty":1,
+               "maxQty":null,
+               "rewards":[
+                  {
+                     "validity":"",
+                     "type":"CASH VOUCHER",
+                     "ruleName":"Automatic Cash Voucher Promotion [Promotion name]",
+                     "reward":"10",
+                     "description":"Cash Voucher [Reward Description]"
+                  }
+               ]
+            }
+         ],
+         "notification":"Congrats![Popup Notification Message]"
+      },
+      {
+         "ruleId":"4869",
+         "ruleName":"Mandatory Mixed Promotion SKU+CV, ONE item to be reedem[Promotion name]",
+         "redemptionType":"AUTOMATIC",
+         "redemptionLimit":"ONE",
+         "groups":[
+            {
+               "validity":null,
+               "type":"FREE SKU",
+               "ruleName":"Mandatory Mixed Promotion SKU+CV, ONE item to be reedem[Promotion name]",
+               "reward":"0144x3",
+               "qty":3,
+               "maxQty":1,
+               "rewards":[
+                  {
+                     "validity":"",
+                     "type":"FREE SKU",
+                     "ruleName":"Mandatory Mixed Promotion SKU+CV, ONE item to be reedem[Promotion name]",
+                     "reward":"0144",
+                     "description":"0144 Reward description"
+                  }
+               ]
+            },
+            {
+               "validity":"",
+               "type":"CASH VOUCHER",
+               "ruleName":"Mandatory Mixed Promotion SKU+CV, ONE item to be reedem[Promotion name]",
+               "reward":"10",
+               "qty":1,
+               "maxQty":null,
+               "rewards":[
+                  {
+                     "validity":"",
+                     "type":"CASH VOUCHER",
+                     "ruleName":"Mandatory Mixed Promotion SKU+CV, ONE item to be reedem[Promotion name]",
+                     "reward":"10",
+                     "description":"CV reward description"
+                  }
+               ]
+            }
+         ],
+         "notification":"Congratulations! [Popup Notification messgae]"
+      },
+      {
+         "ruleId":"5030",
+         "ruleName":"Optional Free sku promotion, MULTIPLE 2 from 3 available SKUs [promotion name]",
+         "redemptionType":"OPTIONAL",
+         "redemptionLimit":"MULTIPLE",
+         "groups":[
+            {
+               "validity":null,
+               "type":"FREE SKU",
+               "ruleName":"Optional Free sku promotion, MULTIPLE 2 from 3 available SKUs [promotion name]",
+               "reward":"0043x1, 0104x1, 0006x1",
+               "qty":1,
+               "maxQty":2,
+               "rewards":[
+                  {
+                     "validity":"",
+                     "type":"FREE SKU",
+                     "ruleName":"Optional Free sku promotion, MULTIPLE 2 from 3 available SKUs [promotion name]",
+                     "reward":"0043",
+                     "description":"0043 SKU Reward Description"
+                  },
+                  {
+                     "validity":"",
+                     "type":"FREE SKU",
+                     "ruleName":"Optional Free sku promotion, MULTIPLE 2 from 3 available SKUs [promotion name]",
+                     "reward":"0104",
+                     "description":"0104 SKU Reward Description "
+                  },
+                  {
+                     "validity":"",
+                     "type":"FREE SKU",
+                     "ruleName":"Optional Free sku promotion, MULTIPLE 2 from 3 available SKUs [promotion name]",
+                     "reward":"0006",
+                     "description":"0006 SKU Reward Description "
+                  }
+               ]
+            }
+         ],
+         "notification":"Congrats![Popup Notification message]"
+      },
+      {
+         "ruleId":"5031",
+         "ruleName":"Optional Cash Voucher Promotion [Promotion name]",
+         "redemptionType":"OPTIONAL",
+         "redemptionLimit":"ONE",
+         "groups":[
+            {
+               "validity":"",
+               "type":"CASH VOUCHER",
+               "ruleName":"Optional Cash Voucher Promotion [Promotion name]",
+               "reward":"12",
+               "qty":1,
+               "maxQty":null,
+               "rewards":[
+                  {
+                     "validity":"",
+                     "type":"CASH VOUCHER",
+                     "ruleName":"Optional Cash Voucher Promotion [Promotion name]",
+                     "reward":"12",
+                     "description":"Cash Voucher [Reward Description]"
+                  }
+               ]
+            }
+         ],
+         "notification":"Congrats![Popup Notification Message]"
+      },
+      {
+         "ruleId":"5032",
+         "ruleName":"Optional Mixed Promotion SKU+CV, ALL item to be reedem [Promotion name]",
+         "redemptionType":"OPTIONAL",
+         "redemptionLimit":"ALL",
+         "groups":[
+            {
+               "validity":null,
+               "type":"FREE SKU",
+               "ruleName":"Optional Mixed Promotion SKU+CV, ALL item to be reedem [Promotion name]",
+               "reward":"0155x1",
+               "qty":1,
+               "maxQty":null,
+               "rewards":[
+                  {
+                     "validity":"",
+                     "type":"FREE SKU",
+                     "ruleName":"Optional Mixed Promotion SKU+CV, ALL item to be reedem [Promotion name]",
+                     "reward":"0155",
+                     "description":"0155 SKU Reward Description "
+                  }
+               ]
+            },
+            {
+               "validity":"",
+               "type":"CASH VOUCHER",
+               "ruleName":"Optional Mixed Promotion SKU+CV, ALL item to be reedem [Promotion name]",
+               "reward":"19",
+               "qty":1,
+               "maxQty":null,
+               "rewards":[
+                  {
+                     "validity":"",
+                     "type":"CASH VOUCHER",
+                     "ruleName":"Optional Mixed Promotion SKU+CV, ALL item to be reedem [Promotion name]",
+                     "reward":"19",
+                     "description":"19 Cash Voucher Reward Description"
+                  }
+               ]
+            }
+         ],
+         "notification":"Congrats![Popup Notification message]"
+      },
+      {
+         "ruleId":"5134",
+         "ruleName":"Optional Free sku promotion, ALL",
+         "redemptionType":"OPTIONAL",
+         "redemptionLimit":"ALL",
+         "groups":[
+            {
+               "validity":null,
+               "type":"FREE SKU",
+               "ruleName":"Optional Free sku promotion, ALL",
+               "reward":"0043x1, 0104x1, 0006x1",
+               "qty":1,
+               "maxQty":null,
+               "rewards":[
+                  {
+                     "validity":"",
+                     "type":"FREE SKU",
+                     "ruleName":"Optional Free sku promotion, ALL",
+                     "reward":"0043",
+                     "description":"0043 SKU Reward Description"
+                  },
+                  {
+                     "validity":"",
+                     "type":"FREE SKU",
+                     "ruleName":"Optional Free sku promotion, ALL",
+                     "reward":"0104",
+                     "description":"0104 SKU Reward Description"
+                  },
+                  {
+                     "validity":"",
+                     "type":"FREE SKU",
+                     "ruleName":"Optional Free sku promotion, ALL",
+                     "reward":"0006",
+                     "description":"0006 SKU Reward Description"
+                  }
+               ]
+            }
+         ],
+         "notification":"Congrats! [Popup Notification Message]"
+      }
+   ]
+}</value>
+  </data>
+</root>

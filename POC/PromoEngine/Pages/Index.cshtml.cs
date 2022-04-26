@@ -4,8 +4,10 @@ using Filuet.Hrbl.Ordering.Abstractions.Builders;
 using Filuet.Hrbl.Ordering.Abstractions.Dto;
 using Filuet.Hrbl.Ordering.Abstractions.Enums;
 using Filuet.Hrbl.Ordering.Abstractions.Models;
+using Filuet.Hrbl.Ordering.Abstractions.Serializers;
 using Filuet.Hrbl.Ordering.Adapter;
 using Filuet.Hrbl.Ordering.Common;
+using Filuet.Hrbl.Ordering.POC.PromoEngine;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
@@ -13,8 +15,8 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
-
 
 namespace PromoEngine.Pages
 {
@@ -23,6 +25,44 @@ namespace PromoEngine.Pages
     {
         private readonly ILogger<IndexModel> _logger;
         private readonly INotyfService _toastNotification;
+
+        [Required]
+        public string DistributorId { get; set; } = "V7003827";
+
+        [Required]
+        public string Country { get; set; } = "CY";
+
+        [DataType(DataType.Date, ErrorMessage = "Date only")]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [Required]
+        public DateTime OrderMonth { get; set; } = DateTime.Parse("2022-01-20");
+
+        [Required]
+        public string OrderCategory { get; set; } = "RSO";
+
+        [Required]
+        public string OrderType { get; set; } = "RSO";
+
+        [Required]
+        public string Warehouse { get; set; } = "U7";
+
+        [Required]
+        public string ProcessingLocation { get; set; } = "U7";
+
+        [Required]
+        public string FreightCode { get; set; } = "PU";
+
+        [Required]
+        public string Cart { get; set; } = "0106x10";
+
+        [Required]
+        public PricingResponse Pricing = null;
+
+        [Required]
+        public GetDSEligiblePromoSKUResponseDTO PromoResult = null;
+
+        [Required]
+        public Promotions Promotions { get; set; }
 
         private HrblOrderingAdapter Adapter => new HrblOrderingAdapter(new HrblOrderingAdapterSettingsBuilder()
                 .WithUri("https://herbalife-oegdevws.hrbl.com/Order/HLOnlineOrdering/ts3/")
@@ -41,6 +81,7 @@ namespace PromoEngine.Pages
             // Success Toast
             _toastNotification.Success("A success for christian-schou.dk");
         }
+
 
         public async Task<IActionResult> OnPostButton()
         {
@@ -121,7 +162,23 @@ namespace PromoEngine.Pages
                     }
                 }
 
-                PromoResult = await Adapter.GetDSEligiblePromoSKU(promoRequest);
+                switch (ServerState.DataSource)
+                {
+                    case DataSource.Cached:
+                        PromoResult = JsonSerializer.Deserialize<GetDSEligiblePromoSKUResponseDTO>(Filuet.Hrbl.Ordering.POC.PromoEngine.Properties.Resources.cachedPromotions);
+                        break;
+                    case DataSource.Original:
+                        PromoResult = await Adapter.GetDSEligiblePromoSKU(promoRequest);
+                        break;
+                    case DataSource.Mock:
+                        JsonSerializerOptions options = new JsonSerializerOptions();
+                        options.Converters.Add(new PromotionRedemptionLimitJsonConverter());
+                        options.Converters.Add(new PromotionRedemptionTypeJsonConverter());
+
+                        Promotions = JsonSerializer.Deserialize<Promotions>(Filuet.Hrbl.Ordering.POC.PromoEngine.Properties.Resources.mockedPromotions, options);
+                        return null;
+                }
+
                 if (PromoResult.IsPromo)
                 {
                     Promotions = new Promotions();
@@ -155,7 +212,8 @@ namespace PromoEngine.Pages
                                         RuleName = fs.PromotionRuleName,
                                         ValidUntil = fs.DateAttribute1?.ToLongDateString() ?? string.Empty
                                     }
-                                    .AddReward(new Reward { // With reward lines
+                                    .AddReward(new Reward
+                                    { // With reward lines
                                         Type = fs.PromotionType,
                                         Description = fs.ChrAttribute3,
                                         RewardItem = fs.PromotionProp1,
@@ -174,7 +232,8 @@ namespace PromoEngine.Pages
                                     RuleName = head.PromotionRuleName,
                                     MaxOrderedQuantity = head.ChrAttribute2
                                 }
-                                .AddRewards(() => x.Select(y => new Reward { // With reward lines
+                                .AddRewards(() => x.Select(y => new Reward
+                                { // With reward lines
                                     Type = y.PromotionType,
                                     Description = y.ChrAttribute3,
                                     RewardItem = y.PromotionProp1,
@@ -184,7 +243,7 @@ namespace PromoEngine.Pages
                             }
                         }
 
-                        Promotions.AddPromo(promotion);
+                        Promotions.Promo.Add(promotion);
                     }
                 }
             }
@@ -197,40 +256,7 @@ namespace PromoEngine.Pages
         }
 
 
-        [Required]
-        public string DistributorId { get; set; } = "V7003827";
-
-        [Required]
-        public string Country { get; set; } = "CY";
-
-        [DataType(DataType.Date, ErrorMessage = "Date only")]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        [Required]
-        public DateTime OrderMonth { get; set; } = DateTime.Parse("2022-01-20");
-
-        [Required]
-        public string OrderCategory { get; set; } = "RSO";
-
-        [Required]
-        public string OrderType { get; set; } = "RSO";
-
-        [Required]
-        public string Warehouse { get; set; } = "U7";
-
-        [Required]
-        public string ProcessingLocation { get; set; } = "U7";
-
-        [Required]
-        public string FreightCode { get; set; } = "PU";
-
-        [Required]
-        public string Cart { get; set; } = "0106x10";
-
-        public PricingResponse Pricing = null;
-
-        public GetDSEligiblePromoSKUResponseDTO PromoResult = null;
-
-        public Promotions Promotions = null;
+       
 
         public string PricingErrors { get; set; } = string.Empty;
 

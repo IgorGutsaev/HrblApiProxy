@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Filuet.Hrbl.Ordering.Test",
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "POC", "POC", "{C8D66225-D11C-4095-A9CE-936E0CE0F4AA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Filuet.Hrbl.Ordering.POC.PromoEngine", "POC\PromoEngine\Filuet.Hrbl.Ordering.POC.PromoEngine.csproj", "{2CE61DE6-B47E-4FBB-9644-69257061AD2D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Filuet.Hrbl.Ordering.POC.PromoEngine", "POC\PromoEngine\Filuet.Hrbl.Ordering.POC.PromoEngine.csproj", "{2CE61DE6-B47E-4FBB-9644-69257061AD2D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
