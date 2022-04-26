@@ -23,7 +23,7 @@
         $(saveButtonId).removeClass('disabled');
     }
 
-    function onOneChanged(itemGroupName, saveButtonId) {
+    function onOneChanged(saveButtonId) {
        // if (value === "on") {
             $(saveButtonId).removeClass('disabled');
         //}
@@ -75,7 +75,7 @@
                         else // single CV
                         {
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="@listControlName" id="@listControlName2" value="@reward.IsSelected" checked onchange="onOneChanged('@listControlName', '#saveSelection_@Model.RuleId')">
+                                <input class="form-check-input" type="checkbox" name="@listControlName" id="@listControlName2" value="@reward.IsSelected" checked onchange="onOneChanged('#saveSelection_@Model.RuleId')">
                                 <label class="form-check-label" for="@listControlName2">
                                     @reward.Description 4.2.1
                                 </label>

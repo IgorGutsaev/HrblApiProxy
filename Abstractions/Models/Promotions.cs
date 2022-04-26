@@ -1,4 +1,5 @@
 ﻿using Filuet.Hrbl.Ordering.Abstractions.Enums;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,14 +7,6 @@ using System.Text.Json.Serialization;
 
 namespace Filuet.Hrbl.Ordering.Abstractions.Models
 {
-    public class Promotions
-    {
-        [JsonPropertyName("promotions")]
-        public IList<Promotion> Promo { get; set; } = new List<Promotion>();
-
-        public override string ToString() => $"{Promo.Count()} promotions";
-    }
-
     public class RewardGroup
     {
         [JsonPropertyName("validity")]
@@ -62,6 +55,7 @@ namespace Filuet.Hrbl.Ordering.Abstractions.Models
         public override string ToString() => Type;
     }
 
+    [BindProperties]
     public class Promotion
     {
         [JsonPropertyName("ruleId")]
@@ -122,9 +116,6 @@ namespace Filuet.Hrbl.Ordering.Abstractions.Models
 
     public class Reward
     {
-        private string _uid = Guid.NewGuid().ToString();
-        public string Uid => _uid;
-
         [JsonIgnore]
         public bool IsSelected { get; set; }
 

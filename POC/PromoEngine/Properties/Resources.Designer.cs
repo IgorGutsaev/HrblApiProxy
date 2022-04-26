@@ -70,8 +70,7 @@ namespace Filuet.Hrbl.Ordering.POC.PromoEngine.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {
-        ///   &quot;promotions&quot;:[
+        ///   Looks up a localized string similar to [
         ///      {
         ///         &quot;ruleId&quot;:&quot;0001&quot;,
         ///         &quot;ruleName&quot;:&quot;Automatic Cash Voucher Promotion [Promotion name]&quot;,
@@ -86,7 +85,8 @@ namespace Filuet.Hrbl.Ordering.POC.PromoEngine.Properties {
         ///               &quot;qty&quot;:1,
         ///               &quot;maxQty&quot;:null,
         ///               &quot;rewards&quot;:[
-        ///      [rest of string was truncated]&quot;;.
+        ///                  {
+        ///    [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string mockedPromotions {
             get {

@@ -2,7 +2,7 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 
-@model Filuet.Hrbl.Ordering.Abstractions.Models.Promotions
+@model List<Filuet.Hrbl.Ordering.Abstractions.Models.Promotion>
 
 <style>
     .promoTableFinal {
@@ -23,7 +23,7 @@
             <th class="promoTableFinal">Max SKU Qty to redeem</th>
             <th class="promoTableFinal">Notification</th>
         </tr>
-        @foreach (var t in Model.Promo)
+        @foreach (var t in Model)
         {
             string totalReward = string.Empty;
             int? maxSkuToRedeem = null;

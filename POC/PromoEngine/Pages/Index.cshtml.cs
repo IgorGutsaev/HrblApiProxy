@@ -62,7 +62,7 @@ namespace PromoEngine.Pages
         public GetDSEligiblePromoSKUResponseDTO PromoResult = null;
 
         [Required]
-        public Promotions Promotions { get; set; }
+        public List<Promotion> Promotions { get; set; }
 
         private HrblOrderingAdapter Adapter => new HrblOrderingAdapter(new HrblOrderingAdapterSettingsBuilder()
                 .WithUri("https://herbalife-oegdevws.hrbl.com/Order/HLOnlineOrdering/ts3/")
@@ -81,7 +81,6 @@ namespace PromoEngine.Pages
             // Success Toast
             _toastNotification.Success("A success for christian-schou.dk");
         }
-
 
         public async Task<IActionResult> OnPostButton()
         {
@@ -166,6 +165,7 @@ namespace PromoEngine.Pages
                 {
                     case DataSource.Cached:
                         PromoResult = JsonSerializer.Deserialize<GetDSEligiblePromoSKUResponseDTO>(Filuet.Hrbl.Ordering.POC.PromoEngine.Properties.Resources.cachedPromotions);
+
                         break;
                     case DataSource.Original:
                         PromoResult = await Adapter.GetDSEligiblePromoSKU(promoRequest);
@@ -175,13 +175,15 @@ namespace PromoEngine.Pages
                         options.Converters.Add(new PromotionRedemptionLimitJsonConverter());
                         options.Converters.Add(new PromotionRedemptionTypeJsonConverter());
 
-                        Promotions = JsonSerializer.Deserialize<Promotions>(Filuet.Hrbl.Ordering.POC.PromoEngine.Properties.Resources.mockedPromotions, options);
-                        return null;
+                        Promotions = JsonSerializer.Deserialize<Promotion[]>(Filuet.Hrbl.Ordering.POC.PromoEngine.Properties.Resources.mockedPromotions, options).ToList();
+                        string testUid = Guid.NewGuid().ToString();
+                        ServerState.PromotionTests.Add(testUid, Promotions);
+                        return RedirectToAction("Promotions", "Home", new { uid = testUid });
                 }
 
                 if (PromoResult.IsPromo)
                 {
-                    Promotions = new Promotions();
+                    Promotions = new List<Promotion>();
 
                     var realPromos = PromoResult.Promotions.Promotion.GroupBy(x => x.RuleID);
                     foreach (var g in realPromos)
@@ -243,7 +245,7 @@ namespace PromoEngine.Pages
                             }
                         }
 
-                        Promotions.Promo.Add(promotion);
+                        Promotions.Add(promotion);
                     }
                 }
             }

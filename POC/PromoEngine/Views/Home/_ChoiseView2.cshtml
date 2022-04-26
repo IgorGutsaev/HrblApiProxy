@@ -1,0 +1,175 @@
+﻿@model Filuet.Hrbl.Ordering.Abstractions.Models.Promotion
+@using Filuet.Hrbl.Ordering.Abstractions.Enums
+
+<script type="text/javascript">
+    function releaseSelection(saveButtonId, releaseButtonId, itemGroupName) { // reset radiobox
+        $("input:radio[name=" + itemGroupName + "]:checked").prop('checked', false);
+        $("input:checkbox[name=" + itemGroupName + "]:checked").prop('checked', false);
+
+        // make reset button inactive
+        $(releaseButtonId).removeClass('btn-warning');
+        $(releaseButtonId).addClass('btn-secondary');
+
+        // activate save button
+        $(saveButtonId).removeClass('disabled');
+    }
+
+    function onOneOptionalSelected(saveButtonId, releaseButtonId) {
+        // make reset button active
+        $(releaseButtonId).removeClass('btn-secondary');
+        $(releaseButtonId).addClass('btn-warning');
+
+        // activate save button
+        $(saveButtonId).removeClass('disabled');
+    }
+
+    function onOneChanged(saveButtonId) {
+        // if (value === "on") {
+        $(saveButtonId).removeClass('disabled');
+        //}
+    }
+
+    function onMultiplyChanged(saveButtonId, itemGroupName, qtyToRedeem, isOptional) {
+        qty = 0;
+        $("input:checkbox[name=" + itemGroupName + "]:checked").each(function () {
+            qty += 1;
+        });
+
+        if (qty === qtyToRedeem || (qty == 0 && isOptional)) {
+            $(saveButtonId).removeClass('disabled');
+        }
+        else $(saveButtonId).addClass('disabled');
+    }
+
+    function applySelection(saveButtonId) {
+        // 'Save' and deactivate save button
+        $(saveButtonId).removeClass('disabled');
+        $(saveButtonId).addClass('disabled');
+
+        // Save changes
+
+    }
+</script>
+
+@{
+    string listControlName = "group_" + Guid.NewGuid().ToString().Replace("-", string.Empty);
+    string listControlName2 = listControlName + "2";
+
+    if (Model.RedemptionLimit == PromotionRedemptionLimit.One)
+    {
+        for (int g = 0; g < Model.RewardGroups.Count(); g++)
+            for (int r = 0; r < Model.RewardGroups[g].Rewards.Count(); r++)
+            {
+                switch (Model.RedemptionType)
+                {
+                    case PromotionRedemptionType.Automatic: // 4.1.1 / 4.2.1 / 4.4.1
+                        if (Model.RewardCount > 1) // If skus, skus + CV
+                        {
+    <div class="form-check">
+        @Html.RadioButtonFor(x => x.RewardGroups[g].Rewards[r].IsSelected, Model.RewardGroups[g].Rewards[r].Description, new { @id = listControlName2, @checked = true })
+
+
+        <input type="radio" value="Male" id="Gender" name="Gender" />Male<br />
+        <input type="radio" value="Female" id="Gender" name="Gender" />Female<br />
+        <input type="radio" value="Unspecified" id="Gender" name="Gender" />Unspecified<br />
+
+
+        @*< input class="form-check-input" type="radio" name="@listControlName" id="@listControlName2" value="@Model.RewardGroups[g].Rewards[r].IsSelected" onchange="onOneChanged('#saveSelection_@Model.RuleId')">*@
+        @*<label class="form-check-label" for="@listControlName2">
+            @Model.RewardGroups[g].Rewards[r].Description 4.1.1 / 4.4.1
+        </label>*@
+
+    </div>
+                        }
+                        else // single CV
+                        {
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="@listControlName" id="@listControlName2" value="@Model.RewardGroups[g].Rewards[r].IsSelected" checked onchange="onOneChanged('#saveSelection_@Model.RuleId')">
+                                <label class="form-check-label" for="@listControlName2">
+                                    @Model.RewardGroups[g].Rewards[r].Description 4.2.1
+                                </label>
+                            </div>
+                        }
+                        break;
+                    case PromotionRedemptionType.Optional: // 4.1.4 / 4.2.2 / 4.4.4
+                        if (Model.RewardCount > 1) // If skus, skus + CV
+                        {
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="@listControlName" id="@listControlName2" value="@Model.RewardGroups[g].Rewards[r].IsSelected" onchange="onOneOptionalSelected('#saveSelection_@Model.RuleId','#deselect_@Model.RuleId')">
+                                <label class="form-check-label" for="@listControlName2">
+                                    @Model.RewardGroups[g].Rewards[r].Description 4.1.4 / 4.4.4
+                                </label>
+                            </div>
+                        }
+                        else // single CV
+                        {
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="@listControlName" id="@listControlName2" value="@Model.RewardGroups[g].Rewards[r].IsSelected" onchange="onOneOptionalSelected('#saveSelection_@Model.RuleId', '#deselect_@Model.RuleId')">
+                                <label class="form-check-label" for="@listControlName2">
+                                    @Model.RewardGroups[g].Rewards[r].Description 4.2.2
+                                </label>
+                            </div>
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+    }
+    else if (Model.RedemptionLimit == PromotionRedemptionLimit.Multiple)
+    {
+        for (int g = 0; g < Model.RewardGroups.Count(); g++)
+            for (int r = 0; r < Model.RewardGroups[g].Rewards.Count(); r++)
+            {
+                switch (Model.RedemptionType)
+                {
+                    case PromotionRedemptionType.Automatic: // 4.1.2 / 4.4.2
+                    case PromotionRedemptionType.Optional: // 4.1.5 / 4.4.5
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="@listControlName" id="@listControlName2" value="@Model.RewardGroups[g].Rewards[r].IsSelected" onchange="onMultiplyChanged('#saveSelection_@Model.RuleId', '@listControlName', @(@Model.RewardGroups[g].MaxOrderedQuantity ?? Model.RewardCount), @(Model.RedemptionType == PromotionRedemptionType.Optional ? 1 : 0))">
+                            <label class="form-check-label" for="@listControlName2">
+                                @Model.RewardGroups[g].Rewards[r].Description 4.1.2 / 4.4.2 / 4.1.5 / 4.4.5
+                            </label>
+                        </div>
+                        break;
+                    default:
+                        break;
+                }
+            }
+    }
+    else if (Model.RedemptionLimit == PromotionRedemptionLimit.All)
+    {
+        for (int g = 0; g < Model.RewardGroups.Count(); g++)
+            for (int r = 0; r < Model.RewardGroups[g].Rewards.Count(); r++)
+            {
+                switch (Model.RedemptionType)
+                {
+                    case PromotionRedemptionType.Automatic: // 4.1.3 / 4.4.3
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="@listControlName" id="@listControlName2" disabled checked value="@Model.RewardGroups[g].Rewards[r].IsSelected">
+                            <label class="form-check-label" for="@listControlName2">
+                                @Model.RewardGroups[g].Rewards[r].Description 4.1.3 / 4.4.3
+                            </label>
+                        </div>
+                        break;
+                    case PromotionRedemptionType.Optional: // 4.1.6 / 4.4.6
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="@listControlName" id="@listControlName2" value="@Model.RewardGroups[g].Rewards[r].IsSelected" onchange="onMultiplyChanged('#saveSelection_@Model.RuleId', '@listControlName', @Model.RewardCount, @(Model.RedemptionType == PromotionRedemptionType.Optional ? 1 : 0))">
+                            <label class="form-check-label" for="@listControlName2">
+                                @Model.RewardGroups[g].Rewards[r].Description 4.1.6 / 4.4.6
+                            </label>
+                        </div>
+                        break;
+                    default:
+                        break;
+                }
+            }
+    }
+    <br>
+
+    if (Model.RedemptionLimit == PromotionRedemptionLimit.One && Model.RedemptionType == PromotionRedemptionType.Optional)
+    {
+        <input type="button" id="deselect_@Model.RuleId" class="btn btn-secondary" onclick="releaseSelection('#saveSelection_@Model.RuleId', '#deselect_@Model.RuleId', '@listControlName')" value="Deselect" />
+    }
+    <button type="button" id="saveSelection_@Model.RuleId" class="btn btn-primary disabled" onclick="applySelection('#saveSelection_@Model.RuleId')">Save selection</button>
+}

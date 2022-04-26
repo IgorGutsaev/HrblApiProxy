@@ -1,9 +1,12 @@
 ﻿using Filuet.Hrbl.Ordering.Abstractions.Models;
+using System.Collections.Generic;
 
 namespace Filuet.Hrbl.Ordering.POC.PromoEngine
 {
     public static class ServerState
     {
+        public static Dictionary<string, List<Promotion>> PromotionTests { get; set; } = new Dictionary<string, List<Promotion>>();
+
         public static DataSource DataSource
         {
             get
