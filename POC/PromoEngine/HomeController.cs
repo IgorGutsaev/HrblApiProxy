@@ -1,4 +1,5 @@
-﻿using Filuet.Hrbl.Ordering.Abstractions.Models;
+﻿using AspNetCoreHero.ToastNotification.Abstractions;
+using Filuet.Hrbl.Ordering.Abstractions.Models;
 using Filuet.Hrbl.Ordering.Abstractions.Serializers;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -11,6 +12,12 @@ namespace Filuet.Hrbl.Ordering.POC.PromoEngine
 {
     public class HomeController : Controller
     {
+        private readonly INotyfService _toastNotification;
+
+        public HomeController(INotyfService toastNotification)
+        {
+            _toastNotification = toastNotification;
+        }
         public IActionResult Index()
         {
             return View();
@@ -22,6 +29,13 @@ namespace Filuet.Hrbl.Ordering.POC.PromoEngine
             List<Promotion> promotions = ServerState.PromotionTests[uid];
             return View(promotions);
         }
+
+        //[HttpPost]
+        //public IActionResult Toast(string msg)
+        //{
+        //    _toastNotification.Success("FFfff");
+        //    return Ok();
+        //}
 
         [HttpPost]
         public IActionResult Index(List<Promotion> promo)

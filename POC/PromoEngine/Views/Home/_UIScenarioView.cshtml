@@ -1,4 +1,6 @@
 ﻿@model List<Filuet.Hrbl.Ordering.Abstractions.Models.Promotion>
+@using Filuet.Hrbl.Ordering.Abstractions.Enums
+@using Filuet.Hrbl.Ordering.Common;
 
 <style>
     .promoFoundPopup {
@@ -7,10 +9,85 @@
         max-width: 700px;
         text-align: left;
         margin: auto;
+        margin-top: 10px !important;
         width: 700px;
         padding: 5px;
     }
 </style>
+
+<script type="text/javascript">
+
+    function onSingleHasChanged(uid, redemptionType, element) {
+        $('#releaseButton_' + uid).removeClass('btn-warning');
+        $('#releaseButton_' + uid).removeClass('btn-secondary');
+        $('#releaseButton_' + uid).addClass('btn-secondary');
+
+        if (redemptionType === 2 && element.checked) // Optional
+        {
+            // make reset button active
+            $('#releaseButton_' + uid).removeClass('btn-secondary');
+            $('#releaseButton_' + uid).addClass('btn-warning');
+        }
+
+        $('#saveButton_' + uid).removeClass('disabled');
+        UnsavedChangesDetected();
+    }
+
+    function applySelection(uid) {
+        $('#saveButton_' + uid).removeClass('disabled');
+        $('#saveButton_' + uid).addClass('disabled');
+
+        var allSaved = true;
+
+        $('[id^="saveButton_"]').each(function () {
+            if (!$(this).hasClass("disabled")) { // if at least one unsaved promotion exisits
+                UnsavedChangesDetected();
+                allSaved = false;
+            }
+        });
+
+        if (allSaved)
+            AllowSubmit();
+    }
+
+    function releaseSelection(uid) { // reset radiobox
+        $("input:radio[uid=choise_" + uid + "]:checked").prop('checked', false);
+        $("input:checkbox[uid=choise_" + uid + "]:checked").prop('checked', false);
+
+        // make reset button inactive
+        $('#releaseButton_' + uid).removeClass('btn-warning');
+        $('#releaseButton_' + uid).addClass('btn-secondary');
+
+        // activate save button
+        $('#saveButton_' + uid).removeClass('disabled');
+        UnsavedChangesDetected();
+    }
+
+    function onMultiplyHasChanged(uid, qtyToRedeem, isOptional) {
+        qty = 0;
+        $("input:checkbox[uid=choise_" + uid + "]:checked").each(function () {
+            qty += 1;
+        });
+
+        //alert(qty + '/' + qtyToRedeem);
+
+        if (qty === qtyToRedeem || (qty == 0 && isOptional === 2)) {
+            $('#saveButton_' + uid).removeClass('disabled');
+            UnsavedChangesDetected();
+        }
+        else $('#saveButton_' + uid).addClass('disabled');
+    }
+
+    function UnsavedChangesDetected() {
+        $('#lockButton').show();
+        $('#confirmButton').hide();
+    }
+
+    function AllowSubmit() {
+        $('#lockButton').hide();
+        $('#confirmButton').show();
+    }
+</script>
 
 @{
     <div class="promoFoundPopup">
@@ -24,64 +101,141 @@
             Promotions
         </button>
 
-        <!-- Modal -->
-        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Manage Vouchers & Promotions</h5>
+        <form method="post" action="/Home/Index">
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Manage Vouchers & Promotions</h5>
 
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <p>
-                            <h6>Select the discount and/or promotions and add them to you order</h6>
-                            <mark style="border: 1px solid #ffd162"><small>Some items are not available for some promotions if previously selected</small></mark>
-                        </p>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>
+                                <h6>Select the discount and/or promotions and add them to you order</h6>
+                                <mark style="border: 1px solid #ffd162"><small>Some items are not available for some promotions if previously selected</small></mark>
+                            </p>
 
-                        <div id="carouselExampleControls" class="carousel" data-ride="carousel @*add 'slide' for animation*@" style="background-color: darkgray">
-                            <ol class="carousel-indicators">
-                                @for (int i = 0; i < Model.Count(); i++)
-                                {
-                                    <li data-target="#carouselExampleIndicators" data-slide-to="@i" class="@(i == 0 ? "active" : string.Empty)"></li>
-                                }
-                            </ol>
-                            <div class="carousel-inner">
-                                <form method="post" action="/Home/Index">
+                            <div id="carouselExampleControls" class="carousel" @*data-ride="carousel slide"*@ style="background-color: darkgray">
+                                <ol class="carousel-indicators">
+                                    @for (int i = 0; i < Model.Count(); i++)
+                                    {
+                                        <li data-target="#carouselExampleIndicators" data-slide-to="@i" class="@(i == 0 ? "active" : string.Empty)"></li>
+                                    }
+                                </ol>
+                                <div class="carousel-inner">
+
                                     @for (int i = 0; i < Model.Count(); i++)
                                     {
                                     <div class="carousel-item @(Model[i] == Model.First() ? "active" : string.Empty)" style="padding: 30px 70px 150px 70px; margin: 0 50px 0 50px">
                                         <p class="h6">@Model[i].Notification</p>
-                                        @Html.Partial("_ChoiseView2", Model[i])
-                                        
+
+                                        @Html.HiddenFor(x => x[i].RuleId)
+                                        @Html.HiddenFor(x => x[i].RedemptionLimit)
+                                        @Html.HiddenFor(x => x[i].RedemptionType)
+                                        @Html.HiddenFor(x => x[i].RuleName)
+                                        @Html.HiddenFor(x => x[i].Notification)
+
+                                        @switch (Model[i].RedemptionLimit)
+                                        {
+                                            case PromotionRedemptionLimit.One:
+                                                switch (Model[i].RedemptionType)
+                                                {
+                                                    case PromotionRedemptionType.Automatic: // 4.1.1 / 4.4.1
+                                                    case PromotionRedemptionType.Optional: // 4.1.4 / 4.4.4
+                                                        var htmlAttributes = new { uid = $"choise_{Model[i].RuleId}", onchange = $"onSingleHasChanged('{Model[i].RuleId}', {(int)Model[i].RedemptionType}, this);" };
+
+                                                        if (Model[i].Rewards.Count() > 1) // If skus, skus + CV: // 4.1.1 / 4.1.4 / 4.4.1 / 4.4.4
+                                                        {
+                                                            @for (int j = 0; j < Model[i].Rewards.Count(); j++)
+                                                            {
+                                                                @Html.HiddenFor(x => x[i].Rewards[j].RewardItem)
+                                                                @Html.RadioButtonFor(model => model[i].SelectedReward, Model[i].Rewards[j], htmlAttributes) <span /> @Model[i].Rewards[j] <br />
+                                                            }
+                                                        }
+                                                        else // single CV: 4.2.1 / 4.2.2
+                                                        {
+                                                            @Html.HiddenFor(x => x[i].Rewards[0].RewardItem)
+                                                            @Html.EditorFor(model => model[i].Rewards[0].IsSelected, new { htmlAttributes = htmlAttributes }) <span /> @Model[i].Rewards[0]
+                                                        }
+                                                        break;
+                                                    default:
+                                                        break;
+                                                }
+                                                break;
+                                            case PromotionRedemptionLimit.Multiple:
+                                            case PromotionRedemptionLimit.All:
+                                                switch (Model[i].RedemptionType)
+                                                {
+                                                    case PromotionRedemptionType.Automatic: // 4.1.2 / 4.4.2
+                                                    case PromotionRedemptionType.Optional: // 4.1.5 / 4.4.5
+                                                        bool disableChooser = Model[i].RedemptionLimit == PromotionRedemptionLimit.All && Model[i].RedemptionType == PromotionRedemptionType.Automatic;
+
+                                                        @for (int j = 0; j < Model[i].Rewards.Count(); j++)
+                                                        {
+                                                            @Html.HiddenFor(x => x[i].Rewards[j].RewardItem)
+                                                            if (!disableChooser)
+                                                            {
+                                                                @Html.CheckBoxFor(model => model[i].Rewards[j].IsSelected, new { uid = $"choise_{Model[i].RuleId}", onchange = $"onMultiplyHasChanged('{Model[i].RuleId}', {Model[i].MaxQtyToRedeem}, {(int)Model[i].RedemptionType});" })
+                                                            }
+                                                            else
+                                                            {
+                                                                @Html.CheckBoxFor(model => model[i].Rewards[j].IsSelected, new { disabled = true, uid = $"choise_{Model[i].RuleId}", onchange = $"onMultiplyHasChanged('{Model[i].RuleId}', {Model[i].MaxQtyToRedeem}, {(int)Model[i].RedemptionType});" })
+                                                            }
+
+                                                            <span /> @Model[i].Rewards[j] <br />
+                                                        }
+
+                                                        break;
+                                                    default:
+                                                        break;
+                                                }
+                                                break;
+                                            default:
+                                                break;
+                                        }
+
+                                        <br>
+                                        <br>
+                                        @if (Model[i].RedemptionLimit == PromotionRedemptionLimit.One && Model[i].RedemptionType == PromotionRedemptionType.Optional)
+                                        {
+                                            <input type="button" id="releaseButton_@Model[i].RuleId" class="btn btn-secondary" onclick="releaseSelection('@Model[i].RuleId')" value="Deselect" />
+                                        }
+                                        <button type="button" id="saveButton_@Model[i].RuleId" class="btn btn-primary disabled" onclick="applySelection('@Model[i].RuleId')">Save selection</button>
+
                                         <div class="carousel-caption d-none d-md-block">
                                             <p>@(Model[i].RuleId + ": " + Model[i].RuleName)</p>
+                                            <p style="font-size: 12px; color: black">[@Model[i].Type / @Model[i].RedemptionLimit.GetDescription() / @Model[i].RedemptionType.GetDescription()]</p>
                                         </div>
                                     </div>
                                     }
-                                </form>
+
+                                </div>
+                                <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="sr-only">Previous</span>
+                                </a>
+                                <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="sr-only">Next</span>
+                                </a>
                             </div>
-                            <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                <span class="sr-only">Previous</span>
-                            </a>
-                            <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                <span class="sr-only">Next</span>
-                            </a>
+
+
                         </div>
-
-
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                        @*<button type="submit" class="btn btn-primary">Save selection</button>*@
-                        <input type="submit" value="Save selection" class="btn btn-primary" />
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                            <button type="submit" id="confirmButton" class="btn btn-primary" disabled>Next</button>
+                            <button type="button" id="lockButton" class="btn btn-secondary" style="display: none" onclick="toastr.warning('There are some unsaved changes')">Next</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </form>
     </div>
+
+    @Html.Partial("_PromoViewGrouped", Model)
 }

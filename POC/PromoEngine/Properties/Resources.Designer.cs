@@ -71,22 +71,23 @@ namespace Filuet.Hrbl.Ordering.POC.PromoEngine.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to [
-        ///      {
-        ///         &quot;ruleId&quot;:&quot;0001&quot;,
-        ///         &quot;ruleName&quot;:&quot;Automatic Cash Voucher Promotion [Promotion name]&quot;,
-        ///         &quot;redemptionType&quot;:&quot;AUTOMATIC&quot;,
-        ///         &quot;redemptionLimit&quot;:&quot;ONE&quot;,
-        ///         &quot;groups&quot;:[
-        ///            {
-        ///               &quot;validity&quot;:&quot;&quot;,
-        ///               &quot;type&quot;:&quot;CASH VOUCHER&quot;,
-        ///               &quot;ruleName&quot;:&quot;Optional Cash Voucher Promotion [Promotion name]&quot;,
-        ///               &quot;reward&quot;:&quot;10&quot;,
-        ///               &quot;qty&quot;:1,
-        ///               &quot;maxQty&quot;:null,
-        ///               &quot;rewards&quot;:[
-        ///                  {
-        ///    [rest of string was truncated]&quot;;.
+        ///   {
+        ///      &quot;ruleId&quot;:&quot;0001&quot;,
+        ///      &quot;ruleName&quot;:&quot;AUTOMATIC Cash Voucher Promotion [Promotion name]&quot;,
+        ///      &quot;redemptionType&quot;:&quot;AUTOMATIC&quot;,
+        ///      &quot;redemptionLimit&quot;:&quot;ONE&quot;,
+        ///      &quot;rewards&quot;:[
+        ///         {
+        ///            &quot;validity&quot;:&quot;&quot;,
+        ///            &quot;type&quot;:&quot;CASH VOUCHER&quot;,
+        ///            &quot;ruleName&quot;:&quot;AUTOMATIC Cash Voucher Promotion [Promotion name]&quot;,
+        ///            &quot;reward&quot;:&quot;11&quot;,
+        ///            &quot;description&quot;:&quot;Cash Voucher [Reward Description]&quot;,
+        ///            &quot;qty&quot;:1,
+        ///            &quot;maxQty&quot;:0
+        ///         }
+        ///      ],
+        ///      &quot; [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string mockedPromotions {
             get {

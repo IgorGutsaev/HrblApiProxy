@@ -6,9 +6,9 @@ namespace Filuet.Hrbl.Ordering.Abstractions.Enums
     {
         [Description("AUTOMATIC")]
         Automatic = 0x01,
-        [Description("MIX")]
-        Mix,
         [Description("OPTIONAL")]
-        Optional
+        Optional,
+        [Description("MIX")]
+        Mix
     }
 }

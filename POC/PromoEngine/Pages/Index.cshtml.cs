@@ -78,8 +78,6 @@ namespace PromoEngine.Pages
 
         public void OnGet()
         {
-            // Success Toast
-            _toastNotification.Success("A success for christian-schou.dk");
         }
 
         public async Task<IActionResult> OnPostButton()
@@ -177,7 +175,7 @@ namespace PromoEngine.Pages
 
                         Promotions = JsonSerializer.Deserialize<Promotion[]>(Filuet.Hrbl.Ordering.POC.PromoEngine.Properties.Resources.mockedPromotions, options).ToList();
                         string testUid = Guid.NewGuid().ToString();
-                        ServerState.PromotionTests.Add(testUid, Promotions);
+                        ServerState.PromotionTests.Add(testUid, Promotions.Select(x=>x.MarkSelectedIfNeeded()).ToList());
                         return RedirectToAction("Promotions", "Home", new { uid = testUid });
                 }
 
@@ -186,66 +184,48 @@ namespace PromoEngine.Pages
                     Promotions = new List<Promotion>();
 
                     var realPromos = PromoResult.Promotions.Promotion.GroupBy(x => x.RuleID);
-                    foreach (var g in realPromos)
+                    foreach (var pro in realPromos)
                     {
                         Promotion promotion = new Promotion
                         {
-                            RuleId = g.Key,
-                            RuleName = g.First().PromotionRuleName,
-                            RedemptionType = EnumHelper.GetValueFromDescription<PromotionRedemptionType>(g.First().RedemptionType),
-                            RedemptionLimit = EnumHelper.GetValueFromDescription<PromotionRedemptionLimit>(g.First().ChrAttribute1),
-                            Notification = g.First().PromoNotification
+                            RuleId = pro.Key,
+                            RuleName = pro.First().PromotionRuleName,
+                            RedemptionType = EnumHelper.GetValueFromDescription<PromotionRedemptionType>(pro.First().RedemptionType),
+                            RedemptionLimit = EnumHelper.GetValueFromDescription<PromotionRedemptionLimit>(pro.First().ChrAttribute1),
+                            Notification = pro.First().PromoNotification
                         };
 
-                        var groupByTypes = g.ToList().GroupBy(x => x.PromotionType);
-
-                        foreach (var x in groupByTypes)
+                        foreach (var x in pro.ToList())
                         {
-                            var head = x.First();
-                            if (head.PromotionType.Equals("CASH VOUCHER", StringComparison.InvariantCultureIgnoreCase))
+                            if (x.PromotionType.Equals("CASH VOUCHER", StringComparison.InvariantCultureIgnoreCase))
                             {
-                                foreach (var fs in x)
-                                {
-                                    promotion.RewardGroups.Add(new RewardGroup // With reward group
-                                    {
-                                        RewardItem = fs.PromotionProp1,
-                                        OrderedQuantity = fs.OrderedQuantity,
-                                        Type = fs.PromotionType,
-                                        RuleName = fs.PromotionRuleName,
-                                        ValidUntil = fs.DateAttribute1?.ToLongDateString() ?? string.Empty
-                                    }
-                                    .AddReward(new Reward
-                                    { // With reward lines
-                                        Type = fs.PromotionType,
-                                        Description = fs.ChrAttribute3,
-                                        RewardItem = fs.PromotionProp1,
-                                        RuleName = fs.PromotionRuleName,
-                                        ValidUntil = fs.DateAttribute1?.ToLongDateString() ?? string.Empty
-                                    }));
-                                }
+                                promotion.Rewards.Add(new Reward
+                                { 
+                                    Type = x.PromotionType,
+                                    MaxOrderedQuantity = x.ChrAttribute2 ?? 0,
+                                    Description = x.ChrAttribute3,
+                                    OrderedQuantity = x.OrderedQuantity,
+                                    RewardItem = x.PromotionProp1,
+                                    RuleName = x.PromotionRuleName,
+                                    ValidUntil = x.DateAttribute1?.ToLongDateString() ?? string.Empty,
+                                    CashVoucherAmount = x.NumAttribute1.HasValue ? (decimal)x.NumAttribute1.Value : 0m
+                                });
                             }
-                            else if (head.PromotionType.Equals("FREE SKU", StringComparison.InvariantCultureIgnoreCase))
+                            else if (x.PromotionType.Equals("FREE SKU", StringComparison.InvariantCultureIgnoreCase))
                             {
-                                promotion.RewardGroups.Add(new RewardGroup // With reward group
-                                {
-                                    RewardItem = string.Join(", ", x.Select(r => $"{r.PromotionProp1}x{r.OrderedQuantity}")),
-                                    OrderedQuantity = head.OrderedQuantity,
-                                    Type = head.PromotionType,
-                                    RuleName = head.PromotionRuleName,
-                                    MaxOrderedQuantity = head.ChrAttribute2
-                                }
-                                .AddRewards(() => x.Select(y => new Reward
-                                { // With reward lines
-                                    Type = y.PromotionType,
-                                    Description = y.ChrAttribute3,
-                                    RewardItem = y.PromotionProp1,
-                                    RuleName = y.PromotionRuleName,
-                                    ValidUntil = y.DateAttribute1?.ToLongDateString() ?? string.Empty
-                                })));
+                                promotion.Rewards.Add(new Reward {
+                                    Type = x.PromotionType,
+                                    MaxOrderedQuantity = x.ChrAttribute2 ?? 0,
+                                    Description = x.ChrAttribute3,
+                                    OrderedQuantity = x.OrderedQuantity,
+                                    RewardItem = x.PromotionProp1,
+                                    RuleName = x.PromotionRuleName,
+                                    ValidUntil = x.DateAttribute1?.ToLongDateString() ?? string.Empty                                     
+                                });
                             }
                         }
 
-                        Promotions.Add(promotion);
+                        Promotions.Add(promotion.MarkSelectedIfNeeded());
                     }
                 }
             }
@@ -256,10 +236,6 @@ namespace PromoEngine.Pages
 
             return null;
         }
-
-
-       
-
         public string PricingErrors { get; set; } = string.Empty;
 
         private string Currency

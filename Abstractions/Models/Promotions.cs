@@ -7,54 +7,6 @@ using System.Text.Json.Serialization;
 
 namespace Filuet.Hrbl.Ordering.Abstractions.Models
 {
-    public class RewardGroup
-    {
-        [JsonPropertyName("validity")]
-        public string ValidUntil { get; set; }
-
-        [JsonPropertyName("type")]
-        public string Type { get; set; }
-
-        [JsonPropertyName("ruleName")]
-        public string RuleName { get; set; }
-
-        [JsonPropertyName("reward")]
-        public string RewardItem { get; set; }
-
-        [JsonPropertyName("qty")]
-        public int OrderedQuantity { get; set; }
-
-        [JsonPropertyName("maxQty")]
-        public int? MaxOrderedQuantity { get; set; } // ChrAttribute2 Such value corresponds to the maximum number of free SKUs user can redeem as part of t
-
-        [JsonPropertyName("rewards")]
-        public IList<Reward> Rewards { get; set; } = new List<Reward>();
-
-        public RewardGroup AddReward(Reward reward)
-        {
-            reward.Group = this;
-            Rewards.Add(reward);
-
-            return this;
-        }
-
-        public RewardGroup AddRewards(Func<IEnumerable<Reward>> setupRewards)
-        {
-            IEnumerable<Reward> rewards = setupRewards?.Invoke();
-
-            if (rewards != null)
-                foreach (var r in rewards)
-                {
-                    r.Group = this;
-                    Rewards.Add(r);
-                }
-
-            return this;
-        }
-
-        public override string ToString() => Type;
-    }
-
     [BindProperties]
     public class Promotion
     {
@@ -69,8 +21,8 @@ namespace Filuet.Hrbl.Ordering.Abstractions.Models
         {
             get
             {
-                bool hasVoucher = RewardGroups.Any(x => string.Equals(x.Type, "CASH VOUCHER", StringComparison.InvariantCultureIgnoreCase));
-                bool hasSkus = RewardGroups.Any(x => string.Equals(x.Type, "Free Sku", StringComparison.InvariantCultureIgnoreCase));
+                bool hasVoucher = Rewards.Any(x => string.Equals(x.Type, "CASH VOUCHER", StringComparison.InvariantCultureIgnoreCase));
+                bool hasSkus = Rewards.Any(x => string.Equals(x.Type, "Free Sku", StringComparison.InvariantCultureIgnoreCase));
 
                 if (hasVoucher && hasSkus)
                     return PromotionType.Mixed;
@@ -97,12 +49,12 @@ namespace Filuet.Hrbl.Ordering.Abstractions.Models
         /// <example>MULTIPLE/ALL/ONE</example>
         public PromotionRedemptionLimit RedemptionLimit { get; set; }
 
+        [JsonPropertyName("rewards")]
+        public IList<Reward> Rewards { get; set; } = new List<Reward>();
 
-        [JsonPropertyName("groups")]
-        public IList<RewardGroup> RewardGroups { get; set; } = new List<RewardGroup>();
+        [JsonPropertyName("selectedReward")]
+        public string SelectedReward { get; set; }
 
-        [JsonIgnore]
-        public int RewardCount => RewardGroups.SelectMany(x => x.Rewards).Count();
 
         [JsonPropertyName("notification")]
         /// <summary>
@@ -112,6 +64,19 @@ namespace Filuet.Hrbl.Ordering.Abstractions.Models
         public string Notification { get; set; } // PromoNotification
 
         public override string ToString() => RuleName;
+
+        public Promotion MarkSelectedIfNeeded()
+        {
+            if (Rewards.Count == 1 && RedemptionType == PromotionRedemptionType.Automatic && RedemptionLimit == PromotionRedemptionLimit.One)
+                Rewards[0].IsSelected = true;
+            else if (Rewards.Count > 0 && RedemptionType == PromotionRedemptionType.Automatic && RedemptionLimit == PromotionRedemptionLimit.All)
+                foreach (var r in Rewards)
+                    r.IsSelected = true;
+
+            return this;
+        }
+
+        public int MaxQtyToRedeem => Rewards.Any() && Rewards.Max(x => x.MaxOrderedQuantity) > 0 ? Rewards.Max(x => x.MaxOrderedQuantity) : Rewards.Count;
     }
 
     public class Reward
@@ -134,9 +99,22 @@ namespace Filuet.Hrbl.Ordering.Abstractions.Models
         [JsonPropertyName("description")]
         public string Description { get; set; }
 
-        [JsonIgnore]
-        public RewardGroup Group { get; set; }
+        [JsonPropertyName("qty")]
+        public int OrderedQuantity { get; set; }
 
-        public override string ToString() => $"{Type} {RewardItem}";
+        [JsonPropertyName("maxQty")]
+        public int MaxOrderedQuantity { get; set; }
+
+        // For CV only
+        [JsonPropertyName("cashAmount")]
+        public decimal CashVoucherAmount { get; set; } = 0m;
+
+        public override string ToString()
+        {
+            if (Type.ToLower().Trim().Contains("voucher") && !Description.ToLower().Trim().StartsWith(RewardItem.ToLower().Trim()))
+                return $"{RewardItem} {Description}".Trim();
+
+            return Description.Trim();
+        }
     }
 }

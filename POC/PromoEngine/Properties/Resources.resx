@@ -122,224 +122,178 @@
   </data>
   <data name="mockedPromotions" xml:space="preserve">
     <value>[
-      {
-         "ruleId":"0001",
-         "ruleName":"Automatic Cash Voucher Promotion [Promotion name]",
-         "redemptionType":"AUTOMATIC",
-         "redemptionLimit":"ONE",
-         "groups":[
-            {
-               "validity":"",
-               "type":"CASH VOUCHER",
-               "ruleName":"Optional Cash Voucher Promotion [Promotion name]",
-               "reward":"10",
-               "qty":1,
-               "maxQty":null,
-               "rewards":[
-                  {
-                     "validity":"",
-                     "type":"CASH VOUCHER",
-                     "ruleName":"Automatic Cash Voucher Promotion [Promotion name]",
-                     "reward":"10",
-                     "description":"Cash Voucher [Reward Description]"
-                  }
-               ]
-            }
-         ],
-         "notification":"Congrats![Popup Notification Message]"
-      },
-      {
-         "ruleId":"4869",
-         "ruleName":"Mandatory Mixed Promotion SKU+CV, ONE item to be reedem[Promotion name]",
-         "redemptionType":"AUTOMATIC",
-         "redemptionLimit":"ONE",
-         "groups":[
-            {
-               "validity":null,
-               "type":"FREE SKU",
-               "ruleName":"Mandatory Mixed Promotion SKU+CV, ONE item to be reedem[Promotion name]",
-               "reward":"0144x3",
-               "qty":3,
-               "maxQty":1,
-               "rewards":[
-                  {
-                     "validity":"",
-                     "type":"FREE SKU",
-                     "ruleName":"Mandatory Mixed Promotion SKU+CV, ONE item to be reedem[Promotion name]",
-                     "reward":"0144",
-                     "description":"0144 Reward description"
-                  }
-               ]
-            },
-            {
-               "validity":"",
-               "type":"CASH VOUCHER",
-               "ruleName":"Mandatory Mixed Promotion SKU+CV, ONE item to be reedem[Promotion name]",
-               "reward":"10",
-               "qty":1,
-               "maxQty":null,
-               "rewards":[
-                  {
-                     "validity":"",
-                     "type":"CASH VOUCHER",
-                     "ruleName":"Mandatory Mixed Promotion SKU+CV, ONE item to be reedem[Promotion name]",
-                     "reward":"10",
-                     "description":"CV reward description"
-                  }
-               ]
-            }
-         ],
-         "notification":"Congratulations! [Popup Notification messgae]"
-      },
-      {
-         "ruleId":"5030",
-         "ruleName":"Optional Free sku promotion, MULTIPLE 2 from 3 available SKUs [promotion name]",
-         "redemptionType":"OPTIONAL",
-         "redemptionLimit":"MULTIPLE",
-         "groups":[
-            {
-               "validity":null,
-               "type":"FREE SKU",
-               "ruleName":"Optional Free sku promotion, MULTIPLE 2 from 3 available SKUs [promotion name]",
-               "reward":"0043x1, 0104x1, 0006x1",
-               "qty":1,
-               "maxQty":2,
-               "rewards":[
-                  {
-                     "validity":"",
-                     "type":"FREE SKU",
-                     "ruleName":"Optional Free sku promotion, MULTIPLE 2 from 3 available SKUs [promotion name]",
-                     "reward":"0043",
-                     "description":"0043 SKU Reward Description"
-                  },
-                  {
-                     "validity":"",
-                     "type":"FREE SKU",
-                     "ruleName":"Optional Free sku promotion, MULTIPLE 2 from 3 available SKUs [promotion name]",
-                     "reward":"0104",
-                     "description":"0104 SKU Reward Description "
-                  },
-                  {
-                     "validity":"",
-                     "type":"FREE SKU",
-                     "ruleName":"Optional Free sku promotion, MULTIPLE 2 from 3 available SKUs [promotion name]",
-                     "reward":"0006",
-                     "description":"0006 SKU Reward Description "
-                  }
-               ]
-            }
-         ],
-         "notification":"Congrats![Popup Notification message]"
-      },
-      {
-         "ruleId":"5031",
-         "ruleName":"Optional Cash Voucher Promotion [Promotion name]",
-         "redemptionType":"OPTIONAL",
-         "redemptionLimit":"ONE",
-         "groups":[
-            {
-               "validity":"",
-               "type":"CASH VOUCHER",
-               "ruleName":"Optional Cash Voucher Promotion [Promotion name]",
-               "reward":"12",
-               "qty":1,
-               "maxQty":null,
-               "rewards":[
-                  {
-                     "validity":"",
-                     "type":"CASH VOUCHER",
-                     "ruleName":"Optional Cash Voucher Promotion [Promotion name]",
-                     "reward":"12",
-                     "description":"Cash Voucher [Reward Description]"
-                  }
-               ]
-            }
-         ],
-         "notification":"Congrats![Popup Notification Message]"
-      },
-      {
-         "ruleId":"5032",
-         "ruleName":"Optional Mixed Promotion SKU+CV, ALL item to be reedem [Promotion name]",
-         "redemptionType":"OPTIONAL",
-         "redemptionLimit":"ALL",
-         "groups":[
-            {
-               "validity":null,
-               "type":"FREE SKU",
-               "ruleName":"Optional Mixed Promotion SKU+CV, ALL item to be reedem [Promotion name]",
-               "reward":"0155x1",
-               "qty":1,
-               "maxQty":null,
-               "rewards":[
-                  {
-                     "validity":"",
-                     "type":"FREE SKU",
-                     "ruleName":"Optional Mixed Promotion SKU+CV, ALL item to be reedem [Promotion name]",
-                     "reward":"0155",
-                     "description":"0155 SKU Reward Description "
-                  }
-               ]
-            },
-            {
-               "validity":"",
-               "type":"CASH VOUCHER",
-               "ruleName":"Optional Mixed Promotion SKU+CV, ALL item to be reedem [Promotion name]",
-               "reward":"19",
-               "qty":1,
-               "maxQty":null,
-               "rewards":[
-                  {
-                     "validity":"",
-                     "type":"CASH VOUCHER",
-                     "ruleName":"Optional Mixed Promotion SKU+CV, ALL item to be reedem [Promotion name]",
-                     "reward":"19",
-                     "description":"19 Cash Voucher Reward Description"
-                  }
-               ]
-            }
-         ],
-         "notification":"Congrats![Popup Notification message]"
-      },
-      {
-         "ruleId":"5134",
-         "ruleName":"Optional Free sku promotion, ALL",
-         "redemptionType":"OPTIONAL",
-         "redemptionLimit":"ALL",
-         "groups":[
-            {
-               "validity":null,
-               "type":"FREE SKU",
-               "ruleName":"Optional Free sku promotion, ALL",
-               "reward":"0043x1, 0104x1, 0006x1",
-               "qty":1,
-               "maxQty":null,
-               "rewards":[
-                  {
-                     "validity":"",
-                     "type":"FREE SKU",
-                     "ruleName":"Optional Free sku promotion, ALL",
-                     "reward":"0043",
-                     "description":"0043 SKU Reward Description"
-                  },
-                  {
-                     "validity":"",
-                     "type":"FREE SKU",
-                     "ruleName":"Optional Free sku promotion, ALL",
-                     "reward":"0104",
-                     "description":"0104 SKU Reward Description"
-                  },
-                  {
-                     "validity":"",
-                     "type":"FREE SKU",
-                     "ruleName":"Optional Free sku promotion, ALL",
-                     "reward":"0006",
-                     "description":"0006 SKU Reward Description"
-                  }
-               ]
-            }
-         ],
-         "notification":"Congrats! [Popup Notification Message]"
-      }
-   ]</value>
+   {
+      "ruleId":"0001",
+      "ruleName":"AUTOMATIC Cash Voucher Promotion [Promotion name]",
+      "redemptionType":"AUTOMATIC",
+      "redemptionLimit":"ONE",
+      "rewards":[
+         {
+            "validity":"",
+            "type":"CASH VOUCHER",
+            "ruleName":"AUTOMATIC Cash Voucher Promotion [Promotion name]",
+            "reward":"11",
+            "description":"Cash Voucher [Reward Description]",
+            "qty":1,
+            "maxQty":0
+         }
+      ],
+      "notification":"Congrats![Popup Notification Message]"
+   },
+   {
+      "ruleId":"4869",
+      "ruleName":"Mandatory Mixed Promotion SKU\u002BCV, ONE item to be reedem[Promotion name]",
+      "redemptionType":"AUTOMATIC",
+      "redemptionLimit":"ONE",
+      "rewards":[
+         {
+            "validity":"",
+            "type":"FREE SKU",
+            "ruleName":"Mandatory Mixed Promotion SKU\u002BCV, ONE item to be reedem[Promotion name]",
+            "reward":"0144",
+            "description":"0144 Reward description",
+            "qty":3,
+            "maxQty":1
+         },
+         {
+            "validity":"",
+            "type":"CASH VOUCHER",
+            "ruleName":"Mandatory Mixed Promotion SKU\u002BCV, ONE item to be reedem[Promotion name]",
+            "reward":"10",
+            "description":"CV reward description",
+            "qty":1,
+            "maxQty":1
+         }
+      ],
+      "selectedReward":null,
+      "notification":"Congratulations! [Popup Notification messgae]",
+      "MaxQtyToRedeem":1
+   },
+   {
+      "ruleId":"5030",
+      "ruleName":"Optional Free sku promotion, MULTIPLE 2 from 3 available SKUs [promotion name]",
+      "redemptionType":"OPTIONAL",
+      "redemptionLimit":"MULTIPLE",
+      "rewards":[
+         {
+            "validity":"",
+            "type":"FREE SKU",
+            "ruleName":"Optional Free sku promotion, MULTIPLE 2 from 3 available SKUs [promotion name]",
+            "reward":"0043",
+            "description":"0043 SKU Reward Description",
+            "qty":1,
+            "maxQty":2
+         },
+         {
+            "validity":"",
+            "type":"FREE SKU",
+            "ruleName":"Optional Free sku promotion, MULTIPLE 2 from 3 available SKUs [promotion name]",
+            "reward":"0104",
+            "description":"0104 SKU Reward Description ",
+            "qty":1,
+            "maxQty":2
+         },
+         {
+            "validity":"",
+            "type":"FREE SKU",
+            "ruleName":"Optional Free sku promotion, MULTIPLE 2 from 3 available SKUs [promotion name]",
+            "reward":"0006",
+            "description":"0006 SKU Reward Description ",
+            "qty":1,
+            "maxQty":2
+         }
+      ],
+      "selectedReward":null,
+      "notification":"Congrats![Popup Notification message]",
+      "MaxQtyToRedeem":2
+   },
+   {
+      "ruleId":"5031",
+      "ruleName":"Optional Cash Voucher Promotion [Promotion name]",
+      "redemptionType":"OPTIONAL",
+      "redemptionLimit":"ONE",
+      "rewards":[
+         {
+            "validity":"",
+            "type":"CASH VOUCHER",
+            "ruleName":"Optional Cash Voucher Promotion [Promotion name]",
+            "reward":"12",
+            "description":"Cash Voucher [Reward Description]",
+            "qty":1,
+            "maxQty":1
+         }
+      ],
+      "selectedReward":null,
+      "notification":"Congrats![Popup Notification Message]",
+      "MaxQtyToRedeem":1
+   },
+   {
+      "ruleId":"5032",
+      "ruleName":"Optional Mixed Promotion SKU\u002BCV, ALL item to be reedem [Promotion name]",
+      "redemptionType":"OPTIONAL",
+      "redemptionLimit":"ALL",
+      "rewards":[
+         {
+            "validity":"",
+            "type":"FREE SKU",
+            "ruleName":"Optional Mixed Promotion SKU\u002BCV, ALL item to be reedem [Promotion name]",
+            "reward":"0155",
+            "description":"0155 SKU Reward Description ",
+            "qty":1,
+            "maxQty":0
+         },
+         {
+            "validity":"",
+            "type":"CASH VOUCHER",
+            "ruleName":"Optional Mixed Promotion SKU\u002BCV, ALL item to be reedem [Promotion name]",
+            "reward":"19",
+            "description":"19 Cash Voucher Reward Description",
+            "qty":1,
+            "maxQty":0
+         }
+      ],
+      "selectedReward":null,
+      "notification":"Congrats![Popup Notification message]",
+      "MaxQtyToRedeem":2
+   },
+   {
+      "ruleId":"5134",
+      "ruleName":"Optional Free sku promotion, ALL",
+      "redemptionType":"OPTIONAL",
+      "redemptionLimit":"ALL",
+      "rewards":[
+         {
+            "validity":"",
+            "type":"FREE SKU",
+            "ruleName":"Optional Free sku promotion, ALL",
+            "reward":"0043",
+            "description":"0043 SKU Reward Description",
+            "qty":1,
+            "maxQty":0
+         },
+         {
+            "validity":"",
+            "type":"FREE SKU",
+            "ruleName":"Optional Free sku promotion, ALL",
+            "reward":"0104",
+            "description":"0104 SKU Reward Description",
+            "qty":1,
+            "maxQty":0
+         },
+         {
+            "validity":"",
+            "type":"FREE SKU",
+            "ruleName":"Optional Free sku promotion, ALL",
+            "reward":"0006",
+            "description":"0006 SKU Reward Description",
+            "qty":1,
+            "maxQty":0
+         }
+      ],
+      "selectedReward":null,
+      "notification":"Congrats! [Popup Notification Message]",
+      "MaxQtyToRedeem":3
+   }
+]</value>
   </data>
 </root>
