@@ -16,6 +16,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text.Json;
+using Filuet.Hrbl.Ordering.Abstractions.Helpers;
 using System.Threading.Tasks;
 
 namespace PromoEngine.Pages
@@ -175,19 +176,21 @@ namespace PromoEngine.Pages
 
                         Promotions = JsonSerializer.Deserialize<Promotion[]>(Filuet.Hrbl.Ordering.POC.PromoEngine.Properties.Resources.mockedPromotions, options).ToList();
                         string testUid = Guid.NewGuid().ToString();
-                        ServerState.PromotionTests.Add(testUid, Promotions.Select(x=>x.MarkSelectedIfNeeded()).ToList());
+                        ServerState.PromotionTests.Add(testUid, Promotions.Select(x => x.MarkSelectedIfNeeded().SetTestId(testUid)).ToList());
                         return RedirectToAction("Promotions", "Home", new { uid = testUid });
                 }
 
                 if (PromoResult.IsPromo)
                 {
                     Promotions = new List<Promotion>();
+                    string testUid = Guid.NewGuid().ToString();
 
                     var realPromos = PromoResult.Promotions.Promotion.GroupBy(x => x.RuleID);
                     foreach (var pro in realPromos)
                     {
                         Promotion promotion = new Promotion
                         {
+                            TestId = testUid,
                             RuleId = pro.Key,
                             RuleName = pro.First().PromotionRuleName,
                             RedemptionType = EnumHelper.GetValueFromDescription<PromotionRedemptionType>(pro.First().RedemptionType),
@@ -225,13 +228,16 @@ namespace PromoEngine.Pages
                             }
                         }
 
-                        Promotions.Add(promotion.MarkSelectedIfNeeded());
+                        Promotions.Add(promotion);
                     }
+
+                    ServerState.PromotionTests.Add(testUid, Promotions.Select(x => x.MarkSelectedIfNeeded().SetTestId(testUid)).ToList());
                 }
             }
             catch (ArgumentException ex)
             {
                 PricingErrors = ex.Message;
+                return StatusCode(500, ex.Message);
             }
 
             return null;

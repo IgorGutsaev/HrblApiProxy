@@ -84,10 +84,9 @@ namespace Filuet.Hrbl.Ordering.POC.PromoEngine.Properties {
         ///            &quot;reward&quot;:&quot;11&quot;,
         ///            &quot;description&quot;:&quot;Cash Voucher [Reward Description]&quot;,
         ///            &quot;qty&quot;:1,
-        ///            &quot;maxQty&quot;:0
-        ///         }
-        ///      ],
-        ///      &quot; [rest of string was truncated]&quot;;.
+        ///            &quot;maxQty&quot;:0,
+        ///			&quot;cashAmount&quot;:11.0
+        ///       [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string mockedPromotions {
             get {

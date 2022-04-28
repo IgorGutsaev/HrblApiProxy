@@ -6,46 +6,53 @@
 
 <style>
     .promoTableFinal {
-        border-style: solid;
-        border-color: #128012;
-        width: 1000px;
         margin: auto;
     }
 </style>
 
 @{
-    <table class="promoTableFinal">
-        <tr class="promoTableFinal">
-            <th class="promoTableFinal">RuleId</th>
-            <th class="promoTableFinal">Rule name</th>
-            <th class="promoTableFinal">Reward item</th>
-            <th class="promoTableFinal">Type</th>
-            <th class="promoTableFinal">Redemption type</th>
-            <th class="promoTableFinal">Redemption limit</th>
-            <th class="promoTableFinal">Max SKU Qty to redeem</th>
-            <th class="promoTableFinal">Notification</th>
-        </tr>
-        @foreach (var t in Model)
-        {
-            string totalReward = string.Empty;
-
-            foreach (var x in t.Rewards)
-                totalReward += $"{x.Type}: {x.RewardItem} {(string.IsNullOrWhiteSpace(x.ValidUntil) ? string.Empty : ($"valid until {x.ValidUntil}"))}".Trim() + ", ";
-
-            totalReward = totalReward.Trim();
-            if (totalReward.EndsWith(','))
-                totalReward = totalReward.Substring(0, totalReward.Length - 1);
-
+    <table class="table table-striped promoTableFinal" id="promoGroupView" style="display: none">
+        <thead>
             <tr class="promoTableFinal">
-                <td class="promoTableFinal">@t.RuleId</td>
-                <td class="promoTableFinal">@t.RuleName</td>
-                <td class="promoTableFinal">@totalReward</td>
-                <td class="promoTableFinal">@t.Type</td>
-                <td class="promoTableFinal">@t.RedemptionType</td>
-                <td class="promoTableFinal">@t.RedemptionLimit</td>
-                <td class="promoTableFinal">@t.MaxQtyToRedeem</td>
-                <td class="promoTableFinal">@t.Notification</td>
+                <th scope="col">#</th>
+                <th scope="col" class="promoTableFinal">RuleId</th>
+                <th scope="col" class="promoTableFinal">Rule name</th>
+                <th scope="col" class="promoTableFinal">Reward item</th>
+                <th scope="col" class="promoTableFinal">Type</th>
+                <th scope="col" class="promoTableFinal">Redemption type</th>
+                <th scope="col" class="promoTableFinal">Redemption limit</th>
+                <th scope="col" class="promoTableFinal">Max SKU Qty to redeem</th>
+                <th scope="col" class="promoTableFinal">Notification</th>
             </tr>
-        }
+        </thead>
+        <tbody>
+            @{
+                int index = 0;
+                foreach (var t in Model)
+                {
+                    index++;
+                    string totalReward = string.Empty;
+
+                    foreach (var x in t.Rewards)
+                        totalReward += $"{x.Type}: {x.RewardItem} {(string.IsNullOrWhiteSpace(x.ValidUntil) ? string.Empty : ($"valid until {x.ValidUntil}"))}".Trim() + ", ";
+
+                    totalReward = totalReward.Trim();
+                    if (totalReward.EndsWith(','))
+                        totalReward = totalReward.Substring(0, totalReward.Length - 1);
+
+                    <tr>
+                        <th scope="row">@index</th>
+                        <td class="promoTableFinal">@t.RuleId</td>
+                        <td class="promoTableFinal">@t.RuleName</td>
+                        <td class="promoTableFinal">@totalReward</td>
+                        <td class="promoTableFinal">@t.Type</td>
+                        <td class="promoTableFinal">@t.RedemptionType</td>
+                        <td class="promoTableFinal">@t.RedemptionLimit</td>
+                        <td class="promoTableFinal">@t.MaxQtyToRedeem</td>
+                        <td class="promoTableFinal">@t.Notification</td>
+                    </tr>
+                }
+            }
+        </tbody>
     </table>
 }

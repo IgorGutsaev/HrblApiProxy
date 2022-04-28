@@ -6,6 +6,11 @@
 
 @using System.Linq;
 
+<style>
+    td {
+        padding-right: 10px;
+    }
+</style>
 <script>
     function RunMocked() {
         $.ajax({
@@ -28,13 +33,12 @@
             contentType: "application/json; charset=utf-8",
             dataType: "text",
             success: function (r) {
-
             }
         });
     }
 </script>
 <div class="text-center">
-    <h1 class="display-4">Welcome to PromoEngine POC</h1>
+    <h1 class="display-4">PromoEngine PoC</h1>
 
     <br />
     <br />
@@ -42,10 +46,10 @@
 
     <form asp-page-handler="button" method="post">
         @*<div>
-            <label>Payment amount:</label>
-            @Html.EditorFor(model => model.Amount, new { htmlAttributes = new { @type = "number", @min = "0.01", @max = Model.Country == "10", @step = "0.01", @value = "0.01" } })
-            <label style="color: red"> * Uzbekistan min amount is 1</label>
-        </div>*@
+                <label>Payment amount:</label>
+                @Html.EditorFor(model => model.Amount, new { htmlAttributes = new { @type = "number", @min = "0.01", @max = Model.Country == "10", @step = "0.01", @value = "0.01" } })
+                <label style="color: red"> * Uzbekistan min amount is 1</label>
+            </div>*@
         @{
             List<SelectListItem> listItems = new List<SelectListItem>();
             listItems.Add(new SelectListItem
@@ -70,41 +74,51 @@
         <table style="width: 100%">
             <tr>
                 <td class="text-right">Distributor ID</td>
-                <td>@Html.EditorFor(model => model.DistributorId)</td>
+                <td>@Html.EditorFor(model => model.DistributorId, new { htmlAttributes = new { @class = "form-control" } })</td>
                 <td class="text-right">Country</td>
-                <td>@Html.DropDownListFor(model => model.Country, listItems)</td>
+                <td>@Html.DropDownListFor(model => model.Country, listItems, "---select country---", new { @class = "form-control" })</td>
             </tr>
             <tr>
                 <td class="text-right">OrderMonth</td>
-                <td>@Html.EditorFor(model => model.OrderMonth, new { style = "width:100%" })</td>
+                <td>@Html.EditorFor(model => model.OrderMonth, new { htmlAttributes = new { @class = "form-control" } })</td>
                 <td class="text-right">OrderType</td>
-                <td>@Html.EditorFor(model => model.OrderType)</td>
+                <td>@Html.EditorFor(model => model.OrderType, new { htmlAttributes = new { @class = "form-control" } })</td>
             </tr>
             <tr>
                 <td class="text-right">Cart (Sku x Qty)</td>
-                <td>@Html.EditorFor(model => model.Cart)</td>
+                <td>@Html.EditorFor(model => model.Cart, new { htmlAttributes = new { @class = "form-control" } })</td>
                 <td class="text-right">OrderCategory</td>
-                <td>@Html.EditorFor(model => model.OrderCategory)</td>
+                <td>@Html.EditorFor(model => model.OrderCategory, new { htmlAttributes = new { @class = "form-control" } })</td>
             </tr>
             <tr>
                 <td class="text-right">Warehouse</td>
-                <td>@Html.EditorFor(model => model.Warehouse)</td>
+                <td>@Html.EditorFor(model => model.Warehouse, new { htmlAttributes = new { @class = "form-control" } })</td>
                 <td class="text-right">ProcessingLocation</td>
-                <td>@Html.EditorFor(model => model.ProcessingLocation)</td>
+                <td>@Html.EditorFor(model => model.ProcessingLocation, new { htmlAttributes = new { @class = "form-control" } })</td>
             </tr>
             <tr>
                 <td class="text-right">FreightCode</td>
-                <td> @Html.EditorFor(model => model.FreightCode)</td>
+                <td> @Html.EditorFor(model => model.FreightCode, new { htmlAttributes = new { @class = "form-control" } })</td>
                 <td></td>
                 <td></td>
             </tr>
         </table>
 
         <br />
+        <br />
+        <br />
 
-        <button class="btn btn-secondary btn-info" onclick="RunMocked()">Run mocked</button>
-        <button class="btn btn-secondary btn-dark" onclick="RunCached()">Run saved</button>
         <button class="btn btn-secondary btn-success">Calculate</button>
+        <br />
+        <label>or</label>
+        <br />
+
+        <div style="display: inline-block">
+            <button class="btn btn-secondary btn-info" onclick="RunMocked()">Run mocked</button>
+        </div>
+        <div style="display: inline-block">
+            <button class="btn btn-secondary btn-dark" onclick="RunCached()">Run saved</button>
+        </div>
 
         <br />
         <br />
@@ -133,12 +147,7 @@
                 if (Model.Promotions.Any())
                 {
                     <br />
-                    @Html.Partial("_UIScenarioView", Model.Promotions)
-                    if (Model.PromoResult != null) // If is not mocked result
-                    {
-                        <br />
-                        @Html.Partial("_PromoView", Model.PromoResult)
-                    }
+                    @Html.ActionLink("Run test", "Promotions", "Home", new { uid = Model.Promotions.First().TestId }, new { @class = "btn btn-primary" })
                     <br />
                     @*@Html.Partial("_PromoViewGrouped", Model.Promotions)*@
                 }

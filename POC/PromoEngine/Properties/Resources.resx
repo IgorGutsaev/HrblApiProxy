@@ -135,10 +135,87 @@
             "reward":"11",
             "description":"Cash Voucher [Reward Description]",
             "qty":1,
+            "maxQty":0,
+			"cashAmount":11.0
+         }
+      ],
+      "notification":"Yay![Popup Notification Message]"
+   },
+   {
+      "ruleId":"0002",
+      "ruleName":"Mandatory Free sku promotion, MULTIPLE 2 from 3 available SKUs [promotion name]",
+      "redemptionType":"AUTOMATIC",
+      "redemptionLimit":"MULTIPLE",
+      "rewards":[
+         {
+            "validity":"",
+            "type":"FREE SKU",
+            "ruleName":"AUTOMATIC Free sku promotion, MULTIPLE 2 from 3 available SKUs [promotion name]",
+            "reward":"0043",
+            "description":"0043 SKU Reward Description",
+            "qty":1,
+            "maxQty":2
+         },
+         {
+            "validity":"",
+            "type":"FREE SKU",
+            "ruleName":"AUTOMATIC Free sku promotion, MULTIPLE 2 from 3 available SKUs [promotion name]",
+            "reward":"0104",
+            "description":"0104 SKU Reward Description ",
+            "qty":1,
+            "maxQty":2
+         },
+         {
+            "validity":"",
+            "type":"FREE SKU",
+            "ruleName":"AUTOMATIC Free sku promotion, MULTIPLE 2 from 3 available SKUs [promotion name]",
+            "reward":"0006",
+            "description":"0006 SKU Reward Description ",
+            "qty":1,
+            "maxQty":2
+         }
+      ],
+      "selectedReward":null,
+      "notification":"Yay! [Popup Notification message]",
+      "MaxQtyToRedeem":2
+   },
+   {
+      "ruleId":"0003",
+      "ruleName":"AUTOMATIC Free sku promotion, ALL",
+      "redemptionType":"AUTOMATIC",
+      "redemptionLimit":"ALL",
+      "rewards":[
+         {
+            "validity":"",
+            "type":"FREE SKU",
+            "ruleName":"AUTOMATIC Free sku promotion, ALL",
+            "reward":"0043",
+            "description":"0043 SKU Reward Description",
+            "qty":1,
+            "maxQty":0
+         },
+         {
+            "validity":"",
+            "type":"FREE SKU",
+            "ruleName":"AUTOMATIC Free sku promotion, ALL",
+            "reward":"0104",
+            "description":"0104 SKU Reward Description",
+            "qty":1,
+            "maxQty":0
+         },
+         {
+            "validity":"",
+            "type":"FREE SKU",
+            "ruleName":"AUTOMATIC Free sku promotion, ALL",
+            "reward":"0006",
+            "description":"0006 SKU Reward Description",
+            "qty":1,
             "maxQty":0
          }
       ],
-      "notification":"Congrats![Popup Notification Message]"
+      "selectedReward":null,
+      "notification":"Yay! [Popup Notification Message]",
+      "MaxQtyToRedeem":3
    },
    {
       "ruleId":"4869",
@@ -162,7 +239,8 @@
             "reward":"10",
             "description":"CV reward description",
             "qty":1,
-            "maxQty":1
+            "maxQty":1,
+			"cashAmount":10.0
          }
       ],
       "selectedReward":null,
@@ -220,7 +298,8 @@
             "reward":"12",
             "description":"Cash Voucher [Reward Description]",
             "qty":1,
-            "maxQty":1
+            "maxQty":1,
+			"cashAmount":12.0
          }
       ],
       "selectedReward":null,
@@ -249,7 +328,8 @@
             "reward":"19",
             "description":"19 Cash Voucher Reward Description",
             "qty":1,
-            "maxQty":0
+            "maxQty":0,
+			"cashAmount":19.0
          }
       ],
       "selectedReward":null,
