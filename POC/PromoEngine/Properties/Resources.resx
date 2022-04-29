@@ -373,6 +373,45 @@
       "selectedReward":null,
       "notification":"Congrats! [Popup Notification Message]",
       "MaxQtyToRedeem":3
+   },
+   {
+      "ruleId":"0004",
+      "ruleName":"AUTOMATIC Mixed Promotion – multiple free SKUs and cash voucher, ALL",
+      "redemptionType":"AUTOMATIC",
+      "redemptionLimit":"ALL",
+      "rewards":[
+         {
+            "validity":"",
+            "type":"FREE SKU",
+            "ruleName":"AUTOMATIC Mixed Promotion – multiple free SKUs and cash voucher, ALL",
+            "reward":"0043",
+            "description":"0043 SKU Reward Description",
+            "qty":1,
+            "maxQty":0
+         },
+         {
+            "validity":"",
+            "type":"FREE SKU",
+            "ruleName":"AUTOMATIC Mixed Promotion – multiple free SKUs and cash voucher, ALL",
+            "reward":"0104",
+            "description":"0104 SKU Reward Description",
+            "qty":1,
+            "maxQty":0
+         },
+         {
+            "validity":"",
+            "type":"CASH VOUCHER",
+            "ruleName":"AUTOMATIC Mixed Promotion – multiple free SKUs and cash voucher, ALL",
+            "reward":"13",
+            "description":"13 Cash Voucher Reward Description",
+            "qty":1,
+            "maxQty":0,
+			"cashAmount":13.0
+         }
+      ],
+      "selectedReward":null,
+      "notification":"Yay! [Popup Notification Message]",
+      "MaxQtyToRedeem":3
    }
 ]</value>
   </data>

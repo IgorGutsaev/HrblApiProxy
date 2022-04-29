@@ -182,54 +182,8 @@ namespace PromoEngine.Pages
 
                 if (PromoResult.IsPromo)
                 {
-                    Promotions = new List<Promotion>();
-                    string testUid = Guid.NewGuid().ToString();
-
-                    var realPromos = PromoResult.Promotions.Promotion.GroupBy(x => x.RuleID);
-                    foreach (var pro in realPromos)
-                    {
-                        Promotion promotion = new Promotion
-                        {
-                            TestId = testUid,
-                            RuleId = pro.Key,
-                            RuleName = pro.First().PromotionRuleName,
-                            RedemptionType = EnumHelper.GetValueFromDescription<PromotionRedemptionType>(pro.First().RedemptionType),
-                            RedemptionLimit = EnumHelper.GetValueFromDescription<PromotionRedemptionLimit>(pro.First().ChrAttribute1),
-                            Notification = pro.First().PromoNotification
-                        };
-
-                        foreach (var x in pro.ToList())
-                        {
-                            if (x.PromotionType.Equals("CASH VOUCHER", StringComparison.InvariantCultureIgnoreCase))
-                            {
-                                promotion.Rewards.Add(new Reward
-                                { 
-                                    Type = x.PromotionType,
-                                    MaxOrderedQuantity = x.ChrAttribute2 ?? 0,
-                                    Description = x.ChrAttribute3,
-                                    OrderedQuantity = x.OrderedQuantity,
-                                    RewardItem = x.PromotionProp1,
-                                    RuleName = x.PromotionRuleName,
-                                    ValidUntil = x.DateAttribute1?.ToLongDateString() ?? string.Empty,
-                                    CashVoucherAmount = x.NumAttribute1.HasValue ? (decimal)x.NumAttribute1.Value : 0m
-                                });
-                            }
-                            else if (x.PromotionType.Equals("FREE SKU", StringComparison.InvariantCultureIgnoreCase))
-                            {
-                                promotion.Rewards.Add(new Reward {
-                                    Type = x.PromotionType,
-                                    MaxOrderedQuantity = x.ChrAttribute2 ?? 0,
-                                    Description = x.ChrAttribute3,
-                                    OrderedQuantity = x.OrderedQuantity,
-                                    RewardItem = x.PromotionProp1,
-                                    RuleName = x.PromotionRuleName,
-                                    ValidUntil = x.DateAttribute1?.ToLongDateString() ?? string.Empty                                     
-                                });
-                            }
-                        }
-
-                        Promotions.Add(promotion);
-                    }
+                    Promotions = PromoResult.ConvertPromotions();
+                    string testUid = Promotions.First().TestId;                    
 
                     ServerState.PromotionTests.Add(testUid, Promotions.Select(x => x.MarkSelectedIfNeeded().SetTestId(testUid)).ToList());
                 }

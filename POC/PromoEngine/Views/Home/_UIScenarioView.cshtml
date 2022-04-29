@@ -209,6 +209,8 @@
 
                                     @for (int i = 0; i < Model.Count(); i++)
                                     {
+                                        bool disableChooser = Model[i].RedemptionLimit == PromotionRedemptionLimit.All && Model[i].RedemptionType == PromotionRedemptionType.Automatic;
+
                                         <div class="carousel-item text-center @(Model[i] == Model.First() ? "active" : string.Empty)" style="padding: 10px 70px 150px 70px">
                                             <p class="h6">@Model[i].Notification</p>
 
@@ -255,7 +257,7 @@
                                                     {
                                                         case PromotionRedemptionType.Automatic: // 4.1.2 / 4.4.2
                                                         case PromotionRedemptionType.Optional: // 4.1.5 / 4.4.5
-                                                            bool disableChooser = Model[i].RedemptionLimit == PromotionRedemptionLimit.All && Model[i].RedemptionType == PromotionRedemptionType.Automatic;
+
 
                                                             @for (int j = 0; j < Model[i].Rewards.Count(); j++)
                                                             {
@@ -285,16 +287,20 @@
                                                     break;
                                             }
 
-                                            <br />
-                                            <br />
+                                            @if (!disableChooser)
+                                            {
+                                                <br />
+                                                <br />
 
-                                            <div style="text-align: center">
-                                                @if (Model[i].RedemptionLimit == PromotionRedemptionLimit.One && Model[i].RedemptionType == PromotionRedemptionType.Optional)
-                                                {
-                                                    <input type="button" id="releaseButton_@Model[i].RuleId" class="btn btn-secondary" onclick="releaseSelection('@Model[i].RuleId')" value="Deselect" />
-                                                }
-                                                <button type="button" id="saveButton_@Model[i].RuleId" class="btn btn-primary disabled" onclick="applySelection('@Model[i].RuleId')">Save selection</button>
-                                            </div>
+                                                <div style="text-align: center">
+                                                    @if (Model[i].RedemptionLimit == PromotionRedemptionLimit.One && Model[i].RedemptionType == PromotionRedemptionType.Optional)
+                                                    {
+                                                        <input type="button" id="releaseButton_@Model[i].RuleId" class="btn btn-secondary" onclick="releaseSelection('@Model[i].RuleId')" value="Deselect" />
+                                                    }
+                                                    <button type="button" id="saveButton_@Model[i].RuleId" class="btn btn-primary disabled" onclick="applySelection('@Model[i].RuleId')">Save selection</button>
+                                                </div>
+
+                                            }
                                             <br />
                                             <div class="carousel-caption d-none d-md-block">
                                                 <p>@(Model[i].RuleId + ": " + Model[i].RuleName)</p>

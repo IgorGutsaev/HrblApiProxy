@@ -120,9 +120,8 @@ namespace Filuet.Hrbl.Ordering.Abstractions.Models
         {
             get
             {
-                // 4.1.3
-                if (RedemptionType == PromotionRedemptionType.Automatic && RedemptionLimit == PromotionRedemptionLimit.All &&
-                    !Rewards.Any(x => !x.IsSelected))
+                if (/*4.2.1*/(RedemptionType == PromotionRedemptionType.Automatic && Type == PromotionType.CashVoucher && Rewards.Any(x => x.IsSelected)) ||
+                    /*4.1.3*/(RedemptionType == PromotionRedemptionType.Automatic && RedemptionLimit == PromotionRedemptionLimit.All && !Rewards.Any(x => !x.IsSelected)))
                     return (PromotionIssueLevel.Info, $"{RuleName}: Congratulations! You are eligable for gifts. Gifts have already been added to your cart.");
 
                 return null;
