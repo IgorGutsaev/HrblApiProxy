@@ -1,8 +1,6 @@
 ﻿using Filuet.Hrbl.Ordering.Abstractions.Serializers;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Filuet.Hrbl.Ordering.Abstractions
 {
@@ -27,7 +25,7 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         public string OrderAddress { get; internal set; }
 
         [JsonProperty("OrderPromotionLine")]
-        public string OrderPromotionLine { get; internal set; }
+        public SubmitRequestOrderPromotionLine[] OrderPromotionLine { get; internal set; }
     }
 
     public class SubmitRequestHeader
@@ -259,22 +257,25 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         public DateTime AppliedDate { get; set; }
 
         [JsonProperty("ApprovalNumber", Order = 10)]
-        public string ApprovalNumber { get; set; }
+        public string ApprovalNumber { get; set; }        
+        
+        [JsonProperty("CheckWireNumber", Order = 11)]
+        public string CheckWireNumber { get; set; }
 
-        [JsonProperty("PaymentReceived", Order = 11)]
+        [JsonProperty("PaymentReceived", Order = 12)]
         [JsonConverter(typeof(StringDecimalConverter))]
         public decimal PaymentReceived { get; set; }
 
-        [JsonProperty("CreditCard", Order = 12)]
+        [JsonProperty("CreditCard", Order = 13)]
         public OrderSubmitPaymentCreditCard CreditCard { get; set; } = new OrderSubmitPaymentCreditCard();
 
-        [JsonProperty("AuthorizationType", Order = 13)]
+        [JsonProperty("AuthorizationType", Order = 14)]
         internal string AuthorizationType { get; set; } = "ONLINE";
 
-        [JsonProperty("VoidFlag", Order = 14)]
+        [JsonProperty("VoidFlag", Order = 15)]
         internal string VoidFlag { get; set; } = "N";
 
-        [JsonProperty("ClientRefNumber", Order = 15)]
+        [JsonProperty("ClientRefNumber", Order = 16)]
         public string ClientRefNumber { get; set; }
     }
 
@@ -301,6 +302,76 @@ namespace Filuet.Hrbl.Ordering.Abstractions
 
         [JsonProperty("CardHolderRelation", Order = 7)]
         internal string CardHolderRelation { get; set; } = "SELF";
-        
+    }
+
+    public class SubmitRequestOrderPromotionLine
+    {
+        [JsonProperty("RuleID", Order = 1)]
+        public string RuleID { get; set; }
+
+        /// <summary>
+        /// A.k.a. promotion rule name. The same as <seealso cref="SubmitRequestOrderPromotionLine.RuleName"/>
+        /// </summary>
+        [JsonProperty("PromotionCode", Order = 2)]
+        public string PromotionCode { get; set; }
+
+        [JsonProperty("RuleName", Order = 3)]
+        public string RuleName { get; set; }
+
+        /// <summary>
+        /// Sku or empty in case of CV
+        /// </summary>
+        [JsonProperty("PromotionItem", Order = 4)]
+        public string PromotionItem { get; set; }
+
+        [JsonProperty("Quantity", Order = 5)]
+        public int Quantity { get; set; }
+
+        [JsonProperty("SKU", Order = 6)]
+        public string SKU { get; set; }
+
+
+        /// <summary>
+        /// Y/N
+        /// </summary>
+        [JsonProperty("IsAddedToOrder", Order = 7)]
+        public string IsAddedToOrder { get; set; }
+
+        /// <summary>
+        /// OPTIONAL / AUTOMATIC
+        /// </summary>
+        [JsonProperty("RedemptionType", Order = 8)]
+        public string RedemptionType { get; set; }
+
+        /// <summary>
+        /// The same as RuleName for SKU, 'CASH VOUCHER' for CV
+        /// </summary>
+        [JsonProperty("ChrAttribute1", Order = 9)]
+        public string PromotionRuleName { get; set; }
+
+        /// <summary>
+        /// 'CASH VOUCHER' for CV, empty for SKU 
+        /// </summary>
+        [JsonProperty("ChrAttribute2", Order = 10)]
+        public string ChrAttribute2 { get; set; }
+
+        /// <summary>
+        /// Empty for SKU, cash voucher receipt number for CV
+        /// </summary>
+        [JsonProperty("ChrAttribute3", Order = 11)]
+        public string ChrAttribute3 { get; set; }
+
+        /// <summary>
+        /// Empty for SKU; CASH VOUCHER reward type: information about partial redemption
+        /// NOTE: partial redemption currently not supported by Promotion Engine. So, 'N' for CV
+        /// </summary>
+        [JsonProperty("ChrAttribute7", Order = 12)]
+        public string ChrAttribute7 { get; set; }
+
+        /// <summary>
+        /// Empty for SKU, Cash voucher amount if the Reward Type is CASH VOUCHER
+        /// </summary>
+        [JsonProperty("NumAttribute1", Order = 13)]
+        public string NumAttribute1 { get; set; }
     }
 }

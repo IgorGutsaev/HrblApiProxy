@@ -66,7 +66,7 @@ namespace PromoEngine.Pages
         public List<Promotion> Promotions { get; set; }
 
         private HrblOrderingAdapter Adapter => new HrblOrderingAdapter(new HrblOrderingAdapterSettingsBuilder()
-                .WithUri("https://herbalife-oegdevws.hrbl.com/Order/HLOnlineOrdering/ts3/")
+                .WithUri("https://herbalife-oegdevws.hrbl.com/Order/HLOnlineOrdering/prs/")
                 .WithServiceConsumer("AAKIOSK")
                 .WithOrganizationId(73)
                 .WithCredentials("hlfnord", "welcome123").Build());
@@ -186,6 +186,7 @@ namespace PromoEngine.Pages
                     string testUid = Promotions.First().TestId;                    
 
                     ServerState.PromotionTests.Add(testUid, Promotions.Select(x => x.MarkSelectedIfNeeded().SetTestId(testUid)).ToList());
+                    ServerState.PricingResponses.Add(testUid, Pricing);
                 }
             }
             catch (ArgumentException ex)

@@ -211,6 +211,18 @@ namespace Filuet.Hrbl.Ordering.Abstractions.Builders
             return this;
         }
 
+        public SubmitRequestBuilder AddPromotionLines(Func<SubmitRequestOrderPromotionLine[]> setupPayment)
+        {
+            SubmitRequestOrderPromotionLine[] lines = setupPayment?.Invoke();
+
+            if (!lines.Any())
+                throw new ArgumentException("No order promotion lines detected");
+
+            _request.OrderPromotionLine = lines;
+
+            return this;
+        }
+
         public SubmitRequest Build() => _request;
     }
 }

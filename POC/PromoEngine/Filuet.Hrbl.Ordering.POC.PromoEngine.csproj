@@ -16,6 +16,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Abstractions\Filuet.Hrbl.Ordering.Abstractions.csproj" />
     <ProjectReference Include="..\..\Adapter\Filuet.Hrbl.Ordering.Adapter.csproj" />
+    <ProjectReference Include="..\..\Common\Filuet.Hrbl.Ordering.Common.csproj" />
   </ItemGroup>
 
   <ItemGroup>

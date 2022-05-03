@@ -143,12 +143,17 @@ namespace Filuet.Hrbl.Ordering.Abstractions.Models
         [JsonPropertyName("ruleName")]
         public string RuleName { get; set; }
 
+
         [JsonPropertyName("reward")]
         public string RewardItem { get; set; }
 
         [JsonPropertyName("description")]
         public string Description { get; set; }
 
+        /// <summary>
+        /// FREE SKU reward case: quantity of the free SKUs which should be added to the order if user redeems
+        /// CASH VOUCHER reward case: value '1'
+        /// </summary>
         [JsonPropertyName("qty")]
         public int OrderedQuantity { get; set; }
 
@@ -158,6 +163,10 @@ namespace Filuet.Hrbl.Ordering.Abstractions.Models
         // For CV only
         [JsonPropertyName("cashAmount")]
         public decimal CashVoucherAmount { get; set; } = 0m;
+
+        // For CV only
+        [JsonPropertyName("receiptNumber")]
+        public string ReceiptNo { get; set; }
 
         public override string ToString()
         {
