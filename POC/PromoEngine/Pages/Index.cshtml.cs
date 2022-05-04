@@ -66,7 +66,7 @@ namespace PromoEngine.Pages
         public List<Promotion> Promotions { get; set; }
 
         private HrblOrderingAdapter Adapter => new HrblOrderingAdapter(new HrblOrderingAdapterSettingsBuilder()
-                .WithUri("https://herbalife-oegdevws.hrbl.com/Order/HLOnlineOrdering/prs/")
+                .WithUri("https://herbalife-oegdevws.hrbl.com/Order/HLOnlineOrdering/ts3/")
                 .WithServiceConsumer("AAKIOSK")
                 .WithOrganizationId(73)
                 .WithCredentials("hlfnord", "welcome123").Build());
@@ -107,8 +107,11 @@ namespace PromoEngine.Pages
                     h.Warehouse = Warehouse;
                     h.OrderMonth = OrderMonth;
                     h.FreightCode = FreightCode;
+
+                    h.OrgID = 294;
+
                     h.CountryCode = Country.ToUpper();
-                    h.PostalCode = "012345";
+                    h.PostalCode = "LV-1073";
                     h.City = "Foo";
                     h.OrderCategory = OrderCategory;
                     h.OrderType = OrderType;

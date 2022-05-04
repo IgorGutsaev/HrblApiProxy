@@ -16,7 +16,7 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         public SubmitRequestOrderLine[] Lines { get; internal set; }
 
         [JsonProperty("OrderPayment")]
-        public SubmitRequestPayment Payment { get; internal set; }
+        public SubmitRequestPayment[] Payment { get; internal set; } // 1 mandatory node is payment while optional are Cash Vouchers
 
         [JsonProperty("OrderNotes")]
         public string OrderNotes { get; internal set; }
@@ -344,6 +344,7 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         public string RedemptionType { get; set; }
 
         /// <summary>
+        /// A.k.a. ChrAttribute1
         /// The same as RuleName for SKU, 'CASH VOUCHER' for CV
         /// </summary>
         [JsonProperty("ChrAttribute1", Order = 9)]
