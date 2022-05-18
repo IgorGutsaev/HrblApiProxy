@@ -17,8 +17,8 @@ namespace Filuet.Hrbl.Ordering.Abstractions.Models
         [JsonProperty("date")]
         public DateTimeOffset Timestamp { get; set; }
 
-        [JsonPropertyName("item")]
-        [JsonProperty("item")]
+        [JsonPropertyName("items")]
+        [JsonProperty("items")]
         public IEnumerable<PollUnitResult> Items { get; set; }
     }
 
