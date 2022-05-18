@@ -7,6 +7,7 @@ using Filuet.Hrbl.Ordering.Abstractions.Builders;
 using Newtonsoft.Json;
 using Filuet.Hrbl.Ordering.Common;
 using Filuet.Hrbl.Ordering.Abstractions.Dto;
+using Filuet.Hrbl.Ordering.Abstractions.Enums;
 
 namespace Filuet.Hrbl.Ordering.Adapter
 {
@@ -104,6 +105,11 @@ namespace Filuet.Hrbl.Ordering.Adapter
         public Task<ConversionRateResponse> GetConversionRate(ConversionRateRequest request) => null;
 
         public Task<GetDSEligiblePromoSKUResponseDTO> GetDSEligiblePromoSKU(GetDSEligiblePromoSKURequestDTO request)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IEnumerable<(ActionLevel, string, DateTime, IEnumerable<(HrblAction, string)>)>> PollRequest()
         {
             throw new NotImplementedException();
         }
