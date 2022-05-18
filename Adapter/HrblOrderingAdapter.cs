@@ -12,6 +12,7 @@ using Filuet.Hrbl.Ordering.Abstractions.Builders;
 using Filuet.Hrbl.Ordering.Abstractions.Dto;
 using System.Net.Http;
 using Filuet.Hrbl.Ordering.Abstractions.Enums;
+using Filuet.Hrbl.Ordering.Abstractions.Models;
 
 namespace Filuet.Hrbl.Ordering.Adapter
 {
@@ -458,9 +459,9 @@ namespace Filuet.Hrbl.Ordering.Adapter
 
         public override string ToString() => Environment.ToString();
 
-        public async Task<(ActionLevel, DateTime, IEnumerable<(string action, ActionLevel level, string comment)>)> PollRequest()
+        public async Task<PollResult> PollRequest()
         {
-            var result = new List<(string action, ActionLevel level, string comment)>();
+            var result = new List<PollUnitResult>();
 
             Func<Exception, string> _getFullExceptionDetails = ex => ex.Message + (ex.InnerException == null ? string.Empty : (System.Environment.NewLine + ex.InnerException.Message));
             Func<IEnumerable<ActionLevel>, ActionLevel> _getResultLevel = a =>
@@ -504,10 +505,10 @@ namespace Filuet.Hrbl.Ordering.Adapter
                 }
             }
 
-            result.Add(("GetDistributorVolumePoints", _getResultLevel(getDistributorVolumePoints_resultLevel), getDistributorVolumePoints_protocol.ToString()));
+            result.Add(new PollUnitResult { Action = "GetDistributorVolumePoints", Level = _getResultLevel(getDistributorVolumePoints_resultLevel), Comment = getDistributorVolumePoints_protocol.ToString() });
             #endregion
 
-            return (_getResultLevel(result.Select(x => x.level)), DateTime.UtcNow, result);
+            return new PollResult { Level = _getResultLevel(result.Select(x => x.Level)), Timestamp = DateTimeOffset.Now, Items = result };
         }
     }
 }

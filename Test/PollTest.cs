@@ -1,4 +1,5 @@
 ﻿using Filuet.Hrbl.Ordering.Abstractions.Enums;
+using Filuet.Hrbl.Ordering.Abstractions.Models;
 using Filuet.Hrbl.Ordering.Tests;
 using System;
 using System.Collections.Generic;
@@ -17,11 +18,11 @@ namespace Filuet.Hrbl.Ordering.Test
             // Pre_validate
 
             // Perform
-            (ActionLevel level, DateTime date, IEnumerable<(string action, ActionLevel level, string comment)> total) result = await _adapter.PollRequest();
+            PollResult result = await _adapter.PollRequest();
 
             // Post_validate
-            Assert.Equal(ActionLevel.Info, result.level);
-            Assert.True(result.total.Count() == 1);
+            Assert.Equal(ActionLevel.Info, result.Level);
+            Assert.True(result.Items.Count() == 1);
         }
     }
 }
