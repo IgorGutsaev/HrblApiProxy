@@ -1,8 +1,6 @@
 ﻿using Filuet.Hrbl.Ordering.Abstractions;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Xunit;
 
 namespace Filuet.Hrbl.Ordering.Tests

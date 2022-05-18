@@ -458,24 +458,56 @@ namespace Filuet.Hrbl.Ordering.Adapter
 
         public override string ToString() => Environment.ToString();
 
-        public async Task<IEnumerable<(ActionLevel, string, DateTime, IEnumerable<(HrblAction, string)>)>> PollRequest()
+        public async Task<(ActionLevel, DateTime, IEnumerable<(string action, ActionLevel level, string comment)>)> PollRequest()
         {
-            List<(ActionLevel, string, DateTime, IEnumerable<(HrblAction, string)>)> result = new List<(ActionLevel, string, DateTime, IEnumerable<(HrblAction, string)>)>();
+            var result = new List<(string action, ActionLevel level, string comment)>();
 
-            // GetDistributorVolumePoints
-            try
+            Func<Exception, string> _getFullExceptionDetails = ex => ex.Message + (ex.InnerException == null ? string.Empty : (System.Environment.NewLine + ex.InnerException.Message));
+            Func<IEnumerable<ActionLevel>, ActionLevel> _getResultLevel = a =>
             {
-                List<(HrblAction, string)> vpResult = new List<(HrblAction, string)>();
+                if (a.Count() == 0)
+                    return ActionLevel.Info;
+                else if (a.Count() == 1)
+                    return a.First();
+                else
+                {
+                    if (a.Count(x => x == ActionLevel.Info) == a.Count())
+                        return ActionLevel.Info;
+                    else if (a.Count(x => x == ActionLevel.Warning) == a.Count())
+                        return ActionLevel.Warning;
+                    else if (a.Count(x => x == ActionLevel.Error) == a.Count())
+                        return ActionLevel.Error;
+                    else return ActionLevel.Warning;
+                }
+            };
 
-                foreach (var x in _settings.PollSettings.Input_for_GetVolumePoints)
+            #region GetDistributorVolumePoints
+            List<ActionLevel> getDistributorVolumePoints_resultLevel = new List<ActionLevel>();
+            StringBuilder getDistributorVolumePoints_protocol = new StringBuilder();
+
+            foreach (var x in _settings.PollSettings.Input_for_GetVolumePoints)
+            {
+                try
                 {
                     DistributorVolumePoints[] dsVolPoints = await GetVolumePoints(x.distributorId, x.month);
+                    if (!dsVolPoints.Any(y => y != null))
+                    {
+                        getDistributorVolumePoints_resultLevel.Add(ActionLevel.Error);
+                        getDistributorVolumePoints_protocol.AppendLine($"Customer UID {x.distributorId}: empty response");
+                    }
+                    else getDistributorVolumePoints_resultLevel.Add(ActionLevel.Info);
+                }
+                catch (Exception ex)
+                {
+                    getDistributorVolumePoints_resultLevel.Add(ActionLevel.Error);
+                    getDistributorVolumePoints_protocol.AppendLine($"Customer UID {x.distributorId}: {_getFullExceptionDetails(ex)}");
                 }
             }
-            catch (Exception ex)
-            { }
 
-            return null;
+            result.Add(("GetDistributorVolumePoints", _getResultLevel(getDistributorVolumePoints_resultLevel), getDistributorVolumePoints_protocol.ToString()));
+            #endregion
+
+            return (_getResultLevel(result.Select(x => x.level)), DateTime.UtcNow, result);
         }
     }
 }

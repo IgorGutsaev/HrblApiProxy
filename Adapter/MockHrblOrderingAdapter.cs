@@ -109,7 +109,7 @@ namespace Filuet.Hrbl.Ordering.Adapter
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<(ActionLevel, string, DateTime, IEnumerable<(HrblAction, string)>)>> PollRequest()
+        public Task<(ActionLevel, DateTime, IEnumerable<(string action, ActionLevel level, string comment)>)> PollRequest()
         {
             throw new NotImplementedException();
         }

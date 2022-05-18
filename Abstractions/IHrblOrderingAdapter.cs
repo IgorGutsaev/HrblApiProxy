@@ -9,7 +9,7 @@ namespace Filuet.Hrbl.Ordering.Abstractions
 {
     public interface IHrblOrderingAdapter
     {
-        Task<IEnumerable<(ActionLevel, string, DateTime, IEnumerable<(HrblAction, string)>)>> PollRequest();
+        Task<(ActionLevel, DateTime, IEnumerable<(string action, ActionLevel level, string comment)>)> PollRequest();
 
         Task<(bool isValid, string memberId)> ValidateSsoBearerToken(string token);
 
