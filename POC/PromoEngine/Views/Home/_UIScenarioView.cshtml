@@ -126,15 +126,21 @@
         UnsavedChangesDetected();
     }
 
-    function onMultiplyHasChanged(uid, qtyToRedeem, isOptional) {
+    function onMultiplyHasChanged(new_value, uid, qtyToRedeem, redemptionType, redemptionLimit) {
         qty = 0;
-        $("input:checkbox[uid=choise_" + uid + "]:checked").each(function () {
-            qty += 1;
-        });
+
+        if (redemptionType === 2 && redemptionLimit === 3) {
+            $("input:checkbox[uid=choise_" + uid + "]").prop("checked", new_value);
+        }
+        else {
+            $("input:checkbox[uid=choise_" + uid + "]:checked").each(function () {
+                qty += 1;
+            });
+        }
 
         //alert(qty + '/' + qtyToRedeem);
 
-        if (qty === qtyToRedeem || (qty == 0 && isOptional === 2)) {
+        if (qty === qtyToRedeem || (qty == 0 && redemptionType === 2)) {
             $('#saveButton_' + uid).removeClass('disabled');
             UnsavedChangesDetected();
         }
@@ -259,7 +265,6 @@
                                                         case PromotionRedemptionType.Automatic: // 4.1.2 / 4.4.2
                                                         case PromotionRedemptionType.Optional: // 4.1.5 / 4.4.5
 
-
                                                             @for (int j = 0; j < Model[i].Rewards.Count(); j++)
                                                             {
                                                                 @Html.HiddenFor(x => x[i].Rewards[j].RewardItem)
@@ -268,12 +273,12 @@
 
                                                                 if (!disableChooser)
                                                                 {
-                                                                    @Html.CheckBoxFor(model => model[i].Rewards[j].IsSelected, new { uid = $"choise_{Model[i].RuleId}", onchange = $"onMultiplyHasChanged('{Model[i].RuleId}', {Model[i].MaxQtyToRedeem}, {(int)Model[i].RedemptionType});" })
+                                                                    @Html.CheckBoxFor(model => model[i].Rewards[j].IsSelected, new { uid = $"choise_{Model[i].RuleId}", onchange = $"onMultiplyHasChanged(this.checked, '{Model[i].RuleId}', {Model[i].MaxQtyToRedeem}, {(int)Model[i].RedemptionType}, {(int)Model[i].RedemptionLimit});" })
                                                                 }
                                                                 else
                                                                 {
                                                                     @Html.HiddenFor(x => x[i].Rewards[j].IsSelected)
-                                                                    @Html.CheckBoxFor(model => model[i].Rewards[j].IsSelected, new { disabled = true, uid = $"choise_{Model[i].RuleId}", onchange = $"onMultiplyHasChanged('{Model[i].RuleId}', {Model[i].MaxQtyToRedeem}, {(int)Model[i].RedemptionType});" })
+                                                                    @Html.CheckBoxFor(model => model[i].Rewards[j].IsSelected, new { disabled = true, uid = $"choise_{Model[i].RuleId}", onchange = $"onMultiplyHasChanged(this.checked,'{Model[i].RuleId}', {Model[i].MaxQtyToRedeem}, {(int)Model[i].RedemptionType}, {(int)Model[i].RedemptionLimit});" })
                                                                 }
 
                                                                 <span /> @Model[i].Rewards[j] <br />

@@ -326,7 +326,7 @@ namespace Filuet.Hrbl.Ordering.Tests
                     h.OrderConfirmEmail = "igor.gutsaev@filuet.ru";
                     h.ShippingInstructions = "p:123-456789";
                 })
-                .AddPayment(p =>
+                .AddPayments(p =>
                 {
                     p.PaymentMethodName = "CARD";
                     p.PaymentStatus = "PAID";

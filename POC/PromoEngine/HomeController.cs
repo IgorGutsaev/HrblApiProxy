@@ -17,7 +17,7 @@ namespace Filuet.Hrbl.Ordering.POC.PromoEngine
         private readonly INotyfService _toastNotification;
 
         private HrblOrderingAdapter Adapter => new HrblOrderingAdapter(new HrblOrderingAdapterSettingsBuilder()
-        .WithUri("https://herbalife-oegdevws.hrbl.com/Order/HLOnlineOrdering/prs/")
+        .WithUri("https://herbalife-oegdevws.hrbl.com/Order/HLOnlineOrdering/ts3/")
         .WithServiceConsumer("AAKIOSK")
         .WithOrganizationId(73)
         .WithCredentials("hlfnord", "welcome123").Build());
@@ -61,8 +61,30 @@ namespace Filuet.Hrbl.Ordering.POC.PromoEngine
             }
 
             decimal cvAmount = promotions.Sum(x => x.Rewards.Where(r => r.IsSelected && string.Equals(r.Type, "Cash voucher", StringComparison.InvariantCultureIgnoreCase)).Sum(r => r.CashVoucherAmount));
-            bool ifCVsSelected = cvAmount > 0;
-            string receiptNo = ifCVsSelected ? string.Join("; ", promotions.SelectMany(x => x.Rewards.Where(r => r.IsSelected && string.Equals(r.Type, "Cash voucher", StringComparison.InvariantCultureIgnoreCase)).Select(x => x.ReceiptNo))) : string.Empty;
+            bool isCVsSelected = cvAmount > 0;
+            string receiptNo = isCVsSelected ? string.Join("; ", promotions.SelectMany(x => x.Rewards.Where(r => r.IsSelected && string.Equals(r.Type, "Cash voucher", StringComparison.InvariantCultureIgnoreCase)).Select(x => x.ReceiptNo))) : string.Empty;
+
+            Action<SubmitRequestPayment> setupCV = null;
+            if (isCVsSelected) setupCV = p =>
+                        {
+                            p.PaymentMethodName = "CARD";
+                            p.PaymentStatus = "PAID";
+                            p.PaymentMethodId = null;
+                            p.PaymentAmount = cvAmount;
+                            p.Date = pricing.Header.OrderDate.AddMinutes(1);
+                            p.Paycode = "CV";
+                            p.PaymentType = "SALE";
+                            p.CurrencyCode = currency;
+                            p.AppliedDate = DateTime.UtcNow;
+                            p.PaymentReceived = pricing.Header.TotalDue ?? 0m;
+                            p.CheckWireNumber = receiptNo;
+                            p.CreditCard.CardHolderName = "CARD HOLDER";
+                            p.CreditCard.CardNumber = "0B11074741560000";
+                            p.CreditCard.CardType = "CARD";
+                            p.CreditCard.CardExpiryDate = DateTime.UtcNow.AddYears(1);
+                            p.CreditCard.TrxApprovalNumber = "51189";
+                            p.ApprovalNumber = "51189";
+                        };
 
             Action<SubmitRequestBuilder> setupAction = (b) =>
                 b.AddHeader(h =>
@@ -70,7 +92,7 @@ namespace Filuet.Hrbl.Ordering.POC.PromoEngine
                     h.OrderSource = "KIOSK";
                     h.DistributorId = pricing.Header.DistributorId;
                     h.CustomerName = "Mr.Anderson";
-                    h.SalesChannelCode = "AAKIOSK";
+                    h.SalesChannelCode = "AUTOSTORE";
                     //h.ReferenceNumber = "LVRIGAS3";
                     h.WareHouseCode = pricing.Header.Warehouse;
                     h.ProcessingLocation = pricing.Header.ProcessingLocation;
@@ -79,60 +101,63 @@ namespace Filuet.Hrbl.Ordering.POC.PromoEngine
                     h.CountryCode = pricing.Header.CountryCode;
                     h.PostalCode = pricing.Header.PostalCode;
                     h.Address1 = pricing.Header.Address1;
-                    h.Address2 = pricing.Header.Address2;
+                    h.Address2 = pricing.Header.Address2 ?? string.Empty;
+                    h.State = string.Empty;
                     h.City = pricing.Header.City;
                     h.ExternalOrderNumber = pricing.Header.ExternalOrderNumber;
                     h.OrderTypeCode = pricing.Header.OrderType;
-                    h.Phone = string.Empty;
+                    h.Phone = null;
                     h.PricingDate = pricing.Header.PriceDate;
                     h.OrderDate = pricing.Header.OrderDate;
-                    h.OrgId = pricing.Header.OrgID;
-                    h.DiscountAmount = 0m;// 57.51m;
+                    h.OrgId = 294;// pricing.Header.OrgID;
                     h.OrderDiscountPercent = (decimal)pricing.Header.DiscountPercent;
                     h.TotalDue = pricing.Header.TotalDue.Value;
                     h.TotalVolume = pricing.Header.VolumePoints.Value;
                     h.TotalAmountPaid = pricing.Header.TotalDue.Value;
                     h.OrderPaymentStatus = "PAID";
                     h.InvShipFlag = "Y";
-                    h.SMSNumber = "";
+                    h.SMSNumber = "79262147116";
                     h.OrderConfirmEmail = "igor.gutsaev@filuet.ru";
-                    h.ShippingInstructions = "p:123-456789";
+                    h.ShippingInstructions = "Order from ASC";
+                    h.OrderPurpose = string.Empty;
+                    h.OrderTypeId = 2991;
+                    h.TaxAmount = pricing.Header.TotalTaxAmount ?? 0m;
+                    h.DiscountAmount = pricing.Header.TotalDiscountAmount ?? 0m;
                 })
-                .AddPayment(p =>
-                {
-                    p.PaymentMethodName = "CARD";
-                    p.PaymentStatus = "PAID";
-                    p.PaymentMethodId = null; // Empty for LV; 
-                    p.PaymentAmount = ifCVsSelected ? cvAmount : (pricing.Header.TotalDue ?? 0m);
-                    p.Date = pricing.Header.OrderDate.AddMinutes(1);
-                    p.Paycode = ifCVsSelected ? "CV" : "CARD"; // !
-                    p.PaymentType = "SALE";
-                    p.CurrencyCode = currency;
-                    p.AppliedDate = DateTime.UtcNow;
-                    p.PaymentReceived = pricing.Header.TotalDue ?? 0m;
-                    p.CheckWireNumber = ifCVsSelected ? receiptNo : null;
-                    p.CreditCard.CardHolderName = "CARD HOLDER";
-                    p.CreditCard.CardNumber = "0B11074741560000";
-                    p.CreditCard.CardType = "CARD";
-                    p.CreditCard.CardExpiryDate = DateTime.UtcNow.AddYears(1);
-                    p.CreditCard.TrxApprovalNumber = "51189";
-                    //p.ClientRefNumber = "INTERNET";
-                    p.ApprovalNumber = "51189";
-                })
+                .AddPayments(p =>
+                    {
+                        p.PaymentMethodName = "CARD";
+                        p.PaymentStatus = "PAID";
+                        p.PaymentMethodId = null; // Empty for LV; 
+                        p.PaymentAmount = pricing.Header.TotalDue - cvAmount ?? 0m;
+                        p.Date = pricing.Header.OrderDate.AddMinutes(1);
+                        p.Paycode = "CARD";
+                        p.PaymentType = "SALE";
+                        p.CurrencyCode = currency;
+                        p.AppliedDate = DateTime.UtcNow;
+                        p.PaymentReceived = pricing.Header.TotalDue ?? 0m;
+                        p.CreditCard.CardHolderName = "CARD HOLDER";
+                        p.CreditCard.CardNumber = "0B11074741560000";
+                        p.CreditCard.CardType = "CARD";
+                        p.CreditCard.CardExpiryDate = DateTime.UtcNow.AddYears(1);
+                        p.CreditCard.TrxApprovalNumber = "51189";
+                        p.ApprovalNumber = "51189";
+                        p.ClientRefNumber = "LVRIGAS3";
+                    }, setupCV)
                 .AddItems(() => pricing.Lines.Select(x =>
-                        new SubmitRequestOrderLine
-                        {
-                            Sku = x.Sku,
-                            Quantity = x.Quantity,
-                            Amount = x.LineDueAmount ?? 0m,
-                            EarnBase = x.Earnbase ?? 0m,
-                            UnitVolume = x.UnitVolumePoints ?? 0m,
-                            TotalRetailPrice = x.TotalRetailPrice ?? 0m,
-                            TotalDiscountedPrice = x.LineDiscountAmount ?? 0m
-                        }
+                    new SubmitRequestOrderLine
+                    {
+                        Sku = x.Sku,
+                        Quantity = x.Quantity,
+                        Amount = x.LineDueAmount ?? 0m,
+                        EarnBase = x.TotalEarnBase ?? 0m,
+                        UnitVolume = x.UnitVolumePoints ?? 0m,
+                        TotalRetailPrice = x.TotalRetailPrice ?? 0m,
+                        TotalDiscountedPrice = x.LineDiscountAmount ?? 0m
+                    }
                     ).ToArray()
                 )
-                .AddPromotionLines(() => promotions.SelectMany(x => x.Rewards.Select(r => new SubmitRequestOrderPromotionLine
+                .AddPromotionLines(() => promotions.SelectMany(x => x.Rewards.Where(r=>r.IsSelected).Select(r => new SubmitRequestOrderPromotionLine
                 {
                     RuleID = x.RuleId,
                     PromotionCode = string.Equals(r.Type, "Free Sku", StringComparison.InvariantCultureIgnoreCase) ? x.RuleName : "CASH VOUCHER",
@@ -140,7 +165,7 @@ namespace Filuet.Hrbl.Ordering.POC.PromoEngine
                     PromotionItem = string.Equals(r.Type, "Free Sku", StringComparison.InvariantCultureIgnoreCase) ? r.RewardItem : null,
                     Quantity = r.OrderedQuantity,
                     SKU = string.Equals(r.Type, "Free Sku", StringComparison.InvariantCultureIgnoreCase) ? r.RewardItem : null,
-                    IsAddedToOrder = r.IsSelected ? "Y" : string.Empty,
+                    IsAddedToOrder = string.Equals(r.Type, "Free Sku", StringComparison.InvariantCultureIgnoreCase) ? "Y" : null,
                     RedemptionType = x.RedemptionType.GetDescription(),
                     PromotionRuleName = string.Equals(r.Type, "Free Sku", StringComparison.InvariantCultureIgnoreCase) ? x.RuleName : "CASH VOUCHER",
                     ChrAttribute2 = string.Equals(r.Type, "Free Sku", StringComparison.InvariantCultureIgnoreCase) ? null : "CASH VOUCHER",

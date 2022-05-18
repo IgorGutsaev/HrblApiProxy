@@ -46,10 +46,10 @@
 
     <form asp-page-handler="button" method="post">
         @*<div>
-                <label>Payment amount:</label>
-                @Html.EditorFor(model => model.Amount, new { htmlAttributes = new { @type = "number", @min = "0.01", @max = Model.Country == "10", @step = "0.01", @value = "0.01" } })
-                <label style="color: red"> * Uzbekistan min amount is 1</label>
-            </div>*@
+            <label>Payment amount:</label>
+            @Html.EditorFor(model => model.Amount, new { htmlAttributes = new { @type = "number", @min = "0.01", @max = Model.Country == "10", @step = "0.01", @value = "0.01" } })
+            <label style="color: red"> * Uzbekistan min amount is 1</label>
+        </div>*@
         @{
             List<SelectListItem> listItems = new List<SelectListItem>();
             listItems.Add(new SelectListItem
@@ -142,6 +142,10 @@
                     <div>DS Type: @Model.PromoResult.Promotions.Promotion.First().DistributorType</div>
                     <div>DS Subtype: @Model.PromoResult.Promotions.Promotion.First().DistributorSubType</div>
                     <div>DS Status: @Model.PromoResult.Promotions.Promotion.First().DistributorStatus</div>
+                }
+                else
+                {
+                    <label style="color: tomato; font-weight: 600">No promotions found</label>
                 }
 
                 if (Model.Promotions.Any())
