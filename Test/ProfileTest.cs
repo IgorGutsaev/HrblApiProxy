@@ -9,7 +9,7 @@ namespace Filuet.Hrbl.Ordering.Tests
     public class ProfileTest : BaseTest
     {
         [Theory]
-        [InlineData("7918180560")]
+        [InlineData("va00311908")]
         //[InlineData("VA00867877")]
         //[InlineData("7919384588")]
         //[InlineData("U515120144")]

@@ -1,5 +1,6 @@
 ﻿using Filuet.Hrbl.Ordering.Abstractions.Builders;
 using Filuet.Hrbl.Ordering.Abstractions.Dto;
+using Filuet.Hrbl.Ordering.Abstractions.Enums;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -8,6 +9,8 @@ namespace Filuet.Hrbl.Ordering.Abstractions
 {
     public interface IHrblOrderingAdapter
     {
+        Task<IEnumerable<(ActionLevel, string, DateTime, IEnumerable<(HrblAction, string)>)>> PollRequest();
+
         Task<(bool isValid, string memberId)> ValidateSsoBearerToken(string token);
 
         Task<SkuInventory[]> GetSkuAvailability(string warehouse, Dictionary<string, int> items);

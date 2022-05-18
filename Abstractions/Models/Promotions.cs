@@ -94,35 +94,35 @@ namespace Filuet.Hrbl.Ordering.Abstractions.Models
 
         public int MaxQtyToRedeem => Rewards.Any() && Rewards.Max(x => x.MaxOrderedQuantity) > 0 ? Rewards.Max(x => x.MaxOrderedQuantity) : Rewards.Count;
 
-        public (PromotionIssueLevel, string)? VerificationInfo
+        public (ActionLevel, string)? VerificationInfo
         {
             get
             {
                 // 4.2.1
                 // Page 37: User is allowed to disable automatic cash voucher
                 if (RedemptionType == PromotionRedemptionType.Automatic && RedemptionLimit == PromotionRedemptionLimit.One && Type == PromotionType.CashVoucher && !Rewards.Any(x => x.IsSelected))
-                    return (PromotionIssueLevel.Warning, $"{RuleName}: Before continuing, take advantage of the promotions available to you.");
+                    return (ActionLevel.Warning, $"{RuleName}: Before continuing, take advantage of the promotions available to you.");
                 // 4.1.1, 4.1.2
                 else if (RedemptionType == PromotionRedemptionType.Automatic &&
                     (RedemptionLimit == PromotionRedemptionLimit.One || RedemptionLimit == PromotionRedemptionLimit.Multiple) &&
                     !Rewards.Any(x => x.IsSelected))
-                    return (PromotionIssueLevel.Error, $"{RuleName}: You have not added any gift to your cart. Please add it to continue.");
+                    return (ActionLevel.Error, $"{RuleName}: You have not added any gift to your cart. Please add it to continue.");
 
                 // Common rule: check all optional promotions. If any with no gifts selected, then warn the user that he/she still has an option to redeem it
                 if (RedemptionType == PromotionRedemptionType.Optional && !Rewards.Any(x => x.IsSelected))
-                    return (PromotionIssueLevel.Warning, $"{RuleName}: Before you proceed to payment, we remind you that promotional gifts are available to you.");
+                    return (ActionLevel.Warning, $"{RuleName}: Before you proceed to payment, we remind you that promotional gifts are available to you.");
 
                 return null;
             }
         }
 
-        public (PromotionIssueLevel, string)? WelcomeInfo
+        public (ActionLevel, string)? WelcomeInfo
         {
             get
             {
                 if (/*4.2.1*/(RedemptionType == PromotionRedemptionType.Automatic && Type == PromotionType.CashVoucher && Rewards.Any(x => x.IsSelected)) ||
                     /*4.1.3*/(RedemptionType == PromotionRedemptionType.Automatic && RedemptionLimit == PromotionRedemptionLimit.All && !Rewards.Any(x => !x.IsSelected)))
-                    return (PromotionIssueLevel.Info, $"{RuleName}: Congratulations! You are eligable for gifts. Gifts have already been added to your cart.");
+                    return (ActionLevel.Info, $"{RuleName}: Congratulations! You are eligable for gifts. Gifts have already been added to your cart.");
 
                 return null;
             }

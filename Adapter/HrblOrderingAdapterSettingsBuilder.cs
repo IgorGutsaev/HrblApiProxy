@@ -70,7 +70,13 @@ namespace Filuet.Hrbl.Ordering.Adapter
             _adapterSettings.Password = password;
 
             return this;
-        }        
+        }
+
+        public HrblOrderingAdapterSettingsBuilder WithPollSettings(HrblOrderingAdapterPollRequestSettings settings)
+        {
+            _adapterSettings.PollSettings = settings;
+            return this;
+        }
         
         public HrblOrderingAdapterSettings Build() => _adapterSettings;
     }

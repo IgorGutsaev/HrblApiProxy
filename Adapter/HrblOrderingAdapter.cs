@@ -11,6 +11,7 @@ using Filuet.Hrbl.Ordering.Common;
 using Filuet.Hrbl.Ordering.Abstractions.Builders;
 using Filuet.Hrbl.Ordering.Abstractions.Dto;
 using System.Net.Http;
+using Filuet.Hrbl.Ordering.Abstractions.Enums;
 
 namespace Filuet.Hrbl.Ordering.Adapter
 {
@@ -63,7 +64,8 @@ namespace Filuet.Hrbl.Ordering.Adapter
             bool isError = false;
             string error = string.Empty;
 
-            Parallel.ForEach(blocks, b => {
+            Parallel.ForEach(blocks, b =>
+            {
                 object response = _proxy.GetSkuAvailability.POST(new
                 {
                     ServiceConsumer = _settings.Consumer,
@@ -86,7 +88,7 @@ namespace Filuet.Hrbl.Ordering.Adapter
                     error = string.IsNullOrWhiteSpace(result.Errors.ErrorMessage) ? "Unknown error" : result.Errors.ErrorMessage;
                 }
 
-                lock(_inventory)
+                lock (_inventory)
                     _inventory.AddRange(result.SkuInventoryDetails.Inventory);
             });
 
@@ -191,7 +193,7 @@ namespace Filuet.Hrbl.Ordering.Adapter
 
             if (request.Contact != null)
             {
-                DistributorContact contactToUpdate = profile.Shipping?.Contacts?.FirstOrDefault(x => x.Type.Equals(request.Contact.Type, StringComparison.InvariantCultureIgnoreCase) 
+                DistributorContact contactToUpdate = profile.Shipping?.Contacts?.FirstOrDefault(x => x.Type.Equals(request.Contact.Type, StringComparison.InvariantCultureIgnoreCase)
                     && (x.SubType.Equals(request.Contact.SubType, StringComparison.InvariantCultureIgnoreCase)
                         || (string.IsNullOrEmpty(request.Contact.SubType) && x.IsActive)));
 
@@ -210,6 +212,8 @@ namespace Filuet.Hrbl.Ordering.Adapter
 
             if (string.IsNullOrWhiteSpace(country))
                 throw new ArgumentException("Country is mandatory");
+
+            distributorId = distributorId.ToUpper();
 
             object response = await _proxy.DSFOPPurchasingLimits.POSTAsync(new
             {
@@ -252,7 +256,8 @@ namespace Filuet.Hrbl.Ordering.Adapter
                     ExpirationDate = DateTime.MaxValue.ToString("yyyy-MM-dd HH:mm:ss+zzz"),
                     EffectiveDate = DateTime.Now.AddYears(-2).ToString("yyyy-MM-dd HH:mm:ss+zzz"),
                     _isActive = "Y"
-                } } };
+                } }
+                };
             }
         }
 
@@ -299,7 +304,7 @@ namespace Filuet.Hrbl.Ordering.Adapter
             object response = await _proxy.DsCashLimit.POSTAsync(new
             {
                 ServiceConsumer = _settings.Consumer,
-                DistributorId = distributorId,
+                DistributorId = distributorId.ToUpper(),
                 ShipToCountry = country,
                 PaymentMethod = "CASH"
             });
@@ -452,5 +457,25 @@ namespace Filuet.Hrbl.Ordering.Adapter
         }
 
         public override string ToString() => Environment.ToString();
+
+        public async Task<IEnumerable<(ActionLevel, string, DateTime, IEnumerable<(HrblAction, string)>)>> PollRequest()
+        {
+            List<(ActionLevel, string, DateTime, IEnumerable<(HrblAction, string)>)> result = new List<(ActionLevel, string, DateTime, IEnumerable<(HrblAction, string)>)>();
+
+            // GetDistributorVolumePoints
+            try
+            {
+                List<(HrblAction, string)> vpResult = new List<(HrblAction, string)>();
+
+                foreach (var x in _settings.PollSettings.Input_for_GetVolumePoints)
+                {
+                    DistributorVolumePoints[] dsVolPoints = await GetVolumePoints(x.distributorId, x.month);
+                }
+            }
+            catch (Exception ex)
+            { }
+
+            return null;
+        }
     }
 }
