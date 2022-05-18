@@ -73,6 +73,7 @@ namespace Filuet.Hrbl.Ordering.Tests
 
         [Theory]
         [InlineData("7918180560")]
+        [InlineData("U512180202")]
         public async Task Test_Get_volume_points(string distributorId)
         {
             // Prepare
@@ -106,7 +107,8 @@ namespace Filuet.Hrbl.Ordering.Tests
         }
 
         [Theory]
-        [InlineData("7918180560", "RU")]
+       // [InlineData("7918180560", "RU")]
+        [InlineData("U512180202", "LV")]
         public async Task Test_Get_distributor_discount(string distributorId, string country)
         {
             // Prepare

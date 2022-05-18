@@ -284,7 +284,7 @@ namespace Filuet.Hrbl.Ordering.Adapter
             object response = await _proxy.GetDistributorDiscount.POSTAsync(new
             {
                 ServiceConsumer = _settings.Consumer,
-                DistributorId = distributorId,
+                DistributorId = distributorId.ToUpper(),
                 OrderMonth = month.ToString("yyyy/MM"),
                 ShipToCountry = country
             });
