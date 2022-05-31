@@ -104,7 +104,7 @@ namespace Filuet.Hrbl.Ordering.Abstractions.Builders
             return this;
         }
 
-        public SubmitRequestBuilder AddPayment(Action<SubmitRequestPayment> setupPayment)
+        public SubmitRequestBuilder AddPayments(Action<SubmitRequestPayment> setupPayment, Action<SubmitRequestPayment> setupCashVouchers = null)
         {
             SubmitRequestPayment payment = setupPayment?.CreateTargetAndInvoke();
 
@@ -169,7 +169,10 @@ namespace Filuet.Hrbl.Ordering.Abstractions.Builders
                 throw new ArgumentException(issues.ToString());
             #endregion
 
-            _request.Payment = payment;
+            if (setupCashVouchers == null)
+                _request.Payment = new SubmitRequestPayment[1] { payment };
+            else
+                _request.Payment = new SubmitRequestPayment[2] { payment, setupCashVouchers?.CreateTargetAndInvoke() };
 
             return this;
         }
@@ -207,6 +210,18 @@ namespace Filuet.Hrbl.Ordering.Abstractions.Builders
                 throw new ArgumentException(issues.ToString());
 
             _request.Lines = lines;
+
+            return this;
+        }
+
+        public SubmitRequestBuilder AddPromotionLines(Func<SubmitRequestOrderPromotionLine[]> setupPayment)
+        {
+            SubmitRequestOrderPromotionLine[] lines = setupPayment?.Invoke();
+
+            if (!lines.Any())
+                throw new ArgumentException("No order promotion lines detected");
+
+            _request.OrderPromotionLine = lines;
 
             return this;
         }

@@ -1,4 +1,5 @@
 ﻿using Filuet.Hrbl.Ordering.Adapter;
+using System;
 
 namespace Filuet.Hrbl.Ordering.Tests
 {
@@ -15,7 +16,8 @@ namespace Filuet.Hrbl.Ordering.Tests
             .WithServiceConsumer(SERVICE_CONSUMER)
             .WithOrganizationId(73)
             .WithCredentials("hlfnord", "welcome123") // prs + ts3 + ts1
-            //.WithCredentials("hlfnord", "F1uT2H1n@0rd")
+                                                      //.WithCredentials("hlfnord", "F1uT2H1n@0rd")
+            .WithPollSettings(x => x.Input_for_GetVolumePoints = new (string distributorId, DateTime month)[] { ("U512180202", DateTime.UtcNow), ("7918180560", DateTime.UtcNow) })
             .Build();
 
         public HrblOrderingAdapter _adapter => new HrblOrderingAdapter(_defaultSettings);

@@ -23,10 +23,10 @@ namespace Filuet.Hrbl.Ordering.Tests
         // [InlineData("S7Y0003968", "my")]
         //[InlineData("MY048647", "my")]
         //[InlineData("D2442080", "id")]
-        [InlineData("VNY0077803", "vn")]
+        [InlineData("U512180202", "lv")]
         public async Task Test_Get_ds_fop_purchasing_limits(string distributorId, string country)
         {
-            //// Prepare
+            // Prepare
             Assert.NotNull(_adapter);
 
             // Pre-validate
@@ -47,7 +47,7 @@ namespace Filuet.Hrbl.Ordering.Tests
         /// <param name="country"></param>
         /// <returns></returns>
         [Theory]
-        [InlineData("7918180560", "ru")]
+        [InlineData("u512180202", "lv")]
        // [InlineData("HERB108388", "ru")]
         public async Task Test_Get_ds_cash_limit(string distributorId, string country)
         {

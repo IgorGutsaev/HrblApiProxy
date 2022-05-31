@@ -1,6 +1,6 @@
 ﻿namespace Filuet.Hrbl.Ordering.Abstractions.Enums
 {
-    public enum PromotionIssueLevel
+    public enum ActionLevel
     {
         Info = 0x01,
         Warning,

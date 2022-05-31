@@ -7,5 +7,7 @@
         public string Login { get; internal set; }
         public string Password { get; internal set; }
         public uint OrganizationId { get; internal set; }
+
+        public HrblOrderingAdapterPollRequestSettings PollSettings { get; internal set; }
     }
 }

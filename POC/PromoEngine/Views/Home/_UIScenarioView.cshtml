@@ -2,6 +2,7 @@
 @using Filuet.Hrbl.Ordering.Abstractions.Enums
 @using Filuet.Hrbl.Ordering.Abstractions.Models
 @using Filuet.Hrbl.Ordering.Common;
+@using Filuet.Hrbl.Ordering.POC.PromoEngine;
 
 <style>
     .promoFoundPopup {
@@ -34,7 +35,7 @@
         if ('@(Model.First().State == Filuet.Hrbl.Ordering.Abstractions.Models.PromotionsState.Verification)' === 'True') {
 
             // If some promotions are selected and no mandatory promotions that hanen't been chosen
-            @if (Model.Any(x => x.Rewards.Any(r => r.IsSelected)) && !Model.Any(x=>x.VerificationInfo.HasValue && x.VerificationInfo.Value.Item1 == PromotionIssueLevel.Error))
+            @if (Model.Any(x => x.Rewards.Any(r => r.IsSelected)) && !Model.Any(x=>x.VerificationInfo.HasValue && x.VerificationInfo.Value.Item1 == ActionLevel.Error))
             {
                 <text>
                     toastr.success('The selected promotions have been applied to your order');
@@ -45,14 +46,14 @@
             {
                 if (promo.VerificationInfo.HasValue)
                 {
-                    if (promo.VerificationInfo.Value.Item1 == PromotionIssueLevel.Error)
+                    if (promo.VerificationInfo.Value.Item1 == ActionLevel.Error)
                     {
                         <text>
                             errorsUnresolved = 1;
                             toastr.error('@promo.VerificationInfo.Value.Item2');
                         </text>
                     }
-                    else if (promo.VerificationInfo.Value.Item1 == PromotionIssueLevel.Warning)
+                    else if (promo.VerificationInfo.Value.Item1 == ActionLevel.Warning)
                     {
                         <text>
                             toastr.warning('@promo.VerificationInfo.Value.Item2');
@@ -125,15 +126,21 @@
         UnsavedChangesDetected();
     }
 
-    function onMultiplyHasChanged(uid, qtyToRedeem, isOptional) {
+    function onMultiplyHasChanged(new_value, uid, qtyToRedeem, redemptionType, redemptionLimit) {
         qty = 0;
-        $("input:checkbox[uid=choise_" + uid + "]:checked").each(function () {
-            qty += 1;
-        });
+
+        if (redemptionType === 2 && redemptionLimit === 3) {
+            $("input:checkbox[uid=choise_" + uid + "]").prop("checked", new_value);
+        }
+        else {
+            $("input:checkbox[uid=choise_" + uid + "]:checked").each(function () {
+                qty += 1;
+            });
+        }
 
         //alert(qty + '/' + qtyToRedeem);
 
-        if (qty === qtyToRedeem || (qty == 0 && isOptional === 2)) {
+        if (qty === qtyToRedeem || (qty == 0 && redemptionType === 2)) {
             $('#saveButton_' + uid).removeClass('disabled');
             UnsavedChangesDetected();
         }
@@ -258,7 +265,6 @@
                                                         case PromotionRedemptionType.Automatic: // 4.1.2 / 4.4.2
                                                         case PromotionRedemptionType.Optional: // 4.1.5 / 4.4.5
 
-
                                                             @for (int j = 0; j < Model[i].Rewards.Count(); j++)
                                                             {
                                                                 @Html.HiddenFor(x => x[i].Rewards[j].RewardItem)
@@ -267,12 +273,12 @@
 
                                                                 if (!disableChooser)
                                                                 {
-                                                                    @Html.CheckBoxFor(model => model[i].Rewards[j].IsSelected, new { uid = $"choise_{Model[i].RuleId}", onchange = $"onMultiplyHasChanged('{Model[i].RuleId}', {Model[i].MaxQtyToRedeem}, {(int)Model[i].RedemptionType});" })
+                                                                    @Html.CheckBoxFor(model => model[i].Rewards[j].IsSelected, new { uid = $"choise_{Model[i].RuleId}", onchange = $"onMultiplyHasChanged(this.checked, '{Model[i].RuleId}', {Model[i].MaxQtyToRedeem}, {(int)Model[i].RedemptionType}, {(int)Model[i].RedemptionLimit});" })
                                                                 }
                                                                 else
                                                                 {
                                                                     @Html.HiddenFor(x => x[i].Rewards[j].IsSelected)
-                                                                    @Html.CheckBoxFor(model => model[i].Rewards[j].IsSelected, new { disabled = true, uid = $"choise_{Model[i].RuleId}", onchange = $"onMultiplyHasChanged('{Model[i].RuleId}', {Model[i].MaxQtyToRedeem}, {(int)Model[i].RedemptionType});" })
+                                                                    @Html.CheckBoxFor(model => model[i].Rewards[j].IsSelected, new { disabled = true, uid = $"choise_{Model[i].RuleId}", onchange = $"onMultiplyHasChanged(this.checked,'{Model[i].RuleId}', {Model[i].MaxQtyToRedeem}, {(int)Model[i].RedemptionType}, {(int)Model[i].RedemptionLimit});" })
                                                                 }
 
                                                                 <span /> @Model[i].Rewards[j] <br />
@@ -344,7 +350,7 @@
     }
     else if (Model.First().State == PromotionsState.Verification &&
         Model.Any(x => x.Rewards.Any(r => r.IsSelected)) &&
-        !Model.Any(x => x.VerificationInfo.HasValue && x.VerificationInfo.Value.Item1 == PromotionIssueLevel.Error))
+        !Model.Any(x => x.VerificationInfo.HasValue && x.VerificationInfo.Value.Item1 == ActionLevel.Error))
     {
 
         // If some free SKUs were selected or If some CV were selected
@@ -414,7 +420,8 @@
                                     </td>
                                 </tr>
                             </table>
-                            <button type="button" class="btn btn-warning" style="background-color: #fcc578 !important; color: white; width: 80%">PROCEED</button>
+                            @*<button type="button" class="btn btn-warning" style="background-color: #fcc578 !important; color: white; width: 80%">PROCEED</button>*@
+                            @Html.ActionLink("PROCEED", "Submit", "Home", new { uid = Model.First().TestId }, new { @class = "btn btn-warning", @style = "background-color: #fcc578 !important; color: white; width: 80%" })
                         </div>
                     }
                 }

@@ -1,9 +1,9 @@
 ﻿using Xunit;
 using Filuet.Hrbl.Ordering.Common;
+using Newtonsoft.Json;
 
 namespace Filuet.Hrbl.Ordering.Test
 {
-
     public class SkuTest
     {
         [Theory]

@@ -11,6 +11,8 @@ using Filuet.Hrbl.Ordering.Common;
 using Filuet.Hrbl.Ordering.Abstractions.Builders;
 using Filuet.Hrbl.Ordering.Abstractions.Dto;
 using System.Net.Http;
+using Filuet.Hrbl.Ordering.Abstractions.Enums;
+using Filuet.Hrbl.Ordering.Abstractions.Models;
 
 namespace Filuet.Hrbl.Ordering.Adapter
 {
@@ -63,7 +65,8 @@ namespace Filuet.Hrbl.Ordering.Adapter
             bool isError = false;
             string error = string.Empty;
 
-            Parallel.ForEach(blocks, b => {
+            Parallel.ForEach(blocks, b =>
+            {
                 object response = _proxy.GetSkuAvailability.POST(new
                 {
                     ServiceConsumer = _settings.Consumer,
@@ -86,7 +89,7 @@ namespace Filuet.Hrbl.Ordering.Adapter
                     error = string.IsNullOrWhiteSpace(result.Errors.ErrorMessage) ? "Unknown error" : result.Errors.ErrorMessage;
                 }
 
-                lock(_inventory)
+                lock (_inventory)
                     _inventory.AddRange(result.SkuInventoryDetails.Inventory);
             });
 
@@ -191,7 +194,7 @@ namespace Filuet.Hrbl.Ordering.Adapter
 
             if (request.Contact != null)
             {
-                DistributorContact contactToUpdate = profile.Shipping?.Contacts?.FirstOrDefault(x => x.Type.Equals(request.Contact.Type, StringComparison.InvariantCultureIgnoreCase) 
+                DistributorContact contactToUpdate = profile.Shipping?.Contacts?.FirstOrDefault(x => x.Type.Equals(request.Contact.Type, StringComparison.InvariantCultureIgnoreCase)
                     && (x.SubType.Equals(request.Contact.SubType, StringComparison.InvariantCultureIgnoreCase)
                         || (string.IsNullOrEmpty(request.Contact.SubType) && x.IsActive)));
 
@@ -210,6 +213,8 @@ namespace Filuet.Hrbl.Ordering.Adapter
 
             if (string.IsNullOrWhiteSpace(country))
                 throw new ArgumentException("Country is mandatory");
+
+            distributorId = distributorId.ToUpper();
 
             object response = await _proxy.DSFOPPurchasingLimits.POSTAsync(new
             {
@@ -252,7 +257,8 @@ namespace Filuet.Hrbl.Ordering.Adapter
                     ExpirationDate = DateTime.MaxValue.ToString("yyyy-MM-dd HH:mm:ss+zzz"),
                     EffectiveDate = DateTime.Now.AddYears(-2).ToString("yyyy-MM-dd HH:mm:ss+zzz"),
                     _isActive = "Y"
-                } } };
+                } }
+                };
             }
         }
 
@@ -279,7 +285,7 @@ namespace Filuet.Hrbl.Ordering.Adapter
             object response = await _proxy.GetDistributorDiscount.POSTAsync(new
             {
                 ServiceConsumer = _settings.Consumer,
-                DistributorId = distributorId,
+                DistributorId = distributorId.ToUpper(),
                 OrderMonth = month.ToString("yyyy/MM"),
                 ShipToCountry = country
             });
@@ -299,7 +305,7 @@ namespace Filuet.Hrbl.Ordering.Adapter
             object response = await _proxy.DsCashLimit.POSTAsync(new
             {
                 ServiceConsumer = _settings.Consumer,
-                DistributorId = distributorId,
+                DistributorId = distributorId.ToUpper(),
                 ShipToCountry = country,
                 PaymentMethod = "CASH"
             });
@@ -452,5 +458,57 @@ namespace Filuet.Hrbl.Ordering.Adapter
         }
 
         public override string ToString() => Environment.ToString();
+
+        public async Task<PollResult> PollRequest()
+        {
+            var result = new List<PollUnitResult>();
+
+            Func<Exception, string> _getFullExceptionDetails = ex => ex.Message + (ex.InnerException == null ? string.Empty : (System.Environment.NewLine + ex.InnerException.Message));
+            Func<IEnumerable<ActionLevel>, ActionLevel> _getResultLevel = a =>
+            {
+                if (a.Count() == 0)
+                    return ActionLevel.Info;
+                else if (a.Count() == 1)
+                    return a.First();
+                else
+                {
+                    if (a.Count(x => x == ActionLevel.Info) == a.Count())
+                        return ActionLevel.Info;
+                    else if (a.Count(x => x == ActionLevel.Warning) == a.Count())
+                        return ActionLevel.Warning;
+                    else if (a.Count(x => x == ActionLevel.Error) == a.Count())
+                        return ActionLevel.Error;
+                    else return ActionLevel.Warning;
+                }
+            };
+
+            #region GetDistributorVolumePoints
+            List<ActionLevel> getDistributorVolumePoints_resultLevel = new List<ActionLevel>();
+            StringBuilder getDistributorVolumePoints_protocol = new StringBuilder();
+
+            foreach (var x in _settings.PollSettings.Input_for_GetVolumePoints)
+            {
+                try
+                {
+                    DistributorVolumePoints[] dsVolPoints = await GetVolumePoints(x.distributorId, x.month);
+                    if (!dsVolPoints.Any(y => y != null))
+                    {
+                        getDistributorVolumePoints_resultLevel.Add(ActionLevel.Error);
+                        getDistributorVolumePoints_protocol.AppendLine($"Customer UID {x.distributorId}: empty response");
+                    }
+                    else getDistributorVolumePoints_resultLevel.Add(ActionLevel.Info);
+                }
+                catch (Exception ex)
+                {
+                    getDistributorVolumePoints_resultLevel.Add(ActionLevel.Error);
+                    getDistributorVolumePoints_protocol.AppendLine($"Customer UID {x.distributorId}: {_getFullExceptionDetails(ex)}");
+                }
+            }
+
+            result.Add(new PollUnitResult { Action = "GetDistributorVolumePoints", Level = _getResultLevel(getDistributorVolumePoints_resultLevel), Comment = getDistributorVolumePoints_protocol.ToString() });
+            #endregion
+
+            return new PollResult { Level = _getResultLevel(result.Select(x => x.Level)), Timestamp = DateTimeOffset.Now, Items = result };
+        }
     }
 }

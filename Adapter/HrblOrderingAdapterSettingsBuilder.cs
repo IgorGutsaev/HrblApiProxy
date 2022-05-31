@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Filuet.Hrbl.Ordering.Common;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -70,7 +71,14 @@ namespace Filuet.Hrbl.Ordering.Adapter
             _adapterSettings.Password = password;
 
             return this;
-        }        
+        }
+
+        public HrblOrderingAdapterSettingsBuilder WithPollSettings(Action<HrblOrderingAdapterPollRequestSettings> setupAction)
+        {
+            HrblOrderingAdapterPollRequestSettings settings = setupAction?.CreateTargetAndInvoke();
+            _adapterSettings.PollSettings = settings;
+            return this;
+        }
         
         public HrblOrderingAdapterSettings Build() => _adapterSettings;
     }

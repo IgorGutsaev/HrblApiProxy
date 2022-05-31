@@ -44,7 +44,8 @@ namespace Filuet.Hrbl.Ordering.Abstractions.Helpers
                             RewardItem = x.PromotionProp1,
                             RuleName = x.PromotionRuleName,
                             ValidUntil = x.DateAttribute1?.ToLongDateString() ?? string.Empty,
-                            CashVoucherAmount = x.NumAttribute1.HasValue ? (decimal)x.NumAttribute1.Value : 0m
+                            CashVoucherAmount = x.NumAttribute1.HasValue ? (decimal)x.NumAttribute1.Value : 0m,
+                            ReceiptNo = x.ChrAttribute6
                         });
                     }
                     else if (x.PromotionType.Equals("FREE SKU", StringComparison.InvariantCultureIgnoreCase))
