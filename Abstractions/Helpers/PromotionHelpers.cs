@@ -12,6 +12,9 @@ namespace Filuet.Hrbl.Ordering.Abstractions.Helpers
     {
         public static List<Promotion> ConvertPromotions(this GetDSEligiblePromoSKUResponseDTO source)
         {
+            if (!source.IsPromo) // If value equals ‘N’ or is null – user is not eligible for promotion / s, hence NO further elements in response should be checked.
+                return null;
+
             List<Promotion> result = new List<Promotion>();
             string testUid = Guid.NewGuid().ToString();
 
