@@ -64,9 +64,10 @@ namespace Filuet.Hrbl.Ordering.POC.PromoEngine
             bool isCVsSelected = cvAmount > 0;
             string receiptNo = isCVsSelected ? string.Join("; ", promotions.SelectMany(x => x.Rewards.Where(r => r.IsSelected && string.Equals(r.Type, "Cash voucher", StringComparison.InvariantCultureIgnoreCase)).Select(x => x.ReceiptNo))) : string.Empty;
 
-            Action<SubmitRequestPayment> setupCV = null;
-            if (isCVsSelected) setupCV = p =>
+            Action<List<SubmitRequestPayment>> setupCV = null;
+            if (isCVsSelected) setupCV = pL =>
                         {
+                            SubmitRequestPayment p = new SubmitRequestPayment();
                             p.PaymentMethodName = "CARD";
                             p.PaymentStatus = "PAID";
                             p.PaymentMethodId = null;
@@ -84,6 +85,7 @@ namespace Filuet.Hrbl.Ordering.POC.PromoEngine
                             p.CreditCard.CardExpiryDate = DateTime.UtcNow.AddYears(1);
                             p.CreditCard.TrxApprovalNumber = "51189";
                             p.ApprovalNumber = "51189";
+                            pL.Add(p);
                         };
 
             Action<SubmitRequestBuilder> setupAction = (b) =>
