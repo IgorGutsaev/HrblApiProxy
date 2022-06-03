@@ -373,6 +373,6 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         /// Empty for SKU, Cash voucher amount if the Reward Type is CASH VOUCHER
         /// </summary>
         [JsonProperty("NumAttribute1", Order = 13)]
-        public string NumAttribute1 { get; set; }
+        public decimal? NumAttribute1 { get; set; }
     }
 }

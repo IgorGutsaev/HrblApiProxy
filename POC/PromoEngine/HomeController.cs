@@ -171,7 +171,7 @@ namespace Filuet.Hrbl.Ordering.POC.PromoEngine
                     ChrAttribute2 = string.Equals(r.Type, "Free Sku", StringComparison.InvariantCultureIgnoreCase) ? null : "CASH VOUCHER",
                     ChrAttribute3 = string.Equals(r.Type, "Free Sku", StringComparison.InvariantCultureIgnoreCase) ? null : r.ReceiptNo,
                     ChrAttribute7 = string.Equals(r.Type, "Free Sku", StringComparison.InvariantCultureIgnoreCase) ? null : "N",
-                    NumAttribute1 = string.Equals(r.Type, "Free Sku", StringComparison.InvariantCultureIgnoreCase) ? null : r.RewardItem
+                    NumAttribute1 = string.Equals(r.Type, "Free Sku", StringComparison.InvariantCultureIgnoreCase) ? null : (decimal?)r.CashVoucherAmount
                 })).ToArray());
 
 
