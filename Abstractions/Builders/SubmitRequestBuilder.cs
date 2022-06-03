@@ -1,5 +1,6 @@
 ﻿using Filuet.Hrbl.Ordering.Common;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
@@ -104,7 +105,7 @@ namespace Filuet.Hrbl.Ordering.Abstractions.Builders
             return this;
         }
 
-        public SubmitRequestBuilder AddPayments(Action<SubmitRequestPayment> setupPayment, Action<SubmitRequestPayment> setupCashVouchers = null)
+        public SubmitRequestBuilder AddPayments(Action<SubmitRequestPayment> setupPayment, Action<List<SubmitRequestPayment>> setupCashVouchers = null)
         {
             SubmitRequestPayment payment = setupPayment?.CreateTargetAndInvoke();
 
@@ -172,7 +173,12 @@ namespace Filuet.Hrbl.Ordering.Abstractions.Builders
             if (setupCashVouchers == null)
                 _request.Payment = new SubmitRequestPayment[1] { payment };
             else
-                _request.Payment = new SubmitRequestPayment[2] { payment, setupCashVouchers?.CreateTargetAndInvoke() };
+            {
+                var payments = new List<SubmitRequestPayment>();
+                payments.Add(payment);
+                payments.AddRange(setupCashVouchers.CreateTargetAndInvoke());
+                _request.Payment = payments.ToArray();
+            }
 
             return this;
         }
