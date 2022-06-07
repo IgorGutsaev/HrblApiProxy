@@ -225,7 +225,7 @@ namespace Filuet.Hrbl.Ordering.Abstractions.Builders
             SubmitRequestOrderPromotionLine[] lines = setupPayment?.Invoke();
 
             if (!lines.Any())
-                throw new ArgumentException("No order promotion lines detected");
+                return this;
 
             _request.OrderPromotionLine = lines;
 
