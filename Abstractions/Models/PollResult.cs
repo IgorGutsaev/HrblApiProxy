@@ -35,5 +35,7 @@ namespace Filuet.Hrbl.Ordering.Abstractions.Models
         [JsonPropertyName("comment")]
         [JsonProperty("comment")]
         public string Comment { get; set; }
+
+        public override string ToString() => Action;
     }
 }

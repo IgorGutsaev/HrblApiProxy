@@ -13,6 +13,7 @@ using Filuet.Hrbl.Ordering.Abstractions.Dto;
 using System.Net.Http;
 using Filuet.Hrbl.Ordering.Abstractions.Enums;
 using Filuet.Hrbl.Ordering.Abstractions.Models;
+using System.Diagnostics;
 
 namespace Filuet.Hrbl.Ordering.Adapter
 {
@@ -115,17 +116,24 @@ namespace Filuet.Hrbl.Ordering.Adapter
             OrderType type = string.IsNullOrWhiteSpace(orderType) ? OrderType.Rso
                 : EnumHelper.GetValueFromDescription<OrderType>(orderType);
 
-            object response = await _proxy.GetProductInventory.POSTAsync(new
+            try
             {
-                CountryCode = country,
-                OrderType = EnumHelper.GetDescription(type)
-            });
+                object response = await _proxy.GetProductInventory.POSTAsync(new
+                {
+                    CountryCode = country,
+                    OrderType = EnumHelper.GetDescription(type)
+                });
 
-            InventoryResult result = JsonConvert.DeserializeObject<InventoryResult>(JsonConvert.SerializeObject(response));
-            if (!result.Inventory.IsSussess)
-                throw new HrblRestApiException($"An error occured while requesting product inventory in {country}");
+                InventoryResult result = JsonConvert.DeserializeObject<InventoryResult>(JsonConvert.SerializeObject(response));
+                if (!result.Inventory.IsSussess)
+                    throw new HrblRestApiException($"An error occured while requesting product inventory in {country}");
 
-            return result.Inventory.Inventories.ItemsRoot.Items;
+                return result.Inventory.Inventories.ItemsRoot.Items;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
         }
 
         public async Task<CatalogItem[]> GetProductCatalog(string country, string orderType = null)
@@ -482,6 +490,32 @@ namespace Filuet.Hrbl.Ordering.Adapter
                 }
             };
 
+            #region Profile
+            List<ActionLevel> getProfile_resultLevel = new List<ActionLevel>();
+            StringBuilder getProfile_protocol = new StringBuilder();
+
+            foreach (var x in _settings.PollSettings.Input_for_GetProfile)
+            {
+                try
+                {
+                    DistributorProfile profile = await GetProfile(x);
+                    if (profile == null || profile.Id == null || !profile.Id.Equals(x, StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        getProfile_resultLevel.Add(ActionLevel.Error);
+                        getProfile_protocol.AppendLine($"Customer UID {x}: empty response");
+                    }
+                    else getProfile_resultLevel.Add(ActionLevel.Info);
+                }
+                catch (Exception ex)
+                {
+                    getProfile_resultLevel.Add(ActionLevel.Error);
+                    getProfile_protocol.AppendLine($"Customer UID {x}: {_getFullExceptionDetails(ex)}");
+                }
+            }
+
+            result.Add(new PollUnitResult { Action = "GetProfile", Level = _getResultLevel(getProfile_resultLevel), Comment = getProfile_protocol.ToString() });
+            #endregion
+
             #region GetDistributorVolumePoints
             List<ActionLevel> getDistributorVolumePoints_resultLevel = new List<ActionLevel>();
             StringBuilder getDistributorVolumePoints_protocol = new StringBuilder();
@@ -506,6 +540,122 @@ namespace Filuet.Hrbl.Ordering.Adapter
             }
 
             result.Add(new PollUnitResult { Action = "GetDistributorVolumePoints", Level = _getResultLevel(getDistributorVolumePoints_resultLevel), Comment = getDistributorVolumePoints_protocol.ToString() });
+            #endregion
+
+            #region TinDetails
+            List<ActionLevel> getDsTIN_resultLevel = new List<ActionLevel>();
+            StringBuilder getDsTIN_protocol = new StringBuilder();
+
+            foreach (var x in _settings.PollSettings.Input_for_GetDistributorTIN)
+            {
+                try
+                {
+                    TinDetails tinDetails = await GetDistributorTins(x.distributorId, x.country);
+                    if (tinDetails == null)
+                    {
+                        getDsTIN_resultLevel.Add(ActionLevel.Error);
+                        getDsTIN_protocol.AppendLine($"Customer UID {x}: empty response");
+                    }
+                    else getDsTIN_resultLevel.Add(ActionLevel.Info);
+                }
+                catch (Exception ex)
+                {
+                    getDsTIN_resultLevel.Add(ActionLevel.Error);
+                    getDsTIN_protocol.AppendLine($"Customer UID {x}: {_getFullExceptionDetails(ex)}");
+                }
+            }
+
+            result.Add(new PollUnitResult { Action = "GetDistributorTins", Level = _getResultLevel(getDsTIN_resultLevel), Comment = getDsTIN_protocol.ToString() });
+            #endregion
+
+            #region Distributor Discount
+            List<ActionLevel> getDsDiscount_resultLevel = new List<ActionLevel>();
+            StringBuilder getDsDiscount_protocol = new StringBuilder();
+
+            foreach (var x in _settings.PollSettings.Input_for_GetDistributorDiscount)
+            {
+                try
+                {
+                    DistributorDiscountResult dsDiscount = await GetDistributorDiscount(x.distributorId, x.month, x.country);
+                    if (dsDiscount == null || dsDiscount.Discount == null || dsDiscount.Discount.Discount == null)
+                    {
+                        getDsDiscount_resultLevel.Add(ActionLevel.Error);
+                        getDsDiscount_protocol.AppendLine($"Customer UID {x}: empty response");
+                    }
+                    else getDsDiscount_resultLevel.Add(ActionLevel.Info);
+                }
+                catch (Exception ex)
+                {
+                    getDsDiscount_resultLevel.Add(ActionLevel.Error);
+                    getDsDiscount_protocol.AppendLine($"Customer UID {x}: {_getFullExceptionDetails(ex)}");
+                }
+            }
+
+            result.Add(new PollUnitResult { Action = "GetDistributorDiscount", Level = _getResultLevel(getDsDiscount_resultLevel), Comment = getDsDiscount_protocol.ToString() });
+            #endregion
+
+            #region GetSku
+            List<ActionLevel> getsku_resultLevel = new List<ActionLevel>();
+            StringBuilder getSku_protocol = new StringBuilder();
+
+            foreach (var x in _settings.PollSettings.Input_for_GetSku)
+            {
+                try
+                {
+                    SkuInventory sku = await GetSkuAvailability(x.warehouse, x.sku, 1);
+                    if (sku == null || !sku.Sku.Equals(x.sku, StringComparison.InvariantCultureIgnoreCase) || !sku.IsSkuValid)
+                    {
+                        getsku_resultLevel.Add(ActionLevel.Error);
+                        getSku_protocol.AppendLine($"Sku {x.sku}: sku not found or invalid");
+                    }
+                    else getsku_resultLevel.Add(ActionLevel.Info);
+                }
+                catch (Exception ex)
+                {
+                    getsku_resultLevel.Add(ActionLevel.Error);
+                    getSku_protocol.AppendLine($"Sku {x}: {_getFullExceptionDetails(ex)}");
+                }
+            }
+
+            result.Add(new PollUnitResult { Action = "GetSku", Level = _getResultLevel(getsku_resultLevel), Comment = getSku_protocol.ToString() });
+            #endregion
+
+            #region GetProductInventory
+            List<ActionLevel> getInventory_resultLevel = new List<ActionLevel>();
+            StringBuilder getInventory_protocol = new StringBuilder();
+
+            foreach (var x in _settings.PollSettings.Input_for_GetProductInventory)
+            {
+                try
+                {
+                    Stopwatch sw = new Stopwatch();
+                    sw.Start();
+                    InventoryItem[] skus = await GetProductInventory(x);
+                    sw.Stop();
+                    if (skus == null || skus.Length == 0)
+                    {
+                        getInventory_resultLevel.Add(ActionLevel.Error);
+                        getInventory_protocol.AppendLine($"Country {x}: unable to download the catalog");
+                    }
+                    else if (sw.Elapsed.TotalSeconds > 30)
+                    {
+                        getInventory_resultLevel.Add(ActionLevel.Warning);
+                        getInventory_protocol.AppendLine($"Country {x}: the catalog is downloading to slow- {sw.Elapsed:mm:ss}");
+                    }
+                    else
+                    {
+                        getInventory_resultLevel.Add(ActionLevel.Info);
+                        getInventory_protocol.AppendLine($"Country {x}: the catalog has been downloaded in {sw.Elapsed.TotalSeconds} sec");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    getsku_resultLevel.Add(ActionLevel.Error);
+                    getInventory_protocol.AppendLine($"Country {x}: {_getFullExceptionDetails(ex)}");
+                }
+            }
+
+            result.Add(new PollUnitResult { Action = "GetProductInventory", Level = _getResultLevel(getInventory_resultLevel), Comment = getInventory_protocol.ToString() });
             #endregion
 
             return new PollResult { Level = _getResultLevel(result.Select(x => x.Level)), Timestamp = DateTimeOffset.Now, Items = result };
