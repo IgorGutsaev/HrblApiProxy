@@ -542,7 +542,114 @@ namespace Filuet.Hrbl.Ordering.Adapter
             result.Add(new PollUnitResult { Action = "GetDistributorVolumePoints", Level = _getResultLevel(getDistributorVolumePoints_resultLevel), Comment = getDistributorVolumePoints_protocol.ToString() });
             #endregion
 
-            #region TinDetails
+            #region GetDSFOPPurchasingLimits
+            List<ActionLevel> getDSFOPPurchasingLimits_resultLevel = new List<ActionLevel>();
+            StringBuilder getDSFOPPurchasingLimits_protocol = new StringBuilder();
+
+            foreach (var x in _settings.PollSettings.Input_for_GetDSFOPPurchasingLimits)
+            {
+                try
+                {
+                    FOPPurchasingLimitsResult fopResult = await GetDSFOPPurchasingLimits(x.distributorId, x.country);
+                    if (fopResult == null || fopResult.FopLimit == null || fopResult.DSPurchasingLimits == null)
+                    {
+                        getDSFOPPurchasingLimits_resultLevel.Add(ActionLevel.Error);
+                        getDSFOPPurchasingLimits_protocol.AppendLine($"Customer UID {x}: empty response");
+                    }
+                    else getDSFOPPurchasingLimits_resultLevel.Add(ActionLevel.Info);
+                }
+                catch (Exception ex)
+                {
+                    getDSFOPPurchasingLimits_resultLevel.Add(ActionLevel.Error);
+                    getDSFOPPurchasingLimits_protocol.AppendLine($"Customer UID {x}: {_getFullExceptionDetails(ex)}");
+                }
+            }
+
+            result.Add(new PollUnitResult { Action = "GetDSFOPPurchasingLimits", Level = _getResultLevel(getDSFOPPurchasingLimits_resultLevel), Comment = getDSFOPPurchasingLimits_protocol.ToString() });
+            #endregion
+
+            #region GetDsCashLimit
+            List<ActionLevel> getCashLimit_resultLevel = new List<ActionLevel>();
+            StringBuilder getCashLimit_protocol = new StringBuilder();
+
+            foreach (var x in _settings.PollSettings.Input_for_GetCashLimit)
+            {
+                try
+                {
+                    DsCashLimitResult cashLimitResult = await GetDsCashLimit(x.distributorId, x.country);
+                    if (cashLimitResult == null || cashLimitResult.LimitAmount < 0m)
+                    {
+                        getCashLimit_resultLevel.Add(ActionLevel.Error);
+                        getCashLimit_protocol.AppendLine($"Customer UID {x}: empty response or invalid cash limit");
+                    }
+                    else getCashLimit_resultLevel.Add(ActionLevel.Info);
+                }
+                catch (Exception ex)
+                {
+                    getCashLimit_resultLevel.Add(ActionLevel.Error);
+                    getCashLimit_protocol.AppendLine($"Customer UID {x}: {_getFullExceptionDetails(ex)}");
+                }
+            }
+
+            result.Add(new PollUnitResult { Action = "GetDsCashLimit", Level = _getResultLevel(getCashLimit_resultLevel), Comment = getCashLimit_protocol.ToString() });
+            #endregion
+
+            #region GetOrderDualMonthStatus
+            List<ActionLevel> getDualMonthStatus_resultLevel = new List<ActionLevel>();
+            StringBuilder getDualMonthStatus_protocol = new StringBuilder();
+
+            foreach (var x in _settings.PollSettings.Input_for_GetDualMonth)
+            {
+                try
+                {
+                    bool dualMonthResult = await GetOrderDualMonthStatus(x);
+                    if (dualMonthResult && DateTime.Now.Day > 4)
+                    {
+                        getDualMonthStatus_resultLevel.Add(ActionLevel.Error);
+                        getDualMonthStatus_protocol.AppendLine($"Country {x}: seems to be invalid dual month result");
+                    }
+                    else getDualMonthStatus_resultLevel.Add(ActionLevel.Info);
+                }
+                catch (Exception ex)
+                {
+                    getDualMonthStatus_resultLevel.Add(ActionLevel.Error);
+                    getDualMonthStatus_protocol.AppendLine($"Country {x}: {_getFullExceptionDetails(ex)}");
+                }
+            }
+
+            result.Add(new PollUnitResult { Action = "GetOrderDualMonthStatus", Level = _getResultLevel(getDualMonthStatus_resultLevel), Comment = getDualMonthStatus_protocol.ToString() });
+            #endregion
+
+            // The Converter works in the production mode only
+#if !DEBUG
+            #region GetConversionRate
+            List<ActionLevel> getConversationRate_resultLevel = new List<ActionLevel>();
+            StringBuilder getConversationRate_protocol = new StringBuilder();
+
+            foreach (var x in _settings.PollSettings.Input_for_GetConversationRate)
+            {
+                try
+                {
+                    ConversionRateResponse conversationRate = await GetConversionRate(new ConversionRateRequest { ConversionDate = DateTime.UtcNow.ToString("yyyy-MM-dd "), ExchangeRateType = x.exchangeRateType, FromCurrency = x.fromCurrency, ToCurrency = x.toCurrency });
+                    if (conversationRate == null || conversationRate.ConversionRate == null || conversationRate.ConversionRate.Value <= 0)
+                    {
+                        getConversationRate_resultLevel.Add(ActionLevel.Error);
+                        getConversationRate_protocol.AppendLine($"{x.exchangeRateType}: invalid rate");
+                    }
+                    else getConversationRate_resultLevel.Add(ActionLevel.Info);
+                }
+                catch (Exception ex)
+                {
+                    getConversationRate_resultLevel.Add(ActionLevel.Error);
+                    getConversationRate_protocol.AppendLine($"Country {x}: {_getFullExceptionDetails(ex)}");
+                }
+            }
+
+            result.Add(new PollUnitResult { Action = "GetConversionRate", Level = _getResultLevel(getConversationRate_resultLevel), Comment = getConversationRate_protocol.ToString() });
+            #endregion
+#endif
+
+#region TinDetails
             List<ActionLevel> getDsTIN_resultLevel = new List<ActionLevel>();
             StringBuilder getDsTIN_protocol = new StringBuilder();
 
@@ -566,9 +673,9 @@ namespace Filuet.Hrbl.Ordering.Adapter
             }
 
             result.Add(new PollUnitResult { Action = "GetDistributorTins", Level = _getResultLevel(getDsTIN_resultLevel), Comment = getDsTIN_protocol.ToString() });
-            #endregion
+#endregion
 
-            #region Distributor Discount
+#region Distributor Discount
             List<ActionLevel> getDsDiscount_resultLevel = new List<ActionLevel>();
             StringBuilder getDsDiscount_protocol = new StringBuilder();
 
@@ -592,9 +699,9 @@ namespace Filuet.Hrbl.Ordering.Adapter
             }
 
             result.Add(new PollUnitResult { Action = "GetDistributorDiscount", Level = _getResultLevel(getDsDiscount_resultLevel), Comment = getDsDiscount_protocol.ToString() });
-            #endregion
+#endregion
 
-            #region GetSku
+#region GetSku
             List<ActionLevel> getsku_resultLevel = new List<ActionLevel>();
             StringBuilder getSku_protocol = new StringBuilder();
 
@@ -618,9 +725,9 @@ namespace Filuet.Hrbl.Ordering.Adapter
             }
 
             result.Add(new PollUnitResult { Action = "GetSku", Level = _getResultLevel(getsku_resultLevel), Comment = getSku_protocol.ToString() });
-            #endregion
+#endregion
 
-            #region GetProductInventory
+#region GetProductInventory
             List<ActionLevel> getInventory_resultLevel = new List<ActionLevel>();
             StringBuilder getInventory_protocol = new StringBuilder();
 
@@ -656,7 +763,46 @@ namespace Filuet.Hrbl.Ordering.Adapter
             }
 
             result.Add(new PollUnitResult { Action = "GetProductInventory", Level = _getResultLevel(getInventory_resultLevel), Comment = getInventory_protocol.ToString() });
-            #endregion
+#endregion
+
+#region GetPriceDetails
+            List<ActionLevel> getPricingRequest_resultLevel = new List<ActionLevel>();
+            StringBuilder getPricingRequest_protocol = new StringBuilder();
+
+            foreach (var x in _settings.PollSettings.Input_for_GetPricingRequests)
+            {
+                PricingRequest req = JsonConvert.DeserializeObject<PricingRequest>(x);
+
+                try
+                {
+                    Stopwatch sw = new Stopwatch();
+                    sw.Start();
+                    PricingResponse pricingResponse = await GetPriceDetails(req);
+                    sw.Stop();
+                    if (pricingResponse == null || pricingResponse.Errors?.HasErrors == true)
+                    {
+                        getPricingRequest_resultLevel.Add(ActionLevel.Error);
+                        if (pricingResponse?.Errors?.HasErrors == true)
+                            getPricingRequest_protocol.AppendLine($"{req.Header.ExternalOrderNumber}: {pricingResponse.Errors.ErrorMessage}");
+                        else
+                            getPricingRequest_protocol.AppendLine($"{req.Header.ExternalOrderNumber}: empty response");
+                    }
+                    else if (sw.Elapsed.TotalSeconds > 30)
+                    {
+                        getPricingRequest_resultLevel.Add(ActionLevel.Warning);
+                        getPricingRequest_protocol.AppendLine($"{req.Header.ExternalOrderNumber}: too long duration- {sw.Elapsed.TotalSeconds} sec");
+                    }
+                    else getPricingRequest_resultLevel.Add(ActionLevel.Info);
+                }
+                catch (Exception ex)
+                {
+                    getPricingRequest_resultLevel.Add(ActionLevel.Error);
+                    getPricingRequest_protocol.AppendLine($"{req.Header.ExternalOrderNumber}: {_getFullExceptionDetails(ex)}");
+                }
+            }
+
+            result.Add(new PollUnitResult { Action = "GetConversionRate", Level = _getResultLevel(getPricingRequest_resultLevel), Comment = getPricingRequest_protocol.ToString() });
+#endregion
 
             return new PollResult { Level = _getResultLevel(result.Select(x => x.Level)), Timestamp = DateTimeOffset.Now, Items = result };
         }
