@@ -1,7 +1,5 @@
 ﻿using Filuet.Hrbl.Ordering.Common;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Filuet.Hrbl.Ordering.Adapter
 {
@@ -79,7 +77,14 @@ namespace Filuet.Hrbl.Ordering.Adapter
             _adapterSettings.PollSettings = settings;
             return this;
         }
-        
+
+        public HrblOrderingAdapterSettingsBuilder WithPollSettings(string pollPayload)
+        {
+            HrblOrderingAdapterPollRequestSettings settings = Newtonsoft.Json.JsonConvert.DeserializeObject<HrblOrderingAdapterPollRequestSettings>(pollPayload);
+            _adapterSettings.PollSettings = settings;
+            return this;
+        }
+
         public HrblOrderingAdapterSettings Build() => _adapterSettings;
     }
 }
