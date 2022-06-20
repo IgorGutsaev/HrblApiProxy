@@ -771,7 +771,7 @@ namespace Filuet.Hrbl.Ordering.Adapter
 
             foreach (var x in _settings.PollSettings.Input_for_GetPricingRequests)
             {
-                PricingRequest req = JsonConvert.DeserializeObject<PricingRequest>(x);
+                PricingRequest req = JsonConvert.DeserializeObject<PricingRequest>(Encoding.UTF8.GetString(Convert.FromBase64String(x)));
 
                 try
                 {
