@@ -1,8 +1,6 @@
 ﻿using Filuet.Hrbl.Ordering.Abstractions.Enums;
 using Filuet.Hrbl.Ordering.Abstractions.Models;
 using Filuet.Hrbl.Ordering.Tests;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
@@ -22,7 +20,7 @@ namespace Filuet.Hrbl.Ordering.Test
 
             // Post_validate
             Assert.Equal(ActionLevel.Info, result.Level);
-            Assert.True(result.Items.Count() == 1);
+            Assert.True(result.Items.Count(x => x.Level == ActionLevel.Error) == 0);
         }
     }
 }

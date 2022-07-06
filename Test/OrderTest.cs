@@ -18,7 +18,7 @@ namespace Filuet.Hrbl.Ordering.Tests
         public async Task Test_Pricing_request__Correct_response(object input)
         {
             // Prepare
-            PricingRequest request = JsonConvert.DeserializeObject<PricingRequest>("{\"ServiceConsumer\":null,\"OrderPriceHeader\":{\"OrderSource\":\"KIOSK\",\"ExternalOrderNumber\":null,\"DistributorId\":\"VA00248957\",\"Warehouse\":\"16\",\"ProcessingLocation\":\"16\",\"FreightCode\":\"PU\",\"CountryCode\":\"IL\",\"OrderMonth\":\"2206\",\"OrderCategory\":\"RSO\",\"OrderType\":\"RSO\",\"PriceDate\":\"2022-06-30T07:49:16\",\"OrderDate\":\"2022-06-30T07:49:16\",\"CurrencyCode\":\"ILS\",\"OrderSubType\":\"\",\"PostalCode\":\"75359\",\"City\":\"Rishon Lezion\",\"State\":null,\"Province\":\"\",\"County\":\"\",\"Address1\":\"4c\",\"Address2\":null,\"Address3\":null,\"Address4\":null,\"OrgID\":287,\"OrderTypeID\":2869},\"OrderPriceLines\":[{\"ProcessingLocation\":\"16\",\"SellingSKU\":\"0142\",\"ProductType\":\"P\",\"OrderedQty\":1.0}]}");// (PricingRequest)input;
+            PricingRequest request = (PricingRequest)input;
 
             // Pre-validate
             Assert.NotNull(request);

@@ -13,6 +13,7 @@ using Filuet.Hrbl.Ordering.Abstractions.Dto;
 using System.Net.Http;
 using Filuet.Hrbl.Ordering.Abstractions.Enums;
 using Filuet.Hrbl.Ordering.Abstractions.Models;
+using System.Diagnostics;
 using Microsoft.Extensions.Logging;
 
 namespace Filuet.Hrbl.Ordering.Adapter
@@ -125,17 +126,24 @@ namespace Filuet.Hrbl.Ordering.Adapter
             OrderType type = string.IsNullOrWhiteSpace(orderType) ? OrderType.Rso
                 : EnumHelper.GetValueFromDescription<OrderType>(orderType);
 
-            object response = await _proxy.GetProductInventory.POSTAsync(new
+            try
             {
-                CountryCode = country,
-                OrderType = EnumHelper.GetDescription(type)
-            });
+                object response = await _proxy.GetProductInventory.POSTAsync(new
+                {
+                    CountryCode = country,
+                    OrderType = EnumHelper.GetDescription(type)
+                });
 
-            InventoryResult result = JsonConvert.DeserializeObject<InventoryResult>(JsonConvert.SerializeObject(response));
-            if (!result.Inventory.IsSussess)
-                throw new HrblRestApiException($"An error occured while requesting product inventory in {country}");
+                InventoryResult result = JsonConvert.DeserializeObject<InventoryResult>(JsonConvert.SerializeObject(response));
+                if (!result.Inventory.IsSussess)
+                    throw new HrblRestApiException($"An error occured while requesting product inventory in {country}");
 
-            return result.Inventory.Inventories.ItemsRoot.Items;
+                return result.Inventory.Inventories.ItemsRoot.Items;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
         }
 
         public async Task<CatalogItem[]> GetProductCatalog(string country, string orderType = null)
@@ -545,6 +553,32 @@ namespace Filuet.Hrbl.Ordering.Adapter
                 }
             };
 
+            #region Profile
+            List<ActionLevel> getProfile_resultLevel = new List<ActionLevel>();
+            StringBuilder getProfile_protocol = new StringBuilder();
+
+            foreach (var x in _settings.PollSettings.Input_for_GetProfile)
+            {
+                try
+                {
+                    DistributorProfile profile = await GetProfile(x);
+                    if (profile == null || profile.Id == null || !profile.Id.Equals(x, StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        getProfile_resultLevel.Add(ActionLevel.Error);
+                        getProfile_protocol.AppendLine($"Customer UID {x}: empty response");
+                    }
+                    else getProfile_resultLevel.Add(ActionLevel.Info);
+                }
+                catch (Exception ex)
+                {
+                    getProfile_resultLevel.Add(ActionLevel.Error);
+                    getProfile_protocol.AppendLine($"Customer UID {x}: {_getFullExceptionDetails(ex)}");
+                }
+            }
+
+            result.Add(new PollUnitResult { Action = "GetProfile", Level = _getResultLevel(getProfile_resultLevel), Comment = getProfile_protocol.ToString() });
+            #endregion
+
             #region GetDistributorVolumePoints
             List<ActionLevel> getDistributorVolumePoints_resultLevel = new List<ActionLevel>();
             StringBuilder getDistributorVolumePoints_protocol = new StringBuilder();
@@ -570,6 +604,268 @@ namespace Filuet.Hrbl.Ordering.Adapter
 
             result.Add(new PollUnitResult { Action = "GetDistributorVolumePoints", Level = _getResultLevel(getDistributorVolumePoints_resultLevel), Comment = getDistributorVolumePoints_protocol.ToString() });
             #endregion
+
+            #region GetDSFOPPurchasingLimits
+            List<ActionLevel> getDSFOPPurchasingLimits_resultLevel = new List<ActionLevel>();
+            StringBuilder getDSFOPPurchasingLimits_protocol = new StringBuilder();
+
+            foreach (var x in _settings.PollSettings.Input_for_GetDSFOPPurchasingLimits)
+            {
+                try
+                {
+                    FOPPurchasingLimitsResult fopResult = await GetDSFOPPurchasingLimits(x.distributorId, x.country);
+                    if (fopResult == null || fopResult.FopLimit == null || fopResult.DSPurchasingLimits == null)
+                    {
+                        getDSFOPPurchasingLimits_resultLevel.Add(ActionLevel.Error);
+                        getDSFOPPurchasingLimits_protocol.AppendLine($"Customer UID {x}: empty response");
+                    }
+                    else getDSFOPPurchasingLimits_resultLevel.Add(ActionLevel.Info);
+                }
+                catch (Exception ex)
+                {
+                    getDSFOPPurchasingLimits_resultLevel.Add(ActionLevel.Error);
+                    getDSFOPPurchasingLimits_protocol.AppendLine($"Customer UID {x}: {_getFullExceptionDetails(ex)}");
+                }
+            }
+
+            result.Add(new PollUnitResult { Action = "GetDSFOPPurchasingLimits", Level = _getResultLevel(getDSFOPPurchasingLimits_resultLevel), Comment = getDSFOPPurchasingLimits_protocol.ToString() });
+            #endregion
+
+            #region GetDsCashLimit
+            List<ActionLevel> getCashLimit_resultLevel = new List<ActionLevel>();
+            StringBuilder getCashLimit_protocol = new StringBuilder();
+
+            foreach (var x in _settings.PollSettings.Input_for_GetCashLimit)
+            {
+                try
+                {
+                    DsCashLimitResult cashLimitResult = await GetDsCashLimit(x.distributorId, x.country);
+                    if (cashLimitResult == null || cashLimitResult.LimitAmount < 0m)
+                    {
+                        getCashLimit_resultLevel.Add(ActionLevel.Error);
+                        getCashLimit_protocol.AppendLine($"Customer UID {x}: empty response or invalid cash limit");
+                    }
+                    else getCashLimit_resultLevel.Add(ActionLevel.Info);
+                }
+                catch (Exception ex)
+                {
+                    getCashLimit_resultLevel.Add(ActionLevel.Error);
+                    getCashLimit_protocol.AppendLine($"Customer UID {x}: {_getFullExceptionDetails(ex)}");
+                }
+            }
+
+            result.Add(new PollUnitResult { Action = "GetDsCashLimit", Level = _getResultLevel(getCashLimit_resultLevel), Comment = getCashLimit_protocol.ToString() });
+            #endregion
+
+            #region GetOrderDualMonthStatus
+            List<ActionLevel> getDualMonthStatus_resultLevel = new List<ActionLevel>();
+            StringBuilder getDualMonthStatus_protocol = new StringBuilder();
+
+            foreach (var x in _settings.PollSettings.Input_for_GetDualMonth)
+            {
+                try
+                {
+                    bool dualMonthResult = await GetOrderDualMonthStatus(x);
+                    if (dualMonthResult && DateTime.Now.Day > 4)
+                    {
+                        getDualMonthStatus_resultLevel.Add(ActionLevel.Error);
+                        getDualMonthStatus_protocol.AppendLine($"Country {x}: seems to be invalid dual month result");
+                    }
+                    else getDualMonthStatus_resultLevel.Add(ActionLevel.Info);
+                }
+                catch (Exception ex)
+                {
+                    getDualMonthStatus_resultLevel.Add(ActionLevel.Error);
+                    getDualMonthStatus_protocol.AppendLine($"Country {x}: {_getFullExceptionDetails(ex)}");
+                }
+            }
+
+            result.Add(new PollUnitResult { Action = "GetOrderDualMonthStatus", Level = _getResultLevel(getDualMonthStatus_resultLevel), Comment = getDualMonthStatus_protocol.ToString() });
+            #endregion
+
+            // The Converter works in the production mode only
+#if !DEBUG
+            #region GetConversionRate
+            List<ActionLevel> getConversationRate_resultLevel = new List<ActionLevel>();
+            StringBuilder getConversationRate_protocol = new StringBuilder();
+
+            foreach (var x in _settings.PollSettings.Input_for_GetConversationRate)
+            {
+                try
+                {
+                    ConversionRateResponse conversationRate = await GetConversionRate(new ConversionRateRequest { ConversionDate = DateTime.UtcNow.ToString("yyyy-MM-dd "), ExchangeRateType = x.exchangeRateType, FromCurrency = x.fromCurrency, ToCurrency = x.toCurrency });
+                    if (conversationRate == null || conversationRate.ConversionRate == null || conversationRate.ConversionRate.Value <= 0)
+                    {
+                        getConversationRate_resultLevel.Add(ActionLevel.Error);
+                        getConversationRate_protocol.AppendLine($"{x.exchangeRateType}: invalid rate");
+                    }
+                    else getConversationRate_resultLevel.Add(ActionLevel.Info);
+                }
+                catch (Exception ex)
+                {
+                    getConversationRate_resultLevel.Add(ActionLevel.Error);
+                    getConversationRate_protocol.AppendLine($"Country {x}: {_getFullExceptionDetails(ex)}");
+                }
+            }
+
+            result.Add(new PollUnitResult { Action = "GetConversionRate", Level = _getResultLevel(getConversationRate_resultLevel), Comment = getConversationRate_protocol.ToString() });
+            #endregion
+#endif
+
+#region TinDetails
+            List<ActionLevel> getDsTIN_resultLevel = new List<ActionLevel>();
+            StringBuilder getDsTIN_protocol = new StringBuilder();
+
+            foreach (var x in _settings.PollSettings.Input_for_GetDistributorTIN)
+            {
+                try
+                {
+                    TinDetails tinDetails = await GetDistributorTins(x.distributorId, x.country);
+                    if (tinDetails == null)
+                    {
+                        getDsTIN_resultLevel.Add(ActionLevel.Error);
+                        getDsTIN_protocol.AppendLine($"Customer UID {x}: empty response");
+                    }
+                    else getDsTIN_resultLevel.Add(ActionLevel.Info);
+                }
+                catch (Exception ex)
+                {
+                    getDsTIN_resultLevel.Add(ActionLevel.Error);
+                    getDsTIN_protocol.AppendLine($"Customer UID {x}: {_getFullExceptionDetails(ex)}");
+                }
+            }
+
+            result.Add(new PollUnitResult { Action = "GetDistributorTins", Level = _getResultLevel(getDsTIN_resultLevel), Comment = getDsTIN_protocol.ToString() });
+#endregion
+
+#region Distributor Discount
+            List<ActionLevel> getDsDiscount_resultLevel = new List<ActionLevel>();
+            StringBuilder getDsDiscount_protocol = new StringBuilder();
+
+            foreach (var x in _settings.PollSettings.Input_for_GetDistributorDiscount)
+            {
+                try
+                {
+                    DistributorDiscountResult dsDiscount = await GetDistributorDiscount(x.distributorId, x.month, x.country);
+                    if (dsDiscount == null || dsDiscount.Discount == null || dsDiscount.Discount.Discount == null)
+                    {
+                        getDsDiscount_resultLevel.Add(ActionLevel.Error);
+                        getDsDiscount_protocol.AppendLine($"Customer UID {x}: empty response");
+                    }
+                    else getDsDiscount_resultLevel.Add(ActionLevel.Info);
+                }
+                catch (Exception ex)
+                {
+                    getDsDiscount_resultLevel.Add(ActionLevel.Error);
+                    getDsDiscount_protocol.AppendLine($"Customer UID {x}: {_getFullExceptionDetails(ex)}");
+                }
+            }
+
+            result.Add(new PollUnitResult { Action = "GetDistributorDiscount", Level = _getResultLevel(getDsDiscount_resultLevel), Comment = getDsDiscount_protocol.ToString() });
+#endregion
+
+#region GetSku
+            List<ActionLevel> getsku_resultLevel = new List<ActionLevel>();
+            StringBuilder getSku_protocol = new StringBuilder();
+
+            foreach (var x in _settings.PollSettings.Input_for_GetSku)
+            {
+                try
+                {
+                    SkuInventory sku = await GetSkuAvailability(x.warehouse, x.sku, 1);
+                    if (sku == null || !sku.Sku.Equals(x.sku, StringComparison.InvariantCultureIgnoreCase) || !sku.IsSkuValid)
+                    {
+                        getsku_resultLevel.Add(ActionLevel.Error);
+                        getSku_protocol.AppendLine($"Sku {x.sku}: sku not found or invalid");
+                    }
+                    else getsku_resultLevel.Add(ActionLevel.Info);
+                }
+                catch (Exception ex)
+                {
+                    getsku_resultLevel.Add(ActionLevel.Error);
+                    getSku_protocol.AppendLine($"Sku {x}: {_getFullExceptionDetails(ex)}");
+                }
+            }
+
+            result.Add(new PollUnitResult { Action = "GetSku", Level = _getResultLevel(getsku_resultLevel), Comment = getSku_protocol.ToString() });
+#endregion
+
+#region GetProductInventory
+            List<ActionLevel> getInventory_resultLevel = new List<ActionLevel>();
+            StringBuilder getInventory_protocol = new StringBuilder();
+
+            foreach (var x in _settings.PollSettings.Input_for_GetProductInventory)
+            {
+                try
+                {
+                    Stopwatch sw = new Stopwatch();
+                    sw.Start();
+                    InventoryItem[] skus = await GetProductInventory(x);
+                    sw.Stop();
+                    if (skus == null || skus.Length == 0)
+                    {
+                        getInventory_resultLevel.Add(ActionLevel.Error);
+                        getInventory_protocol.AppendLine($"Country {x}: unable to download the catalog");
+                    }
+                    else if (sw.Elapsed.TotalSeconds > 30)
+                    {
+                        getInventory_resultLevel.Add(ActionLevel.Warning);
+                        getInventory_protocol.AppendLine($"Country {x}: the catalog is downloading to slow- {sw.Elapsed:mm:ss}");
+                    }
+                    else
+                    {
+                        getInventory_resultLevel.Add(ActionLevel.Info);
+                        getInventory_protocol.AppendLine($"Country {x}: the catalog has been downloaded in {sw.Elapsed.TotalSeconds} sec");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    getsku_resultLevel.Add(ActionLevel.Error);
+                    getInventory_protocol.AppendLine($"Country {x}: {_getFullExceptionDetails(ex)}");
+                }
+            }
+
+            result.Add(new PollUnitResult { Action = "GetProductInventory", Level = _getResultLevel(getInventory_resultLevel), Comment = getInventory_protocol.ToString() });
+#endregion
+
+#region GetPriceDetails
+            List<ActionLevel> getPricingRequest_resultLevel = new List<ActionLevel>();
+            StringBuilder getPricingRequest_protocol = new StringBuilder();
+
+            foreach (var x in _settings.PollSettings.Input_for_GetPricingRequests)
+            {
+                PricingRequest req = JsonConvert.DeserializeObject<PricingRequest>(Encoding.UTF8.GetString(Convert.FromBase64String(x)));
+
+                try
+                {
+                    Stopwatch sw = new Stopwatch();
+                    sw.Start();
+                    PricingResponse pricingResponse = await GetPriceDetails(req);
+                    sw.Stop();
+                    if (pricingResponse == null || pricingResponse.Errors?.HasErrors == true)
+                    {
+                        getPricingRequest_resultLevel.Add(ActionLevel.Error);
+                        if (pricingResponse?.Errors?.HasErrors == true)
+                            getPricingRequest_protocol.AppendLine($"{req.Header.ExternalOrderNumber}: {pricingResponse.Errors.ErrorMessage}");
+                        else
+                            getPricingRequest_protocol.AppendLine($"{req.Header.ExternalOrderNumber}: empty response");
+                    }
+                    else if (sw.Elapsed.TotalSeconds > 30)
+                    {
+                        getPricingRequest_resultLevel.Add(ActionLevel.Warning);
+                        getPricingRequest_protocol.AppendLine($"{req.Header.ExternalOrderNumber}: too long duration- {sw.Elapsed.TotalSeconds} sec");
+                    }
+                    else getPricingRequest_resultLevel.Add(ActionLevel.Info);
+                }
+                catch (Exception ex)
+                {
+                    getPricingRequest_resultLevel.Add(ActionLevel.Error);
+                    getPricingRequest_protocol.AppendLine($"{req.Header.ExternalOrderNumber}: {_getFullExceptionDetails(ex)}");
+                }
+            }
+
+            result.Add(new PollUnitResult { Action = "GetConversionRate", Level = _getResultLevel(getPricingRequest_resultLevel), Comment = getPricingRequest_protocol.ToString() });
+#endregion
 
             return new PollResult { Level = _getResultLevel(result.Select(x => x.Level)), Timestamp = DateTimeOffset.Now, Items = result };
         }

@@ -64,9 +64,10 @@ namespace Filuet.Hrbl.Ordering.POC.PromoEngine
             bool isCVsSelected = cvAmount > 0;
             string receiptNo = isCVsSelected ? string.Join("; ", promotions.SelectMany(x => x.Rewards.Where(r => r.IsSelected && string.Equals(r.Type, "Cash voucher", StringComparison.InvariantCultureIgnoreCase)).Select(x => x.ReceiptNo))) : string.Empty;
 
-            Action<SubmitRequestPayment> setupCV = null;
-            if (isCVsSelected) setupCV = p =>
+            Action<List<SubmitRequestPayment>> setupCV = null;
+            if (isCVsSelected) setupCV = pL =>
                         {
+                            SubmitRequestPayment p = new SubmitRequestPayment();
                             p.PaymentMethodName = "CARD";
                             p.PaymentStatus = "PAID";
                             p.PaymentMethodId = null;
@@ -84,6 +85,7 @@ namespace Filuet.Hrbl.Ordering.POC.PromoEngine
                             p.CreditCard.CardExpiryDate = DateTime.UtcNow.AddYears(1);
                             p.CreditCard.TrxApprovalNumber = "51189";
                             p.ApprovalNumber = "51189";
+                            pL.Add(p);
                         };
 
             Action<SubmitRequestBuilder> setupAction = (b) =>
@@ -171,7 +173,7 @@ namespace Filuet.Hrbl.Ordering.POC.PromoEngine
                     ChrAttribute2 = string.Equals(r.Type, "Free Sku", StringComparison.InvariantCultureIgnoreCase) ? null : "CASH VOUCHER",
                     ChrAttribute3 = string.Equals(r.Type, "Free Sku", StringComparison.InvariantCultureIgnoreCase) ? null : r.ReceiptNo,
                     ChrAttribute7 = string.Equals(r.Type, "Free Sku", StringComparison.InvariantCultureIgnoreCase) ? null : "N",
-                    NumAttribute1 = string.Equals(r.Type, "Free Sku", StringComparison.InvariantCultureIgnoreCase) ? null : r.RewardItem
+                    NumAttribute1 = string.Equals(r.Type, "Free Sku", StringComparison.InvariantCultureIgnoreCase) ? null : (decimal?)r.CashVoucherAmount
                 })).ToArray());
 
 

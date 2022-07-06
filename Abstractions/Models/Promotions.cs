@@ -101,16 +101,16 @@ namespace Filuet.Hrbl.Ordering.Abstractions.Models
                 // 4.2.1
                 // Page 37: User is allowed to disable automatic cash voucher
                 if (RedemptionType == PromotionRedemptionType.Automatic && RedemptionLimit == PromotionRedemptionLimit.One && Type == PromotionType.CashVoucher && !Rewards.Any(x => x.IsSelected))
-                    return (ActionLevel.Warning, $"{RuleName}: Before continuing, take advantage of the promotions available to you.");
+                    return (ActionLevel.Warning, $"{RuleId} {RuleName}: Before continuing, take advantage of the promotions available to you.");
                 // 4.1.1, 4.1.2
                 else if (RedemptionType == PromotionRedemptionType.Automatic &&
                     (RedemptionLimit == PromotionRedemptionLimit.One || RedemptionLimit == PromotionRedemptionLimit.Multiple) &&
                     !Rewards.Any(x => x.IsSelected))
-                    return (ActionLevel.Error, $"{RuleName}: You have not added any gift to your cart. Please add it to continue.");
+                    return (ActionLevel.Error, $"{RuleId} {RuleName}: You have not added any gift to your cart. Please add it to continue.");
 
                 // Common rule: check all optional promotions. If any with no gifts selected, then warn the user that he/she still has an option to redeem it
                 if (RedemptionType == PromotionRedemptionType.Optional && !Rewards.Any(x => x.IsSelected))
-                    return (ActionLevel.Warning, $"{RuleName}: Before you proceed to payment, we remind you that promotional gifts are available to you.");
+                    return (ActionLevel.Warning, $"{RuleId} {RuleName}: Before you proceed to payment, we remind you that promotional gifts are available to you.");
 
                 return null;
             }
