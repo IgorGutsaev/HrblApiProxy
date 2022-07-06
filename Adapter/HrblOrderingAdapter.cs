@@ -279,7 +279,8 @@ namespace Filuet.Hrbl.Ordering.Adapter
             }
             catch
             {
-                return new TinDetails {
+                return new TinDetails
+                {
                     DistributorTins = new DistributorTin[] {
                         new DistributorTin {
                             Country = country,
@@ -449,7 +450,8 @@ namespace Filuet.Hrbl.Ordering.Adapter
             if (string.IsNullOrWhiteSpace(country) || country.Trim().Length != 2)
                 throw new ArgumentException("Country is mandatory");
 
-            var request = new {
+            var request = new
+            {
                 ShipToCountry = country.Trim().ToUpper()
             };
 
@@ -561,13 +563,26 @@ namespace Filuet.Hrbl.Ordering.Adapter
             {
                 try
                 {
+                    Stopwatch sw = new Stopwatch();
+                    sw.Start();
                     DistributorProfile profile = await GetProfile(x);
+                    sw.Stop();
+
                     if (profile == null || profile.Id == null || !profile.Id.Equals(x, StringComparison.InvariantCultureIgnoreCase))
                     {
                         getProfile_resultLevel.Add(ActionLevel.Error);
-                        getProfile_protocol.AppendLine($"Customer UID {x}: empty response");
+                        getProfile_protocol.AppendLine($"UID {x}: empty response");
                     }
-                    else getProfile_resultLevel.Add(ActionLevel.Info);
+                    else if (sw.Elapsed.TotalSeconds > 3)
+                    {
+                        getProfile_resultLevel.Add(ActionLevel.Warning);
+                        getProfile_protocol.AppendLine($"UID {x}: too long response- {sw.Elapsed:mm:ss}");
+                    }
+                    else
+                    {
+                        getProfile_resultLevel.Add(ActionLevel.Info);
+                        getProfile_protocol.AppendLine($"UID {x}: downloaded in - {sw.Elapsed:mm:ss}");
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -587,13 +602,26 @@ namespace Filuet.Hrbl.Ordering.Adapter
             {
                 try
                 {
+                    Stopwatch sw = new Stopwatch();
+                    sw.Start();
                     DistributorVolumePoints[] dsVolPoints = await GetVolumePoints(x.distributorId, x.month);
+                    sw.Stop();
+
                     if (!dsVolPoints.Any(y => y != null))
                     {
                         getDistributorVolumePoints_resultLevel.Add(ActionLevel.Error);
-                        getDistributorVolumePoints_protocol.AppendLine($"Customer UID {x.distributorId}: empty response");
+                        getDistributorVolumePoints_protocol.AppendLine($"UID {x.distributorId}: empty response");
                     }
-                    else getDistributorVolumePoints_resultLevel.Add(ActionLevel.Info);
+                    else if (sw.Elapsed.TotalSeconds > 3)
+                    {
+                        getDistributorVolumePoints_resultLevel.Add(ActionLevel.Warning);
+                        getDistributorVolumePoints_protocol.AppendLine($"UID {x}: too long response- {sw.Elapsed:mm:ss}");
+                    }
+                    else
+                    {
+                        getDistributorVolumePoints_resultLevel.Add(ActionLevel.Info);
+                        getDistributorVolumePoints_protocol.AppendLine($"UID {x}: downloaded in - {sw.Elapsed:mm:ss}");
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -613,13 +641,26 @@ namespace Filuet.Hrbl.Ordering.Adapter
             {
                 try
                 {
+                    Stopwatch sw = new Stopwatch();
+                    sw.Start();
                     FOPPurchasingLimitsResult fopResult = await GetDSFOPPurchasingLimits(x.distributorId, x.country);
+                    sw.Stop();
+
                     if (fopResult == null || fopResult.FopLimit == null || fopResult.DSPurchasingLimits == null)
                     {
                         getDSFOPPurchasingLimits_resultLevel.Add(ActionLevel.Error);
-                        getDSFOPPurchasingLimits_protocol.AppendLine($"Customer UID {x}: empty response");
+                        getDSFOPPurchasingLimits_protocol.AppendLine($"UID {x}: empty response");
                     }
-                    else getDSFOPPurchasingLimits_resultLevel.Add(ActionLevel.Info);
+                    else if (sw.Elapsed.TotalSeconds > 3)
+                    {
+                        getDSFOPPurchasingLimits_resultLevel.Add(ActionLevel.Warning);
+                        getDSFOPPurchasingLimits_protocol.AppendLine($"UID {x}: too long response- {sw.Elapsed:mm:ss}");
+                    }
+                    else
+                    {
+                        getDSFOPPurchasingLimits_resultLevel.Add(ActionLevel.Info);
+                        getDSFOPPurchasingLimits_protocol.AppendLine($"UID {x}: downloaded in - {sw.Elapsed:mm:ss}");
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -639,13 +680,26 @@ namespace Filuet.Hrbl.Ordering.Adapter
             {
                 try
                 {
+                    Stopwatch sw = new Stopwatch();
+                    sw.Start();
                     DsCashLimitResult cashLimitResult = await GetDsCashLimit(x.distributorId, x.country);
+                    sw.Stop();
+
                     if (cashLimitResult == null || cashLimitResult.LimitAmount < 0m)
                     {
                         getCashLimit_resultLevel.Add(ActionLevel.Error);
-                        getCashLimit_protocol.AppendLine($"Customer UID {x}: empty response or invalid cash limit");
+                        getCashLimit_protocol.AppendLine($"UID {x}: empty response or invalid cash limit");
                     }
-                    else getCashLimit_resultLevel.Add(ActionLevel.Info);
+                    else if (sw.Elapsed.TotalSeconds > 3)
+                    {
+                        getCashLimit_resultLevel.Add(ActionLevel.Warning);
+                        getCashLimit_protocol.AppendLine($"UID {x}: too long response- {sw.Elapsed:mm:ss}");
+                    }
+                    else
+                    {
+                        getCashLimit_resultLevel.Add(ActionLevel.Info);
+                        getCashLimit_protocol.AppendLine($"UID {x}: downloaded in - {sw.Elapsed:mm:ss}");
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -665,13 +719,26 @@ namespace Filuet.Hrbl.Ordering.Adapter
             {
                 try
                 {
+                    Stopwatch sw = new Stopwatch();
+                    sw.Start();
                     bool dualMonthResult = await GetOrderDualMonthStatus(x);
-                    if (dualMonthResult && DateTime.Now.Day > 4)
+                    sw.Stop();
+
+                    if (dualMonthResult && DateTime.Now.Day > 4 && DateTime.Now.Day < 30)
                     {
                         getDualMonthStatus_resultLevel.Add(ActionLevel.Error);
-                        getDualMonthStatus_protocol.AppendLine($"Country {x}: seems to be invalid dual month result");
+                        getDualMonthStatus_protocol.AppendLine($"{x}: seems to be invalid dual month result");
                     }
-                    else getDualMonthStatus_resultLevel.Add(ActionLevel.Info);
+                    else if (sw.Elapsed.TotalSeconds > 3)
+                    {
+                        getDualMonthStatus_resultLevel.Add(ActionLevel.Warning);
+                        getDualMonthStatus_protocol.AppendLine($"{x}: too long response- {sw.Elapsed:mm:ss}");
+                    }
+                    else
+                    {
+                        getDualMonthStatus_resultLevel.Add(ActionLevel.Info);
+                        getDualMonthStatus_protocol.AppendLine($"{x}: downloaded in - {sw.Elapsed:mm:ss}");
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -712,7 +779,7 @@ namespace Filuet.Hrbl.Ordering.Adapter
             #endregion
 #endif
 
-#region TinDetails
+            #region TinDetails
             List<ActionLevel> getDsTIN_resultLevel = new List<ActionLevel>();
             StringBuilder getDsTIN_protocol = new StringBuilder();
 
@@ -720,13 +787,26 @@ namespace Filuet.Hrbl.Ordering.Adapter
             {
                 try
                 {
+                    Stopwatch sw = new Stopwatch();
+                    sw.Start();
                     TinDetails tinDetails = await GetDistributorTins(x.distributorId, x.country);
+                    sw.Stop();
+
                     if (tinDetails == null)
                     {
                         getDsTIN_resultLevel.Add(ActionLevel.Error);
-                        getDsTIN_protocol.AppendLine($"Customer UID {x}: empty response");
+                        getDsTIN_protocol.AppendLine($"UID {x}: empty response");
                     }
-                    else getDsTIN_resultLevel.Add(ActionLevel.Info);
+                    else if (sw.Elapsed.TotalSeconds > 3)
+                    {
+                        getDsTIN_resultLevel.Add(ActionLevel.Warning);
+                        getDsTIN_protocol.AppendLine($"UID {x}: too long response- {sw.Elapsed:mm:ss}");
+                    }
+                    else
+                    {
+                        getDsTIN_resultLevel.Add(ActionLevel.Info);
+                        getDsTIN_protocol.AppendLine($"UID {x}: downloaded in - {sw.Elapsed:mm:ss}");
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -736,9 +816,9 @@ namespace Filuet.Hrbl.Ordering.Adapter
             }
 
             result.Add(new PollUnitResult { Action = "GetDistributorTins", Level = _getResultLevel(getDsTIN_resultLevel), Comment = getDsTIN_protocol.ToString() });
-#endregion
+            #endregion
 
-#region Distributor Discount
+            #region Distributor Discount
             List<ActionLevel> getDsDiscount_resultLevel = new List<ActionLevel>();
             StringBuilder getDsDiscount_protocol = new StringBuilder();
 
@@ -746,13 +826,26 @@ namespace Filuet.Hrbl.Ordering.Adapter
             {
                 try
                 {
+                    Stopwatch sw = new Stopwatch();
+                    sw.Start();
                     DistributorDiscountResult dsDiscount = await GetDistributorDiscount(x.distributorId, x.month, x.country);
+                    sw.Stop();
                     if (dsDiscount == null || dsDiscount.Discount == null || dsDiscount.Discount.Discount == null)
                     {
                         getDsDiscount_resultLevel.Add(ActionLevel.Error);
-                        getDsDiscount_protocol.AppendLine($"Customer UID {x}: empty response");
+                        getDsDiscount_protocol.AppendLine($"UID {x}: empty response");
                     }
-                    else getDsDiscount_resultLevel.Add(ActionLevel.Info);
+                    else if (sw.Elapsed.TotalSeconds > 3)
+                    {
+                        getDsDiscount_resultLevel.Add(ActionLevel.Warning);
+                        getDsDiscount_protocol.AppendLine($"UID {x}: too long response- {sw.Elapsed:mm:ss}");
+                    }
+                    else
+                    {
+                        getDsDiscount_resultLevel.Add(ActionLevel.Info);
+                        getDsDiscount_protocol.AppendLine($"UID {x}: downloaded in - {sw.Elapsed:mm:ss}");
+                    }
+
                 }
                 catch (Exception ex)
                 {
@@ -762,9 +855,9 @@ namespace Filuet.Hrbl.Ordering.Adapter
             }
 
             result.Add(new PollUnitResult { Action = "GetDistributorDiscount", Level = _getResultLevel(getDsDiscount_resultLevel), Comment = getDsDiscount_protocol.ToString() });
-#endregion
+            #endregion
 
-#region GetSku
+            #region GetSku
             List<ActionLevel> getsku_resultLevel = new List<ActionLevel>();
             StringBuilder getSku_protocol = new StringBuilder();
 
@@ -772,13 +865,25 @@ namespace Filuet.Hrbl.Ordering.Adapter
             {
                 try
                 {
+                    Stopwatch sw = new Stopwatch();
+                    sw.Start();
                     SkuInventory sku = await GetSkuAvailability(x.warehouse, x.sku, 1);
+                    sw.Stop();
                     if (sku == null || !sku.Sku.Equals(x.sku, StringComparison.InvariantCultureIgnoreCase) || !sku.IsSkuValid)
                     {
                         getsku_resultLevel.Add(ActionLevel.Error);
                         getSku_protocol.AppendLine($"Sku {x.sku}: sku not found or invalid");
                     }
-                    else getsku_resultLevel.Add(ActionLevel.Info);
+                    else if (sw.Elapsed.TotalSeconds > 3)
+                    {
+                        getsku_resultLevel.Add(ActionLevel.Warning);
+                        getSku_protocol.AppendLine($"Sku {x.sku}: too long response- {sw.Elapsed:mm:ss}");
+                    }
+                    else
+                    {
+                        getsku_resultLevel.Add(ActionLevel.Info);
+                        getSku_protocol.AppendLine($"Sku {x.sku}: downloaded in - {sw.Elapsed:mm:ss}");
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -788,9 +893,9 @@ namespace Filuet.Hrbl.Ordering.Adapter
             }
 
             result.Add(new PollUnitResult { Action = "GetSku", Level = _getResultLevel(getsku_resultLevel), Comment = getSku_protocol.ToString() });
-#endregion
+            #endregion
 
-#region GetProductInventory
+            #region GetProductInventory
             List<ActionLevel> getInventory_resultLevel = new List<ActionLevel>();
             StringBuilder getInventory_protocol = new StringBuilder();
 
@@ -815,7 +920,7 @@ namespace Filuet.Hrbl.Ordering.Adapter
                     else
                     {
                         getInventory_resultLevel.Add(ActionLevel.Info);
-                        getInventory_protocol.AppendLine($"Country {x}: the catalog has been downloaded in {sw.Elapsed.TotalSeconds} sec");
+                        getInventory_protocol.AppendLine($"Country {x}: the catalog has been downloaded in {sw.Elapsed:mm:ss}");
                     }
                 }
                 catch (Exception ex)
@@ -826,9 +931,9 @@ namespace Filuet.Hrbl.Ordering.Adapter
             }
 
             result.Add(new PollUnitResult { Action = "GetProductInventory", Level = _getResultLevel(getInventory_resultLevel), Comment = getInventory_protocol.ToString() });
-#endregion
+            #endregion
 
-#region GetPriceDetails
+            #region GetPriceDetails
             List<ActionLevel> getPricingRequest_resultLevel = new List<ActionLevel>();
             StringBuilder getPricingRequest_protocol = new StringBuilder();
 
@@ -865,7 +970,7 @@ namespace Filuet.Hrbl.Ordering.Adapter
             }
 
             result.Add(new PollUnitResult { Action = "GetConversionRate", Level = _getResultLevel(getPricingRequest_resultLevel), Comment = getPricingRequest_protocol.ToString() });
-#endregion
+            #endregion
 
             return new PollResult { Level = _getResultLevel(result.Select(x => x.Level)), Timestamp = DateTimeOffset.Now, Items = result };
         }
