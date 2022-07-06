@@ -576,12 +576,12 @@ namespace Filuet.Hrbl.Ordering.Adapter
                     else if (sw.Elapsed.TotalSeconds > 3)
                     {
                         getProfile_resultLevel.Add(ActionLevel.Warning);
-                        getProfile_protocol.AppendLine($"UID {x}: too long response- {sw.Elapsed:mm:ss}");
+                        getProfile_protocol.AppendLine($"UID {x}: too long response- {sw.Elapsed.ToString("g")}");
                     }
                     else
                     {
                         getProfile_resultLevel.Add(ActionLevel.Info);
-                        getProfile_protocol.AppendLine($"UID {x}: downloaded in - {sw.Elapsed:mm:ss}");
+                        getProfile_protocol.AppendLine($"UID {x}: downloaded in - {sw.Elapsed.ToString("g")}");
                     }
                 }
                 catch (Exception ex)
@@ -615,12 +615,12 @@ namespace Filuet.Hrbl.Ordering.Adapter
                     else if (sw.Elapsed.TotalSeconds > 3)
                     {
                         getDistributorVolumePoints_resultLevel.Add(ActionLevel.Warning);
-                        getDistributorVolumePoints_protocol.AppendLine($"UID {x}: too long response- {sw.Elapsed:mm:ss}");
+                        getDistributorVolumePoints_protocol.AppendLine($"UID {x}: too long response- {sw.Elapsed.ToString("g")}");
                     }
                     else
                     {
                         getDistributorVolumePoints_resultLevel.Add(ActionLevel.Info);
-                        getDistributorVolumePoints_protocol.AppendLine($"UID {x}: downloaded in - {sw.Elapsed:mm:ss}");
+                        getDistributorVolumePoints_protocol.AppendLine($"UID {x}: downloaded in - {sw.Elapsed.ToString("g")}");
                     }
                 }
                 catch (Exception ex)
@@ -654,12 +654,12 @@ namespace Filuet.Hrbl.Ordering.Adapter
                     else if (sw.Elapsed.TotalSeconds > 3)
                     {
                         getDSFOPPurchasingLimits_resultLevel.Add(ActionLevel.Warning);
-                        getDSFOPPurchasingLimits_protocol.AppendLine($"UID {x}: too long response- {sw.Elapsed:mm:ss}");
+                        getDSFOPPurchasingLimits_protocol.AppendLine($"UID {x}: too long response- {sw.Elapsed.ToString("g")}");
                     }
                     else
                     {
                         getDSFOPPurchasingLimits_resultLevel.Add(ActionLevel.Info);
-                        getDSFOPPurchasingLimits_protocol.AppendLine($"UID {x}: downloaded in - {sw.Elapsed:mm:ss}");
+                        getDSFOPPurchasingLimits_protocol.AppendLine($"UID {x}: downloaded in - {sw.Elapsed.ToString("g")}");
                     }
                 }
                 catch (Exception ex)
@@ -693,12 +693,12 @@ namespace Filuet.Hrbl.Ordering.Adapter
                     else if (sw.Elapsed.TotalSeconds > 3)
                     {
                         getCashLimit_resultLevel.Add(ActionLevel.Warning);
-                        getCashLimit_protocol.AppendLine($"UID {x}: too long response- {sw.Elapsed:mm:ss}");
+                        getCashLimit_protocol.AppendLine($"UID {x}: too long response- {sw.Elapsed.ToString("g")}");
                     }
                     else
                     {
                         getCashLimit_resultLevel.Add(ActionLevel.Info);
-                        getCashLimit_protocol.AppendLine($"UID {x}: downloaded in - {sw.Elapsed:mm:ss}");
+                        getCashLimit_protocol.AppendLine($"UID {x}: downloaded in - {sw.Elapsed.ToString("g")}");
                     }
                 }
                 catch (Exception ex)
@@ -732,12 +732,12 @@ namespace Filuet.Hrbl.Ordering.Adapter
                     else if (sw.Elapsed.TotalSeconds > 3)
                     {
                         getDualMonthStatus_resultLevel.Add(ActionLevel.Warning);
-                        getDualMonthStatus_protocol.AppendLine($"{x}: too long response- {sw.Elapsed:mm:ss}");
+                        getDualMonthStatus_protocol.AppendLine($"{x}: too long response- {sw.Elapsed.ToString("g")}");
                     }
                     else
                     {
                         getDualMonthStatus_resultLevel.Add(ActionLevel.Info);
-                        getDualMonthStatus_protocol.AppendLine($"{x}: downloaded in - {sw.Elapsed:mm:ss}");
+                        getDualMonthStatus_protocol.AppendLine($"{x}: downloaded in - {sw.Elapsed.ToString("g")}");
                     }
                 }
                 catch (Exception ex)
@@ -800,12 +800,12 @@ namespace Filuet.Hrbl.Ordering.Adapter
                     else if (sw.Elapsed.TotalSeconds > 3)
                     {
                         getDsTIN_resultLevel.Add(ActionLevel.Warning);
-                        getDsTIN_protocol.AppendLine($"UID {x}: too long response- {sw.Elapsed:mm:ss}");
+                        getDsTIN_protocol.AppendLine($"UID {x}: too long response- {sw.Elapsed.ToString("g")}");
                     }
                     else
                     {
                         getDsTIN_resultLevel.Add(ActionLevel.Info);
-                        getDsTIN_protocol.AppendLine($"UID {x}: downloaded in - {sw.Elapsed:mm:ss}");
+                        getDsTIN_protocol.AppendLine($"UID {x}: downloaded in - {sw.Elapsed.ToString("g")}");
                     }
                 }
                 catch (Exception ex)
@@ -838,12 +838,12 @@ namespace Filuet.Hrbl.Ordering.Adapter
                     else if (sw.Elapsed.TotalSeconds > 3)
                     {
                         getDsDiscount_resultLevel.Add(ActionLevel.Warning);
-                        getDsDiscount_protocol.AppendLine($"UID {x}: too long response- {sw.Elapsed:mm:ss}");
+                        getDsDiscount_protocol.AppendLine($"UID {x}: too long response- {sw.Elapsed.ToString("g")}");
                     }
                     else
                     {
                         getDsDiscount_resultLevel.Add(ActionLevel.Info);
-                        getDsDiscount_protocol.AppendLine($"UID {x}: downloaded in - {sw.Elapsed:mm:ss}");
+                        getDsDiscount_protocol.AppendLine($"UID {x}: downloaded in - {sw.Elapsed.ToString("g")}");
                     }
 
                 }
@@ -877,12 +877,12 @@ namespace Filuet.Hrbl.Ordering.Adapter
                     else if (sw.Elapsed.TotalSeconds > 3)
                     {
                         getsku_resultLevel.Add(ActionLevel.Warning);
-                        getSku_protocol.AppendLine($"Sku {x.sku}: too long response- {sw.Elapsed:mm:ss}");
+                        getSku_protocol.AppendLine($"Sku {x.sku}: too long response- {sw.Elapsed.ToString("g")}");
                     }
                     else
                     {
                         getsku_resultLevel.Add(ActionLevel.Info);
-                        getSku_protocol.AppendLine($"Sku {x.sku}: downloaded in - {sw.Elapsed:mm:ss}");
+                        getSku_protocol.AppendLine($"Sku {x.sku}: downloaded in - {sw.Elapsed.ToString("g")}");
                     }
                 }
                 catch (Exception ex)
@@ -915,12 +915,12 @@ namespace Filuet.Hrbl.Ordering.Adapter
                     else if (sw.Elapsed.TotalSeconds > 30)
                     {
                         getInventory_resultLevel.Add(ActionLevel.Warning);
-                        getInventory_protocol.AppendLine($"Country {x}: the catalog is downloading to slow- {sw.Elapsed:mm:ss}");
+                        getInventory_protocol.AppendLine($"Country {x}: the catalog is downloading to slow- {sw.Elapsed.ToString("g")}");
                     }
                     else
                     {
                         getInventory_resultLevel.Add(ActionLevel.Info);
-                        getInventory_protocol.AppendLine($"Country {x}: the catalog has been downloaded in {sw.Elapsed:mm:ss}");
+                        getInventory_protocol.AppendLine($"Country {x}: the catalog has been downloaded in {sw.Elapsed.ToString("g")}");
                     }
                 }
                 catch (Exception ex)
