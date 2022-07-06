@@ -797,7 +797,7 @@ namespace Filuet.Hrbl.Ordering.Adapter
                         getDsTIN_resultLevel.Add(ActionLevel.Error);
                         getDsTIN_protocol.AppendLine($"UID {x}: empty response");
                     }
-                    else if (sw.Elapsed.TotalSeconds > 3)
+                    else if (sw.Elapsed.TotalSeconds > 60)
                     {
                         getDsTIN_resultLevel.Add(ActionLevel.Warning);
                         getDsTIN_protocol.AppendLine($"UID {x}: too long response- {sw.Elapsed.ToString("g")}");
