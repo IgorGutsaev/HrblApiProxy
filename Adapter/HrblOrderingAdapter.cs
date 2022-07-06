@@ -13,6 +13,7 @@ using Filuet.Hrbl.Ordering.Abstractions.Dto;
 using System.Net.Http;
 using Filuet.Hrbl.Ordering.Abstractions.Enums;
 using Filuet.Hrbl.Ordering.Abstractions.Models;
+using Microsoft.Extensions.Logging;
 
 namespace Filuet.Hrbl.Ordering.Adapter
 {
@@ -23,15 +24,18 @@ namespace Filuet.Hrbl.Ordering.Adapter
         /// </summary>
         private readonly HLOnlineOrderingRS _proxy;
         private readonly HrblOrderingAdapterSettings _settings;
+        private readonly ILogger<HrblOrderingAdapter> _logger;
 
         public HrblEnvironment Environment => _settings.ApiUri.ToLower().Contains("/ts3/") ? HrblEnvironment.TS3 :
             (_settings.ApiUri.ToLower().Contains("/prs/") ? HrblEnvironment.PRS :
             (_settings.ApiUri.ToLower().Contains("/prod/") ? HrblEnvironment.Prod : HrblEnvironment.Unknown));
 
-        public HrblOrderingAdapter(HrblOrderingAdapterSettings settings)
+        public HrblOrderingAdapter(HrblOrderingAdapterSettings settings, ILogger<HrblOrderingAdapter> logger = null)
         {
+            _logger = logger;
             _settings = settings;
             _proxy = new HLOnlineOrderingRS(new Uri(_settings.ApiUri));
+            _logger?.LogInformation($"Proxy instance to {settings.ApiUri} created");
             _proxy.SerializationSettings = null;
             _proxy.DeserializationSettings = null;
             _proxy.HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(Encoding.UTF8.GetBytes($"{_settings.Login}:{ _settings.Password}")));
@@ -67,7 +71,7 @@ namespace Filuet.Hrbl.Ordering.Adapter
 
             Parallel.ForEach(blocks, b =>
             {
-                object response = _proxy.GetSkuAvailability.POST(new
+                var request = new
                 {
                     ServiceConsumer = _settings.Consumer,
                     SkuInquiryDetails = b.Select(x => new
@@ -79,9 +83,16 @@ namespace Filuet.Hrbl.Ordering.Adapter
                             WarehouseCode = warehouse
                         }
                     }).ToList()
-                });
+                };
 
-                SkuInventoryDetailsResult result = JsonConvert.DeserializeObject<SkuInventoryDetailsResult>(JsonConvert.SerializeObject(response));
+                _logger?.LogInformation(System.Text.Json.JsonSerializer.Serialize(request));
+
+                object response = _proxy.GetSkuAvailability.POST(request);
+
+                string data = JsonConvert.SerializeObject(response);
+                _logger?.LogInformation($"Result is '{System.Text.Json.JsonSerializer.Serialize(data)}'");
+
+                SkuInventoryDetailsResult result = JsonConvert.DeserializeObject<SkuInventoryDetailsResult>(data);
 
                 if (result.Errors != null && result.Errors.HasErrors)
                 {
@@ -95,7 +106,6 @@ namespace Filuet.Hrbl.Ordering.Adapter
 
             if (isError)
                 throw new HrblRestApiException(error);
-
 
             return _inventory.ToArray();
         }
@@ -167,11 +177,17 @@ namespace Filuet.Hrbl.Ordering.Adapter
             if (string.IsNullOrWhiteSpace(distributorId))
                 throw new ArgumentException("Distributor ID must be specified");
 
-            object response = await _proxy.GetDistributorProfile.POSTAsync(new
+            var request = new
             {
                 ServiceConsumer = _settings.Consumer,
                 DistributorId = distributorId,
-            });
+            };
+
+            _logger?.LogInformation(System.Text.Json.JsonSerializer.Serialize(request));
+
+            object response = await _proxy.GetDistributorProfile.POSTAsync(request);
+
+            _logger?.LogInformation($"Result is '{response}'");
 
             return JsonConvert.DeserializeObject<DistributorProfileResult>(response.ToString(),
                 new HrblNullableResponseConverter<DistributorProfileResult>()).Profile;
@@ -216,12 +232,18 @@ namespace Filuet.Hrbl.Ordering.Adapter
 
             distributorId = distributorId.ToUpper();
 
-            object response = await _proxy.DSFOPPurchasingLimits.POSTAsync(new
+            var request = new
             {
                 ServiceConsumer = _settings.Consumer,
                 DistributorID = distributorId,
                 CountryCode = country.ToUpper()
-            });
+            };
+
+            _logger?.LogInformation(System.Text.Json.JsonSerializer.Serialize(request));
+
+            object response = await _proxy.DSFOPPurchasingLimits.POSTAsync(request);
+
+            _logger?.LogInformation($"Result is '{response}'");
 
             return JsonConvert.DeserializeObject<FOPPurchasingLimitsResult>(JsonConvert.SerializeObject(response)
                 , new HrblNullableResponseConverter<FOPPurchasingLimitsResult>());
@@ -249,15 +271,16 @@ namespace Filuet.Hrbl.Ordering.Adapter
             }
             catch
             {
-                return new TinDetails
-                {
+                return new TinDetails {
                     DistributorTins = new DistributorTin[] {
-                    new DistributorTin { Country = country,
-                    Code = country + country,
-                    ExpirationDate = DateTime.MaxValue.ToString("yyyy-MM-dd HH:mm:ss+zzz"),
-                    EffectiveDate = DateTime.Now.AddYears(-2).ToString("yyyy-MM-dd HH:mm:ss+zzz"),
-                    _isActive = "Y"
-                } }
+                        new DistributorTin {
+                            Country = country,
+                            Code = country + country,
+                            ExpirationDate = DateTime.MaxValue.ToString("yyyy-MM-dd HH:mm:ss+zzz"),
+                            EffectiveDate = DateTime.Now.AddYears(-2).ToString("yyyy-MM-dd HH:mm:ss+zzz"),
+                            _isActive = "Y"
+                        }
+                    }
                 };
             }
         }
@@ -267,14 +290,20 @@ namespace Filuet.Hrbl.Ordering.Adapter
             if (string.IsNullOrWhiteSpace(distributorId))
                 throw new ArgumentException("Distributor ID must be specified");
 
-            object response = await _proxy.GetDistributorVolumePoints.POSTAsync(new
+            var request = new
             {
                 ServiceConsumer = _settings.Consumer,
                 DistributorId = distributorId,
                 FromMonth = month.ToString("yyyy/MM"),
                 ToMonth = monthTo.HasValue ? monthTo.Value.ToString("yyyy/MM") : month.ToString("yyyy/MM"),
                 IncludeORgVolumes = "N"
-            });
+            };
+
+            _logger?.LogInformation(System.Text.Json.JsonSerializer.Serialize(request));
+
+            object response = await _proxy.GetDistributorVolumePoints.POSTAsync(request);
+
+            _logger?.LogInformation($"Result is '{response}'");
 
             return JsonConvert.DeserializeObject<DistributorVolumePointsDetailsResult>(JsonConvert.SerializeObject(response),
                 new HrblNullableResponseConverter<DistributorVolumePointsDetailsResult>()).DistributorVolumeDetails.DistributorVolume;
@@ -282,13 +311,19 @@ namespace Filuet.Hrbl.Ordering.Adapter
 
         public async Task<DistributorDiscountResult> GetDistributorDiscount(string distributorId, DateTime month, string country)
         {
-            object response = await _proxy.GetDistributorDiscount.POSTAsync(new
+            var request = new
             {
                 ServiceConsumer = _settings.Consumer,
                 DistributorId = distributorId.ToUpper(),
                 OrderMonth = month.ToString("yyyy/MM"),
                 ShipToCountry = country
-            });
+            };
+
+            _logger?.LogInformation(System.Text.Json.JsonSerializer.Serialize(request));
+
+            object response = await _proxy.GetDistributorDiscount.POSTAsync(request);
+
+            _logger?.LogInformation($"Result is '{response}'");
 
             return JsonConvert.DeserializeObject<DistributorDiscountResult>(JsonConvert.SerializeObject(response),
                 new HrblNullableResponseConverter<DistributorDiscountResult>());
@@ -302,13 +337,19 @@ namespace Filuet.Hrbl.Ordering.Adapter
         /// <returns></returns>
         public async Task<DsCashLimitResult> GetDsCashLimit(string distributorId, string country)
         {
-            object response = await _proxy.DsCashLimit.POSTAsync(new
+            var request = new
             {
                 ServiceConsumer = _settings.Consumer,
                 DistributorId = distributorId.ToUpper(),
                 ShipToCountry = country,
                 PaymentMethod = "CASH"
-            });
+            };
+
+            _logger?.LogInformation(System.Text.Json.JsonSerializer.Serialize(request));
+
+            object response = await _proxy.DsCashLimit.POSTAsync(request);
+
+            _logger?.LogInformation($"Result is '{response}'");
 
             return JsonConvert.DeserializeObject<DsCashLimitResult>(JsonConvert.SerializeObject(response));
         }
@@ -328,7 +369,11 @@ namespace Filuet.Hrbl.Ordering.Adapter
                 request.Header.PriceDate = newPriceTime;
             }
 
+            _logger?.LogInformation(System.Text.Json.JsonSerializer.Serialize(request));
+
             object response = await _proxy.GetPriceDetails.POSTAsync(request);
+
+            _logger?.LogInformation($"Result is '{response}'");
 
             PricingResponse result = JsonConvert.DeserializeObject<PricingResponse>(JsonConvert.SerializeObject(response),
                 new HrblNullableResponseConverter<PricingResponse>());
@@ -360,7 +405,11 @@ namespace Filuet.Hrbl.Ordering.Adapter
                 .AddServiceConsumer(_settings.Consumer)
                 .Build();
 
+            _logger?.LogInformation(System.Text.Json.JsonSerializer.Serialize(request));
+
             object response = await _proxy.SubmitOrder.POSTAsync(request);
+
+            _logger?.LogInformation($"Result is '{response}'");
 
             return JsonConvert.DeserializeObject<SubmitResponse>(JsonConvert.SerializeObject(response));
         }
@@ -369,7 +418,11 @@ namespace Filuet.Hrbl.Ordering.Adapter
         {
             request.ServiceConsumer = _settings.Consumer;
 
+            _logger?.LogInformation(System.Text.Json.JsonSerializer.Serialize(request));
+
             object response = await _proxy.SubmitOrder.POSTAsync(request);
+
+            _logger?.LogInformation($"Result is '{response}'");
 
             return JsonConvert.DeserializeObject<SubmitResponse>(JsonConvert.SerializeObject(response));
         }
@@ -388,10 +441,15 @@ namespace Filuet.Hrbl.Ordering.Adapter
             if (string.IsNullOrWhiteSpace(country) || country.Trim().Length != 2)
                 throw new ArgumentException("Country is mandatory");
 
-            object response = await _proxy.GetOrderDualMonthStatus.POSTAsync(new
-            {
+            var request = new {
                 ShipToCountry = country.Trim().ToUpper()
-            });
+            };
+
+            _logger?.LogInformation(System.Text.Json.JsonSerializer.Serialize(request));
+
+            object response = await _proxy.GetOrderDualMonthStatus.POSTAsync(request);
+
+            _logger?.LogInformation($"Result is '{response}'");
 
             return JsonConvert.DeserializeObject<OrderDualMonthStatus>(JsonConvert.SerializeObject(response)).IsDualMonthAllowed;
         }
@@ -446,12 +504,17 @@ namespace Filuet.Hrbl.Ordering.Adapter
         {
             HttpRequestMessage httpRequestMessage = new HttpRequestMessage(HttpMethod.Post, _proxy.BaseUri.AbsoluteUri + "/GetDSEligiblePromoSKU");
 
-            var json = JsonConvert.SerializeObject(request);
+            string json = JsonConvert.SerializeObject(request);
+
+            _logger?.LogInformation(json);
+
             //construct content to send
             httpRequestMessage.Content = new StringContent(json, Encoding.UTF8, "application/json");
 
             var repsonse = await _proxy.HttpClient.SendAsync(httpRequestMessage);
             string responseStr = await repsonse.Content.ReadAsStringAsync();
+
+            _logger?.LogInformation($"Result is '{responseStr}'");
 
             return JsonConvert.DeserializeObject<GetDSEligiblePromoSKUResponseDTO>(responseStr,
               new HrblNullableResponseConverter<GetDSEligiblePromoSKUResponseDTO>());

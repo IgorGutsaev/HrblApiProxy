@@ -9,10 +9,10 @@ namespace Filuet.Hrbl.Ordering.Tests
 
         private HrblOrderingAdapterSettings _defaultSettings =>
             new HrblOrderingAdapterSettingsBuilder()
-            .WithUri("https://herbalife-oegdevws.hrbl.com/Order/HLOnlineOrdering/ts3/")
+            //.WithUri("https://herbalife-oegdevws.hrbl.com/Order/HLOnlineOrdering/ts3/")
             //.WithUri("https://herbalife-oegdevws.hrbl.com/Order/HLOnlineOrdering/ts1/")
             //.WithUri("https://herbalife-econnectslc.hrbl.com/Order/HLOnlineOrdering/prod/")
-            //.WithUri("https://herbalife-oegdevws.hrbl.com/Order/HLOnlineOrdering/prs/")
+            .WithUri("https://herbalife-oegdevws.hrbl.com/Order/HLOnlineOrdering/prs/")
             .WithServiceConsumer(SERVICE_CONSUMER)
             .WithOrganizationId(73)
             .WithCredentials("hlfnord", "welcome123") // prs + ts3 + ts1
