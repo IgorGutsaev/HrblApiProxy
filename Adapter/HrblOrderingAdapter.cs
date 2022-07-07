@@ -573,7 +573,7 @@ namespace Filuet.Hrbl.Ordering.Adapter
                         getProfile_resultLevel.Add(ActionLevel.Error);
                         getProfile_protocol.AppendLine($"UID {x}: empty response");
                     }
-                    else if (sw.Elapsed.TotalSeconds > 5)
+                    else if (sw.Elapsed.TotalSeconds > 10)
                     {
                         getProfile_resultLevel.Add(ActionLevel.Warning);
                         getProfile_protocol.AppendLine($"UID {x}: too long response- {sw.Elapsed.ToString("g")}");
@@ -612,7 +612,7 @@ namespace Filuet.Hrbl.Ordering.Adapter
                         getDistributorVolumePoints_resultLevel.Add(ActionLevel.Error);
                         getDistributorVolumePoints_protocol.AppendLine($"UID {x.distributorId}: empty response");
                     }
-                    else if (sw.Elapsed.TotalSeconds > 3)
+                    else if (sw.Elapsed.TotalSeconds > 10)
                     {
                         getDistributorVolumePoints_resultLevel.Add(ActionLevel.Warning);
                         getDistributorVolumePoints_protocol.AppendLine($"UID {x}: too long response- {sw.Elapsed.ToString("g")}");
@@ -651,7 +651,7 @@ namespace Filuet.Hrbl.Ordering.Adapter
                         getDSFOPPurchasingLimits_resultLevel.Add(ActionLevel.Error);
                         getDSFOPPurchasingLimits_protocol.AppendLine($"UID {x}: empty response");
                     }
-                    else if (sw.Elapsed.TotalSeconds > 3)
+                    else if (sw.Elapsed.TotalSeconds > 10)
                     {
                         getDSFOPPurchasingLimits_resultLevel.Add(ActionLevel.Warning);
                         getDSFOPPurchasingLimits_protocol.AppendLine($"UID {x}: too long response- {sw.Elapsed.ToString("g")}");
@@ -690,7 +690,7 @@ namespace Filuet.Hrbl.Ordering.Adapter
                         getCashLimit_resultLevel.Add(ActionLevel.Error);
                         getCashLimit_protocol.AppendLine($"UID {x}: empty response or invalid cash limit");
                     }
-                    else if (sw.Elapsed.TotalSeconds > 3)
+                    else if (sw.Elapsed.TotalSeconds > 10)
                     {
                         getCashLimit_resultLevel.Add(ActionLevel.Warning);
                         getCashLimit_protocol.AppendLine($"UID {x}: too long response- {sw.Elapsed.ToString("g")}");
@@ -729,7 +729,7 @@ namespace Filuet.Hrbl.Ordering.Adapter
                         getDualMonthStatus_resultLevel.Add(ActionLevel.Error);
                         getDualMonthStatus_protocol.AppendLine($"{x}: seems to be invalid dual month result");
                     }
-                    else if (sw.Elapsed.TotalSeconds > 3)
+                    else if (sw.Elapsed.TotalSeconds > 10)
                     {
                         getDualMonthStatus_resultLevel.Add(ActionLevel.Warning);
                         getDualMonthStatus_protocol.AppendLine($"{x}: too long response- {sw.Elapsed.ToString("g")}");
@@ -835,7 +835,7 @@ namespace Filuet.Hrbl.Ordering.Adapter
                         getDsDiscount_resultLevel.Add(ActionLevel.Error);
                         getDsDiscount_protocol.AppendLine($"UID {x}: empty response");
                     }
-                    else if (sw.Elapsed.TotalSeconds > 3)
+                    else if (sw.Elapsed.TotalSeconds > 10)
                     {
                         getDsDiscount_resultLevel.Add(ActionLevel.Warning);
                         getDsDiscount_protocol.AppendLine($"UID {x}: too long response- {sw.Elapsed.ToString("g")}");
@@ -874,7 +874,7 @@ namespace Filuet.Hrbl.Ordering.Adapter
                         getsku_resultLevel.Add(ActionLevel.Error);
                         getSku_protocol.AppendLine($"Sku {x.sku}: sku not found or invalid");
                     }
-                    else if (sw.Elapsed.TotalSeconds > 5)
+                    else if (sw.Elapsed.TotalSeconds > 10)
                     {
                         getsku_resultLevel.Add(ActionLevel.Warning);
                         getSku_protocol.AppendLine($"Sku {x.sku}: too long response- {sw.Elapsed.ToString("g")}");
