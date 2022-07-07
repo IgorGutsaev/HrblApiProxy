@@ -573,7 +573,7 @@ namespace Filuet.Hrbl.Ordering.Adapter
                         getProfile_resultLevel.Add(ActionLevel.Error);
                         getProfile_protocol.AppendLine($"UID {x}: empty response");
                     }
-                    else if (sw.Elapsed.TotalSeconds > 3)
+                    else if (sw.Elapsed.TotalSeconds > 5)
                     {
                         getProfile_resultLevel.Add(ActionLevel.Warning);
                         getProfile_protocol.AppendLine($"UID {x}: too long response- {sw.Elapsed.ToString("g")}");
@@ -874,7 +874,7 @@ namespace Filuet.Hrbl.Ordering.Adapter
                         getsku_resultLevel.Add(ActionLevel.Error);
                         getSku_protocol.AppendLine($"Sku {x.sku}: sku not found or invalid");
                     }
-                    else if (sw.Elapsed.TotalSeconds > 3)
+                    else if (sw.Elapsed.TotalSeconds > 5)
                     {
                         getsku_resultLevel.Add(ActionLevel.Warning);
                         getSku_protocol.AppendLine($"Sku {x.sku}: too long response- {sw.Elapsed.ToString("g")}");
