@@ -7,7 +7,6 @@ using Filuet.Hrbl.Ordering.Abstractions.Builders;
 using Newtonsoft.Json;
 using Filuet.Hrbl.Ordering.Common;
 using Filuet.Hrbl.Ordering.Abstractions.Dto;
-using Filuet.Hrbl.Ordering.Abstractions.Enums;
 using Filuet.Hrbl.Ordering.Abstractions.Models;
 
 namespace Filuet.Hrbl.Ordering.Adapter
@@ -111,6 +110,11 @@ namespace Filuet.Hrbl.Ordering.Adapter
         }
 
         public Task<PollResult> PollRequest()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<SsoAuthDistributorDetails> GetSsoProfile(string login, string password)
         {
             throw new NotImplementedException();
         }

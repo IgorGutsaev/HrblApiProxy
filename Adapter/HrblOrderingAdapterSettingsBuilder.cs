@@ -22,6 +22,16 @@ namespace Filuet.Hrbl.Ordering.Adapter
             return this;
         }
 
+        public HrblOrderingAdapterSettingsBuilder WithSsoAuthUri(string uri)
+        {
+            if (string.IsNullOrWhiteSpace(uri))
+                throw new ArgumentException("Sso auth uri is mandatory");
+
+            _adapterSettings.SSOAuthServiceUri = uri;
+
+            return this;
+        }
+
         /// <summary>
         /// Add service consumer
         /// </summary>

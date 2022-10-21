@@ -12,6 +12,8 @@ namespace Filuet.Hrbl.Ordering.Abstractions
     {
         Task<PollResult> PollRequest();
 
+        Task<SsoAuthDistributorDetails> GetSsoProfile(string login, string password);
+
         Task<(bool isValid, string memberId)> ValidateSsoBearerToken(string token);
 
         Task<SkuInventory[]> GetSkuAvailability(string warehouse, Dictionary<string, int> items);

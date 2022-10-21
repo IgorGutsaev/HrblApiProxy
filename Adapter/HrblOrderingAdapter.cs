@@ -15,17 +15,18 @@ using Filuet.Hrbl.Ordering.Abstractions.Enums;
 using Filuet.Hrbl.Ordering.Abstractions.Models;
 using System.Diagnostics;
 using Microsoft.Extensions.Logging;
+using System.Net.NetworkInformation;
 
 namespace Filuet.Hrbl.Ordering.Adapter
 {
     public class HrblOrderingAdapter : IHrblOrderingAdapter
     {
-        /// <summary>
-        /// Hrbl auto-generated proxy for REST API
-        /// </summary>
-        private readonly HLOnlineOrderingRS _proxy;
-        private readonly HrblOrderingAdapterSettings _settings;
-        private readonly ILogger<HrblOrderingAdapter> _logger;
+        private const string hlbuild = "1.0.1";
+        private const string hlappid = "1";
+        private const string hlclientdevice = "HUAWEI HUAWEI MT7-TL10 Huawei/MT7-TL10/hwmt7:4.4.2/ HuaweiMT7 - TL10 / C00B130:user/ota-rel-keys,release-keys";
+        private const string hlclientapp = "SHOP";
+        private const string hllocale = "en-US";
+        private const string hlclientos = "android/4.4.2:C00B130";
 
         public HrblEnvironment Environment => _settings.ApiUri.ToLower().Contains("/ts3/") ? HrblEnvironment.TS3 :
             (_settings.ApiUri.ToLower().Contains("/prs/") ? HrblEnvironment.PRS :
@@ -162,6 +163,37 @@ namespace Filuet.Hrbl.Ordering.Adapter
         #endregion
 
         #region Distributor
+        public async Task<SsoAuthDistributorDetails> GetSsoProfile(string login, string password)
+        {
+            using (HttpClient httpClient = new HttpClient())
+            {
+                httpClient.BaseAddress = new Uri(_settings.SSOAuthServiceUri);
+                var request = new HttpRequestMessage(HttpMethod.Post, "/api/auth");
+                request.Headers.Add("X-HLBUILD", hlbuild);
+                request.Headers.Add("X-HLAPPID", hlappid);
+                request.Headers.Add("X-HLCLIENTDEVICE", hlclientdevice);
+                request.Headers.Add("X-HLCLIENTAPP", hlclientapp);
+                request.Headers.Add("X-HLLOCALE", hllocale);
+                request.Headers.Add("X-HLCLIENTOS", hlclientos);
+                request.Content = new StringContent($"{{ \"data\": {{ \"locale\": \"{hllocale}\", \"username\": \"{login}\", \"password\": \"{password}\" }}}}"
+                    , Encoding.Default, "application/json");
+
+                HttpResponseMessage response = await httpClient.SendAsync(request);
+                response.EnsureSuccessStatusCode();
+
+                string resultStr = response.Content.ReadAsStringAsync().Result;
+                SsoAuthResposeWrapper result = JsonConvert.DeserializeObject<SsoAuthResposeWrapper>(resultStr);
+                if (!result.Data.IsAuthenticated)
+                    throw new Exception("Not authenticated");
+
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", result.Data.Token);
+
+                HttpResponseMessage messageDetails = httpClient.GetAsync("/api/Distributor/?type=Detailed").Result;
+                resultStr = messageDetails.EnsureSuccessStatusCode().Content.ReadAsStringAsync().Result;
+                return JsonConvert.DeserializeObject<SsoAuthDistributorDetails>(resultStr);
+            }
+        }
+
         public async Task<(bool isValid, string memberId)> ValidateSsoBearerToken(string token)
         {
             if (string.IsNullOrWhiteSpace(token))
@@ -974,5 +1006,12 @@ namespace Filuet.Hrbl.Ordering.Adapter
 
             return new PollResult { Level = _getResultLevel(result.Select(x => x.Level)), Timestamp = DateTimeOffset.Now, Items = result };
         }
+
+        /// <summary>
+        /// Hrbl auto-generated proxy for REST API
+        /// </summary>
+        private readonly HLOnlineOrderingRS _proxy;
+        private readonly HrblOrderingAdapterSettings _settings;
+        private readonly ILogger<HrblOrderingAdapter> _logger;
     }
 }

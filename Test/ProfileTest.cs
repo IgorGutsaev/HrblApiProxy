@@ -1,6 +1,5 @@
 ﻿using Filuet.Hrbl.Ordering.Abstractions;
 using System;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -9,18 +8,29 @@ namespace Filuet.Hrbl.Ordering.Tests
     public class ProfileTest : BaseTest
     {
         [Theory]
+        [InlineData("herb103051@testherbalife.com", "test@123")] // production
+        //[InlineData("Trangle1967", "Trangle1967")]
+        public async Task Test_Get_SsoProfile(string login, string password)
+        {
+            // Prepare
+            Assert.NotNull(_adapter);
+
+            // Pre-validate
+            Assert.False(string.IsNullOrWhiteSpace(login));
+            Assert.False(string.IsNullOrWhiteSpace(password));
+
+            // Perform
+            SsoAuthDistributorDetails result = await _adapter.GetSsoProfile(login, password);
+
+            // Post-validate
+            Assert.NotNull(result);
+        }
+
+        [Theory]
         [InlineData("va00311908")]
-        //[InlineData("VA00867877")]
-        //[InlineData("7919384588")]
-        //[InlineData("U515120144")]
-        //[InlineData("VA00863126")]
-        //[InlineData("HERB108388")] // DELETED member state
-        //[InlineData("HERB101058")]
-        //[InlineData("S7131170")]
-        //[InlineData("D1040636")]
-        //[InlineData("MY721834")]
-        //[InlineData("95126026")]
-        //[InlineData("20168088")]
+        [InlineData("VA00863126")]
+        [InlineData("HERB108388")] // DELETED member state
+        [InlineData("20168088")]
         public async Task Test_Get_profile(string distributorId)
         {
             // Prepare

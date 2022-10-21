@@ -13,6 +13,10 @@ namespace Filuet.Hrbl.Ordering.Tests
             //.WithUri("https://herbalife-oegdevws.hrbl.com/Order/HLOnlineOrdering/ts1/")
             //.WithUri("https://herbalife-econnectslc.hrbl.com/Order/HLOnlineOrdering/prod/")
             .WithUri("https://herbalife-oegdevws.hrbl.com/Order/HLOnlineOrdering/prs/")
+            //.WithSsoAuthUri("https://zus2q3.myherbalife.com")
+            //.WithSsoAuthUri("https://zus2q2.myherbalife.com")
+            //.WithSsoAuthUri("https://www.myherbalife.com")
+            .WithSsoAuthUri("https://zus2prs.myherbalife.com")
             .WithServiceConsumer(SERVICE_CONSUMER)
             .WithOrganizationId(73)
             .WithCredentials("hlfnord", "welcome123") // prs + ts3 + ts1
