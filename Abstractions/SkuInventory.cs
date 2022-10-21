@@ -56,6 +56,12 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         [JsonProperty(PropertyName = "AvailableQuantity")]
         public int AvailableQuantity { get; set; }
 
+        [JsonProperty(PropertyName = "ReasonCode")]
+        public string ReasonCode { get; set; }
+
+        [JsonProperty(PropertyName = "ReasonMsg")]
+        public string ReasonMsg { get; set; }
+
         public override string ToString() => Sku;
     }
 }

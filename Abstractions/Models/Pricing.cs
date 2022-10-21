@@ -117,6 +117,24 @@ namespace Filuet.Hrbl.Ordering.Abstractions
     {
         [JsonProperty("OrderSource")]
         public string OrderSource { get; set; }
+
+        /// <summary>
+        /// To setup timeshift
+        /// </summary>
+        /// <param name="date"></param>
+        public void SetOrderDate(DateTime date)
+        {
+            OrderDate = date;
+        }
+
+        /// <summary>
+        /// To setup timeshift
+        /// </summary>
+        /// <param name="date"></param>
+        public void SetPricingDate(DateTime date)
+        {
+            PriceDate = date;
+        }
     }
 
     public class PricingResponseHeader : BasePricingHeader
