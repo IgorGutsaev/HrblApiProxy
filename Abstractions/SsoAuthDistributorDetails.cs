@@ -265,6 +265,15 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         public double PersonalVolumeLimitUsed { get; set; }
     }
 
+    public class SsoAuthResult
+    {
+        [JsonProperty(PropertyName = "token")]
+        public string Token { get; set; }
+
+        [JsonProperty(PropertyName = "profile")]
+        public SsoAuthDistributorDetails Profile { get; set; }
+    }
+
     public class SsoAuthDistributorDetails
     {
         public class SsoAuthDistributorDetailsError

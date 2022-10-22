@@ -114,7 +114,7 @@ namespace Filuet.Hrbl.Ordering.Adapter
             throw new NotImplementedException();
         }
 
-        public Task<SsoAuthDistributorDetails> GetSsoProfile(string login, string password)
+        public Task<SsoAuthResult> GetSsoProfile(string login, string password)
         {
             throw new NotImplementedException();
         }

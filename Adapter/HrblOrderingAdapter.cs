@@ -15,7 +15,6 @@ using Filuet.Hrbl.Ordering.Abstractions.Enums;
 using Filuet.Hrbl.Ordering.Abstractions.Models;
 using System.Diagnostics;
 using Microsoft.Extensions.Logging;
-using System.Net.NetworkInformation;
 
 namespace Filuet.Hrbl.Ordering.Adapter
 {
@@ -163,7 +162,7 @@ namespace Filuet.Hrbl.Ordering.Adapter
         #endregion
 
         #region Distributor
-        public async Task<SsoAuthDistributorDetails> GetSsoProfile(string login, string password)
+        public async Task<SsoAuthResult> GetSsoProfile(string login, string password)
         {
             using (HttpClient httpClient = new HttpClient())
             {
@@ -190,7 +189,9 @@ namespace Filuet.Hrbl.Ordering.Adapter
 
                 HttpResponseMessage messageDetails = httpClient.GetAsync("/api/Distributor/?type=Detailed").Result;
                 resultStr = messageDetails.EnsureSuccessStatusCode().Content.ReadAsStringAsync().Result;
-                return JsonConvert.DeserializeObject<SsoAuthDistributorDetails>(resultStr);
+                SsoAuthDistributorDetails details = JsonConvert.DeserializeObject<SsoAuthDistributorDetails>(resultStr);
+
+                return new SsoAuthResult { Token = result.Data.Token, Profile = details };
             }
         }
 

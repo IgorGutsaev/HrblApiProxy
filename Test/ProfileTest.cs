@@ -9,7 +9,7 @@ namespace Filuet.Hrbl.Ordering.Tests
     {
         [Theory]
         [InlineData("herb103051@testherbalife.com", "test@123")] // production
-        //[InlineData("Trangle1967", "Trangle1967")]
+        [InlineData("Trangle1967", "Trangle1967")]
         public async Task Test_Get_SsoProfile(string login, string password)
         {
             // Prepare
