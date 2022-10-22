@@ -8,7 +8,7 @@ namespace Filuet.Hrbl.Ordering.Tests
     public class ProfileTest : BaseTest
     {
         [Theory]
-        [InlineData("herb103051@testherbalife.com", "test@123")] // production
+       // [InlineData("herb103051@testherbalife.com", "test@123")] // production
         [InlineData("Trangle1967", "Trangle1967")]
         public async Task Test_Get_SsoProfile(string login, string password)
         {
@@ -20,7 +20,7 @@ namespace Filuet.Hrbl.Ordering.Tests
             Assert.False(string.IsNullOrWhiteSpace(password));
 
             // Perform
-            SsoAuthDistributorDetails result = await _adapter.GetSsoProfile(login, password);
+            SsoAuthResult result = await _adapter.GetSsoProfile(login, password);
 
             // Post-validate
             Assert.NotNull(result);
