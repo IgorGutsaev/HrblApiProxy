@@ -545,7 +545,7 @@ namespace Filuet.Hrbl.Ordering.Adapter
 
         public async Task<GetDSEligiblePromoSKUResponseDTO> GetDSEligiblePromoSKU(GetDSEligiblePromoSKURequestDTO request)
         {
-            HttpRequestMessage httpRequestMessage = new HttpRequestMessage(HttpMethod.Post, _proxy.BaseUri.AbsoluteUri + "/GetDSEligiblePromoSKU");
+            HttpRequestMessage httpRequestMessage = new HttpRequestMessage(HttpMethod.Post, new Uri(new Uri(_proxy.BaseUri.AbsoluteUri), "GetDSEligiblePromoSKU"));
 
             string json = JsonConvert.SerializeObject(request);
 

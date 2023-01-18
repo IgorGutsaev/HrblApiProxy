@@ -8,7 +8,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>SDK for Herbalife Fusion</description>
     <releaseNotes>SDK to call Herbalife Fusion service methods</releaseNotes>
-    <copyright>Copyright © Filuet RS 2020</copyright>
+    <copyright>Copyright © Filuet RS 2023</copyright>
     <tags>Filuet SDK</tags>
   </metadata>
   <files>

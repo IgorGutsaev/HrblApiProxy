@@ -66,7 +66,7 @@ namespace PromoEngine.Pages
         public List<Promotion> Promotions { get; set; }
 
         private HrblOrderingAdapter Adapter => new HrblOrderingAdapter(new HrblOrderingAdapterSettingsBuilder()
-                .WithUri("https://herbalife-oegdevws.hrbl.com/Order/HLOnlineOrdering/ts3/")
+                .WithUri("https://herbalife-oegdevws.hrbl.com/Order/HLOnlineOrdering/prs/")
                 .WithServiceConsumer("AAKIOSK")
                 .WithOrganizationId(73)
                 .WithCredentials("hlfnord", "welcome123").Build());
