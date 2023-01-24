@@ -30,6 +30,12 @@ namespace Filuet.Hrbl.Ordering.Abstractions.Dto
         [JsonProperty("VolumePoints")]
         public string VolumePoints { get; set; }
 
+        [JsonProperty("OrderLines")]
+        public OrderLines OrderLines { get; set; }
+    }
+
+    public class OrderLines
+    {
         [JsonProperty("Promotion")]
         public List<ReqPromotion> Promotion { get; set; }
     }
