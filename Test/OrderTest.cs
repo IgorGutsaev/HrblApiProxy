@@ -413,30 +413,33 @@ namespace Filuet.Hrbl.Ordering.Tests
                 OrderDate = DateTime.Now,
                 OrderType = "RSO",
                 VolumePoints = "100",
-                Promotion = new List<ReqPromotion>()
+                OrderLines = new OrderLines()
                 {
-                    new ReqPromotion()
+                    Promotion = new List<ReqPromotion>()
                     {
-                        SKU = "0141",
-                        FreightCode = "PU1",
-                        OrderedQuantity = 1,
-                        ChrAttribute1 = "PC",
-                        ChrAttribute2 = "AAKIOSK",
-                        ChrAttribute3 = "9O",
-                        ChrAttribute5 = "P",
-                        TotalRetail = 1300
-                    },
-                    new ReqPromotion()
-                    {
-                        SKU = "0006",
-                        FreightCode = "PU1",
-                        OrderedQuantity = 1,
-                        ChrAttribute1 = "PC",
-                        ChrAttribute2 = "AAKIOSK",
-                        ChrAttribute3 = "9O",
-                        ChrAttribute5 = "P",
-                        TotalRetail = 5000
-                    },
+                        new ReqPromotion()
+                        {
+                            SKU = "0141",
+                            FreightCode = "PU1",
+                            OrderedQuantity = 1,
+                            ChrAttribute1 = "PC",
+                            ChrAttribute2 = "AAKIOSK",
+                            ChrAttribute3 = "9O",
+                            ChrAttribute5 = "P",
+                            TotalRetail = 1300
+                        },
+                        new ReqPromotion()
+                        {
+                            SKU = "0006",
+                            FreightCode = "PU1",
+                            OrderedQuantity = 1,
+                            ChrAttribute1 = "PC",
+                            ChrAttribute2 = "AAKIOSK",
+                            ChrAttribute3 = "9O",
+                            ChrAttribute5 = "P",
+                            TotalRetail = 5000
+                        },
+                    }
                 }
             };
             var result = await _adapter.GetDSEligiblePromoSKU(request);
