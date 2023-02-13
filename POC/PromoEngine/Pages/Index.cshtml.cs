@@ -145,11 +145,12 @@ namespace PromoEngine.Pages
 
                 if (Pricing.Lines.Any())
                 {
-                    promoRequest.Promotion = new List<ReqPromotion>();
+                    promoRequest.OrderLines = new OrderLines();
+                    promoRequest.OrderLines.Promotion = new List<ReqPromotion>();
 
                     foreach (var line in Pricing.Lines)
                     {
-                        promoRequest.Promotion.Add(new ReqPromotion
+                        promoRequest.OrderLines.Promotion.Add(new ReqPromotion
                         {
                             SKU = line.Sku,
                             FreightCode = FreightCode,
