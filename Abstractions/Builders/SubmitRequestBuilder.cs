@@ -167,7 +167,7 @@ namespace Filuet.Hrbl.Ordering.Abstractions.Builders
             else payment.CreditCard = null;
 
             if (issues.Length > 0)
-                throw new ArgumentException(issues.ToString());
+                throw new ArgumentException(issues.ToString().Trim());
             #endregion
 
             if (setupCashVouchers == null)
