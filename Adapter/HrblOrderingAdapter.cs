@@ -15,6 +15,8 @@ using Filuet.Hrbl.Ordering.Abstractions.Enums;
 using Filuet.Hrbl.Ordering.Abstractions.Models;
 using System.Diagnostics;
 using Microsoft.Extensions.Logging;
+using System.Net;
+using System.Runtime.CompilerServices;
 
 namespace Filuet.Hrbl.Ordering.Adapter
 {
@@ -48,7 +50,7 @@ namespace Filuet.Hrbl.Ordering.Adapter
         /// </summary>
         /// <param name="warehouse">Warehouse to request</param>
         /// <param name="items">collection of goods identifier</param>
-        public async Task<SkuInventory[]> GetSkuAvailability(string warehouse, Dictionary<string, int> items)
+        public async Task<SkuInventory[]> GetSkuAvailabilityAsync(string warehouse, Dictionary<string, int> items)
         {
             if (!items.Any())
                 return new SkuInventory[0];
@@ -70,15 +72,15 @@ namespace Filuet.Hrbl.Ordering.Adapter
             bool isError = false;
             string error = string.Empty;
 
-            Parallel.ForEach(blocks, b =>
+            List<Task<object>> chunkTasks = new List<Task<object>>();
+
+            foreach(var b in blocks)
             {
                 var request = new
                 {
                     ServiceConsumer = _settings.Consumer,
-                    SkuInquiryDetails = b.Select(x => new
-                    {
-                        Sku = new
-                        {
+                    SkuInquiryDetails = b.Select(x => new {
+                        Sku = new {
                             SkuName = x.Key.ToNormalSku(),
                             Quantity = x.Value.ToString(),
                             WarehouseCode = warehouse
@@ -88,8 +90,13 @@ namespace Filuet.Hrbl.Ordering.Adapter
 
                 _logger?.LogInformation(System.Text.Json.JsonSerializer.Serialize(request));
 
-                object response = _proxy.GetSkuAvailability.POST(request);
+                chunkTasks.Add(_proxy.GetSkuAvailability.POSTAsync(request));
+            }
 
+            object[] responses = await Task.WhenAll(chunkTasks);
+
+            foreach (object response in responses)
+            {
                 string data = JsonConvert.SerializeObject(response);
                 _logger?.LogInformation($"Result is '{System.Text.Json.JsonSerializer.Serialize(data)}'");
 
@@ -103,7 +110,7 @@ namespace Filuet.Hrbl.Ordering.Adapter
 
                 lock (_inventory)
                     _inventory.AddRange(result.SkuInventoryDetails.Inventory);
-            });
+            }
 
             if (isError)
                 throw new HrblRestApiException(error);
@@ -117,8 +124,8 @@ namespace Filuet.Hrbl.Ordering.Adapter
         /// <param name="warehouse">Warehouse to request</param>
         /// <param name="sku">sku to request</param>
         /// <param name="quantity"></param>
-        public async Task<SkuInventory> GetSkuAvailability(string warehouse, string sku, int quantity)
-            => await GetSkuAvailability(warehouse, new List<KeyValuePair<string, int>> { new KeyValuePair<string, int>(sku, quantity) }
+        public async Task<SkuInventory> GetSkuAvailabilityAsync(string warehouse, string sku, int quantity)
+            => await GetSkuAvailabilityAsync(warehouse, new List<KeyValuePair<string, int>> { new KeyValuePair<string, int>(sku, quantity) }
                 .ToDictionary(x => x.Key, x => x.Value)).ContinueWith(x => x.Result.FirstOrDefault());
 
         public async Task<InventoryItem[]> GetProductInventory(string country, string orderType = null)
@@ -900,7 +907,7 @@ namespace Filuet.Hrbl.Ordering.Adapter
                 {
                     Stopwatch sw = new Stopwatch();
                     sw.Start();
-                    SkuInventory sku = await GetSkuAvailability(x.warehouse, x.sku, 1);
+                    SkuInventory sku = await GetSkuAvailabilityAsync(x.warehouse, x.sku, 1);
                     sw.Stop();
                     if (sku == null || !sku.Sku.Equals(x.sku, StringComparison.InvariantCultureIgnoreCase) || !sku.IsSkuValid)
                     {

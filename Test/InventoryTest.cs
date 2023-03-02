@@ -43,7 +43,7 @@ namespace Filuet.Hrbl.Ordering.Tests
             Assert.True(quantity > 0);
 
             // Perform
-            SkuInventory result = await _adapter.GetSkuAvailability(warehouse, sku, quantity);
+            SkuInventory result = await _adapter.GetSkuAvailabilityAsync(warehouse, sku, quantity);
 
             // Post-validate
             Assert.NotNull(result);
@@ -61,7 +61,25 @@ namespace Filuet.Hrbl.Ordering.Tests
             Assert.False(string.IsNullOrWhiteSpace(warehouse));
 
             // Perform
-            SkuInventory[] result = await _adapter.GetSkuAvailability(warehouse, items);
+            SkuInventory[] result = await _adapter.GetSkuAvailabilityAsync(warehouse, items);
+
+            // Post-validate
+            Assert.NotNull(result);
+        }
+
+        [Theory]
+        [MemberData(nameof(TestDataGenerator.GetProductCatalog), MemberType = typeof(TestDataGenerator))]
+        public async Task Test_Valid_sku_remains_scope_Async(string warehouse, Dictionary<string, int> items)
+        {
+            // Prepare
+            Assert.NotNull(_adapter);
+
+            // Pre-validate
+            Assert.False(string.IsNullOrWhiteSpace(warehouse));
+
+            // Perform
+            Task<SkuInventory[]> t = _adapter.GetSkuAvailabilityAsync(warehouse, items);
+            SkuInventory[] result = await t;
 
             // Post-validate
             Assert.NotNull(result);

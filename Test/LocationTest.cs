@@ -11,7 +11,7 @@ namespace Filuet.Hrbl.Ordering.Tests
     public class LocationTest : BaseTest
     {
         [Theory]
-        [InlineData("lv")]
+        [InlineData("kh")]
         public async Task Test_Get_ds_fop_purchasing_limits(string country)
         {
             // Prepare
