@@ -394,7 +394,7 @@ namespace Filuet.Hrbl.Ordering.Tests
         [Fact]
         public async Task Test_ConversionRate()
         {
-            var response = await _adapter.GetConversionRate(new ConversionRateRequest { ConversionDate = "2022-03-11T12:15:11.4366", ExchangeRateType = "HL Cambodia NTS FX",  FromCurrency = "USD", ToCurrency = "KHR" });
+            var response = await _adapter.GetConversionRate(new ConversionRateRequest { ConversionDate = "2023-03-02T12:15:11.4366", ExchangeRateType = "HL Cambodia NTS FX",  FromCurrency = "USD", ToCurrency = "KHR" });
         }
 
         [Fact]
