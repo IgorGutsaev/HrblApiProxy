@@ -11,7 +11,7 @@ namespace Filuet.Hrbl.Ordering.Abstractions
     {
         Task<PollResult> PollRequest();
 
-        Task<SsoAuthResult> GetSsoProfile(string login, string password);
+        Task<SsoAuthResult> GetSsoProfileAsync(string login, string password);
 
         Task<(bool isValid, string memberId)> ValidateSsoBearerToken(string token);
 

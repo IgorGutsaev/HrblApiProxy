@@ -15,8 +15,6 @@ using Filuet.Hrbl.Ordering.Abstractions.Enums;
 using Filuet.Hrbl.Ordering.Abstractions.Models;
 using System.Diagnostics;
 using Microsoft.Extensions.Logging;
-using System.Net;
-using System.Runtime.CompilerServices;
 
 namespace Filuet.Hrbl.Ordering.Adapter
 {
@@ -169,7 +167,7 @@ namespace Filuet.Hrbl.Ordering.Adapter
         #endregion
 
         #region Distributor
-        public async Task<SsoAuthResult> GetSsoProfile(string login, string password)
+        public async Task<SsoAuthResult> GetSsoProfileAsync(string login, string password)
         {
             using (HttpClient httpClient = new HttpClient())
             {
@@ -185,12 +183,12 @@ namespace Filuet.Hrbl.Ordering.Adapter
                     , Encoding.Default, "application/json");
 
                 HttpResponseMessage response = await httpClient.SendAsync(request);
-                response.EnsureSuccessStatusCode();
+                //response.EnsureSuccessStatusCode();
 
                 string resultStr = response.Content.ReadAsStringAsync().Result;
                 SsoAuthResposeWrapper result = JsonConvert.DeserializeObject<SsoAuthResposeWrapper>(resultStr);
-                if (!result.Data.IsAuthenticated)
-                    throw new Exception("Not authenticated");
+                if (result.Data == null || !result.Data.IsAuthenticated)
+                    throw new UnauthorizedAccessException(result.Message);
 
                 httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", result.Data.Token);
 

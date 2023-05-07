@@ -21,7 +21,7 @@ namespace Filuet.Hrbl.Ordering.Tests
             Assert.False(string.IsNullOrWhiteSpace(password));
 
             // Perform
-            SsoAuthResult result = await _adapter.GetSsoProfile(login, password);
+            SsoAuthResult result = await _adapter.GetSsoProfileAsync(login, password);
 
             // Post-validate
             Assert.NotNull(result);
