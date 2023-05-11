@@ -88,7 +88,7 @@ namespace Filuet.Hrbl.Ordering.POC.PromoEngine
                             pL.Add(p);
                         };
 
-            Action<SubmitRequestBuilder> setupAction = (b) =>
+            Action<SubmitRequestBuilder> setupAction = b =>
                 b.AddHeader(h =>
                 {
                     h.OrderSource = "KIOSK";
@@ -104,6 +104,7 @@ namespace Filuet.Hrbl.Ordering.POC.PromoEngine
                     h.PostalCode = pricing.Header.PostalCode;
                     h.Address1 = pricing.Header.Address1;
                     h.Address2 = pricing.Header.Address2 ?? string.Empty;
+                    h.Address3 = pricing.Header.Address3 ?? string.Empty;
                     h.State = string.Empty;
                     h.City = pricing.Header.City;
                     h.ExternalOrderNumber = pricing.Header.ExternalOrderNumber;
