@@ -1,0 +1,1 @@
+(Get-Content HrblRestApiClient.cs).replace('MediaTypeHeaderValue.Parse("application/json")', 'MediaTypeHeaderValue.Parse("application/json; charset=utf-8")') | Set-Content HrblRestApiClient.cs

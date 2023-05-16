@@ -350,27 +350,11 @@ namespace Filuet.Hrbl.Ordering.Adapter
 
             object response = await _proxy.GetDistributorProfileAsync(request);
 
-            var encoderSettings = new TextEncoderSettings();
-            encoderSettings.AllowCharacters('\u0436', '\u0430', '\uFFFD');
-            encoderSettings.AllowRange(UnicodeRanges.BasicLatin);
-            var options = new JsonSerializerOptions
-            {
-                Encoder = JavaScriptEncoder.Create(encoderSettings),
-                WriteIndented = true
-            };
-
-            //var options = new JsonSerializerOptions
-            //{
-            //    Encoder = JavaScriptEncoder.Create(UnicodeRanges.All),
-            //    Converters = { new StringConverterForUtf8EscapedCharValues() },
-            //    WriteIndented = true
-            //};
-
-            string responseString = JsonSerializer.Serialize(response, options);
+            string responseString = JsonSerializer.Serialize(response);
 
             _logger?.LogInformation($"Result is '{responseString}'");
 
-            return JsonSerializer.Deserialize<DistributorProfileResult>(responseString.ResolveHrblMess(), options).Profile;
+            return JsonSerializer.Deserialize<DistributorProfileResult>(responseString.ResolveHrblMess()).Profile;
         }
 
         public async Task UpdateAddressAndContacts(Action<ProfileUpdateBuilder> setup)
