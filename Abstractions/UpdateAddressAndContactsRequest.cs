@@ -1,19 +1,19 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace Filuet.Hrbl.Ordering.Abstractions
 {
     internal class UpdateAddressAndContactsRequest
     {
-        [JsonProperty("ServiceConsumer")]
+        [JsonPropertyName("ServiceConsumer")]
         public string ServiceConsumer { get; internal set; }
 
-        [JsonProperty("DistributorId")]
+        [JsonPropertyName("DistributorId")]
         public string DistributorId { get; internal set; }
 
-        [JsonProperty("Address")]
+        [JsonPropertyName("Address")]
         public DistributorAddressToUpdate Address { get; internal set; }
 
-        [JsonProperty("contact")]
+        [JsonPropertyName("contact")]
         public DistributorContactToUpdate Contact { get; internal set; }
     }
 }

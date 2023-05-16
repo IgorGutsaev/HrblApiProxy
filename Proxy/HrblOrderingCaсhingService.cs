@@ -24,14 +24,14 @@ namespace Filuet.Hrbl.Ordering.Proxy
             _logger = logger;
         }
 
-        public async Task<SsoAuthDistributorDetails> GetSsoProfileAsync(string login, string password)
+        public async Task<SsoAuthResult> GetSsoProfileAsync(string login, string password, bool force = false)
         {
             string key = $"{login.ToLower()}+{password}";
-            SsoAuthDistributorDetails? cachedProfile = _longCache.GetSsoProfile(key);
+            SsoAuthResult? cachedProfile = _longCache.GetSsoProfile(key);
 
             MemoryCacher memCacher = _shortCache.Get(SSO_PROFILE_CACHE_NAME, SSO_PROFILE_CACHE_SIZE_MB);
             
-            Func<Task<SsoAuthDistributorDetails>> extractProfile = async () =>
+            Func<Task<SsoAuthResult>> extractProfile = async () =>
             {
                 // Cached profile has not been found. We must request Herbalife
                 SsoAuthResult authResponse;
@@ -42,12 +42,12 @@ namespace Filuet.Hrbl.Ordering.Proxy
                     if (authResponse != null)
                     {
                         // Put response to the short cache
-                        memCacher.Set(key, authResponse.Profile, SSO_PROFILE_CACHE_DURATION_MIN * 60000, false);
+                        memCacher.Set(key, authResponse, SSO_PROFILE_CACHE_DURATION_MIN * 60000, false);
                         // Put response to the long cache
-                        _longCache.PutSsoProfile(login, key, authResponse.Profile);
+                        _longCache.PutSsoProfile(login, key, authResponse);
                         // + add hrbl token
 
-                        return authResponse.Profile;
+                        return authResponse;
                     }
                 }
                 catch (UnauthorizedAccessException ex)
@@ -61,13 +61,13 @@ namespace Filuet.Hrbl.Ordering.Proxy
                 throw new UnauthorizedAccessException();
             };
 
-            if (cachedProfile != null)
+            if (cachedProfile != null && !force)
             {
                 // The profile has been found in the long cache. But password may have changed
                 // so let's request to Herbalife for verification 
 
                 // First let's check 'short' cache. The profile in the short cache means that login/password provided were up to date as of cache lifetime ago
-                SsoAuthDistributorDetails fromCache = memCacher.Get<SsoAuthDistributorDetails>(key);
+                SsoAuthResult fromCache = memCacher.Get<SsoAuthResult>(key);
                 if (fromCache != null)
                     return fromCache;
                 else
@@ -90,6 +90,6 @@ namespace Filuet.Hrbl.Ordering.Proxy
 
         const string SSO_PROFILE_CACHE_NAME = "ssoProfiles";
         const int SSO_PROFILE_CACHE_SIZE_MB = 100; 
-        const int SSO_PROFILE_CACHE_DURATION_MIN = 1440; 
+        const int SSO_PROFILE_CACHE_DURATION_MIN = 180; 
     }
 }

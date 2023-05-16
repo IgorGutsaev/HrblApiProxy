@@ -1,88 +1,86 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System;
+using System.Text.Json.Serialization;
 
 namespace Filuet.Hrbl.Ordering.Abstractions
 {
     public class DistributorVolumePointsDetailsResult
     {
-        [JsonProperty("DistributorId")]
+        [JsonPropertyName("DistributorId")]
         public string DistributorId { get; private set; }
 
-        [JsonProperty("DistributorVolumeDetails")]
+        [JsonPropertyName("DistributorVolumeDetails")]
         public DistributorVolumeDelails DistributorVolumeDetails { get; private set; }
     }
 
     public class DistributorVolumeDelails
     {
-        [JsonProperty("DistributorVolume")]
+        [JsonPropertyName("DistributorVolume")]
         public DistributorVolumePoints[] DistributorVolume { get; private set; }
     }
 
     public class DistributorVolumePoints
     {
-        [JsonProperty("OrderMonth")]
+        [JsonPropertyName("OrderMonth")]
         public string OrderMonth { get; private set; }
 
-        [JsonProperty("DistPPV")]
+        [JsonPropertyName("DistPPV")]
         public decimal DistPPV { get; private set; }
 
-        [JsonProperty("DistDLV")]
+        [JsonPropertyName("DistDLV")]
         public decimal DistDLV { get; private set; }
 
-        [JsonProperty("DistPV")]
+        [JsonPropertyName("DistPV")]
         public decimal DistPV { get; private set; }
 
-        [JsonProperty("DistGV")]
+        [JsonPropertyName("DistGV")]
         public decimal DistGV { get; private set; }
 
-        [JsonProperty("DistTV")]
+        [JsonPropertyName("DistTV")]
         public decimal DistTV { get; private set; }
 
-        [JsonProperty("DistRO")]
+        [JsonPropertyName("DistRO")]
         public decimal DistRO { get; private set; }
 
-        [JsonProperty("DistMPV")]
+        [JsonPropertyName("DistMPV")]
         public decimal DistMPV { get; private set; }
 
-        [JsonProperty("DistMTV")]
+        [JsonPropertyName("DistMTV")]
         public decimal DistMTV { get; private set; }
 
-        [JsonProperty("Dist3PPV")]
+        [JsonPropertyName("Dist3PPV")]
         public decimal Dist3PPV { get; private set; }
 
-        [JsonProperty("Dist12PPV")]
+        [JsonPropertyName("Dist12PPV")]
         public decimal Dist12PPV { get; private set; }
 
-        [JsonProperty("DistUV")]
+        [JsonPropertyName("DistUV")]
         public decimal DistUV { get; private set; }
 
-        [JsonProperty("DistEV")]
+        [JsonPropertyName("DistEV")]
         public decimal DistEV { get; private set; }
 
-        [JsonProperty("UvEvLastUpdateDate")]
+        [JsonPropertyName("UvEvLastUpdateDate")]
         public DateTime? UvEvLastUpdateDate { get; private set; }
 
-        [JsonProperty("Dist3DLV")]
+        [JsonPropertyName("Dist3DLV")]
         public decimal Dist3DLV { get; private set; }
 
-        [JsonProperty("Dist12DLV")]
+        [JsonPropertyName("Dist12DLV")]
         public decimal Dist12DLV { get; private set; }
 
-        [JsonProperty("Dist6PPV")]
+        [JsonPropertyName("Dist6PPV")]
         public decimal Dist6PPV { get; private set; }
 
-        [JsonProperty("Dist6DLV")]
+        [JsonPropertyName("Dist6DLV")]
         public decimal Dist6DLV { get; private set; }
 
-        [JsonProperty("Dist2PPV")]
+        [JsonPropertyName("Dist2PPV")]
         public decimal Dist2PPV { get; private set; }
 
-        [JsonProperty("CDLV")]
+        [JsonPropertyName("CDLV")]
         public decimal CDLV { get; private set; }
 
-        [JsonProperty("PM_12DLV")]
+        [JsonPropertyName("PM_12DLV")]
         public decimal PM_12DLV { get; private set; }
     }
 }

@@ -1,16 +1,16 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
+using System.Text.Json.Serialization;
 
 namespace Filuet.Hrbl.Ordering.Abstractions
 {
     public class SubmitResponse
     {
-        [JsonProperty("OrderStatus")]
+        [JsonPropertyName("OrderStatus")]
         public string OrderStatus { get; set; } //  SUCCESS
-        [JsonProperty("OrderNumber")]
+        [JsonPropertyName("OrderNumber")]
         public string OrderNumber { get; set; }
 
-        [JsonProperty("Errors")]
+        [JsonPropertyName("Errors")]
         internal CommonErrorList Errors { get; private set; }
 
         [JsonIgnore]

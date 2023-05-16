@@ -20,8 +20,8 @@ namespace Filuet.Hrbl.Ordering.Proxy.Controllers
         }
 
         [HttpPost("profile")]
-        public async Task<SsoAuthDistributorDetails> GetSsoProfileAsync([FromBody] AuthCredentials credentials)
-            => await _hrblOrderingService.GetSsoProfileAsync(credentials.Login.Trim(), credentials.Password.Trim());
+        public async Task<SsoAuthResult> GetSsoProfileAsync([FromBody] AuthCredentials credentials)
+            => await _hrblOrderingService.GetSsoProfileAsync(credentials.Login.Trim(), credentials.Password.Trim(), credentials.Force);
 
 
         private readonly ILogger<HrblRestApiController> _logger;

@@ -12,5 +12,8 @@ namespace Filuet.Hrbl.Ordering.Proxy.Models
         [Required]
         [JsonPropertyName("password")]
         public string Password { get; set; }
+
+        [JsonPropertyName("force")]
+        public bool Force { get; set; } = false;
     }
 }

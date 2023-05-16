@@ -1,45 +1,44 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
+using System.Text.Json.Serialization;
 
 namespace Filuet.Hrbl.Ordering.Abstractions
 {
     internal class GetDistributorTinsResult
     {
-        [JsonProperty("DistributorId")]
+        [JsonPropertyName("DistributorId")]
         private string Distributor { get; set; }
 
-        [JsonProperty("TinDetails")]
+        [JsonPropertyName("TinDetails")]
         public TinDetails TinDetails { get; set; }
 
-        [JsonProperty("ErrorDetails")] // Also might be ranamed as Errors
+        [JsonPropertyName("ErrorDetails")] // Also might be ranamed as Errors
         internal CommonErrorList Errors { get; private set; }
     }
 
     public class TinDetails
     {
-        [JsonProperty("DistributorTin")]
+        [JsonPropertyName("DistributorTin")]
         public DistributorTin[] DistributorTins { get; set; }
     }
 
     public class DistributorTin
     {
-        [JsonProperty("TinCode")]
+        [JsonPropertyName("TinCode")]
         public string Code { get; set; }
                 
-        [JsonProperty("TinNumber")]
+        [JsonPropertyName("TinNumber")]
         public string Number { get; set; }
 
-        [JsonProperty("TinCountry")]
+        [JsonPropertyName("TinCountry")]
         public string Country { get; set; }
 
-        [JsonProperty("EffectiveDate")]
+        [JsonPropertyName("EffectiveDate")]
         public string EffectiveDate { get; set; }
 
-        [JsonProperty("ExpirationDate")]
+        [JsonPropertyName("ExpirationDate")]
         public string ExpirationDate { get; set; }
 
-
-        [JsonProperty("ActiveFlag")]
+        [JsonPropertyName("ActiveFlag")]
         internal string _isActive { get; set; }
 
         [JsonIgnore]

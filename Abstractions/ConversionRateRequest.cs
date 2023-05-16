@@ -1,22 +1,20 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System;
+using System.Text.Json.Serialization;
 
 namespace Filuet.Hrbl.Ordering.Abstractions
 {
     public class ConversionRateRequest
     {
-        [JsonProperty("FromCurrency")]
+        [JsonPropertyName("FromCurrency")]
         public string FromCurrency { get; set; }
 
-        [JsonProperty("ToCurrency")]
+        [JsonPropertyName("ToCurrency")]
         public string ToCurrency { get; set; }
 
-        [JsonProperty("ConversionDate")]
+        [JsonPropertyName("ConversionDate")]
         public string ConversionDate { get; set; }
 
-        [JsonProperty("ExchangeRateType")]
+        [JsonPropertyName("ExchangeRateType")]
         public string ExchangeRateType { get; set; }
 
         public void SetDate(DateTime date)

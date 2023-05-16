@@ -1,15 +1,12 @@
-﻿using Newtonsoft.Json.Converters;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿//using Newtonsoft.Json.Converters;
 
-namespace Filuet.Hrbl.Ordering.Abstractions.Serializers
-{
-    public class OrderMonthSelectDateTimeConverter : IsoDateTimeConverter
-    {
-        public OrderMonthSelectDateTimeConverter()
-        {
-            base.DateTimeFormat = "yyMM";
-        }
-    }
-}
+//namespace Filuet.Hrbl.Ordering.Abstractions.Serializers
+//{
+//    public class OrderMonthSelectDateTimeConverter : IsoDateTimeConverter
+//    {
+//        public OrderMonthSelectDateTimeConverter()
+//        {
+//            base.DateTimeFormat = "yyMM";
+//        }
+//    }
+//}

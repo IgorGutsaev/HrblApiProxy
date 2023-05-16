@@ -1,22 +1,19 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Text.Json.Serialization;
 
 namespace Filuet.Hrbl.Ordering.Abstractions
 {
     public class Responses
     {
-        [JsonProperty("Response")]
+        [JsonPropertyName("Response")]
         public Response[] Response { get; private set; }
     }
 
     public class Response
     {
-        [JsonProperty("ResponseCode")]
+        [JsonPropertyName("ResponseCode")]
         public string Code { get; private set; }
 
-        [JsonProperty("ResponseMessage")]
+        [JsonPropertyName("ResponseMessage")]
         public string Message { get; private set; }
     }
 }

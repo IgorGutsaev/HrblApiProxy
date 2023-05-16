@@ -1,197 +1,195 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.ComponentModel;
+﻿using System;
 using System.Linq;
-using System.Xml.Serialization;
+using System.Text.Json.Serialization;
 
 namespace Filuet.Hrbl.Ordering.Abstractions
 {
     internal class DistributorProfileResult
     {
-        [JsonProperty("Distributor")]
+        [JsonPropertyName("Distributor")]
         public DistributorProfile Profile { get; private set; }
     }
 
     public sealed class DistributorProfile
     {
-        [JsonProperty("DistributorName")]
+        [JsonPropertyName("DistributorName")]
         public string Name { get; private set; }
 
-        [JsonProperty("DistributorId")]
+        [JsonPropertyName("DistributorId")]
         public string Id { get; private set; }
 
-        [JsonProperty("DistributorShip")]
+        [JsonPropertyName("DistributorShip")]
         public DistributorShipping Shipping { get; private set; }
 
-        [JsonProperty("DistributorStatus")]
+        [JsonPropertyName("DistributorStatus")]
         public string DistributorStatus { get; private set; }
 
-        [JsonProperty("DistributorType")]
+        [JsonPropertyName("DistributorType")]
         public string DistributorType { get; private set; }
 
-        [JsonProperty("DistributorSubType")]
+        [JsonPropertyName("DistributorSubType")]
         public string DistributorSubType { get; private set; }
 
-        [JsonProperty("TypeSubType")]
+        [JsonPropertyName("TypeSubType")]
         public string TypeSubType { get; private set; }
 
-        [JsonProperty("ApplicationNumber")]
+        [JsonPropertyName("ApplicationNumber")]
         public string ApplicationNumber { get; private set; }
 
-        [JsonProperty("ApplicationSource")]
+        [JsonPropertyName("ApplicationSource")]
         public string ApplicationSource { get; private set; }
 
-        [JsonProperty("DistributorDatesFlags")]
+        [JsonPropertyName("DistributorDatesFlags")]
         public DistributorDatesFlags DatesAndFlags { get; private set; }
 
-        [JsonProperty("Minor")]
+        [JsonPropertyName("Minor")]
         public string Minor { get; private set; }
 
-        [JsonProperty("SponsorId")]
+        [JsonPropertyName("SponsorId")]
         public string SponsorId { get; private set; }
 
-        [JsonProperty("SponsorLastName")]
+        [JsonPropertyName("SponsorLastName")]
         public string SponsorLastName { get; private set; }
 
-        [JsonProperty("SponsorFirstName")]
+        [JsonPropertyName("SponsorFirstName")]
         public string SponsorFirstName { get; private set; }
 
-        [JsonProperty("SponsorMiddleName")]
+        [JsonPropertyName("SponsorMiddleName")]
         public string SponsorMiddleName { get; private set; }
 
-        [JsonProperty("DeletionReason")]
+        [JsonPropertyName("DeletionReason")]
         public string DeletionReason { get; private set; }
 
-        [JsonProperty("CorpIncorporationPlace")]
+        [JsonPropertyName("CorpIncorporationPlace")]
         public string CorpIncorporationPlace { get; private set; }
 
-        [JsonProperty("AuxillaryId")]
+        [JsonPropertyName("AuxillaryId")]
         public string AuxillaryId { get; private set; }
 
-        [JsonProperty("ProblemType")]
+        [JsonPropertyName("ProblemType")]
         public string ProblemType { get; private set; }
 
-        [JsonProperty("AvailableCreditLimit")]
+        [JsonPropertyName("AvailableCreditLimit")]
         public object AvailableCreditLimit { get; private set; }
 
-        [JsonProperty("ReceivabletoCollect")]
+        [JsonPropertyName("ReceivabletoCollect")]
         public object ReceivabletoCollect { get; private set; }
 
-        [JsonProperty("CheckPayableTo")]
+        [JsonPropertyName("CheckPayableTo")]
         public string CheckPayableTo { get; private set; }
 
-        [JsonProperty("MVPenaltyMonth")]
+        [JsonPropertyName("MVPenaltyMonth")]
         public object MVPenaltyMonth { get; private set; }
 
-        [JsonProperty("CheckPayableToLocal")]
+        [JsonPropertyName("CheckPayableToLocal")]
         public string CheckPayableToLocal { get; private set; }
 
-        [JsonProperty("NotificationPreference")]
+        [JsonPropertyName("NotificationPreference")]
         public string NotificationPreference { get; private set; }
 
-        [JsonProperty("TABLevel")]
+        [JsonPropertyName("TABLevel")]
         public string TABLevel { get; private set; }
 
-        [JsonProperty("XTABLevel")]
+        [JsonPropertyName("XTABLevel")]
         public string XTABLevel { get; private set; }
 
-        [JsonProperty("CountryofResidence")]
+        [JsonPropertyName("CountryofResidence")]
         public string CountryOfResidence { get; private set; }
 
-        [JsonProperty("CountryofProcessing")]
+        [JsonPropertyName("CountryofProcessing")]
         public string CountryOfProcessing { get; private set; }
 
-        [JsonProperty("LanguageCodeLocal")]
+        [JsonPropertyName("LanguageCodeLocal")]
         public string LanguageCodeLocal { get; private set; }
 
-        [JsonProperty("MXDSRefNum")]
+        [JsonPropertyName("MXDSRefNum")]
         public string MXDSRefNum { get; private set; }
 
-        [JsonProperty("ItalyDSType")]
+        [JsonPropertyName("ItalyDSType")]
         public string ItalyDSType { get; private set; }
 
-        [JsonProperty("DSTypeDesc")]
+        [JsonPropertyName("DSTypeDesc")]
         public string DSTypeDesc { get; private set; }
 
-        [JsonProperty("DSSubTypeDesc")]
+        [JsonPropertyName("DSSubTypeDesc")]
         public string DSSubTypeDesc { get; private set; }
 
-        [JsonProperty("Partners")]
+        [JsonPropertyName("Partners")]
         public object Partners { get; private set; }
 
-        [JsonProperty("Discount")]
+        [JsonPropertyName("Discount")]
         public DistributorDiscount Discount { get; private set; }
 
-        [JsonProperty("CSExpiryDate")]
+        [JsonPropertyName("CSExpiryDate")]
         public DateTime? CSExpiryDate { get; private set; }
 
-        [JsonProperty("EnrollerID")]
+        [JsonPropertyName("EnrollerID")]
         public string EnrollerID { get; private set; }
 
-        [JsonProperty("EnrollerFirstName")]
+        [JsonPropertyName("EnrollerFirstName")]
         public string EnrollerFirstName { get; private set; }
 
-        [JsonProperty("EnrollerLastName")]
+        [JsonPropertyName("EnrollerLastName")]
         public string EnrollerLastName { get; private set; }
 
-        [JsonProperty("CantBuyReasons")]
+        [JsonPropertyName("CantBuyReasons")]
         public CantBuyReasons CantBuyReasons { get; private set; }
 
-        [JsonProperty("DsTrainings")]
+        [JsonPropertyName("DsTrainings")]
         public object DsTrainings { get; private set; }
 
-        [JsonProperty("TrainingsHold")]
+        [JsonPropertyName("TrainingsHold")]
         public object TrainingsHold { get; private set; }
 
-        [JsonProperty("LifePartnerLastName")]
+        [JsonPropertyName("LifePartnerLastName")]
         public string LifePartnerLastName { get; private set; }
 
-        [JsonProperty("LifePartnerFirstName")]
+        [JsonPropertyName("LifePartnerFirstName")]
         public string LifePartnerFirstName { get; private set; }
 
-        [JsonProperty("LifePartnerMiddleName")]
+        [JsonPropertyName("LifePartnerMiddleName")]
         public string LifePartnerMiddleName { get; private set; }
 
-        [JsonProperty("LifePartnerLastLocalName")]
+        [JsonPropertyName("LifePartnerLastLocalName")]
         public string LifePartnerLastLocalName { get; private set; }
 
-        [JsonProperty("LifePartnerFirstLocalName")]
+        [JsonPropertyName("LifePartnerFirstLocalName")]
         public string LifePartnerFirstLocalName { get; private set; }
 
-        [JsonProperty("LifePartnerMiddleLocalName")]
+        [JsonPropertyName("LifePartnerMiddleLocalName")]
         public string LifePartnerMiddleLocalName { get; private set; }
 
-        [JsonProperty("OtherType")]
+        [JsonPropertyName("OtherType")]
         public string OtherType { get; private set; }
 
-        [JsonProperty("OtherSubtype")]
+        [JsonPropertyName("OtherSubtype")]
         public string OtherSubtype { get; private set; }
 
-        [JsonProperty("SponsorEmailAddress")]
+        [JsonPropertyName("SponsorEmailAddress")]
         public string SponsorEmailAddress { get; private set; }
 
-        [JsonProperty("DistTinsMessage")]
+        [JsonPropertyName("DistTinsMessage")]
         public DistTinsMessage DistTinsMessage { get; private set; }
 
-        [JsonProperty("OrderRestrictionFlag")]
+        [JsonPropertyName("OrderRestrictionFlag")]
         public string OrderRestrictionFlag { get; private set; }
 
-        [JsonProperty("OrderRestrictions")]
+        [JsonPropertyName("OrderRestrictions")]
         public string OrderRestrictions { get; private set; }
 
-        [JsonProperty("CountryofMailing")]
+        [JsonPropertyName("CountryofMailing")]
         public string CountryOfMailing { get; private set; }
 
-        [JsonProperty("AccountType")]
+        [JsonPropertyName("AccountType")]
         public string AccountType { get; private set; }
 
-        [JsonProperty("DsJoiningPurpose")]
+        [JsonPropertyName("DsJoiningPurpose")]
         public string DsJoiningPurpose { get; private set; }
 
-        [JsonProperty("CnType")]
+        [JsonPropertyName("CnType")]
         public string CnType { get; private set; }
 
-        [JsonProperty("CnSubType")]
+        [JsonPropertyName("CnSubType")]
         public string CnSubType { get; private set; }
 
         [JsonIgnore]
@@ -208,85 +206,85 @@ namespace Filuet.Hrbl.Ordering.Abstractions
 
     public sealed class DistributorDiscount
     {
-        [JsonProperty("DistributorDiscount")]
+        [JsonPropertyName("DistributorDiscount")]
         public int? Discount { get; private set; }
 
-        [JsonProperty("HerbalifeMinDiscount")]
+        [JsonPropertyName("HerbalifeMinDiscount")]
         public int? MinDiscount { get; private set; }
 
-        [JsonProperty("HerbalifeMaxDiscount")]
+        [JsonPropertyName("HerbalifeMaxDiscount")]
         public int? MaxDiscount { get; private set; }
 
-        [JsonProperty("PeronsalConsumptionDiscount")]
+        [JsonPropertyName("PeronsalConsumptionDiscount")]
         public int? PeronsalConsumptionDiscount { get; private set; }
 
-        [JsonProperty("RetailDiscount")]
+        [JsonPropertyName("RetailDiscount")]
         public int? RetailDiscount { get; private set; }
     }
 
     public sealed class DistributorShipping
     {
-        [JsonProperty("Type")]
+        [JsonPropertyName("Type")]
         public string Type { get; private set; }
 
-        [JsonProperty("PartyId")]
+        [JsonPropertyName("PartyId")]
         public string PartyId { get; private set; }
 
-        [JsonProperty("PartyNumber")]
+        [JsonPropertyName("PartyNumber")]
         public string PartyNumber { get; private set; }
 
-        [JsonProperty("PartyName")]
+        [JsonPropertyName("PartyName")]
         public string PartyName { get; private set; }
 
-        [JsonProperty("FirstName")]
+        [JsonPropertyName("FirstName")]
         public string FirstName { get; private set; }
 
-        [JsonProperty("LastName")]
+        [JsonPropertyName("LastName")]
         public string LastName { get; private set; }
 
-        [JsonProperty("MiddleName")]
+        [JsonPropertyName("MiddleName")]
         public string MiddleName { get; private set; }
 
-        [JsonProperty("FirstNameLocal")]
+        [JsonPropertyName("FirstNameLocal")]
         public string FirstNameLocal { get; private set; }
 
-        [JsonProperty("LastNameLocal")]
+        [JsonPropertyName("LastNameLocal")]
         public string LastNameLocal { get; private set; }
 
-        [JsonProperty("MiddleNameLocal")]
+        [JsonPropertyName("MiddleNameLocal")]
         public string MiddleNameLocal { get; private set; }
 
-        [JsonProperty("SpouseFirstName")]
+        [JsonPropertyName("SpouseFirstName")]
         public string SpouseFirstName { get; private set; }
 
-        [JsonProperty("SpouseLastName")]
+        [JsonPropertyName("SpouseLastName")]
         public string SpouseLastName { get; private set; }
 
-        [JsonProperty("SpouseMiddleName")]
+        [JsonPropertyName("SpouseMiddleName")]
         public string SpouseMiddleName { get; private set; }
 
-        [JsonProperty("SpouseFirstNameLocal")]
+        [JsonPropertyName("SpouseFirstNameLocal")]
         public string SpouseFirstNameLocal { get; private set; }
 
-        [JsonProperty("SpouseLastNameLocal")]
+        [JsonPropertyName("SpouseLastNameLocal")]
         public string SpouseLastNameLocal { get; private set; }
 
-        [JsonProperty("SpouseMiddleNameLocal")]
+        [JsonPropertyName("SpouseMiddleNameLocal")]
         public string SpouseMiddleNameLocal { get; private set; }
 
-        [JsonProperty("DateofBirth")]
+        [JsonPropertyName("DateofBirth")]
         public DateTime? DateofBirth { get; private set; }
 
-        [JsonProperty("Gender")]
+        [JsonPropertyName("Gender")]
         public string Gender { get; private set; }
 
-        [JsonProperty("Addresses")]
+        [JsonPropertyName("Addresses")]
         private DistributorAddresses _addresses { get; set; }
 
         [JsonIgnore]
         public DistributorAddress[] Addresses => _addresses?.Addresses;
 
-        [JsonProperty("Contacts")]
+        [JsonPropertyName("Contacts")]
         private DistributorContacts _contacts { get; set; }
 
         [JsonIgnore]
@@ -295,61 +293,61 @@ namespace Filuet.Hrbl.Ordering.Abstractions
 
     public sealed class DistributorAddresses
     {
-        [JsonProperty("Address")]
+        [JsonPropertyName("Address")]
         public DistributorAddress[] Addresses { get; private set; }
     }
 
     public class DistributorAddress
     {
-        [JsonProperty("AddressType")]
+        [JsonPropertyName("AddressType")]
         public string Type { get; internal set; }
 
-        [JsonProperty("AddressLine1")]
+        [JsonPropertyName("AddressLine1")]
         public string Line1 { get; internal set; }
 
-        [JsonProperty("AddressLine2")]
+        [JsonPropertyName("AddressLine2")]
         public string Line2 { get; internal set; }
 
-        [JsonProperty("AddressLine3")]
+        [JsonPropertyName("AddressLine3")]
         public string Line3 { get; internal set; }
 
-        [JsonProperty("AddressLine4")]
+        [JsonPropertyName("AddressLine4")]
         public string Line4 { get; internal set; }
 
-        [JsonProperty("suburb")]
+        [JsonPropertyName("suburb")]
         public string Suburb { get; internal set; }
 
-        [JsonProperty("geo_code")]
+        [JsonPropertyName("geo_code")]
         public string GeoCode { get; internal set; }
 
-        [JsonProperty("City")]
+        [JsonPropertyName("City")]
         public string City { get; internal set; }
 
-        [JsonProperty("State")]
+        [JsonPropertyName("State")]
         public string State { get; internal set; }
 
-        [JsonProperty("Province")]
+        [JsonPropertyName("Province")]
         public string Province { get; internal set; }
 
-        [JsonProperty("County")]
+        [JsonPropertyName("County")]
         public string County { get; internal set; }
 
-        [JsonProperty("Country")]
+        [JsonPropertyName("Country")]
         public string Country { get; internal set; }
 
-        [JsonProperty("ZipCode")]
+        [JsonPropertyName("ZipCode")]
         public string ZipCode { get; internal set; }
 
-        [JsonProperty("ZipPlusFour")]
+        [JsonPropertyName("ZipPlusFour")]
         public string ZipPlusFour { get; internal set; }
 
-        [JsonProperty("CareOfName")]
+        [JsonPropertyName("CareOfName")]
         public string CareOfName { get; internal set; }
 
-        [JsonProperty("LastUpdateDate")]
+        [JsonPropertyName("LastUpdateDate")]
         public DateTime LastUpdateDate { get; internal set; }
 
-        [JsonProperty("Attribute4")]
+        [JsonPropertyName("Attribute4")]
         public string Attribute4 { get; internal set; }
 
         [JsonIgnore]
@@ -429,37 +427,37 @@ namespace Filuet.Hrbl.Ordering.Abstractions
 
     public sealed class DistributorContacts
     {
-        [JsonProperty("Contact")]
+        [JsonPropertyName("Contact")]
         public DistributorContact[] Contacts { get; private set; }
     }
 
     public class DistributorContact
     {
-        [JsonProperty("Type")]
+        [JsonPropertyName("Type")]
         public string Type { get; internal set; }
 
-        [JsonProperty("SubType")]
+        [JsonPropertyName("SubType")]
         public string SubType { get; internal set; }
 
-        [JsonProperty("Value")]
+        [JsonPropertyName("Value")]
         public string Value { get; internal set; }
 
-        [JsonProperty("OldValue")]
+        [JsonPropertyName("OldValue")]
         public string OldValue { get; internal set; } = string.Empty;
 
-        [JsonProperty("IsPrimary")]
+        [JsonPropertyName("IsPrimary")]
         internal string _isPrimary { get; set; }
 
         [JsonIgnore]
         public bool IsPrimary => string.Equals(_isPrimary, "Y", StringComparison.InvariantCultureIgnoreCase);
 
-        [JsonProperty("IsActive")]
+        [JsonPropertyName("IsActive")]
         internal string _isActive { get; set; }
 
         [JsonIgnore]
         public bool IsActive => string.Equals(_isActive, "A", StringComparison.InvariantCultureIgnoreCase);
 
-        [JsonProperty("LastUpdateDate")]
+        [JsonPropertyName("LastUpdateDate")]
         public DateTime LastUpdateDate { get; internal set; }
 
         public override string ToString() => Type.Trim();
@@ -467,19 +465,19 @@ namespace Filuet.Hrbl.Ordering.Abstractions
 
     internal sealed class DistributorContactToUpdate : DistributorContact
     {
-        [JsonProperty("Attribute1")]
+        [JsonPropertyName("Attribute1")]
         public string Attribute1 { get; private set; }
 
-        [JsonProperty("Attribute2")]
+        [JsonPropertyName("Attribute2")]
         public string Attribute2 { get; private set; }
 
-        [JsonProperty("Attribute3")]
+        [JsonPropertyName("Attribute3")]
         public string Attribute3 { get; private set; }
 
-        [JsonProperty("Attribute4")]
+        [JsonPropertyName("Attribute4")]
         public string Attribute4 { get; private set; }
 
-        [JsonProperty("Attribute5")]
+        [JsonPropertyName("Attribute5")]
         public string Attribute5 { get; private set; }
 
         internal void FillInWithUnspecifiedData(DistributorContact address)
@@ -500,103 +498,103 @@ namespace Filuet.Hrbl.Ordering.Abstractions
 
     public sealed class DistributorDatesFlags
     {
-        [JsonProperty("DistDates")]
+        [JsonPropertyName("DistDates")]
         public DistributorDates Dates { get; private set; }
 
-        [JsonProperty("DistFlags")]
+        [JsonPropertyName("DistFlags")]
         public DistributorFlags Flags { get; private set; }
     }
 
     public sealed class DistributorDates
     {
-        [JsonProperty("ApplicationDate")]
+        [JsonPropertyName("ApplicationDate")]
         public DateTime? ApplicationDate { get; private set; }
 
-        [JsonProperty("ApplicationInputDate")]
+        [JsonPropertyName("ApplicationInputDate")]
         public DateTime? ApplicationInputDate { get; private set; }
 
-        [JsonProperty("APFDueDate")]
+        [JsonPropertyName("APFDueDate")]
         public DateTime? APFDueDate { get; private set; }
 
-        [JsonProperty("APFPaymentDate")]
+        [JsonPropertyName("APFPaymentDate")]
         public DateTime? APFPaymentDate { get; private set; }
 
-        [JsonProperty("CompletionDate")]
+        [JsonPropertyName("CompletionDate")]
         public DateTime? CompletionDate { get; private set; }
 
-        [JsonProperty("CorpIncorporationDate")]
+        [JsonPropertyName("CorpIncorporationDate")]
         public DateTime? CorpIncorporationDate { get; private set; }
 
-        [JsonProperty("CorpEffectiveDate")]
+        [JsonPropertyName("CorpEffectiveDate")]
         public DateTime? CorpEffectiveDate { get; private set; }
 
-        [JsonProperty("DeletionDate")]
+        [JsonPropertyName("DeletionDate")]
         public DateTime? DeletionDate { get; private set; }
 
-        [JsonProperty("SubTypeQualDate")]
+        [JsonPropertyName("SubTypeQualDate")]
         public DateTime? SubTypeQualDate { get; private set; }
 
-        [JsonProperty("SBQualDate")]
+        [JsonPropertyName("SBQualDate")]
         public DateTime? SBQualDate { get; private set; }
 
-        [JsonProperty("SPQualDate")]
+        [JsonPropertyName("SPQualDate")]
         public DateTime? SPQualDate { get; private set; }
 
-        [JsonProperty("SPReQualDate")]
+        [JsonPropertyName("SPReQualDate")]
         public DateTime? SPReQualDate { get; private set; }
 
-        [JsonProperty("SPDemotionDate")]
+        [JsonPropertyName("SPDemotionDate")]
         public DateTime? SPDemotionDate { get; private set; }
 
-        [JsonProperty("QPQualDate")]
+        [JsonPropertyName("QPQualDate")]
         public DateTime? QPQualDate { get; private set; }
 
-        [JsonProperty("QPReQualDate")]
+        [JsonPropertyName("QPReQualDate")]
         public DateTime? QPReQualDate { get; private set; }
 
-        [JsonProperty("QPDemotionDate")]
+        [JsonPropertyName("QPDemotionDate")]
         public DateTime? QPDemotionDate { get; private set; }
 
-        [JsonProperty("TabQualDate")]
+        [JsonPropertyName("TabQualDate")]
         public DateTime? TabQualDate { get; private set; }
 
-        [JsonProperty("PBAppDate")]
+        [JsonPropertyName("PBAppDate")]
         public DateTime? PBAppDate { get; private set; }
 
-        [JsonProperty("PBAppInputDate")]
+        [JsonPropertyName("PBAppInputDate")]
         public DateTime? PBAppInputDate { get; private set; }
 
-        [JsonProperty("SlidingScaleDate")]
+        [JsonPropertyName("SlidingScaleDate")]
         public DateTime? SlidingScaleDate { get; private set; }
 
-        [JsonProperty("TrainingEndDate")]
+        [JsonPropertyName("TrainingEndDate")]
         public DateTime? TrainingEndDate { get; private set; }
 
-        [JsonProperty("TrainingExtEndDate")]
+        [JsonPropertyName("TrainingExtEndDate")]
         public DateTime? TrainingExtEndDate { get; private set; }
 
-        [JsonProperty("HAPExpiryDate")]
+        [JsonPropertyName("HAPExpiryDate")]
         public DateTime? HAPExpiryDate { get; private set; }
 
-        [JsonProperty("MBApplicationDate")]
+        [JsonPropertyName("MBApplicationDate")]
         public DateTime? MBApplicationDate { get; private set; }
 
-        [JsonProperty("MBApplicationInputDate")]
+        [JsonPropertyName("MBApplicationInputDate")]
         public DateTime? MBApplicationInputDate { get; private set; }
 
-        [JsonProperty("MBCompletionDate")]
+        [JsonPropertyName("MBCompletionDate")]
         public DateTime? MBCompletionDate { get; private set; }
 
-        [JsonProperty("LatestConversionDate")]
+        [JsonPropertyName("LatestConversionDate")]
         public DateTime? LatestConversionDate { get; private set; }
 
-        [JsonProperty("MandatoryTrainingEndDate")]
+        [JsonPropertyName("MandatoryTrainingEndDate")]
         public DateTime? MandatoryTrainingEndDate { get; private set; }
 
-        [JsonProperty("TabRequalDate")]
+        [JsonPropertyName("TabRequalDate")]
         public DateTime? TabRequalDate { get; private set; }
 
-        [JsonProperty("PBRequalDatepublic")]
+        [JsonPropertyName("PBRequalDatepublic")]
         public DateTime? PBRequalDatepublic { get; private set; }
 
         [JsonIgnore]
@@ -605,121 +603,121 @@ namespace Filuet.Hrbl.Ordering.Abstractions
 
     public sealed class DistributorFlags
     {
-        [JsonProperty("APSStatus")]
+        [JsonPropertyName("APSStatus")]
         public string APSStatus { get; private set; }
 
-        [JsonProperty("AuditFlag")]
+        [JsonPropertyName("AuditFlag")]
         public string AuditFlag { get; private set; }
 
-        [JsonProperty("CantBuy")]
+        [JsonPropertyName("CantBuy")]
         public string CantBuy { get; private set; }
 
-        [JsonProperty("CharterMember")]
+        [JsonPropertyName("CharterMember")]
         public string CharterMember { get; private set; }
 
-        [JsonProperty("ChairmanClub")]
+        [JsonPropertyName("ChairmanClub")]
         public string ChairmanClub { get; private set; }
 
-        [JsonProperty("DonotPay")]
+        [JsonPropertyName("DonotPay")]
         public string DonotPay { get; private set; }
 
-        [JsonProperty("EBPFlag")]
+        [JsonPropertyName("EBPFlag")]
         public string EBPFlag { get; private set; }
 
-        [JsonProperty("FRSSFFlag")]
+        [JsonPropertyName("FRSSFFlag")]
         public string FRSSFFlag { get; private set; }
 
-        [JsonProperty("FoundersCircle")]
+        [JsonPropertyName("FoundersCircle")]
         public string FoundersCircle { get; private set; }
 
-        [JsonProperty("HAPStatus")]
+        [JsonPropertyName("HAPStatus")]
         public string HAPStatus { get; private set; }
 
-        [JsonProperty("HLDFGFlag")]
+        [JsonPropertyName("HLDFGFlag")]
         public string HLDFGFlag { get; private set; }
 
-        [JsonProperty("HardCashOnly")]
+        [JsonPropertyName("HardCashOnly")]
         public string HardCashOnly { get; private set; }
 
-        [JsonProperty("LTMSCFlag")]
+        [JsonPropertyName("LTMSCFlag")]
         public string LTMSCFlag { get; private set; }
 
-        [JsonProperty("NSFFEE")]
+        [JsonPropertyName("NSFFEE")]
         public string NSFFEE { get; private set; }
 
-        [JsonProperty("NSFONFlag")]
+        [JsonPropertyName("NSFONFlag")]
         public string NSFONFlag { get; private set; }
 
-        [JsonProperty("NoUpdate")]
+        [JsonPropertyName("NoUpdate")]
         public string NoUpdate { get; private set; }
 
-        [JsonProperty("OutstandingBalance")]
+        [JsonPropertyName("OutstandingBalance")]
         public string OutstandingBalance { get; private set; }
 
-        [JsonProperty("PRNCKFlag")]
+        [JsonPropertyName("PRNCKFlag")]
         public string PRNCKFlag { get; private set; }
 
-        [JsonProperty("Retired")]
+        [JsonPropertyName("Retired")]
         public string Retired { get; private set; }
 
-        [JsonProperty("REGHDFlag")]
+        [JsonPropertyName("REGHDFlag")]
         public string REGHDFlag { get; private set; }
 
-        [JsonProperty("SBStatus")]
+        [JsonPropertyName("SBStatus")]
         public string SBStatus { get; private set; }
 
-        [JsonProperty("SKPPBFlag")]
+        [JsonPropertyName("SKPPBFlag")]
         public string SKPPBFlag { get; private set; }
 
-        [JsonProperty("TodaysMagazine")]
+        [JsonPropertyName("TodaysMagazine")]
         public string TodaysMagazine { get; private set; }
 
-        [JsonProperty("Untouchable")]
+        [JsonPropertyName("Untouchable")]
         public string Untouchable { get; private set; }
 
-        [JsonProperty("VerifiedDistributor")]
+        [JsonPropertyName("VerifiedDistributor")]
         public string VerifiedDistributor { get; private set; }
 
-        [JsonProperty("CashOnlyFlag")]
+        [JsonPropertyName("CashOnlyFlag")]
         public string CashOnlyFlag { get; private set; }
 
-        [JsonProperty("AdvisoryFlag")]
+        [JsonPropertyName("AdvisoryFlag")]
         public string AdvisoryFlag { get; private set; }
 
-        [JsonProperty("TrainingFlag")]
+        [JsonPropertyName("TrainingFlag")]
         public string TrainingFlag { get; private set; }
 
-        [JsonProperty("TrainingExtendFlag")]
+        [JsonPropertyName("TrainingExtendFlag")]
         public string TrainingExtendFlag { get; private set; }
 
-        [JsonProperty("IsMPCFraud")]
+        [JsonPropertyName("IsMPCFraud")]
         public string IsMPCFraud { get; private set; }
 
-        [JsonProperty("CONVHOLDFLAG")]
+        [JsonPropertyName("CONVHOLDFLAG")]
         public string CONVHOLDFLAG { get; private set; }
 
-        [JsonProperty("MandatoryTrainingFlag")]
+        [JsonPropertyName("MandatoryTrainingFlag")]
         public string MandatoryTrainingFlag { get; private set; }
 
-        [JsonProperty("InternationalFlag")]
+        [JsonPropertyName("InternationalFlag")]
         public string InternationalFlag { get; private set; }
 
-        [JsonProperty("BCPFlag")]
+        [JsonPropertyName("BCPFlag")]
         public string BCPFlag { get; private set; }
 
-        [JsonProperty("NCLGFlag")]
+        [JsonPropertyName("NCLGFlag")]
         public string NCLGFlag { get; private set; }
 
-        [JsonProperty("PPV500Flag")]
+        [JsonPropertyName("PPV500Flag")]
         public string PPV500Flag { get; private set; }
 
-        [JsonProperty("ForeignPurchaseRestriction")]
+        [JsonPropertyName("ForeignPurchaseRestriction")]
         public string ForeignPurchaseRestriction { get; private set; }
 
-        [JsonProperty("ForeignSale")]
+        [JsonPropertyName("ForeignSale")]
         public string ForeignSale { get; private set; }
 
-        [JsonProperty("DataPriv")]
+        [JsonPropertyName("DataPriv")]
         public string DataPriv { get; private set; }
 
         [JsonIgnore]
@@ -734,22 +732,22 @@ namespace Filuet.Hrbl.Ordering.Abstractions
 
     public sealed class DistTinsMessage
     {
-        [JsonProperty("DistributorTinsMessage")]
+        [JsonPropertyName("DistributorTinsMessage")]
         public DistributorTinsMessage[] Messages { get; private set; }
     }
 
     public sealed class DistributorTinsMessage
     {
-        [JsonProperty("MessageNumber")]
+        [JsonPropertyName("MessageNumber")]
         public int MessageNumber { get; private set; }
 
-        [JsonProperty("Message")]
+        [JsonPropertyName("Message")]
         public string Message { get; private set; }
     }
 
     public sealed class CantBuyReasons
     {
-        [JsonProperty("Reason", Order = 1)]
+        [JsonPropertyName("Reason")]
         public string[] Reasons { get; set; }
 
         [JsonIgnore]

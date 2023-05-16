@@ -1,100 +1,98 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System;
+using System.Text.Json.Serialization;
 
 namespace Filuet.Hrbl.Ordering.Abstractions
 {
     internal class CatalogResult
     {
-        [JsonProperty("ProdCatalogDetails")]
+        [JsonPropertyName("ProdCatalogDetails")]
         public ProdCatalogDetails CatalogDetails { get; private set; }
     }
 
     internal class ProdCatalogDetails
     {
-        [JsonProperty("ProdCatalogDetail")]
+        [JsonPropertyName("ProdCatalogDetail")]
         public CatalogItem[] Items { get; private set; }
     }
 
     public class CatalogItem
     {
-        [JsonProperty("CountryCode")]
+        [JsonPropertyName("CountryCode")]
         public string CountryCode { get; private set; }
 
-        [JsonProperty("SellingSKU")]
+        [JsonPropertyName("SellingSKU")]
         public string SellingSKU { get; private set; }
 
-        [JsonProperty("EarnBase")]
+        [JsonPropertyName("EarnBase")]
         public string EarnBase { get; private set; }
 
-        [JsonProperty("UnitTaxBase")]
+        [JsonPropertyName("UnitTaxBase")]
         public string UnitTaxBase { get; private set; }
 
-        [JsonProperty("ProductUOMCode")]
+        [JsonPropertyName("ProductUOMCode")]
         public string ProductUOMCode { get; private set; }
 
-        [JsonProperty("ListPrice")]
+        [JsonPropertyName("ListPrice")]
         public decimal ListPrice { get; private set; }
 
-        [JsonProperty("VolumePoints")]
+        [JsonPropertyName("VolumePoints")]
         public decimal VolumePoints { get; private set; }
 
-        [JsonProperty("PlEffStartDt")]
+        [JsonPropertyName("PlEffStartDt")]
         public DateTime PlEffStartDt { get; private set; }
 
-        [JsonProperty("PlEffEndDt")]
+        [JsonPropertyName("PlEffEndDt")]
         public DateTime PlEffEndDt { get; private set; }
 
-        [JsonProperty("VpEffStartDt")]
+        [JsonPropertyName("VpEffStartDt")]
         public DateTime VpEffStartDt { get; private set; }
 
-        [JsonProperty("VpEffEndDt")]
+        [JsonPropertyName("VpEffEndDt")]
         public DateTime VpEffEndDt { get; private set; }
 
-        [JsonProperty("CurrencyCode")]
+        [JsonPropertyName("CurrencyCode")]
         public string CurrencyCode { get; private set; }
 
-        [JsonProperty("FreightExFlag")]
+        [JsonPropertyName("FreightExFlag")]
         public string FreightExFlag { get; private set; }
 
-        [JsonProperty("PHExFlag")]
+        [JsonPropertyName("PHExFlag")]
         public string PHExFlag { get; private set; }
 
-        [JsonProperty("LogisticExFlag")]
+        [JsonPropertyName("LogisticExFlag")]
         public string LogisticExFlag { get; private set; }
 
-        [JsonProperty("FlexKitFlag")]
+        [JsonPropertyName("FlexKitFlag")]
         public string FlexKitFlag { get; private set; }
 
-        [JsonProperty("IsEventItem")]
+        [JsonPropertyName("IsEventItem")]
         public string IsEventItem { get; private set; }
 
-        [JsonProperty("SkuRestriction")]
+        [JsonPropertyName("SkuRestriction")]
         public string SkuRestriction { get; private set; }
 
-        [JsonProperty("ROEarnBase")]
+        [JsonPropertyName("ROEarnBase")]
         public string ROEarnBase { get; private set; }
 
-        [JsonProperty("PBEarnBase")]
+        [JsonPropertyName("PBEarnBase")]
         public string PBEarnBase { get; private set; }
 
-        [JsonProperty("HSNSACNumber")]
+        [JsonPropertyName("HSNSACNumber")]
         public string HSNSACNumber { get; private set; }
 
-        [JsonProperty("PUM")]
+        [JsonPropertyName("PUM")]
         public string PUM { get; private set; }
 
-        [JsonProperty("UOM")]
+        [JsonPropertyName("UOM")]
         public string UOM { get; private set; }
 
-        [JsonProperty("UOMValue")]
+        [JsonPropertyName("UOMValue")]
         public string UOMValue { get; private set; }
 
-        [JsonProperty("NumberOfServings")]
+        [JsonPropertyName("NumberOfServings")]
         public string NumberOfServings { get; private set; }
 
-        [JsonProperty("ServingSize")]
+        [JsonPropertyName("ServingSize")]
         public string ServingSize { get; private set; }
     }
 }

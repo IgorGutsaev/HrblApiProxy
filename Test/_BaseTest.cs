@@ -11,16 +11,16 @@ namespace Filuet.Hrbl.Ordering.Tests
             new HrblOrderingAdapterSettingsBuilder()
             //.WithUri("https://herbalife-oegdevws.hrbl.com/Order/HLOnlineOrdering/ts3/")
             //.WithUri("https://herbalife-oegdevws.hrbl.com/Order/HLOnlineOrdering/ts1/")
-            .WithUri("https://herbalife-econnectslc.hrbl.com/Order/HLOnlineOrdering/prod/")
-           // .WithUri("https://herbalife-oegdevws.hrbl.com/Order/HLOnlineOrdering/prs/")
+            //.WithUri("https://herbalife-econnectslc.hrbl.com/Order/HLOnlineOrdering/prod/")
+            .WithUri("https://herbalife-oegdevws.hrbl.com/Order/HLOnlineOrdering/prs/")
             //.WithSsoAuthUri("https://zus2q3.myherbalife.com")
             //.WithSsoAuthUri("https://zus2q2.myherbalife.com")
-            .WithSsoAuthUri("https://www.myherbalife.com")
-            //.WithSsoAuthUri("https://zus2prs.myherbalife.com")
+            //.WithSsoAuthUri("https://www.myherbalife.com")
+            .WithSsoAuthUri("https://zus2prs.myherbalife.com")
             .WithServiceConsumer(SERVICE_CONSUMER)
             .WithOrganizationId(73)
-            //.WithCredentials("hlfnord", "welcome123") // prs + ts3 + ts1
-            .WithCredentials("hlfnord", "F1uT2H1n@0rd")
+            .WithCredentials("hlfnord", "welcome123") // prs + ts3 + ts1
+            //.WithCredentials("hlfnord", "F1uT2H1n@0rd")
             .WithPollSettings(x => {
                 x.Input_for_GetVolumePoints = new (string distributorId, DateTime month)[] { ("U512180202", DateTime.UtcNow), ("7918180560", DateTime.UtcNow) };
                 x.Input_for_GetProfile = new string[] { "U512180202", "7918180560" };

@@ -1,28 +1,26 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System;
+using System.Text.Json.Serialization;
 
 namespace Filuet.Hrbl.Ordering.Abstractions
 {
     internal class WHFreightCodesResult : WHFreightCodes
     {
-        [JsonProperty("PostalCode")]
+        [JsonPropertyName("PostalCode")]
         public string PostalCode { get; private set; }
 
-        [JsonProperty("ErrorCode")]
+        [JsonPropertyName("ErrorCode")]
         public string ErrorCode { get; set; }
 
-        [JsonProperty("ErrorMessage")]
+        [JsonPropertyName("ErrorMessage")]
         public string ErrorMessage { get; set; }
     }
 
     public class WHFreightCodes
     {
-        [JsonProperty("WHFriehtCodes")]
+        [JsonPropertyName("WHFriehtCodes")]
         public WHFreightCode[] WHFriehtCodes { get; private set; }
 
-        [JsonProperty("ExpressDeliveryFlag")]
+        [JsonPropertyName("ExpressDeliveryFlag")]
         public string _isExpressDeliveryFlag { get; private set; }
 
         [JsonIgnore]
@@ -31,10 +29,10 @@ namespace Filuet.Hrbl.Ordering.Abstractions
 
     public class WHFreightCode
     {
-        [JsonProperty("ShippingWareHouse")]
+        [JsonPropertyName("ShippingWareHouse")]
         public string ShippingWareHouse { get; private set; }
 
-        [JsonProperty("FrieghtCode")]
+        [JsonPropertyName("FrieghtCode")]
         public string FrieghtCode { get; private set; }
     }
 }

@@ -1,75 +1,74 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Text.Json.Serialization;
 
 namespace Filuet.Hrbl.Ordering.Abstractions.Dto
 {
     public class GetDSEligiblePromoSKURequestDTO
     {
-        [JsonProperty("ServiceConsumer")]
+        [JsonPropertyName("ServiceConsumer")]
         public string ServiceConsumer { get; set; }
 
-        [JsonProperty("RequestingService")]
+        [JsonPropertyName("RequestingService")]
         public string RequestingService { get; set; }
 
-        [JsonProperty("DistributorId")]
+        [JsonPropertyName("DistributorId")]
         public string DistributorId { get; set; }
 
-        [JsonProperty("Country")]
+        [JsonPropertyName("Country")]
         public string Country { get; set; }
 
-        [JsonProperty("OrderMonth")]
+        [JsonPropertyName("OrderMonth")]
         public string OrderMonth { get; set; }
 
         public DateTime OrderDate { get; set; }
 
-        [JsonProperty("OrderType")]
+        [JsonPropertyName("OrderType")]
         public string OrderType { get; set; }
 
-        [JsonProperty("VolumePoints")]
+        [JsonPropertyName("VolumePoints")]
         public string VolumePoints { get; set; }
 
-        [JsonProperty("OrderLines")]
+        [JsonPropertyName("OrderLines")]
         public OrderLines OrderLines { get; set; }
     }
 
     public class OrderLines
     {
-        [JsonProperty("Promotion")]
+        [JsonPropertyName("Promotion")]
         public List<ReqPromotion> Promotion { get; set; }
     }
 
     public class ReqPromotion
     {
-        [JsonProperty("SKU")]
+        [JsonPropertyName("SKU")]
         public string SKU { get; set; }
 
-        [JsonProperty("FreightCode")]
+        [JsonPropertyName("FreightCode")]
         public string FreightCode { get; set; }
 
-        [JsonProperty("OrderedQuantity")]
+        [JsonPropertyName("OrderedQuantity")]
         public int OrderedQuantity { get; set; }
 
-        [JsonProperty("ChrAttribute1")]
+        [JsonPropertyName("ChrAttribute1")]
         public string ChrAttribute1 { get; set; }
 
-        [JsonProperty("ChrAttribute2")]
+        [JsonPropertyName("ChrAttribute2")]
         public string ChrAttribute2 { get; set; }
 
         /// <summary>
         /// Warehouse code
         /// </summary>
-        [JsonProperty("ChrAttribute3")]
+        [JsonPropertyName("ChrAttribute3")]
         public string ChrAttribute3 { get; set; }
 
         /// <summary>
         /// Product type P/A/L
         /// </summary>
-        [JsonProperty("ChrAttribute5")]
+        [JsonPropertyName("ChrAttribute5")]
         public string ChrAttribute5 { get; set; }
 
-        [JsonProperty("TotalRetail")]
+        [JsonPropertyName("TotalRetail")]
         public double TotalRetail { get; set; }
     }
 }

@@ -1,22 +1,19 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Text.Json.Serialization;
 
 namespace Filuet.Hrbl.Ordering.Abstractions
 {
     public class DistributorDiscountResult
     {
-        [JsonProperty("Distributor")]
+        [JsonPropertyName("Distributor")]
         public DistributorDiscountDetails Discount { get; private set; }
     }
 
     public class DistributorDiscountDetails
     {
-        [JsonProperty("DistributorType")]
+        [JsonPropertyName("DistributorType")]
         public string DistributorType { get; private set; }
 
-        [JsonProperty("Discount")]
+        [JsonPropertyName("Discount")]
         public DistributorDiscount Discount { get; private set; }
     }
 }

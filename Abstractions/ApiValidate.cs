@@ -1,16 +1,13 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Text.Json.Serialization;
 
 namespace Filuet.Hrbl.Ordering.Abstractions
 {
     internal class ApiValidateResponse
     {
-        [JsonProperty("IsValid")]
+        [JsonPropertyName("IsValid")]
         public bool IsValid { get; private set; }
 
-        [JsonProperty("MemberId")]
+        [JsonPropertyName("MemberId")]
         public string MemberId { get; private set; }
     }
 }

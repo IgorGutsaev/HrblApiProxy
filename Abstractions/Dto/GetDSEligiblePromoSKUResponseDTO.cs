@@ -1,18 +1,18 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Filuet.Hrbl.Ordering.Abstractions.Dto
 {
     public class GetDSEligiblePromoSKUResponseDTO
     {
-        [JsonProperty("IsPromoOrder")]
+        [JsonPropertyName("IsPromoOrder")]
         public string IsPromoOrder { get; set; }
 
-        [JsonProperty("Promotions")]
+        [JsonPropertyName("Promotions")]
         public RespPromotions Promotions { get; set; }
 
-        [JsonProperty("Errors")]
+        [JsonPropertyName("Errors")]
         public string Errors { get; set; }
 
         [JsonIgnore]
@@ -21,241 +21,241 @@ namespace Filuet.Hrbl.Ordering.Abstractions.Dto
 
     public class RespPromotion
     {
-        [JsonProperty("DistributorId")]
+        [JsonPropertyName("DistributorId")]
         public string DistributorId { get; set; }
 
-        [JsonProperty("OrderMonth")]
+        [JsonPropertyName("OrderMonth")]
         public string OrderMonth { get; set; }
 
-        [JsonProperty("OrderCount")]
+        [JsonPropertyName("OrderCount")]
         public int OrderCount { get; set; }
 
-        [JsonProperty("DistributorStatus")]
+        [JsonPropertyName("DistributorStatus")]
         public string DistributorStatus { get; set; }
 
-        [JsonProperty("DOB")]
+        [JsonPropertyName("DOB")]
         public object DOB { get; set; }
 
-        [JsonProperty("Country")]
+        [JsonPropertyName("Country")]
         public string Country { get; set; }
 
-        [JsonProperty("DistributorType")]
+        [JsonPropertyName("DistributorType")]
         public string DistributorType { get; set; }
 
-        [JsonProperty("DistributorSubType")]
+        [JsonPropertyName("DistributorSubType")]
         public string DistributorSubType { get; set; }
 
-        [JsonProperty("SKU")]
+        [JsonPropertyName("SKU")]
         public string SKU { get; set; }
 
-        [JsonProperty("ShippingInstructions")]
+        [JsonPropertyName("ShippingInstructions")]
         public object ShippingInstructions { get; set; }
 
-        [JsonProperty("SKUReward")]
+        [JsonPropertyName("SKUReward")]
         public string SKUReward { get; set; }
 
-        [JsonProperty("ApplicationDate")]
+        [JsonPropertyName("ApplicationDate")]
         public object ApplicationDate { get; set; }
 
-        [JsonProperty("AnniversaryMonth")]
+        [JsonPropertyName("AnniversaryMonth")]
         public object AnniversaryMonth { get; set; }
 
-        [JsonProperty("FreightCode")]
+        [JsonPropertyName("FreightCode")]
         public object FreightCode { get; set; }
 
-        [JsonProperty("PromotionRule")]
+        [JsonPropertyName("PromotionRule")]
         public string PromotionRule { get; set; }
 
-        [JsonProperty("Precedence")]
+        [JsonPropertyName("Precedence")]
         public object Precedence { get; set; }
 
-        [JsonProperty("OrderType")]
+        [JsonPropertyName("OrderType")]
         public object OrderType { get; set; }
 
-        [JsonProperty("OrderedQuantity")]
+        [JsonPropertyName("OrderedQuantity")]
         public int OrderedQuantity { get; set; }
 
-        [JsonProperty("ChrAttribute1")]
+        [JsonPropertyName("ChrAttribute1")]
         public string ChrAttribute1 { get; set; }
 
-        [JsonProperty("ChrAttribute2")]
+        [JsonPropertyName("ChrAttribute2")]
         public int? ChrAttribute2 { get; set; }
 
-        [JsonProperty("ChrAttribute3")]
+        [JsonPropertyName("ChrAttribute3")]
         public string ChrAttribute3 { get; set; }
 
-        [JsonProperty("ChrAttribute4")]
+        [JsonPropertyName("ChrAttribute4")]
         public string ChrAttribute4 { get; set; }
 
-        [JsonProperty("ChrAttribute5")]
+        [JsonPropertyName("ChrAttribute5")]
         public string ChrAttribute5 { get; set; }
 
-        [JsonProperty("DateAttribute1")]
+        [JsonPropertyName("DateAttribute1")]
         public DateTime? DateAttribute1 { get; set; }
 
-        [JsonProperty("DateAttribute2")]
+        [JsonPropertyName("DateAttribute2")]
         public object DateAttribute2 { get; set; }
 
-        [JsonProperty("DateAttribute3")]
+        [JsonPropertyName("DateAttribute3")]
         public object DateAttribute3 { get; set; }
 
-        [JsonProperty("DateAttribute4")]
+        [JsonPropertyName("DateAttribute4")]
         public object DateAttribute4 { get; set; }
 
-        [JsonProperty("DateAttribute5")]
+        [JsonPropertyName("DateAttribute5")]
         public object DateAttribute5 { get; set; }
 
-        [JsonProperty("NumAttribute1")]
+        [JsonPropertyName("NumAttribute1")]
         public int? NumAttribute1 { get; set; }
 
-        [JsonProperty("NumAttribute2")]
+        [JsonPropertyName("NumAttribute2")]
         public int? NumAttribute2 { get; set; }
 
-        [JsonProperty("NumAttribute3")]
+        [JsonPropertyName("NumAttribute3")]
         public int? NumAttribute3 { get; set; }
 
-        [JsonProperty("NumAttribute4")]
+        [JsonPropertyName("NumAttribute4")]
         public object NumAttribute4 { get; set; }
 
-        [JsonProperty("NumAttribute5")]
+        [JsonPropertyName("NumAttribute5")]
         public object NumAttribute5 { get; set; }
 
-        [JsonProperty("TotalRetail")]
+        [JsonPropertyName("TotalRetail")]
         public object TotalRetail { get; set; }
 
-        [JsonProperty("TotalDiscount")]
+        [JsonPropertyName("TotalDiscount")]
         public object TotalDiscount { get; set; }
 
-        [JsonProperty("TotalDiscountRetail")]
+        [JsonPropertyName("TotalDiscountRetail")]
         public object TotalDiscountRetail { get; set; }
 
-        [JsonProperty("TotalTax")]
+        [JsonPropertyName("TotalTax")]
         public object TotalTax { get; set; }
 
-        [JsonProperty("TotalVolume")]
+        [JsonPropertyName("TotalVolume")]
         public object TotalVolume { get; set; }
 
-        [JsonProperty("ShippingHandling")]
+        [JsonPropertyName("ShippingHandling")]
         public object ShippingHandling { get; set; }
 
-        [JsonProperty("TotalDue")]
+        [JsonPropertyName("TotalDue")]
         public object TotalDue { get; set; }
 
-        [JsonProperty("ReferencePMTAmount")]
+        [JsonPropertyName("ReferencePMTAmount")]
         public object ReferencePMTAmount { get; set; }
 
-        [JsonProperty("ReferencePMTCheckNo")]
+        [JsonPropertyName("ReferencePMTCheckNo")]
         public object ReferencePMTCheckNo { get; set; }
 
-        [JsonProperty("RedemptionType")]
+        [JsonPropertyName("RedemptionType")]
         public string RedemptionType { get; set; }
 
-        [JsonProperty("RuleID")]
+        [JsonPropertyName("RuleID")]
         public string RuleID { get; set; }
 
-        [JsonProperty("PromotionItem")]
+        [JsonPropertyName("PromotionItem")]
         public object PromotionItem { get; set; }
 
-        [JsonProperty("PromotionRuleName")]
+        [JsonPropertyName("PromotionRuleName")]
         public string PromotionRuleName { get; set; }
 
-        [JsonProperty("PromotionType")]
+        [JsonPropertyName("PromotionType")]
         public string PromotionType { get; set; }
 
-        [JsonProperty("PromotionProp1")]
+        [JsonPropertyName("PromotionProp1")]
         public string PromotionProp1 { get; set; }
 
-        [JsonProperty("PromotionProp2")]
+        [JsonPropertyName("PromotionProp2")]
         public object PromotionProp2 { get; set; }
 
-        [JsonProperty("RedemptionFlag")]
+        [JsonPropertyName("RedemptionFlag")]
         public object RedemptionFlag { get; set; }
 
-        [JsonProperty("EligibleFlag")]
+        [JsonPropertyName("EligibleFlag")]
         public object EligibleFlag { get; set; }
 
-        [JsonProperty("PromoNotification")]
+        [JsonPropertyName("PromoNotification")]
         public string PromoNotification { get; set; }
 
-        [JsonProperty("ChrAttribute6")]
+        [JsonPropertyName("ChrAttribute6")]
         public string ChrAttribute6 { get; set; }
 
-        [JsonProperty("ChrAttribute7")]
+        [JsonPropertyName("ChrAttribute7")]
         public string ChrAttribute7 { get; set; }
 
-        [JsonProperty("ChrAttribute8")]
+        [JsonPropertyName("ChrAttribute8")]
         public object ChrAttribute8 { get; set; }
 
-        [JsonProperty("ChrAttribute9")]
+        [JsonPropertyName("ChrAttribute9")]
         public object ChrAttribute9 { get; set; }
 
-        [JsonProperty("ChrAttribute10")]
+        [JsonPropertyName("ChrAttribute10")]
         public object ChrAttribute10 { get; set; }
 
-        [JsonProperty("ChrAttribute11")]
+        [JsonPropertyName("ChrAttribute11")]
         public object ChrAttribute11 { get; set; }
 
-        [JsonProperty("ChrAttribute12")]
+        [JsonPropertyName("ChrAttribute12")]
         public object ChrAttribute12 { get; set; }
 
-        [JsonProperty("ChrAttribute13")]
+        [JsonPropertyName("ChrAttribute13")]
         public object ChrAttribute13 { get; set; }
 
-        [JsonProperty("ChrAttribute14")]
+        [JsonPropertyName("ChrAttribute14")]
         public object ChrAttribute14 { get; set; }
 
-        [JsonProperty("ChrAttribute15")]
+        [JsonPropertyName("ChrAttribute15")]
         public object ChrAttribute15 { get; set; }
 
-        [JsonProperty("DateAttribute6")]
+        [JsonPropertyName("DateAttribute6")]
         public object DateAttribute6 { get; set; }
 
-        [JsonProperty("DateAttribute7")]
+        [JsonPropertyName("DateAttribute7")]
         public object DateAttribute7 { get; set; }
 
-        [JsonProperty("DateAttribute8")]
+        [JsonPropertyName("DateAttribute8")]
         public object DateAttribute8 { get; set; }
 
-        [JsonProperty("DateAttribute9")]
+        [JsonPropertyName("DateAttribute9")]
         public object DateAttribute9 { get; set; }
 
-        [JsonProperty("DateAttribute10")]
+        [JsonPropertyName("DateAttribute10")]
         public object DateAttribute10 { get; set; }
 
-        [JsonProperty("NumAttribute6")]
+        [JsonPropertyName("NumAttribute6")]
         public object NumAttribute6 { get; set; }
 
-        [JsonProperty("NumAttribute7")]
+        [JsonPropertyName("NumAttribute7")]
         public object NumAttribute7 { get; set; }
 
-        [JsonProperty("NumAttribute8")]
+        [JsonPropertyName("NumAttribute8")]
         public object NumAttribute8 { get; set; }
 
-        [JsonProperty("NumAttribute9")]
+        [JsonPropertyName("NumAttribute9")]
         public object NumAttribute9 { get; set; }
 
-        [JsonProperty("NumAttribute10")]
+        [JsonPropertyName("NumAttribute10")]
         public object NumAttribute10 { get; set; }
 
-        [JsonProperty("NumAttribute11")]
+        [JsonPropertyName("NumAttribute11")]
         public object NumAttribute11 { get; set; }
 
-        [JsonProperty("NumAttribute12")]
+        [JsonPropertyName("NumAttribute12")]
         public object NumAttribute12 { get; set; }
 
-        [JsonProperty("NumAttribute13")]
+        [JsonPropertyName("NumAttribute13")]
         public object NumAttribute13 { get; set; }
 
-        [JsonProperty("NumAttribute14")]
+        [JsonPropertyName("NumAttribute14")]
         public object NumAttribute14 { get; set; }
 
-        [JsonProperty("NumAttribute15")]
+        [JsonPropertyName("NumAttribute15")]
         public object NumAttribute15 { get; set; }
     }
 
     public class RespPromotions
     {
-        [JsonProperty("Promotion")]
+        [JsonPropertyName("Promotion")]
         public List<RespPromotion> Promotion { get; set; }
     }
 }

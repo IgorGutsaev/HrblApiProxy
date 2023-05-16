@@ -1,13 +1,10 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Text.Json.Serialization;
 
 namespace Filuet.Hrbl.Ordering.Abstractions
 {
     public class ConversionRateResponse
     {
-        [JsonProperty("ConversionRate")]
+        [JsonPropertyName("ConversionRate")]
         public decimal? ConversionRate { get; set; }
     }
 }

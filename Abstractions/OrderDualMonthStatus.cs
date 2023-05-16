@@ -1,13 +1,11 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System;
+using System.Text.Json.Serialization;
 
 namespace Filuet.Hrbl.Ordering.Abstractions
 {
     public class OrderDualMonthStatus
     {
-        [JsonProperty("ISDualMonthAllowed")]
+        [JsonPropertyName("ISDualMonthAllowed")]
         private string _dualMonth { get; set; }
 
         [JsonIgnore]

@@ -1,276 +1,276 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Filuet.Hrbl.Ordering.Abstractions
 {
     public class SsoAuthBillingAddress
     {
-        [JsonProperty(PropertyName = "city")]
+        [JsonPropertyName("city")]
         public string City { get; set; }
 
-        [JsonProperty(PropertyName = "cloudId")]
+        [JsonPropertyName("cloudId")]
         public string CloudId { get; set; }
 
-        [JsonProperty(PropertyName = "country")]
+        [JsonPropertyName("country")]
         public string Country { get; set; }
 
-        [JsonProperty(PropertyName = "countyDistrict")]
+        [JsonPropertyName("countyDistrict")]
         public string CountyDistrict { get; set; }
 
-        [JsonProperty(PropertyName = "isPrimary")]
+        [JsonPropertyName("isPrimary")]
         public bool IsPrimary { get; set; }
 
-        [JsonProperty(PropertyName = "lastUpdatedDate")]
+        [JsonPropertyName("lastUpdatedDate")]
         public object LastUpdatedDate { get; set; }
 
-        [JsonProperty(PropertyName = "line1")]
+        [JsonPropertyName("line1")]
         public string Line1 { get; set; }
 
-        [JsonProperty(PropertyName = "line2")]
+        [JsonPropertyName("line2")]
         public string Line2 { get; set; }
 
-        [JsonProperty(PropertyName = "line3")]
+        [JsonPropertyName("line3")]
         public string Line3 { get; set; }
 
-        [JsonProperty(PropertyName = "line4")]
+        [JsonPropertyName("line4")]
         public string Line4 { get; set; }
 
-        [JsonProperty(PropertyName = "nickName")]
+        [JsonPropertyName("nickName")]
         public string NickName { get; set; }
 
-        [JsonProperty(PropertyName = "personCloudId")]
+        [JsonPropertyName("personCloudId")]
         public string PersonCloudId { get; set; }
 
-        [JsonProperty(PropertyName = "postalCode")]
+        [JsonPropertyName("postalCode")]
         public string PostalCode { get; set; }
 
-        [JsonProperty(PropertyName = "stateProvinceTerritory")]
+        [JsonPropertyName("stateProvinceTerritory")]
         public string StateProvinceTerritory { get; set; }
 
-        [JsonProperty(PropertyName = "type")]
+        [JsonPropertyName("type")]
         public string Type { get; set; }
     }
 
     public class SsoAuthFiscalAddress
     {
-        [JsonProperty(PropertyName = "city")]
+        [JsonPropertyName("city")]
         public string City { get; set; }
 
-        [JsonProperty(PropertyName = "cloudId")]
+        [JsonPropertyName("cloudId")]
         public string CloudId { get; set; }
 
-        [JsonProperty(PropertyName = "country")]
+        [JsonPropertyName("country")]
         public string Country { get; set; }
 
-        [JsonProperty(PropertyName = "countyDistrict")]
+        [JsonPropertyName("countyDistrict")]
         public string CountyDistrict { get; set; }
 
-        [JsonProperty(PropertyName = "isPrimary")]
+        [JsonPropertyName("isPrimary")]
         public bool IsPrimary { get; set; }
 
-        [JsonProperty(PropertyName = "lastUpdatedDate")]
+        [JsonPropertyName("lastUpdatedDate")]
         public object LastUpdatedDate { get; set; }
 
-        [JsonProperty(PropertyName = "line1")]
+        [JsonPropertyName("line1")]
         public string Line1 { get; set; }
 
-        [JsonProperty(PropertyName = "line2")]
+        [JsonPropertyName("line2")]
         public string Line2 { get; set; }
 
-        [JsonProperty(PropertyName = "line3")]
+        [JsonPropertyName("line3")]
         public string Line3 { get; set; }
 
-        [JsonProperty(PropertyName = "line4")]
+        [JsonPropertyName("line4")]
         public string Line4 { get; set; }
 
-        [JsonProperty(PropertyName = "nickName")]
+        [JsonPropertyName("nickName")]
         public string NickName { get; set; }
 
-        [JsonProperty(PropertyName = "personCloudId")]
+        [JsonPropertyName("personCloudId")]
         public string PersonCloudId { get; set; }
 
-        [JsonProperty(PropertyName = "postalCode")]
+        [JsonPropertyName("postalCode")]
         public string PostalCode { get; set; }
 
-        [JsonProperty(PropertyName = "stateProvinceTerritory")]
+        [JsonPropertyName("stateProvinceTerritory")]
         public string StateProvinceTerritory { get; set; }
 
-        [JsonProperty(PropertyName = "type")]
+        [JsonPropertyName("type")]
         public string Type { get; set; }
     }
 
     public class SsoAuthMailingAddress
     {
-        [JsonProperty(PropertyName = "city")]
+        [JsonPropertyName("city")]
         public string City { get; set; }
 
-        [JsonProperty(PropertyName = "cloudId")]
+        [JsonPropertyName("cloudId")]
         public string CloudId { get; set; }
 
-        [JsonProperty(PropertyName = "country")]
+        [JsonPropertyName("country")]
         public string Country { get; set; }
 
-        [JsonProperty(PropertyName = "countyDistrict")]
+        [JsonPropertyName("countyDistrict")]
         public string CountyDistrict { get; set; }
 
-        [JsonProperty(PropertyName = "isPrimary")]
+        [JsonPropertyName("isPrimary")]
         public bool IsPrimary { get; set; }
 
-        [JsonProperty(PropertyName = "lastUpdatedDate")]
+        [JsonPropertyName("lastUpdatedDate")]
         public object LastUpdatedDate { get; set; }
 
-        [JsonProperty(PropertyName = "line1")]
+        [JsonPropertyName("line1")]
         public string Line1 { get; set; }
 
-        [JsonProperty(PropertyName = "line2")]
+        [JsonPropertyName("line2")]
         public string Line2 { get; set; }
 
-        [JsonProperty(PropertyName = "line3")]
+        [JsonPropertyName("line3")]
         public string Line3 { get; set; }
 
-        [JsonProperty(PropertyName = "line4")]
+        [JsonPropertyName("line4")]
         public string Line4 { get; set; }
 
-        [JsonProperty(PropertyName = "nickName")]
+        [JsonPropertyName("nickName")]
         public string NickName { get; set; }
 
-        [JsonProperty(PropertyName = "personCloudId")]
+        [JsonPropertyName("personCloudId")]
         public string PersonCloudId { get; set; }
 
-        [JsonProperty(PropertyName = "postalCode")]
+        [JsonPropertyName("postalCode")]
         public string PostalCode { get; set; }
 
-        [JsonProperty(PropertyName = "stateProvinceTerritory")]
+        [JsonPropertyName("stateProvinceTerritory")]
         public string StateProvinceTerritory { get; set; }
 
-        [JsonProperty(PropertyName = "type")]
+        [JsonPropertyName("type")]
         public string Type { get; set; }
     }
 
     public class Addresses
     {
-        [JsonProperty(PropertyName = "billingAddress")]
+        [JsonPropertyName("billingAddress")]
         public SsoAuthBillingAddress BillingAddress { get; set; }
 
-        [JsonProperty(PropertyName = "fiscalAddress")]
+        [JsonPropertyName("fiscalAddress")]
         public SsoAuthFiscalAddress FiscalAddress { get; set; }
 
-        [JsonProperty(PropertyName = "mailingAddress")]
+        [JsonPropertyName("mailingAddress")]
         public SsoAuthMailingAddress MailingAddress { get; set; }
     }
 
     public class SsoAuthEmail
     {
-        [JsonProperty(PropertyName = "address")]
+        [JsonPropertyName("address")]
         public string Address { get; set; }
 
-        [JsonProperty(PropertyName = "type")]
+        [JsonPropertyName("type")]
         public object Type { get; set; }
 
-        [JsonProperty(PropertyName = "isPrimary")]
+        [JsonPropertyName("isPrimary")]
         public bool IsPrimary { get; set; }
 
-        [JsonProperty(PropertyName = "cloudId")]
+        [JsonPropertyName("cloudId")]
         public object CloudId { get; set; }
 
-        [JsonProperty(PropertyName = "lastUpdatedDate")]
+        [JsonPropertyName("lastUpdatedDate")]
         public object LastUpdatedDate { get; set; }
     }
 
     public class SsoAuthFlags
     {
-        [JsonProperty(PropertyName = "advisoryRequired")]
+        [JsonPropertyName("advisoryRequired")]
         public bool AdvisoryRequired { get; set; }
 
-        [JsonProperty(PropertyName = "cantBuy")]
+        [JsonPropertyName("cantBuy")]
         public bool CantBuy { get; set; }
 
-        [JsonProperty(PropertyName = "distributorStatus")]
+        [JsonPropertyName("distributorStatus")]
         public string DistributorStatus { get; set; }
 
-        [JsonProperty(PropertyName = "hardCashOnly")]
+        [JsonPropertyName("hardCashOnly")]
         public bool HardCashOnly { get; set; }
 
-        [JsonProperty(PropertyName = "isCustomer")]
+        [JsonPropertyName("isCustomer")]
         public bool IsCustomer { get; set; }
 
-        [JsonProperty(PropertyName = "isDeleted")]
+        [JsonPropertyName("isDeleted")]
         public bool IsDeleted { get; set; }
 
-        [JsonProperty(PropertyName = "isTerminated")]
+        [JsonPropertyName("isTerminated")]
         public bool IsTerminated { get; set; }
 
-        [JsonProperty(PropertyName = "isLockedByDivorce")]
+        [JsonPropertyName("isLockedByDivorce")]
         public bool IsLockedByDivorce { get; set; }
 
-        [JsonProperty(PropertyName = "isTransitioning")]
+        [JsonPropertyName("isTransitioning")]
         public bool IsTransitioning { get; set; }
 
-        [JsonProperty(PropertyName = "isBCP")]
+        [JsonPropertyName("isBCP")]
         public bool IsBCP { get; set; }
 
-        [JsonProperty(PropertyName = "orderRestriction")]
+        [JsonPropertyName("orderRestriction")]
         public bool OrderRestriction { get; set; }
 
-        [JsonProperty(PropertyName = "foreignSale")]
+        [JsonPropertyName("foreignSale")]
         public bool ForeignSale { get; set; }
     }
 
     public class SsoAuthEnglish
     {
-        [JsonProperty(PropertyName = "first")]
+        [JsonPropertyName("first")]
         public string First { get; set; }
 
-        [JsonProperty(PropertyName = "last")]
+        [JsonPropertyName("last")]
         public string Last { get; set; }
 
-        [JsonProperty(PropertyName = "middle")]
+        [JsonPropertyName("middle")]
         public string Middle { get; set; }
     }
 
     public class SsoAuthLocal
     {
-        [JsonProperty(PropertyName = "first")]
+        [JsonPropertyName("first")]
         public string First { get; set; }
 
-        [JsonProperty(PropertyName = "last")]
+        [JsonPropertyName("last")]
         public string Last { get; set; }
 
-        [JsonProperty(PropertyName = "middle")]
+        [JsonPropertyName("middle")]
         public string Middle { get; set; }
     }
 
     public class SsoAuthNames
     {
-        [JsonProperty(PropertyName = "english")]
+        [JsonPropertyName("english")]
         public SsoAuthEnglish English { get; set; }
 
-        [JsonProperty(PropertyName = "local")]
+        [JsonPropertyName("local")]
         public SsoAuthLocal Local { get; set; }
     }
 
     public class SsoAuthVolumeLimits
     {
-        [JsonProperty(PropertyName = "consignmentVolumeLimit")]
+        [JsonPropertyName("consignmentVolumeLimit")]
         public double ConsignmentVolumeLimit { get; set; }
 
-        [JsonProperty(PropertyName = "consignmentVolumeLimitUsed")]
+        [JsonPropertyName("consignmentVolumeLimitUsed")]
         public double ConsignmentVolumeLimitUsed { get; set; }
 
-        [JsonProperty(PropertyName = "personalVolumeLimit")]
+        [JsonPropertyName("personalVolumeLimit")]
         public double PersonalVolumeLimit { get; set; }
 
-        [JsonProperty(PropertyName = "personalVolumeLimitUsed")]
+        [JsonPropertyName("personalVolumeLimitUsed")]
         public double PersonalVolumeLimitUsed { get; set; }
     }
 
     public class SsoAuthResult
     {
-        [JsonProperty(PropertyName = "token")]
+        [JsonPropertyName("token")]
         public string Token { get; set; }
 
-        [JsonProperty(PropertyName = "profile")]
+        [JsonPropertyName("profile")]
         public SsoAuthDistributorDetails Profile { get; set; }
     }
 
@@ -278,83 +278,83 @@ namespace Filuet.Hrbl.Ordering.Abstractions
     {
         public class SsoAuthDistributorDetailsError
         {
-            [JsonProperty(PropertyName = "code")]
+            [JsonPropertyName("code")]
             public int Code { get; set; }
 
-            [JsonProperty(PropertyName = "message")]
+            [JsonPropertyName("message")]
             public string Message { get; set; }
 
-            [JsonProperty(PropertyName = "data")]
+            [JsonPropertyName("data")]
             public object Data { get; set; }
         }
 
-        [JsonProperty(PropertyName = "addresses")]
+        [JsonPropertyName("addresses")]
         public Addresses Addresses { get; set; }
 
-        [JsonProperty(PropertyName = "apfDueDate")]
+        [JsonPropertyName("apfDueDate")]
         public DateTime? ApfDueDate { get; set; }
 
-        [JsonProperty(PropertyName = "birthDate")]
+        [JsonPropertyName("birthDate")]
         public DateTime? BirthDate { get; set; }
 
-        [JsonProperty(PropertyName = "dsSubType")]
+        [JsonPropertyName("dsSubType")]
         public string DsSubType { get; set; }
 
-        [JsonProperty(PropertyName = "dsType")]
+        [JsonPropertyName("dsType")]
         public string DsType { get; set; }
 
-        [JsonProperty(PropertyName = "emails")]
+        [JsonPropertyName("emails")]
         public List<SsoAuthEmail> Emails { get; set; }
 
-        [JsonProperty(PropertyName = "error")]
+        [JsonPropertyName("error")]
         public SsoAuthDistributorDetailsError Error { get; set; }
 
-        [JsonProperty(PropertyName = "flags")]
+        [JsonPropertyName("flags")]
         public SsoAuthFlags Flags { get; set; }
 
-        [JsonProperty(PropertyName = "memberId")]
+        [JsonPropertyName("memberId")]
         public string MemberId { get; set; }
 
-        [JsonProperty(PropertyName = "names")]
+        [JsonPropertyName("names")]
         public SsoAuthNames Names { get; set; }
 
-        [JsonProperty(PropertyName = "phones")]
+        [JsonPropertyName("phones")]
         public List<string> Phones { get; set; }
 
-        [JsonProperty(PropertyName = "processingCountryCode")]
+        [JsonPropertyName("processingCountryCode")]
         public string ProcessingCountryCode { get; set; }
 
-        [JsonProperty(PropertyName = "residenceCountryCode")]
+        [JsonPropertyName("residenceCountryCode")]
         public string ResidenceCountryCode { get; set; }
 
-        [JsonProperty(PropertyName = "mailingCountryCode")]
+        [JsonPropertyName("mailingCountryCode")]
         public string MailingCountryCode { get; set; }
 
-        [JsonProperty(PropertyName = "sponsorId")]
+        [JsonPropertyName("sponsorId")]
         public string SponsorId { get; set; }
 
-        [JsonProperty(PropertyName = "teamLevel")]
+        [JsonPropertyName("teamLevel")]
         public object TeamLevel { get; set; }
 
-        [JsonProperty(PropertyName = "tenCustomerFormStatus")]
+        [JsonPropertyName("tenCustomerFormStatus")]
         public object TenCustomerFormStatus { get; set; }
 
-        [JsonProperty(PropertyName = "volumeLimits")]
+        [JsonPropertyName("volumeLimits")]
         public SsoAuthVolumeLimits VolumeLimits { get; set; }
 
-        [JsonProperty(PropertyName = "custCategoryType")]
+        [JsonPropertyName("custCategoryType")]
         public object CustCategoryType { get; set; }
 
-        [JsonProperty(PropertyName = "orderRestrictions")]
+        [JsonPropertyName("orderRestrictions")]
         public object OrderRestrictions { get; set; }
 
-        [JsonProperty(PropertyName = "cantBuyReasons")]
+        [JsonPropertyName("cantBuyReasons")]
         public List<string> CantBuyReasons { get; set; }
 
-        [JsonProperty(PropertyName = "subscription")]
+        [JsonPropertyName("subscription")]
         public object Subscription { get; set; }
 
-        [JsonProperty(PropertyName = "dsJoiningPurpose")]
+        [JsonPropertyName("dsJoiningPurpose")]
         public object DsJoiningPurpose { get; set; }
     }
 }

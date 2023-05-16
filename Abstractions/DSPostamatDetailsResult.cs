@@ -1,52 +1,49 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Text.Json.Serialization;
 
 namespace Filuet.Hrbl.Ordering.Abstractions
 {
     internal class DSPostamatDetailsResult
     {
-        [JsonProperty("DsPostamatDetails")]
+        [JsonPropertyName("DsPostamatDetails")]
         public DsPostamatDetails[] DsPostamatDetails { get; private set; }
 
-        [JsonProperty("Errors")]
+        [JsonPropertyName("Errors")]
         public CommonErrorList Errors { get; private set; }
     }
 
     public class DsPostamatDetails
     {
-        [JsonProperty("PostamatId")]
+        [JsonPropertyName("PostamatId")]
         public string PostamatId { get; set; }
 
-        [JsonProperty("City")]
+        [JsonPropertyName("City")]
         public string City { get; set; }
 
-        [JsonProperty("Region")]
+        [JsonPropertyName("Region")]
         public string Region { get; set; }
 
-        [JsonProperty("Zipcode")]
+        [JsonPropertyName("Zipcode")]
         public string Zipcode { get; set; }
 
-        [JsonProperty("FrieghtCode")]
+        [JsonPropertyName("FrieghtCode")]
         public string FrieghtCode { get; set; }
 
-        [JsonProperty("ShippingWarehouse")]
+        [JsonPropertyName("ShippingWarehouse")]
         public string ShippingWarehouse { get; set; }
 
-        [JsonProperty("PlaceName")]
+        [JsonPropertyName("PlaceName")]
         public string PlaceName { get; set; }
 
-        [JsonProperty("MetroStation")]
+        [JsonPropertyName("MetroStation")]
         public string MetroStation { get; set; }
 
-        [JsonProperty("Street")]
+        [JsonPropertyName("Street")]
         public string Street { get; set; }
 
-        [JsonProperty("Building")]
+        [JsonPropertyName("Building")]
         public string Building { get; set; }
 
-        [JsonProperty("AddtionalInfo")]
+        [JsonPropertyName("AddtionalInfo")]
         public string AddtionalInfo { get; set; }
     }
 }

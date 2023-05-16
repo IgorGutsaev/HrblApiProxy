@@ -1,15 +1,13 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System;
+using System.Text.Json.Serialization;
 
 namespace Filuet.Hrbl.Ordering.Abstractions
 {
     internal class ApiValidateRequest
     {
-        [JsonProperty("X-HLAPPID")]
+        [JsonPropertyName("X-HLAPPID")]
         public string AppId { get; private set; }
-        [JsonProperty("AccessToken")]
+        [JsonPropertyName("AccessToken")]
         public string AccessToken { get; private set; }
 
         internal static ApiValidateRequest Create(uint organizationId, string token)

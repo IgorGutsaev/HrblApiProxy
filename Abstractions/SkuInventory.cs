@@ -1,20 +1,20 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
+using System.Text.Json.Serialization;
 
 namespace Filuet.Hrbl.Ordering.Abstractions
 {
     internal class SkuInventoryDetailsResult
     {
-        [JsonProperty("SkuInventoryDetails")]
+        [JsonPropertyName("SkuInventoryDetails")]
         public SkuInventoryDetails SkuInventoryDetails { get; set; }
 
-        [JsonProperty("Errors")]
+        [JsonPropertyName("Errors")]
         internal CommonErrorList Errors { get; private set; }
     }
 
     internal class SkuInventoryDetails
     {
-        [JsonProperty(PropertyName = "SkuInventory")]
+        [JsonPropertyName("SkuInventory")]
         public SkuInventory[] Inventory { get; set; }
     }
 
@@ -23,13 +23,13 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         /// <summary>
         /// Original SkuName
         /// </summary>
-        [JsonProperty(PropertyName = "SkuName")]
+        [JsonPropertyName("SkuName")]
         public string Sku { get; set; }
 
         /// <summary>
         /// Original ValidSKU
         /// </summary>
-        [JsonProperty(PropertyName = "ValidSKU")]
+        [JsonPropertyName("ValidSKU")]
         private string ValidSKU { get; set; }
 
         [JsonIgnore]
@@ -38,7 +38,7 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         /// <summary>
         /// Original SKUAvailable
         /// </summary>
-        [JsonProperty(PropertyName = "SKUAvailable")]
+        [JsonPropertyName("SKUAvailable")]
         private string SKUAvailable { get; set; }
 
         [JsonIgnore]
@@ -47,19 +47,19 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         /// <summary>
         /// Original CrossSellSKU
         /// </summary>
-        [JsonProperty(PropertyName = "CrossSellSKU")]
+        [JsonPropertyName("CrossSellSKU")]
         public string CrossSellSKU { get; set; }
 
         /// <summary>
         /// Original AvailableQuantity
         /// </summary>
-        [JsonProperty(PropertyName = "AvailableQuantity")]
+        [JsonPropertyName("AvailableQuantity")]
         public int AvailableQuantity { get; set; }
 
-        [JsonProperty(PropertyName = "ReasonCode")]
+        [JsonPropertyName("ReasonCode")]
         public string ReasonCode { get; set; }
 
-        [JsonProperty(PropertyName = "ReasonMsg")]
+        [JsonPropertyName("ReasonMsg")]
         public string ReasonMsg { get; set; }
 
         public override string ToString() => Sku;

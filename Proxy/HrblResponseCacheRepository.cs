@@ -5,15 +5,15 @@ namespace Filuet.Hrbl.Ordering.Proxy
 {
     public class HrblResponseCacheRepository
     {
-        public SsoAuthDistributorDetails? GetSsoProfile(string key)
+        public SsoAuthResult? GetSsoProfile(string key)
         {
-            if (_profilesCache.TryGetValue(key, out SsoAuthDistributorDetails? currentValue))
+            if (_profilesCache.TryGetValue(key, out SsoAuthResult? currentValue))
                 return currentValue;
 
             return null;
         }
 
-        public void PutSsoProfile(string login, string key, SsoAuthDistributorDetails profile)
+        public void PutSsoProfile(string login, string key, SsoAuthResult profile)
         {
             login = login.ToLower();
 
@@ -30,7 +30,7 @@ namespace Filuet.Hrbl.Ordering.Proxy
         public bool RemoveSsoProfile(string key)
             => _profilesCache.TryRemove(key, out _);
 
-        private readonly ConcurrentDictionary<string, SsoAuthDistributorDetails> _profilesCache = new ConcurrentDictionary<string, SsoAuthDistributorDetails>();
+        private readonly ConcurrentDictionary<string, SsoAuthResult> _profilesCache = new ConcurrentDictionary<string, SsoAuthResult>();
         private readonly ConcurrentDictionary<string, string> _profilesLoginToKeyRelation = new ConcurrentDictionary<string, string>();
     }
 }

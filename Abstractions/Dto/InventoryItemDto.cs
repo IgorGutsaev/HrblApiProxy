@@ -1,19 +1,19 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace Filuet.Hrbl.Ordering.Abstractions.Dto
 {
     public class InventoryItemDto
     {
-        [JsonProperty("sku")]
+        [JsonPropertyName("sku")]
         public string Sku { get; private set; }
 
-        [JsonProperty("wh")]
+        [JsonPropertyName("wh")]
         public string Warehouse { get; private set; }
 
-        [JsonProperty("block")]
+        [JsonPropertyName("block")]
         public bool IsBlocked { get; private set; }
 
-        [JsonProperty("qty")]
+        [JsonPropertyName("qty")]
         public int QuantityAvailable { get; private set; }
 
         public static InventoryItemDto Create(InventoryItem item)

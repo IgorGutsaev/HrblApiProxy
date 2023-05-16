@@ -1,11 +1,11 @@
-﻿using Newtonsoft.Json;
-using System.Linq;
+﻿using System.Linq;
+using System.Text.Json.Serialization;
 
 namespace Filuet.Hrbl.Ordering.Abstractions
 {
     internal class CommonErrorList
     {
-        [JsonProperty("Error")]
+        [JsonPropertyName("Error")]
         public CommonError[] Error { get; private set; } = new CommonError[0];
 
         [JsonIgnore]
@@ -18,10 +18,10 @@ namespace Filuet.Hrbl.Ordering.Abstractions
 
     internal class CommonError
     {
-        [JsonProperty("ErrorCode")]
+        [JsonPropertyName("ErrorCode")]
         public string ErrorCode { get; set; }
 
-        [JsonProperty("ErrorMessage")]
+        [JsonPropertyName("ErrorMessage")]
         public string ErrorMessage { get; set; }
     }
 }

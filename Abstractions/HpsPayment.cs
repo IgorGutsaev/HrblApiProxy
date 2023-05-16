@@ -1,64 +1,83 @@
 ﻿using Filuet.Hrbl.Ordering.Abstractions.Serializers;
-using Newtonsoft.Json;
+
 using System;
+using System.Text.Json.Serialization;
 
 namespace Filuet.Hrbl.Ordering.Abstractions
 {
     public class HpsPaymentPayload
     {
-        [JsonProperty("Country", Order = 1)]
+        [JsonPropertyName("Country")]
+        [JsonPropertyOrder(order: 1)]
         public string Country { get; internal set; }
 
-        [JsonProperty("OrderNumber", Order = 2)]
+        [JsonPropertyName("OrderNumber")]
+        [JsonPropertyOrder(order: 2)]
         public string OrderNumber { get; internal set; }
 
-        [JsonProperty("ClientRefNum", Order = 3)]
+        [JsonPropertyName("ClientRefNum")]
+        [JsonPropertyOrder(order: 3)]
         public string ClientRefNum { get; internal set; }
 
-        [JsonProperty("DistributorId", Order = 5)]
+        [JsonPropertyName("DistributorId")]
+        [JsonPropertyOrder(order: 5)]
         public string DistributorId { get; internal set; }
 
-        [JsonProperty("PayCode", Order = 6)]
+        [JsonPropertyName("PayCode")]
+        [JsonPropertyOrder(order: 6)]
         public string PayCode { get; internal set; }
 
-        [JsonProperty("Currency", Order = 8)]
+        [JsonPropertyName("Currency")]
+        [JsonPropertyOrder(order: 8)]
         public string Currency { get; internal set; }
 
-        [JsonProperty("Amount", Order = 9)]
+        [JsonPropertyName("Amount")]
+        [JsonPropertyOrder(order: 9)]
         public string Amount { get; internal set; }
 
-        [JsonProperty("CardHolderName", Order = 10)]
+        [JsonPropertyName("CardHolderName")]
+        [JsonPropertyOrder(order: 10)]
         public string CardHolderName { get; internal set; }
 
-        [JsonProperty("CreditCardNum", Order = 11)]
+        [JsonPropertyName("CreditCardNum")]
+        [JsonPropertyOrder(order: 11)]
         public string CreditCardNumTokenized { get; internal set; }
 
-        [JsonProperty("ExpiryDate", Order = 12)]
-        [JsonConverter(typeof(CustomDateTimeConverter))]
+        [JsonPropertyName("ExpiryDate")]
+        [JsonPropertyOrder(order: 12)]
+       // [JsonConverter(typeof(CustomDateTimeConverter))]
         public DateTime ExpiryDate { get; internal set; }
 
-        [JsonProperty("CVV2", Order = 13)]
+        [JsonPropertyName("CVV2")]
+        [JsonPropertyOrder(order: 13)]
         public string CVV2 { get; internal set; }
 
-        [JsonProperty("PayeeID", Order = 15)]
+        [JsonPropertyName("PayeeID")]
+        [JsonPropertyOrder(order: 15)]
         public string PayeeID { get; internal set; }
 
-        [JsonProperty("Address1", Order = 16)]
+        [JsonPropertyName("Address1")]
+        [JsonPropertyOrder(order: 16)]
         public string Address1 { get; internal set; }
 
-        [JsonProperty("City", Order = 17)]
+        [JsonPropertyName("City")]
+        [JsonPropertyOrder(order: 17)]
         public string City { get; internal set; }
 
-        [JsonProperty("PostalCode", Order = 18)]
+        [JsonPropertyName("PostalCode")]
+        [JsonPropertyOrder(order: 18)]
         public string PostalCode { get; internal set; }
 
-        [JsonProperty("ProcessingLocation", Order = 19)]
+        [JsonPropertyName("ProcessingLocation")]
+        [JsonPropertyOrder(order: 19)]
         public string ProcessingLocation { get; internal set; }
 
-        [JsonProperty("OrderType", Order = 21)]
+        [JsonPropertyName("OrderType")]
+        [JsonPropertyOrder(order: 21)]
         public string OrderType { get; internal set; }
 
-        [JsonProperty("Installments", Order = 22)]
+        [JsonPropertyName("Installments")]
+        [JsonPropertyOrder(order: 22)]
         public uint Installments { get; internal set; }
 
         public static HpsPaymentPayload Create(string orderNumber, string distributorId, string currency, decimal amount,
@@ -88,19 +107,28 @@ namespace Filuet.Hrbl.Ordering.Abstractions
 
     internal class HpsPaymentBody : HpsPaymentPayload
     {
-        [JsonProperty("Operator", Order = 4)]
+        [JsonPropertyName("Operator")]
+        [JsonPropertyOrder(order: 4)]
         public string Operator { get; private set; } = "Order Taker"; // is constant for the time being
 
-        [JsonProperty("PaymentType", Order = 7)]
+        [JsonPropertyName("PaymentType")]
+        [JsonPropertyOrder(order: 7)]
         public string PaymentType { get; private set; } = "SALE"; // is constant for the time being
 
-        [JsonProperty("Transactionclass", Order = 14)]
+        [JsonPropertyName("Transactionclass")]
+        [JsonPropertyOrder(order: 14)]
         public string Transactionclass => string.IsNullOrEmpty(CVV2) ? "CA" : "FA";
 
-        [JsonProperty("ApplicationSource", Order = 20)]
+        [JsonPropertyName("ApplicationSource")]
+        [JsonPropertyOrder(order: 20)]
         public string ApplicationSource { get; private set; } = "ORDERPAY"; // is constant for the time being
 
-        [JsonProperty("AuthMerchantNum", Order = 24)]
+        [JsonPropertyName("InstallmentsSpecified")]
+        [JsonPropertyOrder(order: 23)]
+        public bool InstallmentsSpecified => Installments > 0;
+
+        [JsonPropertyName("AuthMerchantNum")]
+        [JsonPropertyOrder(order: 24)]
         public string AuthMerchantNum
         {
             get
@@ -117,7 +145,8 @@ namespace Filuet.Hrbl.Ordering.Abstractions
             }
         }
 
-        [JsonProperty("SettMerchantNum", Order = 25)]
+        [JsonPropertyName("SettMerchantNum")]
+        [JsonPropertyOrder(order: 25)]
         public string SettMerchantNum
         {
             get
@@ -133,86 +162,83 @@ namespace Filuet.Hrbl.Ordering.Abstractions
                 }
             }
         }
-
-        [JsonProperty("InstallmentsSpecified", Order = 23)]
-        public bool InstallmentsSpecified => Installments > 0;
     }
 
     internal class HpsPaymentRequest
     {
-        [JsonProperty("ServiceConsumer")]
+        [JsonPropertyName("ServiceConsumer")]
         public string ServiceConsumer { get; internal set; }
 
-        [JsonProperty("PaymentRequest")]
+        [JsonPropertyName("PaymentRequest")]
         public HpsPaymentBody PaymentRequest { get; internal set; } = new HpsPaymentBody();
     }
 
     internal class HpsPaymentResponse
     {
-        [JsonProperty("PaymentResponse")] // Also might be ranamed as Errors
+        [JsonPropertyName("PaymentResponse")] // Also might be ranamed as Errors
         public HpsPaymentResponseDetails PaymentResponse { get; private set; }
 
-        [JsonProperty("ErrorDetails")] // Also might be ranamed as Errors
+        [JsonPropertyName("ErrorDetails")] // Also might be ranamed as Errors
         public CommonErrorList Errors { get; private set; }
     }
 
     internal class HpsPaymentResponseDetails
     {
-        [JsonProperty("OrderNumber")]
+        [JsonPropertyName("OrderNumber")]
         public string OrderNumber { get; private set; }
 
-        [JsonProperty("ClientRefNum")]
+        [JsonPropertyName("ClientRefNum")]
         public string ClientRefNum { get; private set; }
 
-        [JsonProperty("CreditCardNum")]
+        [JsonPropertyName("CreditCardNum")]
         public string CreditCardNum { get; private set; }
 
-        [JsonProperty("TransactionID")]
+        [JsonPropertyName("TransactionID")]
         public string TransactionID { get; private set; }
 
-        [JsonProperty("AuthSystem")]
+        [JsonPropertyName("AuthSystem")]
         public string AuthSystem { get; private set; }
 
-        [JsonProperty("ApprovalNum")]
+        [JsonPropertyName("ApprovalNum")]
         public string ApprovalNum { get; private set; }
 
-        [JsonProperty("HPPResponseCd")]
+        [JsonPropertyName("HPPResponseCd")]
         public string HPPResponseCd { get; private set; }
 
-        [JsonProperty("HPPResponseMsg")]
+        [JsonPropertyName("HPPResponseMsg")]
         public string HPPResponseMsg { get; private set; }
 
-        [JsonProperty("AuthSystemResponseCd")]
+        [JsonPropertyName("AuthSystemResponseCd")]
         public string AuthSystemResponseCd { get; private set; }
 
-        [JsonProperty("AuthResponseMsg")]
+        [JsonPropertyName("AuthResponseMsg")]
         public string AuthResponseMsg { get; private set; }
 
-        [JsonProperty("Cvv2ResponseCode")]
+        [JsonPropertyName("Cvv2ResponseCode")]
         public string Cvv2ResponseCode { get; private set; }
 
-        [JsonProperty("Cvv2ResponseMsg")]
+        [JsonPropertyName("Cvv2ResponseMsg")]
         public string Cvv2ResponseMsg { get; private set; }
 
-        [JsonProperty("AvsResponseCode")]
+        [JsonPropertyName("AvsResponseCode")]
         public string AvsResponseCode { get; private set; }
 
-        [JsonProperty("AvsResponseMsg")]
+        [JsonPropertyName("AvsResponseMsg")]
         public string AvsResponseMsg { get; private set; }
 
-        [JsonProperty("ProcessedTime")]
+        [JsonPropertyName("ProcessedTime")]
         public DateTime? ProcessedTime { get; private set; }
 
-        [JsonProperty("MerchantNum")]
+        [JsonPropertyName("MerchantNum")]
         public string MerchantNum { get; private set; }
 
-        [JsonProperty("KountHash")]
+        [JsonPropertyName("KountHash")]
         public string KountHash { get; private set; }
 
-        [JsonProperty("CardType")]
+        [JsonPropertyName("CardType")]
         public string CardType { get; private set; }
 
-        [JsonProperty("PaymentMethodId")]
+        [JsonPropertyName("PaymentMethodId")]
         public string PaymentMethodId { get; private set; }
     }
 }

@@ -1,16 +1,16 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace Filuet.Hrbl.Ordering.Abstractions
 {
     public class DsCashLimitResult
     {
-        [JsonProperty("LimitAmount")]
+        [JsonPropertyName("LimitAmount")]
         public decimal LimitAmount { get; private set; }
 
-        [JsonProperty("CashAmountPaid")]
+        [JsonPropertyName("CashAmountPaid")]
         public decimal CashAmountPaid { get; private set; }
 
-        [JsonProperty("Responses")]
+        [JsonPropertyName("Responses")]
         public Responses Responses { get; private set; }
     }
 }
