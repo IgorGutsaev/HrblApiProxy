@@ -5,10 +5,10 @@ namespace Filuet.Hrbl.Ordering.Abstractions
     internal class DSPostamatDetailsResult
     {
         [JsonPropertyName("DsPostamatDetails")]
-        public DsPostamatDetails[] DsPostamatDetails { get; private set; }
+        public DsPostamatDetails[] DsPostamatDetails { get; set; }
 
         [JsonPropertyName("Errors")]
-        public CommonErrorList Errors { get; private set; }
+        public CommonErrorList Errors { get; set; }
     }
 
     public class DsPostamatDetails

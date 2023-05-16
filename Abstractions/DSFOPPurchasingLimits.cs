@@ -9,7 +9,7 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         private DSFOPLimits DSFOPLimits { get; set; }
 
         [JsonPropertyName("DSOTLimits")]
-        public DSOTLimits DSOTLimits { get; private set; }
+        public DSOTLimits DSOTLimits { get; set; }
 
         [JsonIgnore]
         public DSFOPLimit FopLimit => DSFOPLimits.DSFOPLimit;
@@ -24,52 +24,52 @@ namespace Filuet.Hrbl.Ordering.Abstractions
     public class DSFOPLimits
     {
         [JsonPropertyName("DSFOPLimit")]
-        public DSFOPLimit DSFOPLimit { get; private set; }
+        public DSFOPLimit DSFOPLimit { get; set; }
     }
 
     public class DSOTLimits
     {
         [JsonPropertyName("DSOTLimit")]
-        public DSOTLimit[] DSFOPLimit { get; private set; }
+        public DSOTLimit[] DSFOPLimit { get; set; }
     }
 
     public class DSFOPLimit
     {
         [JsonPropertyName("EarnedFOP")]
-        public decimal? EarnedFOP { get; private set; }
+        public decimal? EarnedFOP { get; set; }
 
         [JsonPropertyName("AvailableFOPLimit")]
-        public decimal? AvailableFOPLimit { get; private set; }
+        public decimal? AvailableFOPLimit { get; set; }
 
         [JsonPropertyName("ThresholdFOPimit")]
-        public decimal? ThresholdFOPimit { get; private set; }
+        public decimal? ThresholdFOPimit { get; set; }
 
         [JsonPropertyName("FOPFirstOrderDate")]
-        public DateTime? FOPFirstOrderDate { get; private set; }
+        public DateTime? FOPFirstOrderDate { get; set; }
 
         [JsonPropertyName("FOPThresholdPeriod")]
-        public int? FOPThresholdPeriod { get; private set; }
+        public int? FOPThresholdPeriod { get; set; }
     }
 
     public class DSOTLimit
     {
         [JsonPropertyName("OTOrderMonth")]
-        public string OTOrderMonth { get; private set; }
+        public string OTOrderMonth { get; set; }
 
         [JsonPropertyName("EarnedOT")]
-        public decimal? EarnedOT { get; private set; }
+        public decimal? EarnedOT { get; set; }
 
         [JsonPropertyName("AvailableOTLimit")]
-        public decimal? AvailableOTLimit { get; private set; }     
+        public decimal? AvailableOTLimit { get; set; }     
         
         [JsonPropertyName("ThresholdOTLimit")]
-        public decimal? ThresholdOTLimit { get; private set; }
+        public decimal? ThresholdOTLimit { get; set; }
 
         [JsonPropertyName("OTFirstOrderDate")]
-        public DateTime? OTFirstOrderDate { get; private set; }
+        public DateTime? OTFirstOrderDate { get; set; }
 
         [JsonPropertyName("OTThresholdPeriod")]
-        public int? OTThresholdPeriod { get; private set; }
+        public int? OTThresholdPeriod { get; set; }
     }
 
     public class DSPurchasingLimits
@@ -81,42 +81,42 @@ namespace Filuet.Hrbl.Ordering.Abstractions
     public class DSPurchasingLimit
     {
         [JsonPropertyName("PPVOrderMonth")]
-        public string PPVOrderMonth { get; private set; }
+        public string PPVOrderMonth { get; set; }
 
         [JsonPropertyName("EarnedPC")]
-        public decimal? EarnedPC { get; private set; }
+        public decimal? EarnedPC { get; set; }
 
         [JsonPropertyName("AvailablePCLimit")]
-        public decimal? AvailablePCLimit { get; private set; }
+        public decimal? AvailablePCLimit { get; set; }
 
         [JsonPropertyName("ThresholdPCLimit")]
-        public decimal? ThresholdPCLimit { get; private set; }
+        public decimal? ThresholdPCLimit { get; set; }
 
         [JsonPropertyName("EarnedAI")]
-        public decimal? EarnedAI { get; private set; }
+        public decimal? EarnedAI { get; set; }
 
         [JsonPropertyName("AvailableAILimit")]
-        public decimal? AvailableAILimit { get; private set; }
+        public decimal? AvailableAILimit { get; set; }
 
         [JsonPropertyName("ThresholdAILimit")]
-        public decimal? ThresholdAILimit { get; private set; }
+        public decimal? ThresholdAILimit { get; set; }
 
         [JsonPropertyName("EarnedRO")]
-        public decimal? EarnedRO { get; private set; }
+        public decimal? EarnedRO { get; set; }
 
         [JsonPropertyName("AvailableROLimit")]
-        public decimal? AvailableROLimit { get; private set; }
+        public decimal? AvailableROLimit { get; set; }
 
         [JsonPropertyName("ThresholdROLimit")]
-        public decimal? ThresholdROLimit { get; private set; }
+        public decimal? ThresholdROLimit { get; set; }
 
         [JsonPropertyName("EarnedCD")]
-        public decimal? EarnedCD { get; private set; }
+        public decimal? EarnedCD { get; set; }
 
         [JsonPropertyName("AvailableCDLimit")]
-        public decimal? AvailableCDLimit { get; private set; }
+        public decimal? AvailableCDLimit { get; set; }
 
         [JsonPropertyName("ThresholdCDLimit")]
-        public decimal? ThresholdCDLimit { get; private set; }
+        public decimal? ThresholdCDLimit { get; set; }
     }
 }

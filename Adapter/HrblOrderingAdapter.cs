@@ -1,10 +1,8 @@
-﻿using Filuet.Fusion.SDK;
-using System;
+﻿using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 using Filuet.Hrbl.Ordering.Abstractions;
 using System.Text;
 using Filuet.Hrbl.Ordering.Common;
@@ -15,9 +13,126 @@ using Filuet.Hrbl.Ordering.Abstractions.Enums;
 using Filuet.Hrbl.Ordering.Abstractions.Models;
 using System.Diagnostics;
 using Microsoft.Extensions.Logging;
+using Filuet.Hrbl.Ordering.SDK;
+using System.Text.Json;
+using Microsoft.Extensions.Options;
+using System.Text.Encodings.Web;
+using System.Text.Unicode;
+using System.Buffers;
+using System.Globalization;
+using System.Text.Json.Serialization;
 
 namespace Filuet.Hrbl.Ordering.Adapter
 {
+
+    public class StringConverterForUtf8EscapedCharValues : JsonConverter<string>
+    {
+        public override string? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        {
+            if (reader.TokenType != JsonTokenType.String)
+                throw new JsonException();
+
+            if (!reader.ValueIsEscaped)
+                return reader.GetString();
+
+            ReadOnlySpan<byte> span = reader.HasValueSequence ? reader.ValueSequence.ToArray() : reader.ValueSpan;
+
+            // Normally a JSON string will be a utf8 byte sequence with embedded utf18 escape codes.  
+            // These improperly encoded JSON strings are utf8 byte sequences with embedded utf8 escape codes.
+
+            var encoding = Encoding.UTF8;
+            var decoder = encoding.GetDecoder();
+            var sb = new StringBuilder();
+            var maxCharCount = Encoding.UTF8.GetMaxCharCount(4);
+
+            for (int i = 0; i < span.Length; i++)
+            {
+                if (span[i] != '\\')
+                {
+                    Span<char> chars = stackalloc char[maxCharCount];
+                    var n = decoder.GetChars(span.Slice(i, 1), chars, false);
+                    sb.Append(chars.Slice(0, n));
+                }
+                else if (i < span.Length - 1 && span[i + 1] == '"')
+                {
+                    sb.Append('"');
+                    i++;
+                }
+                else if (i < span.Length - 1 && span[i + 1] == '\\')
+                {
+                    sb.Append('\\');
+                    i++;
+                }
+                else if (i < span.Length - 1 && span[i + 1] == '/')
+                {
+                    sb.Append('/');
+                    i++;
+                }
+                else if (i < span.Length - 1 && span[i + 1] == 'b')
+                {
+                    sb.Append('\u0008');
+                    i++;
+                }
+                else if (i < span.Length - 1 && span[i + 1] == 'b')
+                {
+                    sb.Append('\u0008');
+                    i++;
+                }
+                else if (i < span.Length - 1 && span[i + 1] == 'f')
+                {
+                    sb.Append('\u0008');
+                    i++;
+                }
+                else if (i < span.Length - 1 && span[i + 1] == 'f')
+                {
+                    sb.Append('\u000C');
+                    i++;
+                }
+                else if (i < span.Length - 1 && span[i + 1] == 'f')
+                {
+                    sb.Append('\u000C');
+                    i++;
+                }
+                else if (i < span.Length - 1 && span[i + 1] == 'n')
+                {
+                    sb.Append('\n');
+                    i++;
+                }
+                else if (i < span.Length - 1 && span[i + 1] == 'r')
+                {
+                    sb.Append('\r');
+                    i++;
+                }
+                else if (i < span.Length - 1 && span[i + 1] == 't')
+                {
+                    sb.Append('\t');
+                    i++;
+                }
+                else if (i < span.Length - 5 && span[i + 1] == 'u')
+                {
+                    Span<char> hexchars = stackalloc char[4] { (char)span[i + 2], (char)span[i + 3], (char)span[i + 4], (char)span[i + 5] };
+                    if (!byte.TryParse(hexchars, NumberStyles.HexNumber, NumberFormatInfo.InvariantInfo, out var b))
+                    {
+                        throw new JsonException();
+                    }
+                    Span<char> chars = stackalloc char[maxCharCount];
+                    Span<byte> bytes = stackalloc byte[1] { b };
+                    var n = decoder.GetChars(bytes, chars, false);
+                    sb.Append(chars.Slice(0, n));
+                    i += 5;
+                }
+                else
+                {
+                    throw new JsonException();
+                }
+            }
+            var s = sb.ToString();
+            return s;
+        }
+
+        public override void Write(Utf8JsonWriter writer, string value, JsonSerializerOptions options) => writer.WriteStringValue(value);
+    }
+
     public class HrblOrderingAdapter : IHrblOrderingAdapter
     {
         private const string hlbuild = "1.0.1";
@@ -35,11 +150,14 @@ namespace Filuet.Hrbl.Ordering.Adapter
         {
             _logger = logger;
             _settings = settings;
-            _proxy = new HLOnlineOrderingRS(new Uri(_settings.ApiUri));
+
+            HttpClient client = new HttpClient();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(Encoding.UTF8.GetBytes($"{_settings.Login}:{_settings.Password}")));
+
+            _proxy = new HrblRestApiClient(client);
+            _proxy.BaseUrl = settings.ApiUri;
+
             _logger?.LogInformation($"Proxy instance to {settings.ApiUri} created");
-            _proxy.SerializationSettings = null;
-            _proxy.DeserializationSettings = null;
-            _proxy.HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(Encoding.UTF8.GetBytes($"{_settings.Login}:{ _settings.Password}")));
         }
 
         #region Inventory
@@ -70,15 +188,16 @@ namespace Filuet.Hrbl.Ordering.Adapter
             bool isError = false;
             string error = string.Empty;
 
-            List<Task<object>> chunkTasks = new List<Task<object>>();
+            List<Task<string>> chunkTasks = new List<Task<string>>();
 
             foreach(var b in blocks)
             {
-                var request = new
+                var request = new GetSkuAvailability_body
                 {
                     ServiceConsumer = _settings.Consumer,
-                    SkuInquiryDetails = b.Select(x => new {
-                        Sku = new {
+                    SkuInquiryDetails = b.Select(x => new OrderHLOnlineOrderingts3GetSkuAvailability_SkuInquiryDetails
+                    {
+                        Sku = new OrderHLOnlineOrderingts3GetSkuAvailability_Sku {
                             SkuName = x.Key.ToNormalSku(),
                             Quantity = x.Value.ToString(),
                             WarehouseCode = warehouse
@@ -86,19 +205,19 @@ namespace Filuet.Hrbl.Ordering.Adapter
                     }).ToList()
                 };
 
-                _logger?.LogInformation(System.Text.Json.JsonSerializer.Serialize(request));
+                _logger?.LogInformation(JsonSerializer.Serialize(request));
 
-                chunkTasks.Add(_proxy.GetSkuAvailability.POSTAsync(request));
+                chunkTasks.Add(_proxy.GetSkuAvailabilityAsync(request));
             }
 
             object[] responses = await Task.WhenAll(chunkTasks);
 
             foreach (object response in responses)
             {
-                string data = JsonConvert.SerializeObject(response);
-                _logger?.LogInformation($"Result is '{System.Text.Json.JsonSerializer.Serialize(data)}'");
+                string data = JsonSerializer.Serialize(response);
+                _logger?.LogInformation($"Result is '{data}'");
 
-                SkuInventoryDetailsResult result = JsonConvert.DeserializeObject<SkuInventoryDetailsResult>(data);
+                SkuInventoryDetailsResult result = JsonSerializer.Deserialize<SkuInventoryDetailsResult>(data);
 
                 if (result.Errors != null && result.Errors.HasErrors)
                 {
@@ -133,13 +252,13 @@ namespace Filuet.Hrbl.Ordering.Adapter
 
             try
             {
-                object response = await _proxy.GetProductInventory.POSTAsync(new
+                string response = await _proxy.GetProductInventoryAsync(new GetProductInventory_body
                 {
                     CountryCode = country,
                     OrderType = EnumHelper.GetDescription(type)
                 });
 
-                InventoryResult result = JsonConvert.DeserializeObject<InventoryResult>(JsonConvert.SerializeObject(response));
+                InventoryResult result = JsonSerializer.Deserialize<InventoryResult>(response.ResolveHrblMess());
                 if (!result.Inventory.IsSussess)
                     throw new HrblRestApiException($"An error occured while requesting product inventory in {country}");
 
@@ -156,13 +275,12 @@ namespace Filuet.Hrbl.Ordering.Adapter
             OrderType type = string.IsNullOrWhiteSpace(orderType) ? OrderType.Rso
                 : EnumHelper.GetValueFromDescription<OrderType>(orderType);
 
-            object response = await _proxy.GetProductCatalog.POSTAsync(new
-            {
+            string response = await _proxy.GetProductCatalogAsync(new GetProductCatalog_body {
                 CountryCode = country,
                 OrderType = EnumHelper.GetDescription(type)
             });
 
-            return JsonConvert.DeserializeObject<CatalogResult>(JsonConvert.SerializeObject(response)).CatalogDetails.Items;
+            return JsonSerializer.Deserialize<CatalogResult>(response.ResolveHrblMess()).CatalogDetails.Items;
         }
         #endregion
 
@@ -186,7 +304,7 @@ namespace Filuet.Hrbl.Ordering.Adapter
                 //response.EnsureSuccessStatusCode();
 
                 string resultStr = response.Content.ReadAsStringAsync().Result;
-                SsoAuthResposeWrapper result = JsonConvert.DeserializeObject<SsoAuthResposeWrapper>(resultStr);
+                SsoAuthResposeWrapper result = JsonSerializer.Deserialize<SsoAuthResposeWrapper>(resultStr);
                 if (result.Data == null || !result.Data.IsAuthenticated)
                     throw new UnauthorizedAccessException(result.Message);
 
@@ -194,7 +312,7 @@ namespace Filuet.Hrbl.Ordering.Adapter
 
                 HttpResponseMessage messageDetails = httpClient.GetAsync("/api/Distributor/?type=Detailed").Result;
                 resultStr = messageDetails.EnsureSuccessStatusCode().Content.ReadAsStringAsync().Result;
-                SsoAuthDistributorDetails details = JsonConvert.DeserializeObject<SsoAuthDistributorDetails>(resultStr);
+                SsoAuthDistributorDetails details = JsonSerializer.Deserialize<SsoAuthDistributorDetails>(resultStr);
 
                 return new SsoAuthResult { Token = result.Data.Token, Profile = details };
             }
@@ -205,10 +323,9 @@ namespace Filuet.Hrbl.Ordering.Adapter
             if (string.IsNullOrWhiteSpace(token))
                 throw new ArgumentException("Country is mandatory");
 
-            object response = await _proxy.ApiValidate.POSTAsync(
-                ApiValidateRequest.Create(_settings.OrganizationId, token));
+            string response = await _proxy.ValidateAsync(new Api_validate_body { AccessToken = token, XHLAPPID = _settings.OrganizationId.ToString() });
 
-            ApiValidateResponse result = JsonConvert.DeserializeObject<ApiValidateResponse>(JsonConvert.SerializeObject(response));
+            ApiValidateResponse result = JsonSerializer.Deserialize<ApiValidateResponse>(response.ResolveHrblMess());
 
             return (result.IsValid, result.MemberId);
         }
@@ -223,20 +340,37 @@ namespace Filuet.Hrbl.Ordering.Adapter
             if (string.IsNullOrWhiteSpace(distributorId))
                 throw new ArgumentException("Distributor ID must be specified");
 
-            var request = new
+            var request = new GetDistributorProfile_body
             {
                 ServiceConsumer = _settings.Consumer,
                 DistributorId = distributorId,
             };
 
-            _logger?.LogInformation(System.Text.Json.JsonSerializer.Serialize(request));
+            _logger?.LogInformation(JsonSerializer.Serialize(request));
 
-            object response = await _proxy.GetDistributorProfile.POSTAsync(request);
+            object response = await _proxy.GetDistributorProfileAsync(request);
 
-            _logger?.LogInformation($"Result is '{response}'");
+            var encoderSettings = new TextEncoderSettings();
+            encoderSettings.AllowCharacters('\u0436', '\u0430', '\uFFFD');
+            encoderSettings.AllowRange(UnicodeRanges.BasicLatin);
+            var options = new JsonSerializerOptions
+            {
+                Encoder = JavaScriptEncoder.Create(encoderSettings),
+                WriteIndented = true
+            };
 
-            return JsonConvert.DeserializeObject<DistributorProfileResult>(response.ToString(),
-                new HrblNullableResponseConverter<DistributorProfileResult>()).Profile;
+            //var options = new JsonSerializerOptions
+            //{
+            //    Encoder = JavaScriptEncoder.Create(UnicodeRanges.All),
+            //    Converters = { new StringConverterForUtf8EscapedCharValues() },
+            //    WriteIndented = true
+            //};
+
+            string responseString = JsonSerializer.Serialize(response, options);
+
+            _logger?.LogInformation($"Result is '{responseString}'");
+
+            return JsonSerializer.Deserialize<DistributorProfileResult>(responseString.ResolveHrblMess(), options).Profile;
         }
 
         public async Task UpdateAddressAndContacts(Action<ProfileUpdateBuilder> setup)
@@ -264,8 +398,8 @@ namespace Filuet.Hrbl.Ordering.Adapter
                     request.Contact.FillInWithUnspecifiedData(contactToUpdate);
                 // else request.Contact = null; // We're not allowed to create new contact
             }
-
-            object response = await _proxy.UpdateDsAddressContacts.POSTAsync(request);
+            
+            object response = await _proxy.UpdateDsAddressContactsAsync(JsonSerializer.Deserialize<UpdateDsAddressContacts_body>(JsonSerializer.Serialize(request)));
         }
 
         public async Task<FOPPurchasingLimitsResult> GetDSFOPPurchasingLimits(string distributorId, string country)
@@ -278,8 +412,7 @@ namespace Filuet.Hrbl.Ordering.Adapter
 
             distributorId = distributorId.ToUpper();
 
-            var request = new
-            {
+            var request = new DSFOPPurchasingLimits_body { 
                 ServiceConsumer = _settings.Consumer,
                 DistributorID = distributorId,
                 CountryCode = country.ToUpper()
@@ -287,12 +420,11 @@ namespace Filuet.Hrbl.Ordering.Adapter
 
             _logger?.LogInformation(System.Text.Json.JsonSerializer.Serialize(request));
 
-            object response = await _proxy.DSFOPPurchasingLimits.POSTAsync(request);
+            string response = await _proxy.DSFOPPurchasingLimitsAsync(request);
 
             _logger?.LogInformation($"Result is '{response}'");
 
-            return JsonConvert.DeserializeObject<FOPPurchasingLimitsResult>(JsonConvert.SerializeObject(response)
-                , new HrblNullableResponseConverter<FOPPurchasingLimitsResult>());
+            return JsonSerializer.Deserialize<FOPPurchasingLimitsResult>(response.ResolveHrblMess());
         }
 
         public async Task<TinDetails> GetDistributorTins(string distributorId, string country)
@@ -305,15 +437,14 @@ namespace Filuet.Hrbl.Ordering.Adapter
 
             try // Stub: we should get some default tin details
             {
-                object response = await _proxy.DistributorTins.POSTAsync(new
+                string response = await _proxy.GetDistributorTinsAsync(new GetDistributorTins_body
                 {
                     ServiceConsumer = _settings.Consumer,
                     DistributorId = distributorId,
                     CountryCode = country.ToUpper()
                 });
 
-                return JsonConvert.DeserializeObject<GetDistributorTinsResult>(JsonConvert.SerializeObject(response)
-                    , new HrblNullableResponseConverter<GetDistributorTinsResult>())?.TinDetails;
+                return JsonSerializer.Deserialize<GetDistributorTinsResult>(response.ResolveHrblMess())?.TinDetails;
             }
             catch
             {
@@ -337,8 +468,7 @@ namespace Filuet.Hrbl.Ordering.Adapter
             if (string.IsNullOrWhiteSpace(distributorId))
                 throw new ArgumentException("Distributor ID must be specified");
 
-            var request = new
-            {
+            var request = new GetDistributorVolumePoints_body {
                 ServiceConsumer = _settings.Consumer,
                 DistributorId = distributorId,
                 FromMonth = month.ToString("yyyy/MM"),
@@ -348,17 +478,16 @@ namespace Filuet.Hrbl.Ordering.Adapter
 
             _logger?.LogInformation(System.Text.Json.JsonSerializer.Serialize(request));
 
-            object response = await _proxy.GetDistributorVolumePoints.POSTAsync(request);
+            string response = await _proxy.GetDistributorVolumePointsAsync(request);
 
             _logger?.LogInformation($"Result is '{response}'");
 
-            return JsonConvert.DeserializeObject<DistributorVolumePointsDetailsResult>(JsonConvert.SerializeObject(response),
-                new HrblNullableResponseConverter<DistributorVolumePointsDetailsResult>()).DistributorVolumeDetails.DistributorVolume;
+            return JsonSerializer.Deserialize<DistributorVolumePointsDetailsResult>(response.ResolveHrblMess()).DistributorVolumeDetails.DistributorVolume;
         }
 
         public async Task<DistributorDiscountResult> GetDistributorDiscount(string distributorId, DateTime month, string country)
         {
-            var request = new
+            var request = new GetDistributorDiscount_body
             {
                 ServiceConsumer = _settings.Consumer,
                 DistributorId = distributorId.ToUpper(),
@@ -366,14 +495,13 @@ namespace Filuet.Hrbl.Ordering.Adapter
                 ShipToCountry = country
             };
 
-            _logger?.LogInformation(System.Text.Json.JsonSerializer.Serialize(request));
+            _logger?.LogInformation(JsonSerializer.Serialize(request));
 
-            object response = await _proxy.GetDistributorDiscount.POSTAsync(request);
+            string response = await _proxy.GetDistributorDiscountAsync(request);
 
             _logger?.LogInformation($"Result is '{response}'");
 
-            return JsonConvert.DeserializeObject<DistributorDiscountResult>(JsonConvert.SerializeObject(response),
-                new HrblNullableResponseConverter<DistributorDiscountResult>());
+            return JsonSerializer.Deserialize<DistributorDiscountResult>(response.ResolveHrblMess());
         }
 
         /// <summary>
@@ -384,7 +512,7 @@ namespace Filuet.Hrbl.Ordering.Adapter
         /// <returns></returns>
         public async Task<DsCashLimitResult> GetDsCashLimit(string distributorId, string country)
         {
-            var request = new
+            var request = new DsCashLimit_body
             {
                 ServiceConsumer = _settings.Consumer,
                 DistributorId = distributorId.ToUpper(),
@@ -392,13 +520,13 @@ namespace Filuet.Hrbl.Ordering.Adapter
                 PaymentMethod = "CASH"
             };
 
-            _logger?.LogInformation(System.Text.Json.JsonSerializer.Serialize(request));
+            _logger?.LogInformation(JsonSerializer.Serialize(request));
 
-            object response = await _proxy.DsCashLimit.POSTAsync(request);
+            string response = await _proxy.DsCashLimitAsync(request);
 
             _logger?.LogInformation($"Result is '{response}'");
 
-            return JsonConvert.DeserializeObject<DsCashLimitResult>(JsonConvert.SerializeObject(response));
+            return JsonSerializer.Deserialize<DsCashLimitResult>(response.ResolveHrblMess());
         }
 
         public async Task<PricingResponse> GetPriceDetails(Action<PricingRequestBuilder> setupAction)
@@ -418,12 +546,11 @@ namespace Filuet.Hrbl.Ordering.Adapter
 
             _logger?.LogInformation(System.Text.Json.JsonSerializer.Serialize(request));
 
-            object response = await _proxy.GetPriceDetails.POSTAsync(request);
+            string response = await _proxy.GetPriceDetailsAsync(JsonSerializer.Deserialize<GetPriceDetails_body>(JsonSerializer.Serialize(request)));
 
             _logger?.LogInformation($"Result is '{response}'");
 
-            PricingResponse result = JsonConvert.DeserializeObject<PricingResponse>(JsonConvert.SerializeObject(response),
-                new HrblNullableResponseConverter<PricingResponse>());
+            PricingResponse result = JsonSerializer.Deserialize<PricingResponse>(response.ResolveHrblMess());
 
             if (!string.IsNullOrWhiteSpace(result.Errors?.ErrorMessage))
                 throw new ArgumentException(result.Errors.ErrorMessage);
@@ -437,8 +564,9 @@ namespace Filuet.Hrbl.Ordering.Adapter
                 .AddServiceConsumer(_settings.Consumer)
                 .AddPayload(payload).Build();
 
-            HpsPaymentResponse result = JsonConvert.DeserializeObject<HpsPaymentResponse>(JsonConvert.SerializeObject(await _proxy.HPSPaymentGateway.POSTAsync(request)),
-              new HrblNullableResponseConverter<HpsPaymentResponse>());
+            string response = await _proxy.HPSPaymentGatewayAsync(JsonSerializer.Deserialize<HPSPaymentGateway_body>(JsonSerializer.Serialize(request)));
+
+            HpsPaymentResponse result = JsonSerializer.Deserialize<HpsPaymentResponse>(response.ResolveHrblMess());
 
             if (result.Errors.HasErrors)
                 throw new HrblRestApiException(result.Errors.ErrorMessage);
@@ -452,33 +580,33 @@ namespace Filuet.Hrbl.Ordering.Adapter
                 .AddServiceConsumer(_settings.Consumer)
                 .Build();
 
-            _logger?.LogInformation(System.Text.Json.JsonSerializer.Serialize(request));
+            _logger?.LogInformation(JsonSerializer.Serialize(request));
 
-            object response = await _proxy.SubmitOrder.POSTAsync(request);
+            string response = await _proxy.SubmitOrderAsync(JsonSerializer.Deserialize<SubmitOrder_body>(JsonSerializer.Serialize(request)));
 
             _logger?.LogInformation($"Result is '{response}'");
 
-            return JsonConvert.DeserializeObject<SubmitResponse>(JsonConvert.SerializeObject(response));
+            return JsonSerializer.Deserialize<SubmitResponse>(response.ResolveHrblMess());
         }
 
         public async Task<SubmitResponse> SubmitOrder(SubmitRequest request)
         {
             request.ServiceConsumer = _settings.Consumer;
 
-            _logger?.LogInformation(System.Text.Json.JsonSerializer.Serialize(request));
+            _logger?.LogInformation(JsonSerializer.Serialize(request));
 
-            object response = await _proxy.SubmitOrder.POSTAsync(request);
+            string response = await _proxy.SubmitOrderAsync(JsonSerializer.Deserialize<SubmitOrder_body>(JsonSerializer.Serialize(request)));
 
             _logger?.LogInformation($"Result is '{response}'");
 
-            return JsonConvert.DeserializeObject<SubmitResponse>(JsonConvert.SerializeObject(response));
+            return JsonSerializer.Deserialize<SubmitResponse>(response.ResolveHrblMess());
         }
 
         public async Task<ConversionRateResponse> GetConversionRate(ConversionRateRequest request)
         {
-            object response = await _proxy.GetConversionRate.POSTAsync(request);
+            string response = await _proxy.GetConversionRateAsync(JsonSerializer.Deserialize<GetConversionRate_body>(JsonSerializer.Serialize(request)));
 
-            return JsonConvert.DeserializeObject<ConversionRateResponse>(JsonConvert.SerializeObject(response));
+            return JsonSerializer.Deserialize<ConversionRateResponse>(response.ResolveHrblMess());
         }
         #endregion
 
@@ -488,18 +616,16 @@ namespace Filuet.Hrbl.Ordering.Adapter
             if (string.IsNullOrWhiteSpace(country) || country.Trim().Length != 2)
                 throw new ArgumentException("Country is mandatory");
 
-            var request = new
-            {
-                ShipToCountry = country.Trim().ToUpper()
-            };
+            var request = new GetOrderDualMonthStatus_body {
+                ShipToCountry = country.Trim().ToUpper() };
 
-            _logger?.LogInformation(System.Text.Json.JsonSerializer.Serialize(request));
+            _logger?.LogInformation(JsonSerializer.Serialize(request));
 
-            object response = await _proxy.GetOrderDualMonthStatus.POSTAsync(request);
+            string response = await _proxy.GetOrderDualMonthStatusAsync(request);
 
             _logger?.LogInformation($"Result is '{response}'");
 
-            return JsonConvert.DeserializeObject<OrderDualMonthStatus>(JsonConvert.SerializeObject(response)).IsDualMonthAllowed;
+            return JsonSerializer.Deserialize<OrderDualMonthStatus>(response.ResolveHrblMess()).IsDualMonthAllowed;
         }
 
         public async Task<DsPostamatDetails[]> GetPostamats(string country, string postamatType, string region = null, string city = null, string zipCode = null)
@@ -510,7 +636,7 @@ namespace Filuet.Hrbl.Ordering.Adapter
             if (string.IsNullOrWhiteSpace(postamatType))
                 throw new ArgumentException("Postamat is mandatory");
 
-            object response = await _proxy.GetDSPostamatDetails.POSTAsync(new
+            string response = await _proxy.GetDSPostamatDetailsAsync(new GetDSPostamatDetails_body
             {
                 Country = country.Trim(),
                 PostamatType = postamatType.Trim(),
@@ -519,7 +645,7 @@ namespace Filuet.Hrbl.Ordering.Adapter
                 ZipCode = zipCode?.Trim()
             });
 
-            DSPostamatDetailsResult result = JsonConvert.DeserializeObject<DSPostamatDetailsResult>(JsonConvert.SerializeObject(response));
+            DSPostamatDetailsResult result = JsonSerializer.Deserialize<DSPostamatDetailsResult>(response.ResolveHrblMess());
 
             if (result.Errors.HasErrors)
                 throw new HrblRestApiException(result.Errors.ErrorMessage);
@@ -532,14 +658,13 @@ namespace Filuet.Hrbl.Ordering.Adapter
             if (string.IsNullOrWhiteSpace(postalCode))
                 throw new ArgumentException("Postal code is mandatory");
 
-            object response = await _proxy.GetShippingWhseAndFreightCodes.POSTAsync(new
-            {
+            string response = await _proxy.GetShippingWhseAndFreightCodesAsync(new GetShippingWhseAndFreightCodes_body {
                 ServiceConsumer = _settings.Consumer,
                 ExpressDeliveryFlag = expressDeliveryFlag ? "Y" : "N",
                 PostalCode = postalCode.Trim()
             });
 
-            WHFreightCodesResult result = JsonConvert.DeserializeObject<WHFreightCodesResult>(JsonConvert.SerializeObject(response));
+            WHFreightCodesResult result = JsonSerializer.Deserialize<WHFreightCodesResult>(response.ResolveHrblMess());
 
             if (result.ErrorCode != "0")
                 throw new HrblRestApiException(result.ErrorMessage);
@@ -550,22 +675,21 @@ namespace Filuet.Hrbl.Ordering.Adapter
 
         public async Task<GetDSEligiblePromoSKUResponseDTO> GetDSEligiblePromoSKU(GetDSEligiblePromoSKURequestDTO request)
         {
-            HttpRequestMessage httpRequestMessage = new HttpRequestMessage(HttpMethod.Post, new Uri(new Uri(_proxy.BaseUri.AbsoluteUri), "GetDSEligiblePromoSKU"));
+            HttpRequestMessage httpRequestMessage = new HttpRequestMessage(HttpMethod.Post, new Uri(new Uri(_proxy.BaseUrl), "GetDSEligiblePromoSKU"));
 
-            string json = JsonConvert.SerializeObject(request);
+            string json = JsonSerializer.Serialize(request);
 
             _logger?.LogInformation(json);
 
             //construct content to send
             httpRequestMessage.Content = new StringContent(json, Encoding.UTF8, "application/json");
 
-            var repsonse = await _proxy.HttpClient.SendAsync(httpRequestMessage);
+            var repsonse = await _proxy._httpClient.SendAsync(httpRequestMessage); // make _httpClient public or include GetDSEligiblePromoSKURequestDTO into spec schema ;)
             string responseStr = await repsonse.Content.ReadAsStringAsync();
 
             _logger?.LogInformation($"Result is '{responseStr}'");
 
-            return JsonConvert.DeserializeObject<GetDSEligiblePromoSKUResponseDTO>(responseStr,
-              new HrblNullableResponseConverter<GetDSEligiblePromoSKUResponseDTO>());
+            return JsonSerializer.Deserialize<GetDSEligiblePromoSKUResponseDTO>(responseStr.ResolveHrblMess());
         }
 
         public override string ToString() => Environment.ToString();
@@ -977,7 +1101,7 @@ namespace Filuet.Hrbl.Ordering.Adapter
 
             foreach (var x in _settings.PollSettings.Input_for_GetPricingRequests)
             {
-                PricingRequest req = JsonConvert.DeserializeObject<PricingRequest>(Encoding.UTF8.GetString(Convert.FromBase64String(x)));
+                PricingRequest req = JsonSerializer.Deserialize<PricingRequest>(Encoding.UTF8.GetString(Convert.FromBase64String(x)));
 
                 try
                 {
@@ -1016,7 +1140,7 @@ namespace Filuet.Hrbl.Ordering.Adapter
         /// <summary>
         /// Hrbl auto-generated proxy for REST API
         /// </summary>
-        private readonly HLOnlineOrderingRS _proxy;
+        private readonly HrblRestApiClient _proxy;
         private readonly HrblOrderingAdapterSettings _settings;
         private readonly ILogger<HrblOrderingAdapter> _logger;
     }

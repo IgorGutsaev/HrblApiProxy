@@ -5,15 +5,15 @@ namespace Filuet.Hrbl.Ordering.Abstractions
     public class DistributorDiscountResult
     {
         [JsonPropertyName("Distributor")]
-        public DistributorDiscountDetails Discount { get; private set; }
+        public DistributorDiscountDetails Discount { get; set; }
     }
 
     public class DistributorDiscountDetails
     {
         [JsonPropertyName("DistributorType")]
-        public string DistributorType { get; private set; }
+        public string DistributorType { get; set; }
 
         [JsonPropertyName("Discount")]
-        public DistributorDiscount Discount { get; private set; }
+        public DistributorDiscount Discount { get; set; }
     }
 }

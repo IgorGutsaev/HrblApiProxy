@@ -12,7 +12,7 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         public TinDetails TinDetails { get; set; }
 
         [JsonPropertyName("ErrorDetails")] // Also might be ranamed as Errors
-        internal CommonErrorList Errors { get; private set; }
+        internal CommonErrorList Errors { get; set; }
     }
 
     public class TinDetails

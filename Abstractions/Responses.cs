@@ -5,15 +5,15 @@ namespace Filuet.Hrbl.Ordering.Abstractions
     public class Responses
     {
         [JsonPropertyName("Response")]
-        public Response[] Response { get; private set; }
+        public Response[] Response { get; set; }
     }
 
     public class Response
     {
         [JsonPropertyName("ResponseCode")]
-        public string Code { get; private set; }
+        public string Code { get; set; }
 
         [JsonPropertyName("ResponseMessage")]
-        public string Message { get; private set; }
+        public string Message { get; set; }
     }
 }

@@ -6,7 +6,7 @@ namespace Filuet.Hrbl.Ordering.Abstractions
     internal class WHFreightCodesResult : WHFreightCodes
     {
         [JsonPropertyName("PostalCode")]
-        public string PostalCode { get; private set; }
+        public string PostalCode { get; set; }
 
         [JsonPropertyName("ErrorCode")]
         public string ErrorCode { get; set; }
@@ -18,10 +18,10 @@ namespace Filuet.Hrbl.Ordering.Abstractions
     public class WHFreightCodes
     {
         [JsonPropertyName("WHFriehtCodes")]
-        public WHFreightCode[] WHFriehtCodes { get; private set; }
+        public WHFreightCode[] WHFriehtCodes { get; set; }
 
         [JsonPropertyName("ExpressDeliveryFlag")]
-        public string _isExpressDeliveryFlag { get; private set; }
+        public string _isExpressDeliveryFlag { get; set; }
 
         [JsonIgnore]
         public bool ExpressDeliveryFlag => _isExpressDeliveryFlag.Equals("y", StringComparison.InvariantCultureIgnoreCase);
@@ -30,9 +30,9 @@ namespace Filuet.Hrbl.Ordering.Abstractions
     public class WHFreightCode
     {
         [JsonPropertyName("ShippingWareHouse")]
-        public string ShippingWareHouse { get; private set; }
+        public string ShippingWareHouse { get; set; }
 
         [JsonPropertyName("FrieghtCode")]
-        public string FrieghtCode { get; private set; }
+        public string FrieghtCode { get; set; }
     }
 }

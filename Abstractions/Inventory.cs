@@ -6,16 +6,16 @@ namespace Filuet.Hrbl.Ordering.Abstractions
     internal class InventoryResult
     {
         [JsonPropertyName("GetInventoryResult")]
-        public InventoryWithStatus Inventory { get; private set; }
+        public InventoryWithStatus Inventory { get; set; }
     }
 
     internal class InventoryWithStatus
     {
         [JsonPropertyName("Status")]
-        public string Status { get; private set; }
+        public string Status { get; set; }
 
         [JsonPropertyName("Inventory")]
-        public Inventory Inventories { get; private set; }
+        public Inventory Inventories { get; set; }
 
         [JsonIgnore]
         public bool IsSussess => Status.Equals("Success", StringComparison.InvariantCultureIgnoreCase);
@@ -24,22 +24,22 @@ namespace Filuet.Hrbl.Ordering.Abstractions
     internal class Inventory
     {
         [JsonPropertyName("Items")]
-        public InventoryItems ItemsRoot { get; private set; }
+        public InventoryItems ItemsRoot { get; set; }
     }
 
     internal class InventoryItems
     {
         [JsonPropertyName("InventoryItem")]
-        public InventoryItem[] Items { get; private set; }
+        public InventoryItem[] Items { get; set; }
     }
 
     public class InventoryItem
     {
         [JsonPropertyName("ConversionFactor")]
-        public decimal ConversionFactor { get; private set; }
+        public decimal ConversionFactor { get; set; }
 
         [JsonPropertyName("CountryCode")]
-        public string CountryCode { get; private set; }
+        public string CountryCode { get; set; }
 
         [JsonPropertyName("IsBlocked")]
         private string _isBlocked { get; set; }
@@ -50,34 +50,34 @@ namespace Filuet.Hrbl.Ordering.Abstractions
             || string.Equals(_isBlocked, "1", StringComparison.InvariantCultureIgnoreCase);
 
         [JsonPropertyName("QuantityAvailable")]
-        public int QuantityAvailable { get; private set; }
+        public int QuantityAvailable { get; set; }
 
         [JsonPropertyName("QuantityOnHand")]
-        public int QuantityOnHand { get; private set; }
+        public int QuantityOnHand { get; set; }
 
         [JsonPropertyName("QuantityReserved")]
-        public int QuantityReserved { get; private set; }
+        public int QuantityReserved { get; set; }
 
         [JsonPropertyName("ReturnCode")]
-        public string ReturnCode { get; private set; }
+        public string ReturnCode { get; set; }
 
         [JsonPropertyName("ReturnMessage")]
-        public string ReturnMessage { get; private set; }
+        public string ReturnMessage { get; set; }
 
         [JsonPropertyName("SKU")]
-        public string SKU { get; private set; }
+        public string SKU { get; set; }
 
         [JsonPropertyName("StockingUnitOfMeasure")]
-        public string StockingUnitOfMeasure { get; private set; }
+        public string StockingUnitOfMeasure { get; set; }
 
         [JsonPropertyName("Threshold")]
-        public decimal Threshold { get; private set; } // Probably is integer type
+        public decimal Threshold { get; set; } // Probably is integer type
 
         [JsonPropertyName("Warehouse")]
-        public string Warehouse { get; private set; }
+        public string Warehouse { get; set; }
 
         [JsonPropertyName("BlockedReason")]
-        public string BlockedReason { get; private set; }
+        public string BlockedReason { get; set; }
 
         [JsonPropertyName("SplitAllowed")]
         private string _splitAllowed { get; set; }

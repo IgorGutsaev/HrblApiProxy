@@ -109,11 +109,11 @@ namespace Filuet.Hrbl.Ordering.Abstractions
     {
         [JsonPropertyName("Operator")]
         [JsonPropertyOrder(order: 4)]
-        public string Operator { get; private set; } = "Order Taker"; // is constant for the time being
+        public string Operator { get; set; } = "Order Taker"; // is constant for the time being
 
         [JsonPropertyName("PaymentType")]
         [JsonPropertyOrder(order: 7)]
-        public string PaymentType { get; private set; } = "SALE"; // is constant for the time being
+        public string PaymentType { get; set; } = "SALE"; // is constant for the time being
 
         [JsonPropertyName("Transactionclass")]
         [JsonPropertyOrder(order: 14)]
@@ -121,7 +121,7 @@ namespace Filuet.Hrbl.Ordering.Abstractions
 
         [JsonPropertyName("ApplicationSource")]
         [JsonPropertyOrder(order: 20)]
-        public string ApplicationSource { get; private set; } = "ORDERPAY"; // is constant for the time being
+        public string ApplicationSource { get; set; } = "ORDERPAY"; // is constant for the time being
 
         [JsonPropertyName("InstallmentsSpecified")]
         [JsonPropertyOrder(order: 23)]
@@ -176,69 +176,69 @@ namespace Filuet.Hrbl.Ordering.Abstractions
     internal class HpsPaymentResponse
     {
         [JsonPropertyName("PaymentResponse")] // Also might be ranamed as Errors
-        public HpsPaymentResponseDetails PaymentResponse { get; private set; }
+        public HpsPaymentResponseDetails PaymentResponse { get; set; }
 
         [JsonPropertyName("ErrorDetails")] // Also might be ranamed as Errors
-        public CommonErrorList Errors { get; private set; }
+        public CommonErrorList Errors { get; set; }
     }
 
     internal class HpsPaymentResponseDetails
     {
         [JsonPropertyName("OrderNumber")]
-        public string OrderNumber { get; private set; }
+        public string OrderNumber { get; set; }
 
         [JsonPropertyName("ClientRefNum")]
-        public string ClientRefNum { get; private set; }
+        public string ClientRefNum { get; set; }
 
         [JsonPropertyName("CreditCardNum")]
-        public string CreditCardNum { get; private set; }
+        public string CreditCardNum { get; set; }
 
         [JsonPropertyName("TransactionID")]
-        public string TransactionID { get; private set; }
+        public string TransactionID { get; set; }
 
         [JsonPropertyName("AuthSystem")]
-        public string AuthSystem { get; private set; }
+        public string AuthSystem { get; set; }
 
         [JsonPropertyName("ApprovalNum")]
-        public string ApprovalNum { get; private set; }
+        public string ApprovalNum { get; set; }
 
         [JsonPropertyName("HPPResponseCd")]
-        public string HPPResponseCd { get; private set; }
+        public string HPPResponseCd { get; set; }
 
         [JsonPropertyName("HPPResponseMsg")]
-        public string HPPResponseMsg { get; private set; }
+        public string HPPResponseMsg { get; set; }
 
         [JsonPropertyName("AuthSystemResponseCd")]
-        public string AuthSystemResponseCd { get; private set; }
+        public string AuthSystemResponseCd { get; set; }
 
         [JsonPropertyName("AuthResponseMsg")]
-        public string AuthResponseMsg { get; private set; }
+        public string AuthResponseMsg { get; set; }
 
         [JsonPropertyName("Cvv2ResponseCode")]
-        public string Cvv2ResponseCode { get; private set; }
+        public string Cvv2ResponseCode { get; set; }
 
         [JsonPropertyName("Cvv2ResponseMsg")]
-        public string Cvv2ResponseMsg { get; private set; }
+        public string Cvv2ResponseMsg { get; set; }
 
         [JsonPropertyName("AvsResponseCode")]
-        public string AvsResponseCode { get; private set; }
+        public string AvsResponseCode { get; set; }
 
         [JsonPropertyName("AvsResponseMsg")]
-        public string AvsResponseMsg { get; private set; }
+        public string AvsResponseMsg { get; set; }
 
         [JsonPropertyName("ProcessedTime")]
-        public DateTime? ProcessedTime { get; private set; }
+        public DateTime? ProcessedTime { get; set; }
 
         [JsonPropertyName("MerchantNum")]
-        public string MerchantNum { get; private set; }
+        public string MerchantNum { get; set; }
 
         [JsonPropertyName("KountHash")]
-        public string KountHash { get; private set; }
+        public string KountHash { get; set; }
 
         [JsonPropertyName("CardType")]
-        public string CardType { get; private set; }
+        public string CardType { get; set; }
 
         [JsonPropertyName("PaymentMethodId")]
-        public string PaymentMethodId { get; private set; }
+        public string PaymentMethodId { get; set; }
     }
 }

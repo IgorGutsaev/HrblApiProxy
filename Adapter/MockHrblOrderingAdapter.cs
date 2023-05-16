@@ -50,18 +50,15 @@ namespace Filuet.Hrbl.Ordering.Adapter
         /// <param name="distributorId">Herbalife distributor id</param>
         /// <returns></returns>
         public async Task<DistributorProfile> GetProfile(string distributorId)
-            => await Task.FromResult(JsonConvert.DeserializeObject<DistributorProfile>(Properties.Resources.MockProfileResponse
-                , new HrblNullableResponseConverter<DistributorProfile>()));
+            => await Task.FromResult(JsonConvert.DeserializeObject<DistributorProfile>(Properties.Resources.MockProfileResponse.ResolveHrblMess()));
 
         public async Task UpdateAddressAndContacts(Action<ProfileUpdateBuilder> setup) { await Task.FromResult(0); /* Sort of a success */ }
 
         public async Task<FOPPurchasingLimitsResult> GetDSFOPPurchasingLimits(string distributorId, string country)
-            => await Task.FromResult(JsonConvert.DeserializeObject<FOPPurchasingLimitsResult>(Properties.Resources.MockDSFOPPurchasingLimit
-                , new HrblNullableResponseConverter<FOPPurchasingLimitsResult>()));
+            => await Task.FromResult(JsonConvert.DeserializeObject<FOPPurchasingLimitsResult>(Properties.Resources.MockDSFOPPurchasingLimit.ResolveHrblMess()));
 
         public async Task<TinDetails> GetDistributorTins(string distributorId, string country)
-            => await Task.FromResult(JsonConvert.DeserializeObject<GetDistributorTinsResult>(Properties.Resources.MockMemberTins
-                , new HrblNullableResponseConverter<GetDistributorTinsResult>()).TinDetails);
+            => await Task.FromResult(JsonConvert.DeserializeObject<GetDistributorTinsResult>(Properties.Resources.MockMemberTins.ResolveHrblMess()).TinDetails);
 
         public async Task<DistributorVolumePoints[]> GetVolumePoints(string distributorId, DateTime month, DateTime? monthTo = null)
             => await Task.FromResult(JsonConvert.DeserializeObject<DistributorVolumePointsDetailsResult>(Properties.Resources.MockVP.Replace("yyyy/MM", month.ToString("yyyy/MM"))).DistributorVolumeDetails.DistributorVolume);

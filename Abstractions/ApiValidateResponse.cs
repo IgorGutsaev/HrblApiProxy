@@ -5,9 +5,9 @@ namespace Filuet.Hrbl.Ordering.Abstractions
     internal class ApiValidateResponse
     {
         [JsonPropertyName("IsValid")]
-        public bool IsValid { get; private set; }
+        public bool IsValid { get; set; }
 
         [JsonPropertyName("MemberId")]
-        public string MemberId { get; private set; }
+        public string MemberId { get; set; }
     }
 }

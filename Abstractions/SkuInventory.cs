@@ -9,7 +9,7 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         public SkuInventoryDetails SkuInventoryDetails { get; set; }
 
         [JsonPropertyName("Errors")]
-        internal CommonErrorList Errors { get; private set; }
+        internal CommonErrorList Errors { get; set; }
     }
 
     internal class SkuInventoryDetails
