@@ -24,7 +24,7 @@ namespace Filuet.Hrbl.Ordering.Tests
             bool result = await _adapter.GetOrderDualMonthStatus(country);
 
             // Post-validate
-            Assert.NotNull(result);
+            Assert.True(result);
         }
 
         [Theory]

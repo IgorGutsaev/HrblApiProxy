@@ -1,0 +1,34 @@
+﻿@page
+@inject Microsoft.Extensions.Configuration.IConfiguration Configuration
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+    @model Filuet.Hrbl.Ordering.Proxy.Pages.IndexModel
+    @{
+        <div class="text-center" style="margin-top: 50px;">
+            <img src="~/images/herbalife.png" alt="" class="rounded" style="max-width: 300px">
+            <img src="~/images/filuet.png" alt="" class="rounded" style="max-width: 300px">
+            @{
+                bool isTestMode = new string[] { "PRS", "TS1", "TS2", "TS3", "TST" }.Contains(@Configuration["Hrbl:Environment"]);
+
+                <h1 class="display-4">
+                    @if (isTestMode)
+                    {
+                        <a href="/swagger" style="text-decoration: none">Herbalife Api v1.0</a>
+                    }
+                    @(isTestMode ? " test mode" : string.Empty)
+                </h1>
+
+                <p>Environment: @Configuration["Hrbl:Environment"]</p>
+
+                // <p>Region: @Configuration["REGIONNAME"]</p>
+            }
+            <small class="text-muted">Filuet Group, <a href="https://filuet.com/technologies/">Automated sales centers</a> @DateTime.Now.Year</small>
+        </div>
+    }
+</body>
+</html>

@@ -22,7 +22,7 @@ namespace Filuet.Hrbl.Ordering.Adapter
         /// <param name="warehouse">Warehouse to request</param>
         /// <param name="items">collection of goods identifier</param>
         public async Task<SkuInventory[]> GetSkuAvailabilityAsync(string warehouse, Dictionary<string, int> items)
-            => items.Select(x => new SkuInventory { Sku = x.Key, AvailableQuantity = x.Value + 1 }).ToArray();
+            => await Task.FromResult(items.Select(x => new SkuInventory { Sku = x.Key, AvailableQuantity = x.Value + 1 }).ToArray());
 
         /// <summary>
         /// Get remains of goods
@@ -31,18 +31,18 @@ namespace Filuet.Hrbl.Ordering.Adapter
         /// <param name="sku">sku to request</param>
         /// <param name="quantity"></param>
         public async Task<SkuInventory> GetSkuAvailabilityAsync(string warehouse, string sku, int quantity)
-            => new SkuInventory { Sku = sku, AvailableQuantity = quantity++ };
+            => await Task.FromResult(new SkuInventory { Sku = sku, AvailableQuantity = quantity++ });
 
-        public async Task<InventoryItem[]> GetProductInventory(string country, string orderType = null)
+        public Task<InventoryItem[]> GetProductInventory(string country, string orderType = null)
             => null;
 
-        public async Task<CatalogItem[]> GetProductCatalog(string country, string orderType = null)
+        public Task<CatalogItem[]> GetProductCatalog(string country, string orderType = null)
             => null;
         #endregion
 
         #region Distributor
         public async Task<(bool isValid, string memberId)> ValidateSsoBearerToken(string token)
-            => (true, "7918180560");
+            => await Task.FromResult((true, "7918180560"));
 
         /// <summary>
         /// Get distributor (customer) profile
@@ -50,24 +50,24 @@ namespace Filuet.Hrbl.Ordering.Adapter
         /// <param name="distributorId">Herbalife distributor id</param>
         /// <returns></returns>
         public async Task<DistributorProfile> GetProfile(string distributorId)
-            => JsonConvert.DeserializeObject<DistributorProfile>(Properties.Resources.MockProfileResponse
-                , new HrblNullableResponseConverter<DistributorProfile>());
+            => await Task.FromResult(JsonConvert.DeserializeObject<DistributorProfile>(Properties.Resources.MockProfileResponse
+                , new HrblNullableResponseConverter<DistributorProfile>()));
 
-        public async Task UpdateAddressAndContacts(Action<ProfileUpdateBuilder> setup) { /* Sort of a success */ }
+        public async Task UpdateAddressAndContacts(Action<ProfileUpdateBuilder> setup) { await Task.FromResult(0); /* Sort of a success */ }
 
         public async Task<FOPPurchasingLimitsResult> GetDSFOPPurchasingLimits(string distributorId, string country)
-            => JsonConvert.DeserializeObject<FOPPurchasingLimitsResult>(Properties.Resources.MockDSFOPPurchasingLimit
-                , new HrblNullableResponseConverter<FOPPurchasingLimitsResult>());
+            => await Task.FromResult(JsonConvert.DeserializeObject<FOPPurchasingLimitsResult>(Properties.Resources.MockDSFOPPurchasingLimit
+                , new HrblNullableResponseConverter<FOPPurchasingLimitsResult>()));
 
         public async Task<TinDetails> GetDistributorTins(string distributorId, string country)
-            => JsonConvert.DeserializeObject<GetDistributorTinsResult>(Properties.Resources.MockMemberTins
-                , new HrblNullableResponseConverter<GetDistributorTinsResult>()).TinDetails;
+            => await Task.FromResult(JsonConvert.DeserializeObject<GetDistributorTinsResult>(Properties.Resources.MockMemberTins
+                , new HrblNullableResponseConverter<GetDistributorTinsResult>()).TinDetails);
 
         public async Task<DistributorVolumePoints[]> GetVolumePoints(string distributorId, DateTime month, DateTime? monthTo = null)
-            => JsonConvert.DeserializeObject<DistributorVolumePointsDetailsResult>(Properties.Resources.MockVP.Replace("yyyy/MM", month.ToString("yyyy/MM"))).DistributorVolumeDetails.DistributorVolume;
+            => await Task.FromResult(JsonConvert.DeserializeObject<DistributorVolumePointsDetailsResult>(Properties.Resources.MockVP.Replace("yyyy/MM", month.ToString("yyyy/MM"))).DistributorVolumeDetails.DistributorVolume);
 
         public async Task<DistributorDiscountResult> GetDistributorDiscount(string distributorId, DateTime month, string country)
-            => JsonConvert.DeserializeObject<DistributorDiscountResult>(Properties.Resources.MockDSFOPPurchasingLimit);
+            => await Task.FromResult(JsonConvert.DeserializeObject<DistributorDiscountResult>(Properties.Resources.MockDSFOPPurchasingLimit));
 
         /// <summary>
         /// Get member cash limit
@@ -76,33 +76,41 @@ namespace Filuet.Hrbl.Ordering.Adapter
         /// <param name="country">Shipp to country</param>
         /// <returns></returns>
         public async Task<DsCashLimitResult> GetDsCashLimit(string distributorId, string country)
-            => JsonConvert.DeserializeObject<DsCashLimitResult>(Properties.Resources.MockDSCashLimit);
+            => await Task.FromResult(JsonConvert.DeserializeObject<DsCashLimitResult>(Properties.Resources.MockDSCashLimit));
 
         public async Task<PricingResponse> GetPriceDetails(Action<PricingRequestBuilder> setupAction)
-            => JsonConvert.DeserializeObject<PricingResponse>(Properties.Resources.MockPricingResponse);
+            => await Task.FromResult(JsonConvert.DeserializeObject<PricingResponse>(Properties.Resources.MockPricingResponse));
 
         public async Task<PricingResponse> GetPriceDetails(PricingRequest request)
-            => JsonConvert.DeserializeObject<PricingResponse>(Properties.Resources.MockPricingResponse);
+            => await Task.FromResult(JsonConvert.DeserializeObject<PricingResponse>(Properties.Resources.MockPricingResponse));
 
         public async Task<string> HpsPaymentGateway(HpsPaymentPayload payload)
-            => Guid.NewGuid().ToString();
+            => await Task.FromResult(Guid.NewGuid().ToString());
 
         public async Task<SubmitResponse> SubmitOrder(Action<SubmitRequestBuilder> setupAction)
-            => new SubmitResponse { OrderStatus = "SUCCESS", OrderNumber = "LRK0123456" };
+            => await Task.FromResult(new SubmitResponse { OrderStatus = "SUCCESS", OrderNumber = "LRK0123456" });
 
         public async Task<SubmitResponse> SubmitOrder(SubmitRequest request)
-            => new SubmitResponse { OrderStatus = "SUCCESS", OrderNumber = "LRK0123456" };
+            => await Task.FromResult(new SubmitResponse { OrderStatus = "SUCCESS", OrderNumber = "LRK0123456" });
         #endregion
 
         #region Common
-        public async Task<bool> GetOrderDualMonthStatus(string country) => true;
+        public async Task<bool> GetOrderDualMonthStatus(string country) => await Task.FromResult(true);
 
-        public async Task<DsPostamatDetails[]> GetPostamats(string country, string postamatType, string region = null, string city = null, string zipCode = null)
-            => null;
+        public Task<DsPostamatDetails[]> GetPostamats(string country, string postamatType, string region = null, string city = null, string zipCode = null)
+        {
+            throw new NotImplementedException();
+        }
 
-        public async Task<WHFreightCode[]> GetShippingWhseAndFreightCodes(string postalCode, bool expressDeliveryFlag = true) => null;
+        public Task<WHFreightCode[]> GetShippingWhseAndFreightCodes(string postalCode, bool expressDeliveryFlag = true)
+        {
+            throw new NotImplementedException();
+        }
 
-        public Task<ConversionRateResponse> GetConversionRate(ConversionRateRequest request) => null;
+        public Task<ConversionRateResponse> GetConversionRate(ConversionRateRequest request)
+        {
+            throw new NotImplementedException();
+        }
 
         public Task<GetDSEligiblePromoSKUResponseDTO> GetDSEligiblePromoSKU(GetDSEligiblePromoSKURequestDTO request)
         {

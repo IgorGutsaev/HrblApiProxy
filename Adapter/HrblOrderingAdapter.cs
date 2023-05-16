@@ -145,7 +145,7 @@ namespace Filuet.Hrbl.Ordering.Adapter
 
                 return result.Inventory.Inventories.ItemsRoot.Items;
             }
-            catch (Exception ex)
+            catch
             {
                 return null;
             }

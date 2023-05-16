@@ -346,7 +346,7 @@
             <button id="detailsButton" type="button" class="btn btn-outline-secondary center-block" onclick="showDetails()">Show details</button>
         </div>
         <br />
-        @Html.Partial("~/Views/Home/_PromoViewGrouped.cshtml", Model)
+        @Html.PartialAsync("~/Views/Home/_PromoViewGrouped.cshtml", Model)
     }
     else if (Model.First().State == PromotionsState.Verification &&
         Model.Any(x => x.Rewards.Any(r => r.IsSelected)) &&

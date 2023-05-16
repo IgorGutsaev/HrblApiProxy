@@ -34,7 +34,7 @@ namespace Filuet.Hrbl.Ordering.Proxy
             Func<Task<SsoAuthDistributorDetails>> extractProfile = async () =>
             {
                 // Cached profile has not been found. We must request Herbalife
-                SsoAuthResult authResponse = null;
+                SsoAuthResult authResponse;
                 try
                 {
                     authResponse = await _adapter.GetSsoProfileAsync(login, password);

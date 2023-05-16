@@ -16,6 +16,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\images\filuet.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Filuet.Infrastructure.DataProvider" Version="1.0.11" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.5" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="7.0.5" />

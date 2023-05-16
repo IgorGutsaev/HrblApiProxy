@@ -420,8 +420,7 @@ namespace Filuet.Hrbl.Ordering.Abstractions
             if (CareOfName == null)
                 CareOfName = address.CareOfName;
 
-            if (LastUpdateDate == null)
-                LastUpdateDate = address.LastUpdateDate;
+            LastUpdateDate = address.LastUpdateDate;
 
             if (Attribute4 == null)
                 Attribute4 = address.Attribute4;

@@ -27,8 +27,11 @@ builder.Services.AddTransient<IHrblOrderingAdapter>(b => new HrblOrderingAdapter
 builder.Services.AddSingleton<IMemoryCachingService, MemoryCachingService>();
 builder.Services.AddSingleton<HrblResponseCacheRepository>();
 builder.Services.AddTransient<IHrblOrderingService, HrblOrderingCaсhingService>();
+builder.Services.AddRazorPages();
 
 var app = builder.Build();
+
+app.UseForwardedHeaders();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -37,7 +40,16 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+
+app.UseRouting();
+app.UseStaticFiles();
 app.UseHttpsRedirection();
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllers();
+    endpoints.MapRazorPages();
+});
 
 ////app.UseAuthorization();
 

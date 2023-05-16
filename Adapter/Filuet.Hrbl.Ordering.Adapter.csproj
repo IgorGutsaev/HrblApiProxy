@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net7.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
@@ -12,7 +12,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Abstractions\Filuet.Hrbl.Ordering.Abstractions.csproj" />
     <ProjectReference Include="..\Common\Filuet.Hrbl.Ordering.Common.csproj" />
-    <ProjectReference Include="..\SDK\Filuet.Hrbl.Ordering.SDK.csproj" />
+    <ProjectReference Include="..\SDK\HrblOrdering.SDK\Filuet.Hrbl.Ordering.SDK.csproj" />
   </ItemGroup>
 
   <ItemGroup>
