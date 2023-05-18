@@ -7,25 +7,25 @@ namespace Filuet.Hrbl.Ordering.Abstractions
     public class SubmitRequest
     {
         [JsonPropertyName("ServiceConsumer")]
-        public string ServiceConsumer { get; internal set; }
+        public string ServiceConsumer { get; set; }
 
         [JsonPropertyName("OrderHeaders")]
-        public SubmitRequestHeader Header { get; internal set; }
+        public SubmitRequestHeader Header { get; set; }
 
         [JsonPropertyName("OrderLine")]
-        public SubmitRequestOrderLine[] Lines { get; internal set; }
+        public SubmitRequestOrderLine[] Lines { get; set; }
 
         [JsonPropertyName("OrderPayment")]
-        public SubmitRequestPayment[] Payment { get; internal set; } // 1 mandatory node is payment while optional are Cash Vouchers
+        public SubmitRequestPayment[] Payment { get; set; } // 1 mandatory node is payment while optional are Cash Vouchers
 
         [JsonPropertyName("OrderNotes")]
-        public string OrderNotes { get; internal set; }
+        public string OrderNotes { get; set; }
 
         [JsonPropertyName("OrderAddress")]
-        public string OrderAddress { get; internal set; }
+        public string OrderAddress { get; set; }
 
         [JsonPropertyName("OrderPromotionLine")]
-        public SubmitRequestOrderPromotionLine[] OrderPromotionLine { get; internal set; }
+        public SubmitRequestOrderPromotionLine[] OrderPromotionLine { get; set; }
     }
 
     public class SubmitRequestHeader

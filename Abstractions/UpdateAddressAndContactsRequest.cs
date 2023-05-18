@@ -5,15 +5,15 @@ namespace Filuet.Hrbl.Ordering.Abstractions
     internal class UpdateAddressAndContactsRequest
     {
         [JsonPropertyName("ServiceConsumer")]
-        public string ServiceConsumer { get; internal set; }
+        public string ServiceConsumer { get; set; }
 
         [JsonPropertyName("DistributorId")]
-        public string DistributorId { get; internal set; }
+        public string DistributorId { get; set; }
 
         [JsonPropertyName("Address")]
-        public DistributorAddressToUpdate Address { get; internal set; }
+        public DistributorAddressToUpdate Address { get; set; }
 
         [JsonPropertyName("contact")]
-        public DistributorContactToUpdate Contact { get; internal set; }
+        public DistributorContactToUpdate Contact { get; set; }
     }
 }

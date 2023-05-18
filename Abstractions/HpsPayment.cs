@@ -9,76 +9,76 @@ namespace Filuet.Hrbl.Ordering.Abstractions
     {
         [JsonPropertyName("Country")]
         [JsonPropertyOrder(order: 1)]
-        public string Country { get; internal set; }
+        public string Country { get; set; }
 
         [JsonPropertyName("OrderNumber")]
         [JsonPropertyOrder(order: 2)]
-        public string OrderNumber { get; internal set; }
+        public string OrderNumber { get; set; }
 
         [JsonPropertyName("ClientRefNum")]
         [JsonPropertyOrder(order: 3)]
-        public string ClientRefNum { get; internal set; }
+        public string ClientRefNum { get; set; }
 
         [JsonPropertyName("DistributorId")]
         [JsonPropertyOrder(order: 5)]
-        public string DistributorId { get; internal set; }
+        public string DistributorId { get; set; }
 
         [JsonPropertyName("PayCode")]
         [JsonPropertyOrder(order: 6)]
-        public string PayCode { get; internal set; }
+        public string PayCode { get; set; }
 
         [JsonPropertyName("Currency")]
         [JsonPropertyOrder(order: 8)]
-        public string Currency { get; internal set; }
+        public string Currency { get; set; }
 
         [JsonPropertyName("Amount")]
         [JsonPropertyOrder(order: 9)]
-        public string Amount { get; internal set; }
+        public string Amount { get; set; }
 
         [JsonPropertyName("CardHolderName")]
         [JsonPropertyOrder(order: 10)]
-        public string CardHolderName { get; internal set; }
+        public string CardHolderName { get; set; }
 
         [JsonPropertyName("CreditCardNum")]
         [JsonPropertyOrder(order: 11)]
-        public string CreditCardNumTokenized { get; internal set; }
+        public string CreditCardNumTokenized { get; set; }
 
         [JsonPropertyName("ExpiryDate")]
         [JsonPropertyOrder(order: 12)]
        // [JsonConverter(typeof(CustomDateTimeConverter))]
-        public DateTime ExpiryDate { get; internal set; }
+        public DateTime ExpiryDate { get; set; }
 
         [JsonPropertyName("CVV2")]
         [JsonPropertyOrder(order: 13)]
-        public string CVV2 { get; internal set; }
+        public string CVV2 { get; set; }
 
         [JsonPropertyName("PayeeID")]
         [JsonPropertyOrder(order: 15)]
-        public string PayeeID { get; internal set; }
+        public string PayeeID { get; set; }
 
         [JsonPropertyName("Address1")]
         [JsonPropertyOrder(order: 16)]
-        public string Address1 { get; internal set; }
+        public string Address1 { get; set; }
 
         [JsonPropertyName("City")]
         [JsonPropertyOrder(order: 17)]
-        public string City { get; internal set; }
+        public string City { get; set; }
 
         [JsonPropertyName("PostalCode")]
         [JsonPropertyOrder(order: 18)]
-        public string PostalCode { get; internal set; }
+        public string PostalCode { get; set; }
 
         [JsonPropertyName("ProcessingLocation")]
         [JsonPropertyOrder(order: 19)]
-        public string ProcessingLocation { get; internal set; }
+        public string ProcessingLocation { get; set; }
 
         [JsonPropertyName("OrderType")]
         [JsonPropertyOrder(order: 21)]
-        public string OrderType { get; internal set; }
+        public string OrderType { get; set; }
 
         [JsonPropertyName("Installments")]
         [JsonPropertyOrder(order: 22)]
-        public uint Installments { get; internal set; }
+        public uint Installments { get; set; }
 
         public static HpsPaymentPayload Create(string orderNumber, string distributorId, string currency, decimal amount,
             string cardHolderName, string cardNumber, int expiryMonth, int expiryYear, string cvv2, string country,
@@ -167,10 +167,10 @@ namespace Filuet.Hrbl.Ordering.Abstractions
     internal class HpsPaymentRequest
     {
         [JsonPropertyName("ServiceConsumer")]
-        public string ServiceConsumer { get; internal set; }
+        public string ServiceConsumer { get; set; }
 
         [JsonPropertyName("PaymentRequest")]
-        public HpsPaymentBody PaymentRequest { get; internal set; } = new HpsPaymentBody();
+        public HpsPaymentBody PaymentRequest { get; set; } = new HpsPaymentBody();
     }
 
     internal class HpsPaymentResponse

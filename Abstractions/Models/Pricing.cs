@@ -22,10 +22,10 @@ namespace Filuet.Hrbl.Ordering.Abstractions
     public class PricingResponse
     {
         [JsonPropertyName("OrderPriceHeader")]
-        public PricingResponseHeader Header { get; internal set; }
+        public PricingResponseHeader Header { get; set; }
 
         [JsonPropertyName("OrderPriceLines")]
-        public PricingResponseLine[] Lines { get; internal set; }
+        public PricingResponseLine[] Lines { get; set; }
 
         [JsonPropertyName("Errors")]
         internal CommonErrorList Errors { get; set; }
@@ -76,12 +76,12 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         [JsonPropertyName("PriceDate")]
         [JsonPropertyOrder(order: 10)]
         //[JsonConverter(typeof(StandardDateTimeConverter))]
-        public DateTime PriceDate { get; internal set; } = DateTime.UtcNow;
+        public DateTime PriceDate { get; set; } = DateTime.UtcNow;
 
         [JsonPropertyName("OrderDate")]
         [JsonPropertyOrder(order: 11)]
        // [JsonConverter(typeof(StandardDateTimeConverter))]
-        public DateTime OrderDate { get; internal set; } = DateTime.UtcNow;
+        public DateTime OrderDate { get; set; } = DateTime.UtcNow;
 
         [JsonPropertyName("CurrencyCode")]
         [JsonPropertyOrder(order: 12)]

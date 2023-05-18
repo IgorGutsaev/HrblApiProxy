@@ -300,65 +300,65 @@ namespace Filuet.Hrbl.Ordering.Abstractions
     public class DistributorAddress
     {
         [JsonPropertyName("AddressType")]
-        public string Type { get; internal set; }
+        public string Type { get; set; }
 
         [JsonPropertyName("AddressLine1")]
-        public string Line1 { get; internal set; }
+        public string Line1 { get; set; }
 
         [JsonPropertyName("AddressLine2")]
-        public string Line2 { get; internal set; }
+        public string Line2 { get; set; }
 
         [JsonPropertyName("AddressLine3")]
-        public string Line3 { get; internal set; }
+        public string Line3 { get; set; }
 
         [JsonPropertyName("AddressLine4")]
-        public string Line4 { get; internal set; }
+        public string Line4 { get; set; }
 
         [JsonPropertyName("suburb")]
-        public string Suburb { get; internal set; }
+        public string Suburb { get; set; }
 
         [JsonPropertyName("geo_code")]
-        public string GeoCode { get; internal set; }
+        public string GeoCode { get; set; }
 
         [JsonPropertyName("City")]
-        public string City { get; internal set; }
+        public string City { get; set; }
 
         [JsonPropertyName("State")]
-        public string State { get; internal set; }
+        public string State { get; set; }
 
         [JsonPropertyName("Province")]
-        public string Province { get; internal set; }
+        public string Province { get; set; }
 
         [JsonPropertyName("County")]
-        public string County { get; internal set; }
+        public string County { get; set; }
 
         [JsonPropertyName("Country")]
-        public string Country { get; internal set; }
+        public string Country { get; set; }
 
         [JsonPropertyName("ZipCode")]
-        public string ZipCode { get; internal set; }
+        public string ZipCode { get; set; }
 
         [JsonPropertyName("ZipPlusFour")]
-        public string ZipPlusFour { get; internal set; }
+        public string ZipPlusFour { get; set; }
 
         [JsonPropertyName("CareOfName")]
-        public string CareOfName { get; internal set; }
+        public string CareOfName { get; set; }
 
         [JsonPropertyName("LastUpdateDate")]
-        public DateTime LastUpdateDate { get; internal set; }
+        public DateTime LastUpdateDate { get; set; }
 
         [JsonPropertyName("Attribute4")]
-        public string Attribute4 { get; internal set; }
+        public string Attribute4 { get; set; }
 
         [JsonIgnore]
-        public string FullAddress => $"{Line1} {Line2} {Line3} {Line4} ";
+        public string FullAddress => $"{Line1} {Line2} {Line3} {Line4}";
 
         public override string ToString() => Type.Trim();
     }
 
     internal sealed class DistributorAddressToUpdate : DistributorAddress
     {
-        public string Building { get; internal set; } = null;
+        public string Building { get; set; } = null;
         public string SiteId { get; set; } = null;
         public string IsPrimary { get; set; } = null;
         public string IsActive { get; set; } = null;
@@ -434,16 +434,16 @@ namespace Filuet.Hrbl.Ordering.Abstractions
     public class DistributorContact
     {
         [JsonPropertyName("Type")]
-        public string Type { get; internal set; }
+        public string Type { get; set; }
 
         [JsonPropertyName("SubType")]
-        public string SubType { get; internal set; }
+        public string SubType { get; set; }
 
         [JsonPropertyName("Value")]
-        public string Value { get; internal set; }
+        public string Value { get; set; }
 
         [JsonPropertyName("OldValue")]
-        public string OldValue { get; internal set; } = string.Empty;
+        public string OldValue { get; set; } = string.Empty;
 
         [JsonPropertyName("IsPrimary")]
         internal string _isPrimary { get; set; }
@@ -458,7 +458,7 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         public bool IsActive => string.Equals(_isActive, "A", StringComparison.InvariantCultureIgnoreCase);
 
         [JsonPropertyName("LastUpdateDate")]
-        public DateTime LastUpdateDate { get; internal set; }
+        public DateTime LastUpdateDate { get; set; }
 
         public override string ToString() => Type.Trim();
     }
