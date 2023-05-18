@@ -118,6 +118,9 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         [JsonPropertyName("Address2")]
         public string Address2 { get; set; }
 
+        [JsonPropertyName("Address3")]
+        public string Address3 { get; set; }
+
         [JsonPropertyName("State")]
         public string State { get; set; }
 
