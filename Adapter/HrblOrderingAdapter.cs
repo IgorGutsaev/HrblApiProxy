@@ -15,9 +15,6 @@ using System.Diagnostics;
 using Microsoft.Extensions.Logging;
 using Filuet.Hrbl.Ordering.SDK;
 using System.Text.Json;
-using Microsoft.Extensions.Options;
-using System.Text.Encodings.Web;
-using System.Text.Unicode;
 using System.Buffers;
 using System.Globalization;
 using System.Text.Json.Serialization;
@@ -27,7 +24,7 @@ namespace Filuet.Hrbl.Ordering.Adapter
 
     public class StringConverterForUtf8EscapedCharValues : JsonConverter<string>
     {
-        public override string? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        public override string Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
             if (reader.TokenType != JsonTokenType.String)
                 throw new JsonException();

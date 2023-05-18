@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Filuet.Hrbl.Ordering.Abstractions;
 using Filuet.Hrbl.Ordering.Abstractions.Builders;
-using Newtonsoft.Json;
 using Filuet.Hrbl.Ordering.Common;
 using Filuet.Hrbl.Ordering.Abstractions.Dto;
 using Filuet.Hrbl.Ordering.Abstractions.Models;
+using System.Text.Json;
 
 namespace Filuet.Hrbl.Ordering.Adapter
 {
@@ -50,21 +50,21 @@ namespace Filuet.Hrbl.Ordering.Adapter
         /// <param name="distributorId">Herbalife distributor id</param>
         /// <returns></returns>
         public async Task<DistributorProfile> GetProfile(string distributorId)
-            => await Task.FromResult(JsonConvert.DeserializeObject<DistributorProfile>(Properties.Resources.MockProfileResponse.ResolveHrblMess()));
+            => await Task.FromResult(JsonSerializer.Deserialize<DistributorProfile>(Properties.Resources.MockProfileResponse.ResolveHrblMess()));
 
         public async Task UpdateAddressAndContacts(Action<ProfileUpdateBuilder> setup) { await Task.FromResult(0); /* Sort of a success */ }
 
         public async Task<FOPPurchasingLimitsResult> GetDSFOPPurchasingLimits(string distributorId, string country)
-            => await Task.FromResult(JsonConvert.DeserializeObject<FOPPurchasingLimitsResult>(Properties.Resources.MockDSFOPPurchasingLimit.ResolveHrblMess()));
+            => await Task.FromResult(JsonSerializer.Deserialize<FOPPurchasingLimitsResult>(Properties.Resources.MockDSFOPPurchasingLimit.ResolveHrblMess()));
 
         public async Task<TinDetails> GetDistributorTins(string distributorId, string country)
-            => await Task.FromResult(JsonConvert.DeserializeObject<GetDistributorTinsResult>(Properties.Resources.MockMemberTins.ResolveHrblMess()).TinDetails);
+            => await Task.FromResult(JsonSerializer.Deserialize<GetDistributorTinsResult>(Properties.Resources.MockMemberTins.ResolveHrblMess()).TinDetails);
 
         public async Task<DistributorVolumePoints[]> GetVolumePoints(string distributorId, DateTime month, DateTime? monthTo = null)
-            => await Task.FromResult(JsonConvert.DeserializeObject<DistributorVolumePointsDetailsResult>(Properties.Resources.MockVP.Replace("yyyy/MM", month.ToString("yyyy/MM"))).DistributorVolumeDetails.DistributorVolume);
+            => await Task.FromResult(JsonSerializer.Deserialize<DistributorVolumePointsDetailsResult>(Properties.Resources.MockVP.Replace("yyyy/MM", month.ToString("yyyy/MM"))).DistributorVolumeDetails.DistributorVolume);
 
         public async Task<DistributorDiscountResult> GetDistributorDiscount(string distributorId, DateTime month, string country)
-            => await Task.FromResult(JsonConvert.DeserializeObject<DistributorDiscountResult>(Properties.Resources.MockDSFOPPurchasingLimit));
+            => await Task.FromResult(JsonSerializer.Deserialize<DistributorDiscountResult>(Properties.Resources.MockDSFOPPurchasingLimit));
 
         /// <summary>
         /// Get member cash limit
@@ -73,13 +73,13 @@ namespace Filuet.Hrbl.Ordering.Adapter
         /// <param name="country">Shipp to country</param>
         /// <returns></returns>
         public async Task<DsCashLimitResult> GetDsCashLimit(string distributorId, string country)
-            => await Task.FromResult(JsonConvert.DeserializeObject<DsCashLimitResult>(Properties.Resources.MockDSCashLimit));
+            => await Task.FromResult(JsonSerializer.Deserialize<DsCashLimitResult>(Properties.Resources.MockDSCashLimit));
 
         public async Task<PricingResponse> GetPriceDetails(Action<PricingRequestBuilder> setupAction)
-            => await Task.FromResult(JsonConvert.DeserializeObject<PricingResponse>(Properties.Resources.MockPricingResponse));
+            => await Task.FromResult(JsonSerializer.Deserialize<PricingResponse>(Properties.Resources.MockPricingResponse));
 
         public async Task<PricingResponse> GetPriceDetails(PricingRequest request)
-            => await Task.FromResult(JsonConvert.DeserializeObject<PricingResponse>(Properties.Resources.MockPricingResponse));
+            => await Task.FromResult(JsonSerializer.Deserialize<PricingResponse>(Properties.Resources.MockPricingResponse));
 
         public async Task<string> HpsPaymentGateway(HpsPaymentPayload payload)
             => await Task.FromResult(Guid.NewGuid().ToString());
@@ -92,37 +92,26 @@ namespace Filuet.Hrbl.Ordering.Adapter
         #endregion
 
         #region Common
-        public async Task<bool> GetOrderDualMonthStatus(string country) => await Task.FromResult(true);
+        public async Task<bool> GetOrderDualMonthStatus(string country)
+            => await Task.FromResult(true);
 
         public Task<DsPostamatDetails[]> GetPostamats(string country, string postamatType, string region = null, string city = null, string zipCode = null)
-        {
-            throw new NotImplementedException();
-        }
+            => null;
 
         public Task<WHFreightCode[]> GetShippingWhseAndFreightCodes(string postalCode, bool expressDeliveryFlag = true)
-        {
-            throw new NotImplementedException();
-        }
+            => null;
 
         public Task<ConversionRateResponse> GetConversionRate(ConversionRateRequest request)
-        {
-            throw new NotImplementedException();
-        }
+            => null;
 
         public Task<GetDSEligiblePromoSKUResponseDTO> GetDSEligiblePromoSKU(GetDSEligiblePromoSKURequestDTO request)
-        {
-            throw new NotImplementedException();
-        }
+            => null;
 
         public Task<PollResult> PollRequest()
-        {
-            throw new NotImplementedException();
-        }
+            => null;
 
         public Task<SsoAuthResult> GetSsoProfileAsync(string login, string password)
-        {
-            throw new NotImplementedException();
-        }
+            => null;
         #endregion
     }
 }
