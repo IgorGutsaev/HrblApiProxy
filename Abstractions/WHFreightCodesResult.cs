@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace Filuet.Hrbl.Ordering.Abstractions
 {
-    internal class WHFreightCodesResult : WHFreightCodes
+    public class WHFreightCodesResult : WHFreightCodes
     {
         [JsonPropertyName("PostalCode")]
         public string PostalCode { get; set; }

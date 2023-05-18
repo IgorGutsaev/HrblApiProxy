@@ -29,10 +29,10 @@ namespace Filuet.Hrbl.Ordering.Tests
 
         [Theory]
         [InlineData("VA00248957")]
-        //[InlineData("va00311908")]
-        //[InlineData("VA00863126")]
-        //[InlineData("HERB108388")] // DELETED member state
-        //[InlineData("20168088")]
+        [InlineData("va00311908")]
+        [InlineData("VA00863126")]
+        [InlineData("HERB108388")] // DELETED member state
+        [InlineData("20168088")]
         public async Task Test_Get_profile(string distributorId)
         {
             // Prepare
@@ -84,6 +84,7 @@ namespace Filuet.Hrbl.Ordering.Tests
         }
 
         [Theory]
+        [InlineData("VA00248957")]
         [InlineData("7918180560")]
         [InlineData("U512180202")]
         public async Task Test_Get_volume_points(string distributorId)

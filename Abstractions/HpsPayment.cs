@@ -105,7 +105,7 @@ namespace Filuet.Hrbl.Ordering.Abstractions
             };
     }
 
-    internal class HpsPaymentBody : HpsPaymentPayload
+    public class HpsPaymentBody : HpsPaymentPayload
     {
         [JsonPropertyName("Operator")]
         [JsonPropertyOrder(order: 4)]
@@ -164,7 +164,7 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         }
     }
 
-    internal class HpsPaymentRequest
+    public class HpsPaymentRequest
     {
         [JsonPropertyName("ServiceConsumer")]
         public string ServiceConsumer { get; set; }
@@ -173,7 +173,7 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         public HpsPaymentBody PaymentRequest { get; set; } = new HpsPaymentBody();
     }
 
-    internal class HpsPaymentResponse
+    public class HpsPaymentResponse
     {
         [JsonPropertyName("PaymentResponse")] // Also might be ranamed as Errors
         public HpsPaymentResponseDetails PaymentResponse { get; set; }
@@ -182,7 +182,7 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         public CommonErrorList Errors { get; set; }
     }
 
-    internal class HpsPaymentResponseDetails
+    public class HpsPaymentResponseDetails
     {
         [JsonPropertyName("OrderNumber")]
         public string OrderNumber { get; set; }

@@ -11,7 +11,7 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         public string OrderNumber { get; set; }
 
         [JsonPropertyName("Errors")]
-        internal CommonErrorList Errors { get; set; }
+        public CommonErrorList Errors { get; set; }
 
         [JsonIgnore]
         public bool IsSuccess => string.Equals(OrderStatus, "SUCCESS", StringComparison.InvariantCultureIgnoreCase);

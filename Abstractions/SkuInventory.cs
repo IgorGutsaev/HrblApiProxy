@@ -3,16 +3,16 @@ using System.Text.Json.Serialization;
 
 namespace Filuet.Hrbl.Ordering.Abstractions
 {
-    internal class SkuInventoryDetailsResult
+    public class SkuInventoryDetailsResult
     {
         [JsonPropertyName("SkuInventoryDetails")]
         public SkuInventoryDetails SkuInventoryDetails { get; set; }
 
         [JsonPropertyName("Errors")]
-        internal CommonErrorList Errors { get; set; }
+        public CommonErrorList Errors { get; set; }
     }
 
-    internal class SkuInventoryDetails
+    public class SkuInventoryDetails
     {
         [JsonPropertyName("SkuInventory")]
         public SkuInventory[] Inventory { get; set; }
@@ -30,7 +30,7 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         /// Original ValidSKU
         /// </summary>
         [JsonPropertyName("ValidSKU")]
-        private string ValidSKU { get; set; }
+        public string ValidSKU { get; set; }
 
         [JsonIgnore]
         public bool IsSkuValid => string.Equals(ValidSKU, "Y", StringComparison.InvariantCultureIgnoreCase);
@@ -39,7 +39,7 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         /// Original SKUAvailable
         /// </summary>
         [JsonPropertyName("SKUAvailable")]
-        private string SKUAvailable { get; set; }
+        public string SKUAvailable { get; set; }
 
         [JsonIgnore]
         public bool IsSkuAvailable => string.Equals(SKUAvailable, "Y", StringComparison.InvariantCultureIgnoreCase);

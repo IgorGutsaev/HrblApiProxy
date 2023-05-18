@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace Filuet.Hrbl.Ordering.Abstractions
 {
-    internal class CommonErrorList
+    public class CommonErrorList
     {
         [JsonPropertyName("Error")]
         public CommonError[] Error { get; set; } = new CommonError[0];
@@ -16,7 +16,7 @@ namespace Filuet.Hrbl.Ordering.Abstractions
             string.Join("\n",Error.Where(x => x.ErrorCode != "0").Select(x => x.ErrorMessage)).Trim();
     }
 
-    internal class CommonError
+    public class CommonError
     {
         [JsonPropertyName("ErrorCode")]
         public string ErrorCode { get; set; }

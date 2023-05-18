@@ -6,7 +6,7 @@ namespace Filuet.Hrbl.Ordering.Abstractions
     public class FOPPurchasingLimitsResult
     {
         [JsonPropertyName("DSFOPLimits")]
-        private DSFOPLimits DSFOPLimits { get; set; }
+        public DSFOPLimits DSFOPLimits { get; set; }
 
         [JsonPropertyName("DSOTLimits")]
         public DSOTLimits DSOTLimits { get; set; }
@@ -15,7 +15,7 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         public DSFOPLimit FopLimit => DSFOPLimits.DSFOPLimit;
 
         [JsonPropertyName("DSPurchasingLimits")]
-        private DSPurchasingLimits _dsPurchasingLimits { get; set; }
+        public DSPurchasingLimits _dsPurchasingLimits { get; set; }
 
         [JsonIgnore]
         public DSPurchasingLimit[] DSPurchasingLimits => _dsPurchasingLimits.DSPurchasingLimit;

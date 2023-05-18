@@ -2,7 +2,7 @@
 
 namespace Filuet.Hrbl.Ordering.Abstractions
 {
-    internal class DSPostamatDetailsResult
+    public class DSPostamatDetailsResult
     {
         [JsonPropertyName("DsPostamatDetails")]
         public DsPostamatDetails[] DsPostamatDetails { get; set; }

@@ -12,7 +12,7 @@ namespace Filuet.Hrbl.Ordering.Tests
     {
         [Theory]
         [InlineData("kh")]
-        public async Task Test_Get_ds_fop_purchasing_limits(string country)
+        public async Task Test_Get_Dual_month_status(string country)
         {
             // Prepare
             Assert.NotNull(_adapter);

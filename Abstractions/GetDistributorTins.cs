@@ -3,16 +3,16 @@ using System.Text.Json.Serialization;
 
 namespace Filuet.Hrbl.Ordering.Abstractions
 {
-    internal class GetDistributorTinsResult
+    public class GetDistributorTinsResult
     {
         [JsonPropertyName("DistributorId")]
-        private string Distributor { get; set; }
+        public string Distributor { get; set; }
 
         [JsonPropertyName("TinDetails")]
         public TinDetails TinDetails { get; set; }
 
         [JsonPropertyName("ErrorDetails")] // Also might be ranamed as Errors
-        internal CommonErrorList Errors { get; set; }
+        public CommonErrorList Errors { get; set; }
     }
 
     public class TinDetails

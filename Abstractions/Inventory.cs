@@ -3,13 +3,13 @@ using System.Text.Json.Serialization;
 
 namespace Filuet.Hrbl.Ordering.Abstractions
 {
-    internal class InventoryResult
+    public class InventoryResult
     {
         [JsonPropertyName("GetInventoryResult")]
         public InventoryWithStatus Inventory { get; set; }
     }
 
-    internal class InventoryWithStatus
+    public class InventoryWithStatus
     {
         [JsonPropertyName("Status")]
         public string Status { get; set; }
@@ -21,13 +21,13 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         public bool IsSussess => Status.Equals("Success", StringComparison.InvariantCultureIgnoreCase);
     }
 
-    internal class Inventory
+    public class Inventory
     {
         [JsonPropertyName("Items")]
         public InventoryItems ItemsRoot { get; set; }
     }
 
-    internal class InventoryItems
+    public class InventoryItems
     {
         [JsonPropertyName("InventoryItem")]
         public InventoryItem[] Items { get; set; }
@@ -42,7 +42,7 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         public string CountryCode { get; set; }
 
         [JsonPropertyName("IsBlocked")]
-        private string _isBlocked { get; set; }
+        public string _isBlocked { get; set; }
 
         [JsonIgnore]
         public bool IsBlocked => string.Equals(_isBlocked, "true", StringComparison.InvariantCultureIgnoreCase) 
@@ -80,7 +80,7 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         public string BlockedReason { get; set; }
 
         [JsonPropertyName("SplitAllowed")]
-        private string _splitAllowed { get; set; }
+        public string _splitAllowed { get; set; }
 
         [JsonIgnore]
         public bool IsSplitAllowed => string.Equals(_splitAllowed, "y", StringComparison.InvariantCultureIgnoreCase);

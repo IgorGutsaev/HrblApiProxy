@@ -295,11 +295,11 @@ namespace Filuet.Hrbl.Ordering.Abstractions
 
         [JsonPropertyName("AuthorizationType")]
         [JsonPropertyOrder(order: 14)]
-        internal string AuthorizationType { get; set; } = "ONLINE";
+        public string AuthorizationType { get; set; } = "ONLINE";
 
         [JsonPropertyName("VoidFlag")]
         [JsonPropertyOrder(order: 15)]
-        internal string VoidFlag { get; set; } = "N";
+        public string VoidFlag { get; set; } = "N";
 
         [JsonPropertyName("ClientRefNumber")]
         [JsonPropertyOrder(order: 16)]

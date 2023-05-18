@@ -399,13 +399,15 @@ namespace Filuet.Hrbl.Ordering.Adapter
                 CountryCode = country.ToUpper()
             };
 
-            _logger?.LogInformation(System.Text.Json.JsonSerializer.Serialize(request));
+            _logger?.LogInformation(JsonSerializer.Serialize(request));
 
-            string response = await _proxy.DSFOPPurchasingLimitsAsync(request);
+            object response = await _proxy.DSFOPPurchasingLimitsAsync(request);
 
-            _logger?.LogInformation($"Result is '{response}'");
+            string responseString = JsonSerializer.Serialize(response);
 
-            return JsonSerializer.Deserialize<FOPPurchasingLimitsResult>(response.ResolveHrblMess());
+            _logger?.LogInformation($"Result is '{responseString}'");
+
+            return JsonSerializer.Deserialize<FOPPurchasingLimitsResult>(responseString.ResolveHrblMess());
         }
 
         public async Task<TinDetails> GetDistributorTins(string distributorId, string country)
@@ -418,14 +420,17 @@ namespace Filuet.Hrbl.Ordering.Adapter
 
             try // Stub: we should get some default tin details
             {
-                string response = await _proxy.GetDistributorTinsAsync(new GetDistributorTins_body
-                {
+                object response = await _proxy.GetDistributorTinsAsync(new GetDistributorTins_body {
                     ServiceConsumer = _settings.Consumer,
                     DistributorId = distributorId,
                     CountryCode = country.ToUpper()
                 });
 
-                return JsonSerializer.Deserialize<GetDistributorTinsResult>(response.ResolveHrblMess())?.TinDetails;
+                string responseString = JsonSerializer.Serialize(response);
+
+                _logger?.LogInformation($"Result is '{responseString}'");
+
+                return JsonSerializer.Deserialize<GetDistributorTinsResult>(responseString.ResolveHrblMess())?.TinDetails;
             }
             catch
             {
@@ -457,13 +462,13 @@ namespace Filuet.Hrbl.Ordering.Adapter
                 IncludeORgVolumes = "N"
             };
 
-            _logger?.LogInformation(System.Text.Json.JsonSerializer.Serialize(request));
+            _logger?.LogInformation(JsonSerializer.Serialize(request));
 
-            string response = await _proxy.GetDistributorVolumePointsAsync(request);
+            object response = await _proxy.GetDistributorVolumePointsAsync(request);
 
-            _logger?.LogInformation($"Result is '{response}'");
+            _logger?.LogInformation($"Result is '{JsonSerializer.Serialize((JsonElement)response)}'");
 
-            return JsonSerializer.Deserialize<DistributorVolumePointsDetailsResult>(response.ResolveHrblMess()).DistributorVolumeDetails.DistributorVolume;
+            return JsonSerializer.Deserialize<DistributorVolumePointsDetailsResult>((JsonElement)response).DistributorVolumeDetails.DistributorVolume;
         }
 
         public async Task<DistributorDiscountResult> GetDistributorDiscount(string distributorId, DateTime month, string country)
@@ -602,11 +607,13 @@ namespace Filuet.Hrbl.Ordering.Adapter
 
             _logger?.LogInformation(JsonSerializer.Serialize(request));
 
-            string response = await _proxy.GetOrderDualMonthStatusAsync(request);
+            object response = await _proxy.GetOrderDualMonthStatusAsync(request);
 
-            _logger?.LogInformation($"Result is '{response}'");
+            string responseString = JsonSerializer.Serialize(response);
 
-            return JsonSerializer.Deserialize<OrderDualMonthStatus>(response.ResolveHrblMess()).IsDualMonthAllowed;
+            _logger?.LogInformation($"Result is '{responseString}'");
+
+            return JsonSerializer.Deserialize<OrderDualMonthStatus>(responseString.ResolveHrblMess()).IsDualMonthAllowed;
         }
 
         public async Task<DsPostamatDetails[]> GetPostamats(string country, string postamatType, string region = null, string city = null, string zipCode = null)

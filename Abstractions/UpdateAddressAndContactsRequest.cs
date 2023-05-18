@@ -2,7 +2,7 @@
 
 namespace Filuet.Hrbl.Ordering.Abstractions
 {
-    internal class UpdateAddressAndContactsRequest
+    public class UpdateAddressAndContactsRequest
     {
         [JsonPropertyName("ServiceConsumer")]
         public string ServiceConsumer { get; set; }

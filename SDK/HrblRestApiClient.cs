@@ -53,7 +53,7 @@ namespace Filuet.Hrbl.Ordering.SDK
 
         /// <returns>Auto generated using Swagger Inspector</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<string> GetDistributorVolumePointsAsync(GetDistributorVolumePoints_body body)
+        public virtual System.Threading.Tasks.Task<object> GetDistributorVolumePointsAsync(GetDistributorVolumePoints_body body)
         {
             return GetDistributorVolumePointsAsync(body, System.Threading.CancellationToken.None);
         }
@@ -61,7 +61,7 @@ namespace Filuet.Hrbl.Ordering.SDK
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Auto generated using Swagger Inspector</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<string> GetDistributorVolumePointsAsync(GetDistributorVolumePoints_body body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<object> GetDistributorVolumePointsAsync(GetDistributorVolumePoints_body body, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/GetDistributorVolumePoints");
@@ -101,7 +101,7 @@ namespace Filuet.Hrbl.Ordering.SDK
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<object>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -900,7 +900,7 @@ namespace Filuet.Hrbl.Ordering.SDK
 
         /// <returns>Auto generated using Swagger Inspector</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<string> GetDistributorTinsAsync(GetDistributorTins_body body)
+        public virtual System.Threading.Tasks.Task<object> GetDistributorTinsAsync(GetDistributorTins_body body)
         {
             return GetDistributorTinsAsync(body, System.Threading.CancellationToken.None);
         }
@@ -908,7 +908,7 @@ namespace Filuet.Hrbl.Ordering.SDK
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Auto generated using Swagger Inspector</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<string> GetDistributorTinsAsync(GetDistributorTins_body body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<object> GetDistributorTinsAsync(GetDistributorTins_body body, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/GetDistributorTins");
@@ -948,7 +948,7 @@ namespace Filuet.Hrbl.Ordering.SDK
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<object>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -1131,7 +1131,7 @@ namespace Filuet.Hrbl.Ordering.SDK
 
         /// <returns>Auto generated using Swagger Inspector</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<string> DSFOPPurchasingLimitsAsync(DSFOPPurchasingLimits_body body)
+        public virtual System.Threading.Tasks.Task<object> DSFOPPurchasingLimitsAsync(DSFOPPurchasingLimits_body body)
         {
             return DSFOPPurchasingLimitsAsync(body, System.Threading.CancellationToken.None);
         }
@@ -1139,7 +1139,7 @@ namespace Filuet.Hrbl.Ordering.SDK
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Auto generated using Swagger Inspector</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<string> DSFOPPurchasingLimitsAsync(DSFOPPurchasingLimits_body body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<object> DSFOPPurchasingLimitsAsync(DSFOPPurchasingLimits_body body, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/DSFOPPurchasingLimits");
@@ -1179,7 +1179,7 @@ namespace Filuet.Hrbl.Ordering.SDK
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<object>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -1208,7 +1208,7 @@ namespace Filuet.Hrbl.Ordering.SDK
 
         /// <returns>Auto generated using Swagger Inspector</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<string> GetOrderDualMonthStatusAsync(GetOrderDualMonthStatus_body body)
+        public virtual System.Threading.Tasks.Task<object> GetOrderDualMonthStatusAsync(GetOrderDualMonthStatus_body body)
         {
             return GetOrderDualMonthStatusAsync(body, System.Threading.CancellationToken.None);
         }
@@ -1216,7 +1216,7 @@ namespace Filuet.Hrbl.Ordering.SDK
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Auto generated using Swagger Inspector</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<string> GetOrderDualMonthStatusAsync(GetOrderDualMonthStatus_body body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<object> GetOrderDualMonthStatusAsync(GetOrderDualMonthStatus_body body, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/GetOrderDualMonthStatus");
@@ -1256,7 +1256,7 @@ namespace Filuet.Hrbl.Ordering.SDK
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<object>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);

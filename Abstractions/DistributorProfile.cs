@@ -356,7 +356,7 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         public override string ToString() => Type.Trim();
     }
 
-    internal sealed class DistributorAddressToUpdate : DistributorAddress
+    public sealed class DistributorAddressToUpdate : DistributorAddress
     {
         public string Building { get; set; } = null;
         public string SiteId { get; set; } = null;
@@ -463,7 +463,7 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         public override string ToString() => Type.Trim();
     }
 
-    internal sealed class DistributorContactToUpdate : DistributorContact
+    public sealed class DistributorContactToUpdate : DistributorContact
     {
         [JsonPropertyName("Attribute1")]
         public string Attribute1 { get; set; }
