@@ -49,7 +49,7 @@ namespace Filuet.Hrbl.Ordering.Adapter
         /// </summary>
         /// <param name="distributorId">Herbalife distributor id</param>
         /// <returns></returns>
-        public async Task<DistributorProfile> GetProfile(string distributorId)
+        public async Task<DistributorProfile> GetProfileAsync(string distributorId)
             => await Task.FromResult(JsonSerializer.Deserialize<DistributorProfile>(Properties.Resources.MockProfileResponse.ResolveHrblMess()));
 
         public async Task UpdateAddressAndContacts(Action<ProfileUpdateBuilder> setup) { await Task.FromResult(0); /* Sort of a success */ }
@@ -92,7 +92,7 @@ namespace Filuet.Hrbl.Ordering.Adapter
         #endregion
 
         #region Common
-        public async Task<bool> GetOrderDualMonthStatus(string country)
+        public async Task<bool> GetOrderDualMonthStatusAsync(string country)
             => await Task.FromResult(true);
 
         public Task<DsPostamatDetails[]> GetPostamats(string country, string postamatType, string region = null, string city = null, string zipCode = null)

@@ -16,7 +16,24 @@ namespace ProxySDKTest
             Assert.NotNull(client);
 
             // perform
-            SsoAuthResult result = await client.GetSsoProfileAsync(login, password, force);
+            SsoAuthResult result = await client.GetSsoProfileAsync(login, password, force, null);
+
+            // post-validate
+            Assert.NotNull(result);
+        }
+
+        [Theory]
+        [InlineData("VA00248957", "https://hrblproxy.azurewebsites.net/")]
+        public async Task Test_Get_Profile(string memberId, string baseUrl)
+        {
+            // prepare
+            HrblOrderingProxyClient client = new HrblOrderingProxyClient(baseUrl);
+
+            // pre-validate
+            Assert.NotNull(client);
+
+            // perform
+            DistributorProfile result = await client.GetProfileAsync(memberId);
 
             // post-validate
             Assert.NotNull(result);

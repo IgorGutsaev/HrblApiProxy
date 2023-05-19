@@ -19,9 +19,17 @@ namespace Filuet.Hrbl.Ordering.Proxy.Controllers
             _logger = logger;
         }
 
-        [HttpPost("profile")]
+        [HttpPost("ssoprofile")]
         public async Task<SsoAuthResult> GetSsoProfileAsync([FromBody] AuthCredentials credentials)
             => await _hrblOrderingService.GetSsoProfileAsync(credentials.Login.Trim(), credentials.Password.Trim(), credentials.Force);
+
+        [HttpGet("profile/{memberId}")]
+        public async Task<DistributorProfile> GetProfileAsync(string memberId)
+            => await _hrblOrderingService.GetDistributorProfileAsync(memberId);
+
+        [HttpGet("dualmonth/{country}")]
+        public async Task<bool> GetDualMonthStatusAsync(string country)
+            => await _hrblOrderingService.GetOrderDualMonthStatusAsync(country);
 
 
         private readonly ILogger<HrblRestApiController> _logger;

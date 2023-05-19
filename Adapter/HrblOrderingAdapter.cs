@@ -332,7 +332,7 @@ namespace Filuet.Hrbl.Ordering.Adapter
         /// </summary>
         /// <param name="distributorId">Herbalife distributor id</param>
         /// <returns></returns>
-        public async Task<DistributorProfile> GetProfile(string distributorId)
+        public async Task<DistributorProfile> GetProfileAsync(string distributorId)
         {
             if (string.IsNullOrWhiteSpace(distributorId))
                 throw new ArgumentException("Distributor ID must be specified");
@@ -359,7 +359,7 @@ namespace Filuet.Hrbl.Ordering.Adapter
             UpdateAddressAndContactsRequest request =
                 setup.CreateTargetAndInvoke().SetServiceConsumer(_settings.Consumer).Build();
 
-            DistributorProfile profile = await GetProfile(request.DistributorId);
+            DistributorProfile profile = await GetProfileAsync(request.DistributorId);
 
             if (request.Address != null)
             {
@@ -597,7 +597,7 @@ namespace Filuet.Hrbl.Ordering.Adapter
         #endregion
 
         #region Common
-        public async Task<bool> GetOrderDualMonthStatus(string country)
+        public async Task<bool> GetOrderDualMonthStatusAsync(string country)
         {
             if (string.IsNullOrWhiteSpace(country) || country.Trim().Length != 2)
                 throw new ArgumentException("Country is mandatory");
@@ -715,7 +715,7 @@ namespace Filuet.Hrbl.Ordering.Adapter
                 {
                     Stopwatch sw = new Stopwatch();
                     sw.Start();
-                    DistributorProfile profile = await GetProfile(x);
+                    DistributorProfile profile = await GetProfileAsync(x);
                     sw.Stop();
 
                     if (profile == null || profile.Id == null || !profile.Id.Equals(x, StringComparison.InvariantCultureIgnoreCase))
@@ -741,7 +741,7 @@ namespace Filuet.Hrbl.Ordering.Adapter
                 }
             }
 
-            result.Add(new PollUnitResult { Action = "GetProfile", Level = _getResultLevel(getProfile_resultLevel), Comment = getProfile_protocol.ToString() });
+            result.Add(new PollUnitResult { Action = "GetProfileAsync", Level = _getResultLevel(getProfile_resultLevel), Comment = getProfile_protocol.ToString() });
             #endregion
 
             #region GetDistributorVolumePoints
@@ -871,7 +871,7 @@ namespace Filuet.Hrbl.Ordering.Adapter
                 {
                     Stopwatch sw = new Stopwatch();
                     sw.Start();
-                    bool dualMonthResult = await GetOrderDualMonthStatus(x);
+                    bool dualMonthResult = await GetOrderDualMonthStatusAsync(x);
                     sw.Stop();
 
                     if (dualMonthResult && DateTime.Now.Day > 4 && DateTime.Now.Day < 30)
@@ -897,7 +897,7 @@ namespace Filuet.Hrbl.Ordering.Adapter
                 }
             }
 
-            result.Add(new PollUnitResult { Action = "GetOrderDualMonthStatus", Level = _getResultLevel(getDualMonthStatus_resultLevel), Comment = getDualMonthStatus_protocol.ToString() });
+            result.Add(new PollUnitResult { Action = "GetOrderDualMonthStatusAsync", Level = _getResultLevel(getDualMonthStatus_resultLevel), Comment = getDualMonthStatus_protocol.ToString() });
             #endregion
 
             // The Converter works in the production mode only

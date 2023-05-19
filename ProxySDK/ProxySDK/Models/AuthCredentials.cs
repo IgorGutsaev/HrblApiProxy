@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
-namespace Filuet.Hrbl.Ordering.Proxy.Models
+namespace Filuet.Hrbl.Ordering.ProxySDK.Models
 {
     public class AuthCredentials
     {

@@ -21,7 +21,7 @@ namespace Filuet.Hrbl.Ordering.Tests
             Assert.False(string.IsNullOrWhiteSpace(country));
 
             // Perform
-            bool result = await _adapter.GetOrderDualMonthStatus(country);
+            bool result = await _adapter.GetOrderDualMonthStatusAsync(country);
 
             // Post-validate
             Assert.True(result);

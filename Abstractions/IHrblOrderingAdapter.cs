@@ -30,7 +30,7 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         /// </summary>
         /// <param name="distributorId">Herbalife distributor id</param>
         /// <returns></returns>
-        Task<DistributorProfile> GetProfile(string distributorId);
+        Task<DistributorProfile> GetProfileAsync(string distributorId);
 
         Task UpdateAddressAndContacts(Action<ProfileUpdateBuilder> setupAction);
 
@@ -40,7 +40,7 @@ namespace Filuet.Hrbl.Ordering.Abstractions
 
         Task<DistributorVolumePoints[]> GetVolumePoints(string distributorId, DateTime month, DateTime? monthTo = null);
 
-        Task<bool> GetOrderDualMonthStatus(string country);
+        Task<bool> GetOrderDualMonthStatusAsync(string country);
 
         Task<DistributorDiscountResult> GetDistributorDiscount(string distributorId, DateTime month, string country);
 

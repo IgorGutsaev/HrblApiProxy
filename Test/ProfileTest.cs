@@ -42,7 +42,7 @@ namespace Filuet.Hrbl.Ordering.Tests
             Assert.False(string.IsNullOrWhiteSpace(distributorId));
 
             // Perform
-            DistributorProfile result = await _adapter.GetProfile(distributorId);
+            DistributorProfile result = await _adapter.GetProfileAsync(distributorId);
 
             // Post-validate
             Assert.NotNull(result);
@@ -62,7 +62,7 @@ namespace Filuet.Hrbl.Ordering.Tests
             await _adapter.UpdateAddressAndContacts(b => b.SetDistributorId(distributorId).SetContacts("EMAIL", email));
 
             // Post-validate
-            DistributorProfile result = await _adapter.GetProfile(distributorId);
+            DistributorProfile result = await _adapter.GetProfileAsync(distributorId);
             Assert.Equal(email, result.Email);
         }
 
@@ -160,7 +160,7 @@ namespace Filuet.Hrbl.Ordering.Tests
             
 
             // Post-validate
-            DistributorProfile profile = await _adapter.GetProfile(distributorId);
+            DistributorProfile profile = await _adapter.GetProfileAsync(distributorId);
             // check address & contact match
             //Assert.NotNull(result);
             //Assert.Equal(distributorId, result.Id);
