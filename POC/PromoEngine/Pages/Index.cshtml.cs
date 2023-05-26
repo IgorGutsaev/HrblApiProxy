@@ -123,7 +123,7 @@ namespace PromoEngine.Pages
                   lines.Select(x => new PricingRequestLine
                   {
                       Sku = x.Key,
-                      Quantity = (decimal)x.Value,
+                      Quantity = (int)x.Value,
                       ProcessingLocation = ProcessingLocation
                   }).ToArray()).Build();
 
