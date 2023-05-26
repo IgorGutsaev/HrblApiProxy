@@ -24,7 +24,13 @@ namespace Filuet.Hrbl.Ordering.Tests
             Assert.NotNull(request);
 
             // Perform
-            PricingResponse response = await _adapter.GetPriceDetails(request);
+            PricingResponse response = null;
+            try
+            {
+                response = await _adapter.GetPriceDetails(request);
+            }
+            catch (Exception ex)
+            { }
 
             // Post-validate
             Assert.NotNull(response);

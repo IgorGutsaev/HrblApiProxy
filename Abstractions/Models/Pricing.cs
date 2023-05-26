@@ -1,5 +1,4 @@
-﻿using Filuet.Hrbl.Ordering.Abstractions.Serializers;
-using System;
+﻿using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -234,7 +233,10 @@ namespace Filuet.Hrbl.Ordering.Abstractions
 
         [JsonPropertyName("OrderedQty")]
         [JsonPropertyOrder(order: 4)]
-        public decimal Quantity { get; set; }
+        public string _quantity { get; set; }
+
+        [JsonIgnore]
+        public int Quantity { get => int.Parse(_quantity); set { _quantity = value.ToString(); } }
 
         public override string ToString() => JsonSerializer.Serialize(this);
     }

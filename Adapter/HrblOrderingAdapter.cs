@@ -187,14 +187,15 @@ namespace Filuet.Hrbl.Ordering.Adapter
 
             List<Task<string>> chunkTasks = new List<Task<string>>();
 
-            foreach(var b in blocks)
+            foreach (var b in blocks)
             {
                 var request = new GetSkuAvailability_body
                 {
                     ServiceConsumer = _settings.Consumer,
                     SkuInquiryDetails = b.Select(x => new OrderHLOnlineOrderingts3GetSkuAvailability_SkuInquiryDetails
                     {
-                        Sku = new OrderHLOnlineOrderingts3GetSkuAvailability_Sku {
+                        Sku = new OrderHLOnlineOrderingts3GetSkuAvailability_Sku
+                        {
                             SkuName = x.Key.ToNormalSku(),
                             Quantity = x.Value.ToString(),
                             WarehouseCode = warehouse
@@ -272,7 +273,8 @@ namespace Filuet.Hrbl.Ordering.Adapter
             OrderType type = string.IsNullOrWhiteSpace(orderType) ? OrderType.Rso
                 : EnumHelper.GetValueFromDescription<OrderType>(orderType);
 
-            string response = await _proxy.GetProductCatalogAsync(new GetProductCatalog_body {
+            string response = await _proxy.GetProductCatalogAsync(new GetProductCatalog_body
+            {
                 CountryCode = country,
                 OrderType = EnumHelper.GetDescription(type)
             });
@@ -379,7 +381,7 @@ namespace Filuet.Hrbl.Ordering.Adapter
                     request.Contact.FillInWithUnspecifiedData(contactToUpdate);
                 // else request.Contact = null; // We're not allowed to create new contact
             }
-            
+
             object response = await _proxy.UpdateDsAddressContactsAsync(JsonSerializer.Deserialize<UpdateDsAddressContacts_body>(JsonSerializer.Serialize(request)));
         }
 
@@ -393,7 +395,8 @@ namespace Filuet.Hrbl.Ordering.Adapter
 
             distributorId = distributorId.ToUpper();
 
-            var request = new DSFOPPurchasingLimits_body { 
+            var request = new DSFOPPurchasingLimits_body
+            {
                 ServiceConsumer = _settings.Consumer,
                 DistributorID = distributorId,
                 CountryCode = country.ToUpper()
@@ -420,7 +423,8 @@ namespace Filuet.Hrbl.Ordering.Adapter
 
             try // Stub: we should get some default tin details
             {
-                object response = await _proxy.GetDistributorTinsAsync(new GetDistributorTins_body {
+                object response = await _proxy.GetDistributorTinsAsync(new GetDistributorTins_body
+                {
                     ServiceConsumer = _settings.Consumer,
                     DistributorId = distributorId,
                     CountryCode = country.ToUpper()
@@ -454,7 +458,8 @@ namespace Filuet.Hrbl.Ordering.Adapter
             if (string.IsNullOrWhiteSpace(distributorId))
                 throw new ArgumentException("Distributor ID must be specified");
 
-            var request = new GetDistributorVolumePoints_body {
+            var request = new GetDistributorVolumePoints_body
+            {
                 ServiceConsumer = _settings.Consumer,
                 DistributorId = distributorId,
                 FromMonth = month.ToString("yyyy/MM"),
@@ -530,9 +535,47 @@ namespace Filuet.Hrbl.Ordering.Adapter
                 request.Header.PriceDate = newPriceTime;
             }
 
-            _logger?.LogInformation(System.Text.Json.JsonSerializer.Serialize(request));
+            _logger?.LogInformation(JsonSerializer.Serialize(request));
 
-            string response = await _proxy.GetPriceDetailsAsync(JsonSerializer.Deserialize<GetPriceDetails_body>(JsonSerializer.Serialize(request)));
+            GetPriceDetails_body body = new GetPriceDetails_body
+            {
+                ServiceConsumer = request.ServiceConsumer,
+                OrderPriceHeader = new OrderHLOnlineOrderingts3GetPriceDetails_OrderPriceHeader
+                { 
+                    OrderSource = request.Header.OrderSource,
+                    ExternalOrderNumber = request.Header.ExternalOrderNumber,
+                    DistributorId = request.Header.DistributorId,
+                    Warehouse = request.Header.Warehouse,
+                    ProcessingLocation = request.Header.ProcessingLocation,
+                    FreightCode = request.Header.FreightCode,
+                    CountryCode = request.Header.CountryCode,
+                    OrderMonth = request.Header.OrderMonth.ToString("yyyy/MM"),
+                    OrderCategory = request.Header.OrderCategory,
+                    OrderType = request.Header.OrderType,
+                    PriceDate = request.Header.PriceDate.ToString("yyyy-MM-dd HH:mm:ss+zzz"),
+                    OrderDate = request.Header.OrderDate.ToString("yyyy-MM-dd HH:mm:ss+zzz"),
+                    CurrencyCode = request.Header.CountryCode,
+                    OrderSubType = request.Header.OrderSubType,
+                    PostalCode = request.Header.PostalCode,
+                    City = request.Header.City,
+                    State = request.Header.State,
+                    Province = request.Header.Province,
+                    County = request.Header.County,
+                    Address1 = request.Header.Address1,
+                    Address2 = request.Header.Address2,
+                    Address3 = request.Header.Address3,
+                    Address4 = request.Header.Address4,
+                    ShipFromOrgId = request.Header.OrgID.ToString(),
+                    OrderTypeId = request.Header.OrderTypeID?.ToString() ?? string.Empty
+                },
+                 OrderPriceLines = request.Lines.Select(x => new OrderHLOnlineOrderingts3GetPriceDetails_OrderPriceLines {
+                   SellingSKU = x.Sku,
+                    OrderedQty = x.Quantity.ToString(),
+                    ProcessingLocation = x.ProcessingLocation
+                 }).ToList()
+            };
+
+            string response = await _proxy.GetPriceDetailsAsync(body);
 
             _logger?.LogInformation($"Result is '{response}'");
 
@@ -602,8 +645,10 @@ namespace Filuet.Hrbl.Ordering.Adapter
             if (string.IsNullOrWhiteSpace(country) || country.Trim().Length != 2)
                 throw new ArgumentException("Country is mandatory");
 
-            var request = new GetOrderDualMonthStatus_body {
-                ShipToCountry = country.Trim().ToUpper() };
+            var request = new GetOrderDualMonthStatus_body
+            {
+                ShipToCountry = country.Trim().ToUpper()
+            };
 
             _logger?.LogInformation(JsonSerializer.Serialize(request));
 
@@ -646,7 +691,8 @@ namespace Filuet.Hrbl.Ordering.Adapter
             if (string.IsNullOrWhiteSpace(postalCode))
                 throw new ArgumentException("Postal code is mandatory");
 
-            string response = await _proxy.GetShippingWhseAndFreightCodesAsync(new GetShippingWhseAndFreightCodes_body {
+            string response = await _proxy.GetShippingWhseAndFreightCodesAsync(new GetShippingWhseAndFreightCodes_body
+            {
                 ServiceConsumer = _settings.Consumer,
                 ExpressDeliveryFlag = expressDeliveryFlag ? "Y" : "N",
                 PostalCode = postalCode.Trim()

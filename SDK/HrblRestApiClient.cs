@@ -1059,7 +1059,7 @@ namespace Filuet.Hrbl.Ordering.SDK
             return GetPriceDetailsAsync(body, System.Threading.CancellationToken.None);
         }
 
-        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param> 
         /// <returns>Auto generated using Swagger Inspector</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
         public virtual async System.Threading.Tasks.Task<string> GetPriceDetailsAsync(GetPriceDetails_body body, System.Threading.CancellationToken cancellationToken)
