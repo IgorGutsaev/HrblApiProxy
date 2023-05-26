@@ -1054,15 +1054,15 @@ namespace Filuet.Hrbl.Ordering.SDK
 
         /// <returns>Auto generated using Swagger Inspector</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<string> GetPriceDetailsAsync(GetPriceDetails_body body)
+        public virtual System.Threading.Tasks.Task<object> GetPriceDetailsAsync(GetPriceDetails_body body)
         {
             return GetPriceDetailsAsync(body, System.Threading.CancellationToken.None);
         }
 
-        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param> 
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Auto generated using Swagger Inspector</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<string> GetPriceDetailsAsync(GetPriceDetails_body body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<object> GetPriceDetailsAsync(GetPriceDetails_body body, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/GetPriceDetails");
@@ -1102,7 +1102,7 @@ namespace Filuet.Hrbl.Ordering.SDK
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<object>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -3819,8 +3819,8 @@ namespace Filuet.Hrbl.Ordering.SDK
 
 #pragma warning restore 1591
 #pragma warning restore 1573
-#pragma warning restore 472
-#pragma warning restore 114
-#pragma warning restore 108
+#pragma warning restore  472
+#pragma warning restore  114
+#pragma warning restore  108
 #pragma warning restore 3016
 #pragma warning restore 8603

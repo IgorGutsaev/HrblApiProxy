@@ -62,7 +62,10 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         [JsonPropertyName("OrderMonth")]
         [JsonPropertyOrder(order: 7)]
         //[JsonConverter(typeof(OrderMonthSelectDateTimeConverter))]
-        public DateTime OrderMonth { get; set; }
+        public string _orderMonth { get; set; }
+
+        [JsonIgnore]
+        public DateTime OrderMonth { get => new DateTime(2000 + int.Parse(_orderMonth.Substring(0, 2)), int.Parse(_orderMonth.Substring(2, 2)), 1); set { _orderMonth = value.ToString("yyMM"); } }
 
         [JsonPropertyName("OrderCategory")]
         [JsonPropertyOrder(order: 8)]
@@ -75,12 +78,18 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         [JsonPropertyName("PriceDate")]
         [JsonPropertyOrder(order: 10)]
         //[JsonConverter(typeof(StandardDateTimeConverter))]
-        public DateTime PriceDate { get; set; } = DateTime.UtcNow;
+        public string _priceDate { get; set; }
+
+        [JsonIgnore]
+        public DateTime PriceDate { get => DateTime.Parse(_priceDate); set { _priceDate = value.ToString("yyyy-MM-ddTHH:mm:sszzz"); } }
 
         [JsonPropertyName("OrderDate")]
         [JsonPropertyOrder(order: 11)]
        // [JsonConverter(typeof(StandardDateTimeConverter))]
-        public DateTime OrderDate { get; set; } = DateTime.UtcNow;
+        public string _orderDate { get; set; }
+
+        [JsonIgnore]
+        public DateTime OrderDate { get => DateTime.Parse(_orderDate); set { _orderDate = value.ToString("yyyy-MM-ddTHH:mm:sszzz"); } }
 
         [JsonPropertyName("CurrencyCode")]
         [JsonPropertyOrder(order: 12)]
@@ -233,10 +242,7 @@ namespace Filuet.Hrbl.Ordering.Abstractions
 
         [JsonPropertyName("OrderedQty")]
         [JsonPropertyOrder(order: 4)]
-        public string _quantity { get; set; }
-
-        [JsonIgnore]
-        public int Quantity { get => int.Parse(_quantity); set { _quantity = value.ToString(); } }
+        public int Quantity { get; set; }
 
         public override string ToString() => JsonSerializer.Serialize(this);
     }

@@ -541,7 +541,7 @@ namespace Filuet.Hrbl.Ordering.Adapter
             {
                 ServiceConsumer = request.ServiceConsumer,
                 OrderPriceHeader = new OrderHLOnlineOrderingts3GetPriceDetails_OrderPriceHeader
-                { 
+                {
                     OrderSource = request.Header.OrderSource,
                     ExternalOrderNumber = request.Header.ExternalOrderNumber,
                     DistributorId = request.Header.DistributorId,
@@ -549,11 +549,11 @@ namespace Filuet.Hrbl.Ordering.Adapter
                     ProcessingLocation = request.Header.ProcessingLocation,
                     FreightCode = request.Header.FreightCode,
                     CountryCode = request.Header.CountryCode,
-                    OrderMonth = request.Header.OrderMonth.ToString("yyyy/MM"),
+                    OrderMonth = request.Header.OrderMonth.ToString("yyMM"),
                     OrderCategory = request.Header.OrderCategory,
                     OrderType = request.Header.OrderType,
-                    PriceDate = request.Header.PriceDate.ToString("yyyy-MM-dd HH:mm:ss+zzz"),
-                    OrderDate = request.Header.OrderDate.ToString("yyyy-MM-dd HH:mm:ss+zzz"),
+                    PriceDate = request.Header.PriceDate.ToString("yyyy-MM-ddTHH:mm:sszzz"),
+                    OrderDate = request.Header.OrderDate.ToString("yyyy-MM-ddTHH:mm:sszzz"),
                     CurrencyCode = request.Header.CountryCode,
                     OrderSubType = request.Header.OrderSubType,
                     PostalCode = request.Header.PostalCode,
@@ -568,18 +568,20 @@ namespace Filuet.Hrbl.Ordering.Adapter
                     ShipFromOrgId = request.Header.OrgID.ToString(),
                     OrderTypeId = request.Header.OrderTypeID?.ToString() ?? string.Empty
                 },
-                 OrderPriceLines = request.Lines.Select(x => new OrderHLOnlineOrderingts3GetPriceDetails_OrderPriceLines {
-                   SellingSKU = x.Sku,
+                OrderPriceLines = request.Lines.Select(x => new OrderHLOnlineOrderingts3GetPriceDetails_OrderPriceLines
+                {
+                    SellingSKU = x.Sku,
                     OrderedQty = x.Quantity.ToString(),
-                    ProcessingLocation = x.ProcessingLocation
-                 }).ToList()
+                    ProcessingLocation = x.ProcessingLocation,
+                    ProductType = x.ProductType
+                }).ToList()
             };
 
-            string response = await _proxy.GetPriceDetailsAsync(body);
+            object response = await _proxy.GetPriceDetailsAsync(body);
+            string responseString = JsonSerializer.Serialize(response);
+            _logger?.LogInformation($"Result is '{responseString}'");
 
-            _logger?.LogInformation($"Result is '{response}'");
-
-            PricingResponse result = JsonSerializer.Deserialize<PricingResponse>(response.ResolveHrblMess());
+            PricingResponse result = JsonSerializer.Deserialize<PricingResponse>(responseString.ResolveHrblMess());
 
             if (!string.IsNullOrWhiteSpace(result.Errors?.ErrorMessage))
                 throw new ArgumentException(result.Errors.ErrorMessage);
