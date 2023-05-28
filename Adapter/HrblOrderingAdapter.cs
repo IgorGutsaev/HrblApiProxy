@@ -185,12 +185,22 @@ namespace Filuet.Hrbl.Ordering.Adapter
                     , Encoding.Default, "application/json");
 
                 HttpResponseMessage response = await httpClient.SendAsync(request);
-                response.EnsureSuccessStatusCode();
+                try
+                {
+                    response.EnsureSuccessStatusCode();
+                }
+                catch (HttpRequestException ex)
+                {
+                    if (ex.StatusCode == HttpStatusCode.Forbidden)
+                        throw new UnauthorizedAccessException("Not authenticated");
+
+                    throw ex;
+                }
 
                 string resultStr = response.Content.ReadAsStringAsync().Result;
                 SsoAuthResposeWrapper result = JsonConvert.DeserializeObject<SsoAuthResposeWrapper>(resultStr);
                 if (!result.Data.IsAuthenticated)
-                    throw new Exception("Not authenticated");
+                    throw new UnauthorizedAccessException("Not authenticated");
 
                 httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", result.Data.Token);
 

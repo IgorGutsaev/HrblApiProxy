@@ -8,9 +8,9 @@ namespace Filuet.Hrbl.Ordering.Tests
     public class ProfileTest : BaseTest
     {
         [Theory]
-       // [InlineData("herb103051@testherbalife.com", "test@123")] // production
-       // [InlineData("Trangle1967", "Trangle1967")]
-        [InlineData("annap68@walla.com", "Apuhov%68")]
+        //[InlineData("herb103051@testherbalife.com", "test@123")] // production
+        [InlineData("Trangle1967", "Tra6ngle1967")]
+        //[InlineData("annap68@walla.com", "Apuhov%68")]
         public async Task Test_Get_SsoProfile(string login, string password)
         {
             // Prepare
