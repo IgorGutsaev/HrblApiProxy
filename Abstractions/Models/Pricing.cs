@@ -7,7 +7,7 @@ namespace Filuet.Hrbl.Ordering.Abstractions
     public class PricingRequest
     {
         [JsonProperty("ServiceConsumer")]
-        internal string ServiceConsumer { get; set; }
+        internal string ServiceConsumer1 { get; set; }
 
         [JsonProperty("OrderPriceHeader")]
         internal PricingRequestHeader Header { get; set; }
