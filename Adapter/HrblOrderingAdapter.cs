@@ -18,6 +18,7 @@ using System.Text.Json;
 using System.Buffers;
 using System.Globalization;
 using System.Text.Json.Serialization;
+using System.Net;
 
 namespace Filuet.Hrbl.Ordering.Adapter
 {
@@ -191,23 +192,31 @@ namespace Filuet.Hrbl.Ordering.Adapter
                     , Encoding.Default, "application/json");
 
                 HttpResponseMessage response = await httpClient.SendAsync(request);
-                //response.EnsureSuccessStatusCode();
+                try
+                {
+                    response.EnsureSuccessStatusCode();
+                }
+                catch (HttpRequestException ex)
+                {
+                    if (ex.StatusCode == HttpStatusCode.Forbidden)
+                        throw new UnauthorizedAccessException("Not authenticated");
 
-                throw ex;
+                    throw ex;
+                }
+
+                string resultStr = response.Content.ReadAsStringAsync().Result;
+                SsoAuthResposeWrapper result = JsonSerializer.Deserialize<SsoAuthResposeWrapper>(resultStr);
+                if (result.Data == null || !result.Data.IsAuthenticated)
+                    throw new UnauthorizedAccessException(result.Message);
+
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", result.Data.Token);
+
+                HttpResponseMessage messageDetails = httpClient.GetAsync("/api/Distributor/?type=Detailed").Result;
+                resultStr = messageDetails.EnsureSuccessStatusCode().Content.ReadAsStringAsync().Result;
+                SsoAuthDistributorDetails details = JsonSerializer.Deserialize<SsoAuthDistributorDetails>(resultStr);
+
+                return new SsoAuthResult { Token = result.Data.Token, Profile = details };
             }
-
-            string resultStr = response.Content.ReadAsStringAsync().Result;
-            SsoAuthResposeWrapper result = JsonSerializer.Deserialize<SsoAuthResposeWrapper>(resultStr);
-            if (result.Data == null || !result.Data.IsAuthenticated)
-                throw new UnauthorizedAccessException(result.Message);
-
-            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", result.Data.Token);
-
-            HttpResponseMessage messageDetails = httpClient.GetAsync("/api/Distributor/?type=Detailed").Result;
-            resultStr = messageDetails.EnsureSuccessStatusCode().Content.ReadAsStringAsync().Result;
-            SsoAuthDistributorDetails details = JsonSerializer.Deserialize<SsoAuthDistributorDetails>(resultStr);
-
-            return new SsoAuthResult { Token = result.Data.Token, Profile = details };
         }
 
         public async Task<(bool isValid, string memberId)> ValidateSsoBearerToken(string token)
@@ -418,7 +427,7 @@ namespace Filuet.Hrbl.Ordering.Adapter
 
         public async Task<PricingResponse> GetPriceDetails(PricingRequest request)
         {
-            request.ServiceConsumer1 = _settings.Consumer;
+            request.ServiceConsumer = _settings.Consumer;
 
             if (string.Equals(request.Header.CountryCode, "ID")) // A stab: Our assumption is that Oracle has invalid timeshift for ID
             {
