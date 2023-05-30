@@ -17,7 +17,7 @@ namespace Filuet.Hrbl.Ordering.Abstractions.Builders
             if (string.IsNullOrWhiteSpace(consumer))
                 throw new ArgumentException("Service consumer is mandatory");
 
-            _request.ServiceConsumer = consumer;
+            _request.ServiceConsumer1 = consumer;
 
             return this;
         }

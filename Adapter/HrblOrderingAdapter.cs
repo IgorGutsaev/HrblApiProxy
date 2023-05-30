@@ -302,6 +302,9 @@ namespace Filuet.Hrbl.Ordering.Adapter
                 HttpResponseMessage response = await httpClient.SendAsync(request);
                 //response.EnsureSuccessStatusCode();
 
+                    throw ex;
+                }
+
                 string resultStr = response.Content.ReadAsStringAsync().Result;
                 SsoAuthResposeWrapper result = JsonSerializer.Deserialize<SsoAuthResposeWrapper>(resultStr);
                 if (result.Data == null || !result.Data.IsAuthenticated)
@@ -525,7 +528,7 @@ namespace Filuet.Hrbl.Ordering.Adapter
 
         public async Task<PricingResponse> GetPriceDetails(PricingRequest request)
         {
-            request.ServiceConsumer = _settings.Consumer;
+            request.ServiceConsumer1 = _settings.Consumer;
 
             if (string.Equals(request.Header.CountryCode, "ID")) // A stab: Our assumption is that Oracle has invalid timeshift for ID
             {
