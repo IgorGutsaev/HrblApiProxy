@@ -21,115 +21,6 @@ using System.Text.Json.Serialization;
 
 namespace Filuet.Hrbl.Ordering.Adapter
 {
-
-    public class StringConverterForUtf8EscapedCharValues : JsonConverter<string>
-    {
-        public override string Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-        {
-            if (reader.TokenType != JsonTokenType.String)
-                throw new JsonException();
-
-            if (!reader.ValueIsEscaped)
-                return reader.GetString();
-
-            ReadOnlySpan<byte> span = reader.HasValueSequence ? reader.ValueSequence.ToArray() : reader.ValueSpan;
-
-            // Normally a JSON string will be a utf8 byte sequence with embedded utf18 escape codes.  
-            // These improperly encoded JSON strings are utf8 byte sequences with embedded utf8 escape codes.
-
-            var encoding = Encoding.UTF8;
-            var decoder = encoding.GetDecoder();
-            var sb = new StringBuilder();
-            var maxCharCount = Encoding.UTF8.GetMaxCharCount(4);
-
-            for (int i = 0; i < span.Length; i++)
-            {
-                if (span[i] != '\\')
-                {
-                    Span<char> chars = stackalloc char[maxCharCount];
-                    var n = decoder.GetChars(span.Slice(i, 1), chars, false);
-                    sb.Append(chars.Slice(0, n));
-                }
-                else if (i < span.Length - 1 && span[i + 1] == '"')
-                {
-                    sb.Append('"');
-                    i++;
-                }
-                else if (i < span.Length - 1 && span[i + 1] == '\\')
-                {
-                    sb.Append('\\');
-                    i++;
-                }
-                else if (i < span.Length - 1 && span[i + 1] == '/')
-                {
-                    sb.Append('/');
-                    i++;
-                }
-                else if (i < span.Length - 1 && span[i + 1] == 'b')
-                {
-                    sb.Append('\u0008');
-                    i++;
-                }
-                else if (i < span.Length - 1 && span[i + 1] == 'b')
-                {
-                    sb.Append('\u0008');
-                    i++;
-                }
-                else if (i < span.Length - 1 && span[i + 1] == 'f')
-                {
-                    sb.Append('\u0008');
-                    i++;
-                }
-                else if (i < span.Length - 1 && span[i + 1] == 'f')
-                {
-                    sb.Append('\u000C');
-                    i++;
-                }
-                else if (i < span.Length - 1 && span[i + 1] == 'f')
-                {
-                    sb.Append('\u000C');
-                    i++;
-                }
-                else if (i < span.Length - 1 && span[i + 1] == 'n')
-                {
-                    sb.Append('\n');
-                    i++;
-                }
-                else if (i < span.Length - 1 && span[i + 1] == 'r')
-                {
-                    sb.Append('\r');
-                    i++;
-                }
-                else if (i < span.Length - 1 && span[i + 1] == 't')
-                {
-                    sb.Append('\t');
-                    i++;
-                }
-                else if (i < span.Length - 5 && span[i + 1] == 'u')
-                {
-                    Span<char> hexchars = stackalloc char[4] { (char)span[i + 2], (char)span[i + 3], (char)span[i + 4], (char)span[i + 5] };
-                    if (!byte.TryParse(hexchars, NumberStyles.HexNumber, NumberFormatInfo.InvariantInfo, out var b))
-                    {
-                        throw new JsonException();
-                    }
-                    Span<char> chars = stackalloc char[maxCharCount];
-                    Span<byte> bytes = stackalloc byte[1] { b };
-                    var n = decoder.GetChars(bytes, chars, false);
-                    sb.Append(chars.Slice(0, n));
-                    i += 5;
-                }
-                else
-                {
-                    throw new JsonException();
-                }
-            }
-            var s = sb.ToString();
-            return s;
-        }
-
-        public override void Write(Utf8JsonWriter writer, string value, JsonSerializerOptions options) => writer.WriteStringValue(value);
-    }
-
     public class HrblOrderingAdapter : IHrblOrderingAdapter
     {
         private const string hlbuild = "1.0.1";
@@ -302,22 +193,21 @@ namespace Filuet.Hrbl.Ordering.Adapter
                 HttpResponseMessage response = await httpClient.SendAsync(request);
                 //response.EnsureSuccessStatusCode();
 
-                    throw ex;
-                }
-
-                string resultStr = response.Content.ReadAsStringAsync().Result;
-                SsoAuthResposeWrapper result = JsonSerializer.Deserialize<SsoAuthResposeWrapper>(resultStr);
-                if (result.Data == null || !result.Data.IsAuthenticated)
-                    throw new UnauthorizedAccessException(result.Message);
-
-                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", result.Data.Token);
-
-                HttpResponseMessage messageDetails = httpClient.GetAsync("/api/Distributor/?type=Detailed").Result;
-                resultStr = messageDetails.EnsureSuccessStatusCode().Content.ReadAsStringAsync().Result;
-                SsoAuthDistributorDetails details = JsonSerializer.Deserialize<SsoAuthDistributorDetails>(resultStr);
-
-                return new SsoAuthResult { Token = result.Data.Token, Profile = details };
+                throw ex;
             }
+
+            string resultStr = response.Content.ReadAsStringAsync().Result;
+            SsoAuthResposeWrapper result = JsonSerializer.Deserialize<SsoAuthResposeWrapper>(resultStr);
+            if (result.Data == null || !result.Data.IsAuthenticated)
+                throw new UnauthorizedAccessException(result.Message);
+
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", result.Data.Token);
+
+            HttpResponseMessage messageDetails = httpClient.GetAsync("/api/Distributor/?type=Detailed").Result;
+            resultStr = messageDetails.EnsureSuccessStatusCode().Content.ReadAsStringAsync().Result;
+            SsoAuthDistributorDetails details = JsonSerializer.Deserialize<SsoAuthDistributorDetails>(resultStr);
+
+            return new SsoAuthResult { Token = result.Data.Token, Profile = details };
         }
 
         public async Task<(bool isValid, string memberId)> ValidateSsoBearerToken(string token)
