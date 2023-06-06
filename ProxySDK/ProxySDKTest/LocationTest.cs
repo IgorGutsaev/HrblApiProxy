@@ -6,7 +6,7 @@ namespace Filuet.Hrbl.Ordering.ProxySDK.Test
     public class LocationTest
     {
         [Theory]
-        [InlineData(Country.Vietnam, "https://hrblproxy.azurewebsites.net/")]
+        [InlineData(Country.Vietnam, "https://hrblproxy-dev.azurewebsites.net/")]
         public async Task Test_Get_Dual_month_status(Country country, string baseUrl)
         {
             // prepare

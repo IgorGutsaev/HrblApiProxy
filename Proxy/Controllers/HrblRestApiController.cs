@@ -58,7 +58,6 @@ namespace Filuet.Hrbl.Ordering.Proxy.Controllers
         public async Task<FOPPurchasingLimitsResult> GetFOPLimitAsync([FromBody] MemberCountryRequest limitsRequest)
             => await _hrblOrderingService.GetDSFOPLimitsAsync(limitsRequest.MemberId, limitsRequest.Country);
 
-
         [HttpPost("profile/tin")]
         public async Task<TinDetails> GetTinAsync([FromBody] MemberCountryRequest limitsRequest)
             => await _hrblOrderingService.GetDistributorTinsAsync(limitsRequest.MemberId, limitsRequest.Country);

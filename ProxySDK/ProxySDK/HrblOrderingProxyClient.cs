@@ -3,6 +3,7 @@ using Filuet.Hrbl.Ordering.ProxySDK.Models;
 using Filuet.Infrastructure.Abstractions.Converters;
 using Filuet.Infrastructure.Abstractions.Enums;
 using Filuet.Infrastructure.Abstractions.Helpers;
+using Microsoft.AspNetCore.Mvc;
 using System.Text;
 using System.Text.Json;
 
@@ -53,6 +54,66 @@ namespace ProxySDK
 
                 string resultStr = response.Content.ReadAsStringAsync().Result;
                 return JsonSerializer.Deserialize<DistributorProfile>(resultStr);
+            }
+        }
+
+        public async Task<DistributorVolumePoints[]> GetVolumePointsAsync(string memberId, DateTime month, DateTime? monthTo)
+        {
+            if (string.IsNullOrWhiteSpace(memberId))
+                throw new ArgumentException("Invalid distributor id");
+
+            using (HttpClient httpClient = new HttpClient())
+            {
+                httpClient.BaseAddress = new Uri(_baseUri);
+                var request = new HttpRequestMessage(HttpMethod.Post, "/api/herbalife/profile/vp");
+
+                VPRequest payload = new VPRequest { MemberId = memberId, Month = month, MonthTo = monthTo };
+                request.Content = new StringContent(JsonSerializer.Serialize(payload, _getSsoProfileJsonSerializationOptions), Encoding.Default, "application/json");
+
+                HttpResponseMessage response = await httpClient.SendAsync(request);
+
+                string resultStr = response.Content.ReadAsStringAsync().Result;
+                return JsonSerializer.Deserialize<DistributorVolumePoints[]>(resultStr);
+            }
+        }
+
+        public async Task<FOPPurchasingLimitsResult> GetDSFOPLimitsAsync(string memberId, Country country)
+        {
+            if (string.IsNullOrWhiteSpace(memberId))
+                throw new ArgumentException("Invalid distributor id");
+
+            using (HttpClient httpClient = new HttpClient())
+            {
+                httpClient.BaseAddress = new Uri(_baseUri);
+                var request = new HttpRequestMessage(HttpMethod.Post, "/api/herbalife/profile/fop");
+
+                MemberCountryRequest payload = new MemberCountryRequest { MemberId = memberId, Country = country };
+                request.Content = new StringContent(JsonSerializer.Serialize(payload, _getSsoProfileJsonSerializationOptions), Encoding.Default, "application/json");
+
+                HttpResponseMessage response = await httpClient.SendAsync(request);
+
+                string resultStr = response.Content.ReadAsStringAsync().Result;
+                return JsonSerializer.Deserialize<FOPPurchasingLimitsResult>(resultStr);
+            }
+        }
+
+        public async Task<TinDetails> GetTinAsync(string memberId, Country country)
+        {
+            if (string.IsNullOrWhiteSpace(memberId))
+                throw new ArgumentException("Invalid distributor id");
+
+            using (HttpClient httpClient = new HttpClient())
+            {
+                httpClient.BaseAddress = new Uri(_baseUri);
+                var request = new HttpRequestMessage(HttpMethod.Post, "/api/herbalife/profile/tin");
+
+                MemberCountryRequest payload = new MemberCountryRequest { MemberId = memberId, Country = country };
+                request.Content = new StringContent(JsonSerializer.Serialize(payload, _getSsoProfileJsonSerializationOptions), Encoding.Default, "application/json");
+
+                HttpResponseMessage response = await httpClient.SendAsync(request);
+
+                string resultStr = response.Content.ReadAsStringAsync().Result;
+                return JsonSerializer.Deserialize<TinDetails>(resultStr);
             }
         }
 
