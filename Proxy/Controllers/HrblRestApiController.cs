@@ -35,7 +35,10 @@ namespace Filuet.Hrbl.Ordering.Proxy.Controllers
                 HttpHelpers.SendHttpGetUnpromisedRequest(_configuration["Url"], $"api/herbalife/profile/{result.Profile.MemberId}");
                 HttpHelpers.SendHttpPostUnpromisedRequest(_configuration["Url"], $"api/herbalife/profile/vp", new VPRequest { MemberId = result.Profile.MemberId });
                 if (credentials.Country.HasValue)
+                {
                     HttpHelpers.SendHttpPostUnpromisedRequest(_configuration["Url"], $"api/herbalife/profile/fop", new MemberCountryRequest { MemberId = result.Profile.MemberId, Country = credentials.Country.Value });
+                    HttpHelpers.SendHttpPostUnpromisedRequest(_configuration["Url"], $"api/herbalife/profile/tin", new MemberCountryRequest { MemberId = result.Profile.MemberId, Country = credentials.Country.Value });
+                }
             }
             #endregion
 

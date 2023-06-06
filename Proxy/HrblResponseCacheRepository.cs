@@ -56,6 +56,27 @@ namespace Filuet.Hrbl.Ordering.Proxy
             => string.IsNullOrWhiteSpace(key) ? false : _ssoProfilesCache.TryRemove(key.Trim().ToUpper(), out _);
         #endregion
 
+        #region Tins
+        public TinDetails? GetTin(string key)
+        {
+            if (_tinCache.TryGetValue(key, out TinDetails? currentValue))
+                return currentValue;
+
+            return null;
+        }
+
+        public void PutTin(string key, TinDetails tin)
+        {
+            if (string.IsNullOrWhiteSpace(key))
+                return;
+
+            _tinCache.AddOrUpdate(key, x => tin, (x, oldValue) => tin);
+        }
+
+        public bool RemoveTin(string key)
+            => _tinCache.TryRemove(key, out _);
+        #endregion
+
         #region DualMonths
         public bool? GetDualMonthStatus(string key)
         {
@@ -82,6 +103,7 @@ namespace Filuet.Hrbl.Ordering.Proxy
 
         private readonly ConcurrentDictionary<string, SsoAuthResult> _ssoProfilesCache = new ConcurrentDictionary<string, SsoAuthResult>();
         private readonly ConcurrentDictionary<string, DistributorProfile> _profilesCache = new ConcurrentDictionary<string, DistributorProfile>();
+        private readonly ConcurrentDictionary<string, TinDetails> _tinCache = new ConcurrentDictionary<string, TinDetails>();
         private readonly ConcurrentDictionary<string, bool> _dualMonthCache = new ConcurrentDictionary<string, bool>();
         private readonly ConcurrentDictionary<string, string> _profilesLoginToKeyRelation = new ConcurrentDictionary<string, string>();
     }

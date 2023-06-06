@@ -80,8 +80,7 @@ namespace Filuet.Hrbl.Ordering.Proxy
                     return cachedProfile;
                 }
             }
-            else
-                return await extractProfile(); // get the profile from Herbalife and attach it to the caches
+            else return await extractProfile(); // get the profile from Herbalife and attach it to the caches
         }
 
         public async Task<DistributorProfile> GetDistributorProfileAsync(string memberId)
@@ -199,30 +198,54 @@ namespace Filuet.Hrbl.Ordering.Proxy
 
         public async Task<TinDetails> GetDistributorTinsAsync(string memberId, Country country)
         {
-            // First Order Purchase limits can only be stored in the short cache
+            string key = $"{memberId}_{country.GetCode()}";
+            TinDetails? cachedTin = _longCache.GetTin(key);
+
             MemoryCacher memCacher = _shortCache.Get(TIN_CACHE_NAME, TIN_CACHE_SIZE_MB);
 
-            string key = $"{memberId}_{country.GetCode()}";
-
-            TinDetails result = memCacher.Get<TinDetails>(key);
-
-            if (result != null)
-                return result;
-
-            try
+            Func<Task<TinDetails>> extractTin = async () =>
             {
-                result = await _adapter.GetDistributorTins(memberId, country.GetCode());
+                // cached profile has not been found. We must request Herbalife
+                TinDetails tinResponse;
+                try
+                {
+                    tinResponse = await _adapter.GetDistributorTins(memberId, country.GetCode());
+                    tinResponse = tinResponse == null ? new TinDetails() : tinResponse;
+                    // put response to the short cache
+                    memCacher.Set(key, tinResponse, TIN_CACHE_DURATION_MIN * 60000, false);
+                    // put response to the long cache
+                    _longCache.PutTin(key, tinResponse);
 
-                if (result != null)
-                    memCacher.Set(key, result, TIN_CACHE_DURATION_MIN * 60000, false);
-            }
-            catch (UnauthorizedAccessException ex)
+                    return tinResponse;
+                }
+                catch (UnauthorizedAccessException ex)
+                {
+                    // clean the caches if extraction has failed
+                    memCacher.Cache.Remove(key);
+                    _longCache.RemoveTin(key);
+                    throw ex;
+                }
+
+                throw new UnauthorizedAccessException();
+            };
+
+            if (cachedTin != null)
             {
-                memCacher.Cache.Remove(key);
-                throw ex;
-            }
+                // the tin details has been found in the long cache.
+                // first let's check 'short' cache. The tin details in the short cache more reliable
+                TinDetails fromCache = memCacher.Get<TinDetails>(key);
+                if (fromCache != null)
+                    return fromCache;
+                else
+                {
+                    // if there'is no tin in the short cache we can pull one from the long cache
+                    // but with the condition that we will validate the tin shortly
+                    _ = Task.Run(extractTin).ConfigureAwait(false);
 
-            return result;
+                    return cachedTin;
+                }
+            }
+            else return await extractTin(); // get the tin from Herbalife and attach it to the caches
         }
 
         public async Task<bool> GetOrderDualMonthStatusAsync(string country)
