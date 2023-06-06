@@ -1,6 +1,8 @@
 ﻿using Filuet.Infrastructure.DataProvider.Interfaces;
 using Filuet.Hrbl.Ordering.Abstractions;
 using Filuet.Infrastructure.DataProvider;
+using Filuet.Infrastructure.Abstractions.Enums;
+using Filuet.Infrastructure.Abstractions.Helpers;
 
 namespace Filuet.Hrbl.Ordering.Proxy
 {
@@ -30,8 +32,9 @@ namespace Filuet.Hrbl.Ordering.Proxy
             SsoAuthResult? cachedProfile = _longCache.GetSsoProfile(key);
 
             MemoryCacher memCacher = _shortCache.Get(SSO_PROFILE_CACHE_NAME, SSO_PROFILE_CACHE_SIZE_MB);
-            
-            Func<Task<SsoAuthResult>> extractProfile = async () => {
+
+            Func<Task<SsoAuthResult>> extractProfile = async () =>
+            {
                 // cached profile has not been found. We must request Herbalife
                 SsoAuthResult authResponse;
                 try
@@ -132,15 +135,101 @@ namespace Filuet.Hrbl.Ordering.Proxy
                     return cachedProfile;
                 }
             }
-            else
-                return await extractProfile(); // get the profile from Herbalife and attach it to the caches
+            else return await extractProfile(); // get the profile from Herbalife and attach it to the caches
+        }
+
+        public async Task<DistributorVolumePoints[]> GetDistributorVolumePointsAsync(string memberId, DateTime month, DateTime? monthTo = null)
+        {
+            // Volume points can only be stored in the short cache
+            MemoryCacher memCacher = _shortCache.Get(VOLUME_POINTS_CACHE_NAME, VOLUME_POINTS_CACHE_SIZE_MB);
+
+            if (monthTo.HasValue && monthTo.Value.Year == month.Year && monthTo.Value.Month == month.Month)
+                monthTo = null;
+
+            string key = $"{memberId}_{new DateTime(month.Year, month.Month, 1):d}{(monthTo.HasValue ? new DateTime(monthTo.Value.Year, monthTo.Value.Month, 1).ToString("d") : string.Empty)}";
+
+            DistributorVolumePoints[] result = memCacher.Get<DistributorVolumePoints[]>(key);
+
+            if (result != null)
+                return result;
+
+            try
+            {
+                result = await _adapter.GetVolumePoints(memberId, month, monthTo);
+
+                if (result != null)
+                    memCacher.Set(key, result, VOLUME_POINTS_CACHE_DURATION_MIN * 60000, false);
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                memCacher.Cache.Remove(key);
+                throw ex;
+            }
+
+            return result;
+        }
+
+        public async Task<FOPPurchasingLimitsResult> GetDSFOPLimitsAsync(string memberId, Country country)
+        {
+            // First Order Purchase limits can only be stored in the short cache
+            MemoryCacher memCacher = _shortCache.Get(FOP_CACHE_NAME, FOP_CACHE_SIZE_MB);
+
+            string key = $"{memberId}_{country.GetCode()}";
+
+            FOPPurchasingLimitsResult result = memCacher.Get<FOPPurchasingLimitsResult>(key);
+
+            if (result != null)
+                return result;
+
+            try
+            {
+                result = await _adapter.GetDSFOPPurchasingLimits(memberId, country.GetCode());
+
+                if (result != null)
+                    memCacher.Set(key, result, FOP_CACHE_DURATION_MIN * 60000, false);
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                memCacher.Cache.Remove(key);
+                throw ex;
+            }
+
+            return result;
+        }
+
+        public async Task<TinDetails> GetDistributorTinsAsync(string memberId, Country country)
+        {
+            // First Order Purchase limits can only be stored in the short cache
+            MemoryCacher memCacher = _shortCache.Get(TIN_CACHE_NAME, TIN_CACHE_SIZE_MB);
+
+            string key = $"{memberId}_{country.GetCode()}";
+
+            TinDetails result = memCacher.Get<TinDetails>(key);
+
+            if (result != null)
+                return result;
+
+            try
+            {
+                result = await _adapter.GetDistributorTins(memberId, country.GetCode());
+
+                if (result != null)
+                    memCacher.Set(key, result, TIN_CACHE_DURATION_MIN * 60000, false);
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                memCacher.Cache.Remove(key);
+                throw ex;
+            }
+
+            return result;
         }
 
         public async Task<bool> GetOrderDualMonthStatusAsync(string country)
         {
             if (string.IsNullOrWhiteSpace(country))
                 throw new ArgumentException("Country code is mandatory");
-            
+
             country = country.ToLower();
             // potential period to apply dual month logic.
             bool dualMonthPotentialPeriod = DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month) == DateTime.Now.Day || DateTime.Now.Day <= 5;
@@ -164,7 +253,7 @@ namespace Filuet.Hrbl.Ordering.Proxy
                     memCacher.Set(country.ToLower(), isDualMonth, DUAL_MONTH_CACHE_DURATION_MIN * 60000, false);
                     // put response to the long cache
                     _longCache.PutDualMonthStatus(country, isDualMonth);
-                    
+
                     return isDualMonth;
                 }
                 catch (Exception ex)
@@ -204,12 +293,24 @@ namespace Filuet.Hrbl.Ordering.Proxy
         private readonly ILogger<IHrblOrderingService> _logger;
 
         const string SSO_PROFILE_CACHE_NAME = "ssoProfiles";
-        const int SSO_PROFILE_CACHE_SIZE_MB = 200; 
+        const int SSO_PROFILE_CACHE_SIZE_MB = 200;
         const int SSO_PROFILE_CACHE_DURATION_MIN = 180;
 
         const string PROFILE_CACHE_NAME = "profiles";
         const int PROFILE_CACHE_SIZE_MB = 200;
         const int PROFILE_CACHE_DURATION_MIN = 180;
+
+        const string VOLUME_POINTS_CACHE_NAME = "volumePoints";
+        const int VOLUME_POINTS_CACHE_SIZE_MB = 10;
+        const int VOLUME_POINTS_CACHE_DURATION_MIN = 2;
+
+        const string FOP_CACHE_NAME = "dsFopLimits";
+        const int FOP_CACHE_SIZE_MB = 10;
+        const int FOP_CACHE_DURATION_MIN = 2;
+
+        const string TIN_CACHE_NAME = "tins";
+        const int TIN_CACHE_SIZE_MB = 10;
+        const int TIN_CACHE_DURATION_MIN = 180;
 
         const string DUAL_MONTH_CACHE_NAME = "dualMonthStatuses";
         const int DUAL_MONTH_CACHE_SIZE_MB = 1;

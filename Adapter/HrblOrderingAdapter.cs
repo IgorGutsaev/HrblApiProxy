@@ -15,9 +15,6 @@ using System.Diagnostics;
 using Microsoft.Extensions.Logging;
 using Filuet.Hrbl.Ordering.SDK;
 using System.Text.Json;
-using System.Buffers;
-using System.Globalization;
-using System.Text.Json.Serialization;
 using System.Net;
 
 namespace Filuet.Hrbl.Ordering.Adapter
@@ -373,9 +370,11 @@ namespace Filuet.Hrbl.Ordering.Adapter
 
             object response = await _proxy.GetDistributorVolumePointsAsync(request);
 
-            _logger?.LogInformation($"Result is '{JsonSerializer.Serialize((JsonElement)response)}'");
+            string responseString = JsonSerializer.Serialize(response);
 
-            return JsonSerializer.Deserialize<DistributorVolumePointsDetailsResult>((JsonElement)response).DistributorVolumeDetails.DistributorVolume;
+            _logger?.LogInformation($"Result is '{responseString}'");
+
+            return JsonSerializer.Deserialize<DistributorVolumePointsDetailsResult>(responseString.ResolveHrblMess())?.DistributorVolumeDetails.DistributorVolume;
         }
 
         public async Task<DistributorDiscountResult> GetDistributorDiscount(string distributorId, DateTime month, string country)

@@ -1,11 +1,9 @@
 ﻿using Filuet.Hrbl.Ordering.Abstractions;
 using Filuet.Hrbl.Ordering.Adapter;
 using Filuet.Hrbl.Ordering.Proxy;
+using Filuet.Infrastructure.Abstractions.Converters;
 using Filuet.Infrastructure.DataProvider;
 using Filuet.Infrastructure.DataProvider.Interfaces;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Identity.Web;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,12 +11,16 @@ var builder = WebApplication.CreateBuilder(args);
 ////builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 ////    .AddMicrosoftIdentityWebApi(builder.Configuration.GetSection("AzureAd"));
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(opts =>
+{
+    opts.JsonSerializerOptions.Converters.Add(new CountryJsonConverter());
+});
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddTransient<IHrblOrderingAdapter>(b => new HrblOrderingAdapter(new HrblOrderingAdapterSettingsBuilder()
-                    .WithUri("https://herbalife-oegdevws.hrbl.com/Order/HLOnlineOrdering/prs/")
+                    .WithUri("https://herbalife-oegdevws.hrbl.com/Order/HLOnlineOrdering/ts3/")
                     .WithServiceConsumer("AAKIOSK")
                     .WithCredentials("hlfnord", "welcome123")
                     // .WithPollSettings(string.IsNullOrWhiteSpace(pollPayload) ? POLL_REQUEST_PAYLOAD : pollPayload)

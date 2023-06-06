@@ -1,4 +1,5 @@
 ﻿using Filuet.Hrbl.Ordering.Abstractions;
+using Filuet.Infrastructure.Abstractions.Enums;
 
 namespace Filuet.Hrbl.Ordering.Proxy
 {
@@ -14,6 +15,12 @@ namespace Filuet.Hrbl.Ordering.Proxy
         Task<SsoAuthResult> GetSsoProfileAsync(string login, string password, bool force = false);
 
         Task<DistributorProfile> GetDistributorProfileAsync(string memberId);
+
+        Task<DistributorVolumePoints[]> GetDistributorVolumePointsAsync(string memberId, DateTime month, DateTime? monthTo = null);
+
+        Task<FOPPurchasingLimitsResult> GetDSFOPLimitsAsync(string memberId, Country country);
+
+        Task<TinDetails> GetDistributorTinsAsync(string memberId, Country country);
 
         Task<bool> GetOrderDualMonthStatusAsync(string country);
     }
