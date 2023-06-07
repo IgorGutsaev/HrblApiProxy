@@ -101,10 +101,19 @@ namespace Filuet.Hrbl.Ordering.Proxy
             => string.IsNullOrWhiteSpace(key) ? false : _dualMonthCache.TryRemove(key.Trim().ToLower(), out _);
         #endregion
 
+        #region Login2MemberId
+        public string GetMemberId(string login)
+            => _loginToMemberIdRelation.ContainsKey(login) ? _loginToMemberIdRelation[login] : null;
+
+        public void PutMemberId(string login, string memberId)
+            => _loginToMemberIdRelation.AddOrUpdate(login, memberId, (x, oldValue) => memberId);
+        #endregion
+
         private readonly ConcurrentDictionary<string, SsoAuthResult> _ssoProfilesCache = new ConcurrentDictionary<string, SsoAuthResult>();
         private readonly ConcurrentDictionary<string, DistributorProfile> _profilesCache = new ConcurrentDictionary<string, DistributorProfile>();
         private readonly ConcurrentDictionary<string, TinDetails> _tinCache = new ConcurrentDictionary<string, TinDetails>();
         private readonly ConcurrentDictionary<string, bool> _dualMonthCache = new ConcurrentDictionary<string, bool>();
         private readonly ConcurrentDictionary<string, string> _profilesLoginToKeyRelation = new ConcurrentDictionary<string, string>();
+        private readonly ConcurrentDictionary<string, string> _loginToMemberIdRelation = new ConcurrentDictionary<string, string>();
     }
 }

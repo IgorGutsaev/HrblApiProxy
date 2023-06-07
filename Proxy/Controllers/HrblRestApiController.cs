@@ -3,9 +3,7 @@ using Filuet.Hrbl.Ordering.Proxy.Helpers;
 using Filuet.Hrbl.Ordering.Proxy.Models;
 using Filuet.Infrastructure.Abstractions.Enums;
 using Filuet.Infrastructure.Abstractions.Helpers;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Identity.Web.Resource;
 
 namespace Filuet.Hrbl.Ordering.Proxy.Controllers
 {
@@ -26,28 +24,14 @@ namespace Filuet.Hrbl.Ordering.Proxy.Controllers
         [HttpPost("ssoprofile")]
         public async Task<SsoAuthResult> GetSsoProfileAsync([FromBody] AuthCredentials credentials)
         {
-            Action<string> _cacheWarming = (memberId) => {
-                HttpHelpers.SendHttpGetUnpromisedRequest(_configuration["Url"], $"api/herbalife/profile/{memberId}");
-                HttpHelpers.SendHttpPostUnpromisedRequest(_configuration["Url"], $"api/herbalife/profile/vp", new VPRequest { MemberId = memberId });
-                if (credentials.Country.HasValue)
-                {
-                    HttpHelpers.SendHttpPostUnpromisedRequest(_configuration["Url"], "api/herbalife/profile/fop", new MemberCountryRequest { MemberId = memberId, Country = credentials.Country.Value });
-                    HttpHelpers.SendHttpPostUnpromisedRequest(_configuration["Url"], "api/herbalife/profile/tin", new MemberCountryRequest { MemberId = memberId, Country = credentials.Country.Value });
-                    HttpHelpers.SendHttpGetUnpromisedRequest(_configuration["Url"], $"api/herbalife/dualmonth/{credentials.Country.Value.GetCode()}");
-                }
-            };
-
             string memberId = _hrblOrderingService.GetMemberIdByLogin(credentials.Login);
             if (!string.IsNullOrWhiteSpace(memberId))
-               _cacheWarming(memberId);
+               warmCache(memberId, credentials.Country); // #4694 member's cache warming
 
             SsoAuthResult result = await _hrblOrderingService.GetSsoProfileAsync(credentials.Login.Trim(), credentials.Password.Trim(), credentials.Force);
 
-            #region cache warming
-            // #4694 member's cache warming
             if (result != null && string.IsNullOrWhiteSpace(memberId))
-                _cacheWarming(result.Profile.MemberId);
-            #endregion
+                warmCache(result.Profile.MemberId, credentials.Country);
 
             return result;
         }
@@ -71,6 +55,18 @@ namespace Filuet.Hrbl.Ordering.Proxy.Controllers
         [HttpGet("dualmonth/{country}")]
         public async Task<bool> GetDualMonthStatusAsync(string country)
             => await _hrblOrderingService.GetOrderDualMonthStatusAsync(country);
+
+        private void warmCache(string memberId, Country? country)
+        {
+            HttpHelpers.SendHttpGetUnpromisedRequest(_configuration["Url"], $"api/herbalife/profile/{memberId}");
+            HttpHelpers.SendHttpPostUnpromisedRequest(_configuration["Url"], $"api/herbalife/profile/vp", new VPRequest { MemberId = memberId });
+            if (country.HasValue)
+            {
+                HttpHelpers.SendHttpPostUnpromisedRequest(_configuration["Url"], "api/herbalife/profile/fop", new MemberCountryRequest { MemberId = memberId, Country = country.Value });
+                HttpHelpers.SendHttpPostUnpromisedRequest(_configuration["Url"], "api/herbalife/profile/tin", new MemberCountryRequest { MemberId = memberId, Country = country.Value });
+                HttpHelpers.SendHttpGetUnpromisedRequest(_configuration["Url"], $"api/herbalife/dualmonth/{country.Value.GetCode()}");
+            }
+        }
 
         private readonly IHrblOrderingService _hrblOrderingService;
         private readonly IConfiguration _configuration;

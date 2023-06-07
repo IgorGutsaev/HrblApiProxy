@@ -3,7 +3,6 @@ using Filuet.Hrbl.Ordering.Abstractions;
 using Filuet.Infrastructure.DataProvider;
 using Filuet.Infrastructure.Abstractions.Enums;
 using Filuet.Infrastructure.Abstractions.Helpers;
-using System.Collections.Concurrent;
 
 namespace Filuet.Hrbl.Ordering.Proxy
 {
@@ -28,12 +27,7 @@ namespace Filuet.Hrbl.Ordering.Proxy
         }
 
         public string GetMemberIdByLogin(string login)
-        {
-            if (string.IsNullOrWhiteSpace(login))
-                return null;
-
-            return _loginToMemberIdRelation.ContainsKey(login) ? _loginToMemberIdRelation[login] : null;
-        }
+            => _longCache.GetMemberId(login);
 
         public async Task<SsoAuthResult> GetSsoProfileAsync(string login, string password, bool force = false)
         {
@@ -56,8 +50,8 @@ namespace Filuet.Hrbl.Ordering.Proxy
                         memCacher.Set(key, authResponse, SSO_PROFILE_CACHE_DURATION_MIN * 60000, false);
                         // put response to the long cache
                         _longCache.PutSsoProfile(login, key, authResponse);
-
-                        _loginToMemberIdRelation.AddOrUpdate(login, authResponse.Profile.MemberId, (x, oldValue) => authResponse.Profile.MemberId);
+                        // and store memberId
+                        _longCache.PutMemberId(login, authResponse.Profile.MemberId);
 
                         return authResponse;
                     }
@@ -324,7 +318,7 @@ namespace Filuet.Hrbl.Ordering.Proxy
         private readonly IHrblOrderingAdapter _adapter;
         private readonly HrblResponseCacheRepository _longCache;
         private readonly IMemoryCachingService _shortCache;
-        private readonly ConcurrentDictionary<string, string> _loginToMemberIdRelation = new ConcurrentDictionary<string, string>();
+        
         private readonly ILogger<IHrblOrderingService> _logger;
 
         const string SSO_PROFILE_CACHE_NAME = "ssoProfiles";
