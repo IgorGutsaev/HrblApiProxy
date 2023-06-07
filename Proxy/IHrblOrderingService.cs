@@ -5,6 +5,8 @@ namespace Filuet.Hrbl.Ordering.Proxy
 {
     public interface IHrblOrderingService
     {
+        string GetMemberIdByLogin(string login);
+
         /// <summary>
         /// 
         /// </summary>

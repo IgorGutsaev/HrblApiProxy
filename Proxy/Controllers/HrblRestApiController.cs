@@ -26,21 +26,27 @@ namespace Filuet.Hrbl.Ordering.Proxy.Controllers
         [HttpPost("ssoprofile")]
         public async Task<SsoAuthResult> GetSsoProfileAsync([FromBody] AuthCredentials credentials)
         {
+            Action<string> _cacheWarming = (memberId) => {
+                HttpHelpers.SendHttpGetUnpromisedRequest(_configuration["Url"], $"api/herbalife/profile/{memberId}");
+                HttpHelpers.SendHttpPostUnpromisedRequest(_configuration["Url"], $"api/herbalife/profile/vp", new VPRequest { MemberId = memberId });
+                if (credentials.Country.HasValue)
+                {
+                    HttpHelpers.SendHttpPostUnpromisedRequest(_configuration["Url"], "api/herbalife/profile/fop", new MemberCountryRequest { MemberId = memberId, Country = credentials.Country.Value });
+                    HttpHelpers.SendHttpPostUnpromisedRequest(_configuration["Url"], "api/herbalife/profile/tin", new MemberCountryRequest { MemberId = memberId, Country = credentials.Country.Value });
+                    HttpHelpers.SendHttpGetUnpromisedRequest(_configuration["Url"], $"api/herbalife/dualmonth/{credentials.Country.Value.GetCode()}");
+                }
+            };
+
+            string memberId = _hrblOrderingService.GetMemberIdByLogin(credentials.Login);
+            if (!string.IsNullOrWhiteSpace(memberId))
+               _cacheWarming(memberId);
+
             SsoAuthResult result = await _hrblOrderingService.GetSsoProfileAsync(credentials.Login.Trim(), credentials.Password.Trim(), credentials.Force);
 
             #region cache warming
             // #4694 member's cache warming
-            if (result != null)
-            {
-                HttpHelpers.SendHttpGetUnpromisedRequest(_configuration["Url"], $"api/herbalife/profile/{result.Profile.MemberId}");
-                HttpHelpers.SendHttpPostUnpromisedRequest(_configuration["Url"], $"api/herbalife/profile/vp", new VPRequest { MemberId = result.Profile.MemberId });
-                if (credentials.Country.HasValue)
-                {
-                    HttpHelpers.SendHttpPostUnpromisedRequest(_configuration["Url"], "api/herbalife/profile/fop", new MemberCountryRequest { MemberId = result.Profile.MemberId, Country = credentials.Country.Value });
-                    HttpHelpers.SendHttpPostUnpromisedRequest(_configuration["Url"], "api/herbalife/profile/tin", new MemberCountryRequest { MemberId = result.Profile.MemberId, Country = credentials.Country.Value });
-                    HttpHelpers.SendHttpGetUnpromisedRequest(_configuration["Url"], $"api/herbalife/dualmonth/{credentials.Country.Value.GetCode()}");
-                }
-            }
+            if (result != null && string.IsNullOrWhiteSpace(memberId))
+                _cacheWarming(result.Profile.MemberId);
             #endregion
 
             return result;
