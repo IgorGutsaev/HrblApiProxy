@@ -3,11 +3,12 @@ using Filuet.Hrbl.Ordering.Proxy.Helpers;
 using Filuet.Hrbl.Ordering.Proxy.Models;
 using Filuet.Infrastructure.Abstractions.Enums;
 using Filuet.Infrastructure.Abstractions.Helpers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Filuet.Hrbl.Ordering.Proxy.Controllers
 {
-    ////[Authorize]
+    //[Authorize]
     [ApiController]
     [Route("api/herbalife")]
     ////[RequiredScope(RequiredScopesConfigurationKey = "AzureAd:Scopes")]

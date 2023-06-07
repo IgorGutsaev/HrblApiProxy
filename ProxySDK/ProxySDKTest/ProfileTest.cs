@@ -12,13 +12,13 @@ namespace ProxySDKTest
         public async Task Test_SSO_Auth(string login, string password, string baseUrl, bool force)
         {
             // prepare
-            HrblOrderingProxyClient client = new HrblOrderingProxyClient(baseUrl);
+            HrblOrderingProxyClient client = new HrblOrderingProxyClient(baseUrl, "hrblproxy", "p0sjd1");
 
             // pre-validate
             Assert.NotNull(client);
 
             // perform
-            SsoAuthResult result = await client.GetSsoProfileAsync(login, password, force, Filuet.Infrastructure.Abstractions.Enums.Country.Japan);
+            SsoAuthResult result = await client.GetSsoProfileAsync(login, password, force, Country.Japan);
 
             // post-validate
             Assert.NotNull(result);
@@ -30,7 +30,7 @@ namespace ProxySDKTest
         public async Task Test_Get_Profile(string memberId, string baseUrl)
         {
             // prepare
-            HrblOrderingProxyClient client = new HrblOrderingProxyClient(baseUrl);
+            HrblOrderingProxyClient client = new HrblOrderingProxyClient(baseUrl, "", "");
 
             // pre-validate
             Assert.NotNull(client);
@@ -47,7 +47,7 @@ namespace ProxySDKTest
         public async Task Test_Get_VP(string memberId, string baseUrl)
         {
             // prepare
-            HrblOrderingProxyClient client = new HrblOrderingProxyClient(baseUrl);
+            HrblOrderingProxyClient client = new HrblOrderingProxyClient(baseUrl, "", "");
 
             // pre-validate
             Assert.NotNull(client);
@@ -64,7 +64,7 @@ namespace ProxySDKTest
         public async Task Test_Get_FOP(string memberId, Country country, string baseUrl)
         {
             // prepare
-            HrblOrderingProxyClient client = new HrblOrderingProxyClient(baseUrl);
+            HrblOrderingProxyClient client = new HrblOrderingProxyClient(baseUrl, "", "");
 
             // pre-validate
             Assert.NotNull(client);
@@ -81,7 +81,7 @@ namespace ProxySDKTest
         public async Task Test_Get_TIN(string memberId, Country country, string baseUrl)
         {
             // prepare
-            HrblOrderingProxyClient client = new HrblOrderingProxyClient(baseUrl);
+            HrblOrderingProxyClient client = new HrblOrderingProxyClient(baseUrl, "", "");
 
             // pre-validate
             Assert.NotNull(client);

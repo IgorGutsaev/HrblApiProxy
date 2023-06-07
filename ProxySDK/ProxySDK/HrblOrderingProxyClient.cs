@@ -3,7 +3,6 @@ using Filuet.Hrbl.Ordering.ProxySDK.Models;
 using Filuet.Infrastructure.Abstractions.Converters;
 using Filuet.Infrastructure.Abstractions.Enums;
 using Filuet.Infrastructure.Abstractions.Helpers;
-using Microsoft.AspNetCore.Mvc;
 using System.Text;
 using System.Text.Json;
 
@@ -11,9 +10,11 @@ namespace ProxySDK
 {
     public class HrblOrderingProxyClient
     {
-        public HrblOrderingProxyClient(string baseUri)
+        public HrblOrderingProxyClient(string baseUri, string login, string password)
         {
             _baseUri = baseUri;
+            _login = login;
+            _password = password;
 
             _getSsoProfileJsonSerializationOptions = new JsonSerializerOptions();
             _getSsoProfileJsonSerializationOptions.Converters.Add(new CountryJsonConverter());
@@ -28,6 +29,7 @@ namespace ProxySDK
             {
                 httpClient.BaseAddress = new Uri(_baseUri);
                 var request = new HttpRequestMessage(HttpMethod.Post, "/api/herbalife/ssoprofile");
+                request.Headers.Add("Authorization", "Basic " + Convert.ToBase64String(Encoding.Default.GetBytes($"{_login}:{_password}")));
 
                 AuthCredentials payload = new AuthCredentials { Login = login, Password = password, Force = force, Country = country };
 
@@ -49,6 +51,7 @@ namespace ProxySDK
             {
                 httpClient.BaseAddress = new Uri(_baseUri);
                 var request = new HttpRequestMessage(HttpMethod.Get, $"/api/herbalife/profile/{memberId}");
+                request.Headers.Add("Authorization", "Basic " + Convert.ToBase64String(Encoding.Default.GetBytes($"{_login}:{_password}")));
 
                 HttpResponseMessage response = await httpClient.SendAsync(request);
 
@@ -66,6 +69,7 @@ namespace ProxySDK
             {
                 httpClient.BaseAddress = new Uri(_baseUri);
                 var request = new HttpRequestMessage(HttpMethod.Post, "/api/herbalife/profile/vp");
+                request.Headers.Add("Authorization", "Basic " + Convert.ToBase64String(Encoding.Default.GetBytes($"{_login}:{_password}")));
 
                 VPRequest payload = new VPRequest { MemberId = memberId, Month = month, MonthTo = monthTo };
                 request.Content = new StringContent(JsonSerializer.Serialize(payload, _getSsoProfileJsonSerializationOptions), Encoding.Default, "application/json");
@@ -86,6 +90,7 @@ namespace ProxySDK
             {
                 httpClient.BaseAddress = new Uri(_baseUri);
                 var request = new HttpRequestMessage(HttpMethod.Post, "/api/herbalife/profile/fop");
+                request.Headers.Add("Authorization", "Basic " + Convert.ToBase64String(Encoding.Default.GetBytes($"{_login}:{_password}")));
 
                 MemberCountryRequest payload = new MemberCountryRequest { MemberId = memberId, Country = country };
                 request.Content = new StringContent(JsonSerializer.Serialize(payload, _getSsoProfileJsonSerializationOptions), Encoding.Default, "application/json");
@@ -106,6 +111,7 @@ namespace ProxySDK
             {
                 httpClient.BaseAddress = new Uri(_baseUri);
                 var request = new HttpRequestMessage(HttpMethod.Post, "/api/herbalife/profile/tin");
+                request.Headers.Add("Authorization", "Basic " + Convert.ToBase64String(Encoding.Default.GetBytes($"{_login}:{_password}")));
 
                 MemberCountryRequest payload = new MemberCountryRequest { MemberId = memberId, Country = country };
                 request.Content = new StringContent(JsonSerializer.Serialize(payload, _getSsoProfileJsonSerializationOptions), Encoding.Default, "application/json");
@@ -123,6 +129,7 @@ namespace ProxySDK
             {
                 httpClient.BaseAddress = new Uri(_baseUri);
                 var request = new HttpRequestMessage(HttpMethod.Get, $"/api/herbalife/dualmonth/{country.GetCode().ToLower()}");
+                request.Headers.Add("Authorization", "Basic " + Convert.ToBase64String(Encoding.Default.GetBytes($"{_login}:{_password}")));
 
                 HttpResponseMessage response = await httpClient.SendAsync(request);
 
@@ -133,5 +140,7 @@ namespace ProxySDK
 
         private readonly JsonSerializerOptions _getSsoProfileJsonSerializationOptions;
         private readonly string _baseUri;
+        private readonly string _login;
+        private readonly string _password;
     }
 }

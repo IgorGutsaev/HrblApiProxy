@@ -35,13 +35,14 @@ var app = builder.Build();
 
 app.UseForwardedHeaders();
 
+app.UseMiddleware<BasicAuthMiddleware>();
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
 
 app.UseRouting();
 app.UseStaticFiles();
@@ -53,8 +54,7 @@ app.UseEndpoints(endpoints =>
     endpoints.MapRazorPages();
 });
 
-////app.UseAuthorization();
-
 app.MapControllers();
+
 
 app.Run();

@@ -10,7 +10,7 @@ namespace Filuet.Hrbl.Ordering.ProxySDK.Test
         public async Task Test_Get_Dual_month_status(Country country, string baseUrl)
         {
             // prepare
-            HrblOrderingProxyClient client = new HrblOrderingProxyClient(baseUrl);
+            HrblOrderingProxyClient client = new HrblOrderingProxyClient(baseUrl, "", "");
 
             // pre-validate
             Assert.NotNull(client);
