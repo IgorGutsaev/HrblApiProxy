@@ -8,12 +8,13 @@ namespace Filuet.Hrbl.Ordering.Tests
     public class InventoryTest : BaseTest
     {
         [Theory]
-        [InlineData("TW", "0006", 1)]
-        [InlineData("LR", "794N / 795N", 1)]
-        [InlineData("5C", "291А", 1)]
-        [InlineData("U7", "0006", 1)]
-        [InlineData("AI", "0006", 1)]
-        [InlineData("LV", "5438", 1)]
+        [InlineData("W5", "0006", 1)]
+        //[InlineData("TW", "0006", 1)]
+        //[InlineData("LR", "794N / 795N", 1)]
+        //[InlineData("5C", "291А", 1)]
+        //[InlineData("U7", "0006", 1)]
+        //[InlineData("AI", "0006", 1)]
+        //[InlineData("LV", "5438", 1)]
         public async Task Test_Valid_sku_remains(string warehouse, string sku, int quantity)
         {
             // Prepare

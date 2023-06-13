@@ -207,7 +207,7 @@ namespace Filuet.Hrbl.Ordering.SDK
 
         /// <returns>Auto generated using Swagger Inspector</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<string> GetSkuAvailabilityAsync(GetSkuAvailability_body body)
+        public virtual System.Threading.Tasks.Task<object> GetSkuAvailabilityAsync(GetSkuAvailability_body body)
         {
             return GetSkuAvailabilityAsync(body, System.Threading.CancellationToken.None);
         }
@@ -215,7 +215,7 @@ namespace Filuet.Hrbl.Ordering.SDK
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Auto generated using Swagger Inspector</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<string> GetSkuAvailabilityAsync(GetSkuAvailability_body body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<object> GetSkuAvailabilityAsync(GetSkuAvailability_body body, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/GetSkuAvailability");
@@ -255,7 +255,7 @@ namespace Filuet.Hrbl.Ordering.SDK
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<object>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);

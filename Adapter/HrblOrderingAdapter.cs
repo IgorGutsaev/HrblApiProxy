@@ -74,7 +74,7 @@ namespace Filuet.Hrbl.Ordering.Adapter
             bool isError = false;
             string error = string.Empty;
 
-            List<Task<string>> chunkTasks = new List<Task<string>>();
+            List<Task<object>> chunkTasks = new List<Task<object>>();
 
             foreach (var b in blocks)
             {
