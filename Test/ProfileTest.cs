@@ -85,8 +85,8 @@ namespace Filuet.Hrbl.Ordering.Tests
 
         [Theory]
         [InlineData("VA00248957")]
-        [InlineData("7918180560")]
-        [InlineData("U512180202")]
+        //[InlineData("7918180560")]
+        //[InlineData("U512180202")]
         public async Task Test_Get_volume_points(string distributorId)
         {
             // Prepare

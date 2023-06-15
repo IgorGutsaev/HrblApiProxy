@@ -99,11 +99,11 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         public string InvShipFlag { get; set; }
 
         [JsonPropertyName("OrgId")]
-        [JsonConverter(typeof(StringIntConverter))]
+        //[JsonConverter(typeof(StringIntConverter))]
         public int OrgId { get; set; }
 
         [JsonPropertyName("OrderTypeId")]
-        [JsonConverter(typeof(StringIntConverter))]
+        //[JsonConverter(typeof(StringIntConverter))]
         public int OrderTypeId { get; set; }
 
         [JsonPropertyName("PostalCode")]
