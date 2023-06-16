@@ -44,18 +44,18 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         public decimal TotalDue { get; set; }
 
         [JsonPropertyName("OrderMonth")]
-        //[JsonConverter(typeof(OrderMonthSelectDateTimeConverter))]
+        [JsonConverter(typeof(OrderMonthSelectDateTimeConverter))]
         public DateTime OrderMonth { get; set; }
 
         [JsonPropertyName("SalesChannelCode")]
         public string SalesChannelCode { get; set; }
 
         [JsonPropertyName("OrderDate")]
-       // [JsonConverter(typeof(StandardDateTimeConverter))]
+        [JsonConverter(typeof(StandardDateTimeConverter))]
         public DateTime OrderDate { get; set; }
 
         [JsonPropertyName("PricingDate")]
-       // [JsonConverter(typeof(StandardDateTimeConverter))]
+        [JsonConverter(typeof(StandardDateTimeConverter))]
         public DateTime PricingDate { get; set; }
 
         [JsonPropertyName("TotalVolume")]
@@ -99,11 +99,9 @@ namespace Filuet.Hrbl.Ordering.Abstractions
         public string InvShipFlag { get; set; }
 
         [JsonPropertyName("OrgId")]
-        //[JsonConverter(typeof(StringIntConverter))]
         public int OrgId { get; set; }
 
         [JsonPropertyName("OrderTypeId")]
-        //[JsonConverter(typeof(StringIntConverter))]
         public int OrderTypeId { get; set; }
 
         [JsonPropertyName("PostalCode")]

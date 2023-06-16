@@ -53,7 +53,7 @@ namespace Filuet.Hrbl.Ordering.SDK
 
         /// <returns>Auto generated using Swagger Inspector</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<object> GetDistributorVolumePointsAsync(GetDistributorVolumePoints_body body)
+        public virtual System.Threading.Tasks.Task<string> GetDistributorVolumePointsAsync(GetDistributorVolumePoints_body body)
         {
             return GetDistributorVolumePointsAsync(body, System.Threading.CancellationToken.None);
         }
@@ -61,7 +61,7 @@ namespace Filuet.Hrbl.Ordering.SDK
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Auto generated using Swagger Inspector</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> GetDistributorVolumePointsAsync(GetDistributorVolumePoints_body body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<string> GetDistributorVolumePointsAsync(GetDistributorVolumePoints_body body, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/GetDistributorVolumePoints");
@@ -101,7 +101,7 @@ namespace Filuet.Hrbl.Ordering.SDK
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<object>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -900,7 +900,7 @@ namespace Filuet.Hrbl.Ordering.SDK
 
         /// <returns>Auto generated using Swagger Inspector</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<object> GetDistributorTinsAsync(GetDistributorTins_body body)
+        public virtual System.Threading.Tasks.Task<string> GetDistributorTinsAsync(GetDistributorTins_body body)
         {
             return GetDistributorTinsAsync(body, System.Threading.CancellationToken.None);
         }
@@ -908,7 +908,7 @@ namespace Filuet.Hrbl.Ordering.SDK
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Auto generated using Swagger Inspector</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> GetDistributorTinsAsync(GetDistributorTins_body body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<string> GetDistributorTinsAsync(GetDistributorTins_body body, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/GetDistributorTins");
@@ -948,7 +948,7 @@ namespace Filuet.Hrbl.Ordering.SDK
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<object>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -1054,7 +1054,7 @@ namespace Filuet.Hrbl.Ordering.SDK
 
         /// <returns>Auto generated using Swagger Inspector</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<object> GetPriceDetailsAsync(GetPriceDetails_body body)
+        public virtual System.Threading.Tasks.Task<string> GetPriceDetailsAsync(GetPriceDetails_body body)
         {
             return GetPriceDetailsAsync(body, System.Threading.CancellationToken.None);
         }
@@ -1062,7 +1062,7 @@ namespace Filuet.Hrbl.Ordering.SDK
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Auto generated using Swagger Inspector</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> GetPriceDetailsAsync(GetPriceDetails_body body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<string> GetPriceDetailsAsync(GetPriceDetails_body body, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/GetPriceDetails");
@@ -1102,7 +1102,7 @@ namespace Filuet.Hrbl.Ordering.SDK
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<object>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -1131,7 +1131,7 @@ namespace Filuet.Hrbl.Ordering.SDK
 
         /// <returns>Auto generated using Swagger Inspector</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<object> DSFOPPurchasingLimitsAsync(DSFOPPurchasingLimits_body body)
+        public virtual System.Threading.Tasks.Task<string> DSFOPPurchasingLimitsAsync(DSFOPPurchasingLimits_body body)
         {
             return DSFOPPurchasingLimitsAsync(body, System.Threading.CancellationToken.None);
         }
@@ -1139,7 +1139,7 @@ namespace Filuet.Hrbl.Ordering.SDK
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Auto generated using Swagger Inspector</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> DSFOPPurchasingLimitsAsync(DSFOPPurchasingLimits_body body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<string> DSFOPPurchasingLimitsAsync(DSFOPPurchasingLimits_body body, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/DSFOPPurchasingLimits");
@@ -1179,7 +1179,7 @@ namespace Filuet.Hrbl.Ordering.SDK
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<object>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -1208,7 +1208,7 @@ namespace Filuet.Hrbl.Ordering.SDK
 
         /// <returns>Auto generated using Swagger Inspector</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<object> GetOrderDualMonthStatusAsync(GetOrderDualMonthStatus_body body)
+        public virtual System.Threading.Tasks.Task<string> GetOrderDualMonthStatusAsync(GetOrderDualMonthStatus_body body)
         {
             return GetOrderDualMonthStatusAsync(body, System.Threading.CancellationToken.None);
         }
@@ -1216,7 +1216,7 @@ namespace Filuet.Hrbl.Ordering.SDK
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Auto generated using Swagger Inspector</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> GetOrderDualMonthStatusAsync(GetOrderDualMonthStatus_body body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<string> GetOrderDualMonthStatusAsync(GetOrderDualMonthStatus_body body, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/GetOrderDualMonthStatus");
@@ -1256,7 +1256,7 @@ namespace Filuet.Hrbl.Ordering.SDK
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<object>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -1285,7 +1285,7 @@ namespace Filuet.Hrbl.Ordering.SDK
 
         /// <returns>Auto generated using Swagger Inspector</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<object> GetDistributorProfileAsync(GetDistributorProfile_body body)
+        public virtual System.Threading.Tasks.Task<string> GetDistributorProfileAsync(GetDistributorProfile_body body)
         {
             return GetDistributorProfileAsync(body, System.Threading.CancellationToken.None);
         }
@@ -1293,7 +1293,7 @@ namespace Filuet.Hrbl.Ordering.SDK
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Auto generated using Swagger Inspector</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<object> GetDistributorProfileAsync(GetDistributorProfile_body body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<string> GetDistributorProfileAsync(GetDistributorProfile_body body, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/GetDistributorProfile");
@@ -1333,7 +1333,7 @@ namespace Filuet.Hrbl.Ordering.SDK
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<object>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -1578,7 +1578,7 @@ namespace Filuet.Hrbl.Ordering.SDK
         public object TotalDiscountAmount { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("LineAmount")]
-        public string LineAmount { get; set; }
+        public double LineAmount { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("VolumePoints")]
         public object VolumePoints { get; set; }
@@ -1605,7 +1605,7 @@ namespace Filuet.Hrbl.Ordering.SDK
         public object ChrAttribute10 { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("TotalRetailPrice")]
-        public string TotalRetailPrice { get; set; }
+        public double TotalRetailPrice { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("DateAttribute5")]
         public object DateAttribute5 { get; set; }
@@ -1644,7 +1644,7 @@ namespace Filuet.Hrbl.Ordering.SDK
         public object ChrAttribute3 { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("EarnBase")]
-        public string EarnBase { get; set; }
+        public double EarnBase { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("ChrAttribute6")]
         public object ChrAttribute6 { get; set; }
@@ -1659,7 +1659,7 @@ namespace Filuet.Hrbl.Ordering.SDK
         public object LineNumber { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("TotalDiscountedPrice")]
-        public string TotalDiscountedPrice { get; set; }
+        public double TotalDiscountedPrice { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("ChrAttribute2")]
         public object ChrAttribute2 { get; set; }
@@ -1671,7 +1671,7 @@ namespace Filuet.Hrbl.Ordering.SDK
         public object FreightTaxAmount { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("UnitVolume")]
-        public string UnitVolume { get; set; }
+        public double UnitVolume { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("TaxRate")]
         public object TaxRate { get; set; }
@@ -1695,7 +1695,7 @@ namespace Filuet.Hrbl.Ordering.SDK
         public object NumAttribute1 { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("Quantity")]
-        public string Quantity { get; set; }
+        public double Quantity { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("CustomerPrice")]
         public object CustomerPrice { get; set; }
@@ -1839,7 +1839,7 @@ namespace Filuet.Hrbl.Ordering.SDK
         public string Address4 { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("OrderTypeId")]
-        public string OrderTypeId { get; set; }
+        public int OrderTypeId { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("BadAddressFlag")]
         public string BadAddressFlag { get; set; }
@@ -2118,7 +2118,7 @@ namespace Filuet.Hrbl.Ordering.SDK
         public OrderHLOnlineOrderingts3SubmitOrder_OrderAddress OrderAddress { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("OrderPayment")]
-        public OrderHLOnlineOrderingts3SubmitOrder_OrderPayment OrderPayment { get; set; }
+        public OrderHLOnlineOrderingts3SubmitOrder_OrderPayment[] OrderPayment { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("OrderPromotionLine")]
         public OrderHLOnlineOrderingts3SubmitOrder_OrderPromotionLine OrderPromotionLine { get; set; }
@@ -2940,7 +2940,7 @@ namespace Filuet.Hrbl.Ordering.SDK
     {
 
         [System.Text.Json.Serialization.JsonPropertyName("TotalDue")]
-        public string TotalDue { get; set; }
+        public double TotalDue { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("AppsRespId")]
         public object AppsRespId { get; set; }
@@ -2967,7 +2967,7 @@ namespace Filuet.Hrbl.Ordering.SDK
         public object LogisticsCharges { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("TaxAmount")]
-        public string TaxAmount { get; set; }
+        public double TaxAmount { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("HoldName")]
         public object HoldName { get; set; }
@@ -3009,7 +3009,7 @@ namespace Filuet.Hrbl.Ordering.SDK
         public object UseSlidingScale { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("DiscountAmount")]
-        public string DiscountAmount { get; set; }
+        public double DiscountAmount { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("ShippingMethodCode")]
         public string ShippingMethodCode { get; set; }
@@ -3024,7 +3024,7 @@ namespace Filuet.Hrbl.Ordering.SDK
         public object PriceListId { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("TotalVolume")]
-        public string TotalVolume { get; set; }
+        public double TotalVolume { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("PHTaxAmount")]
         public object PHTaxAmount { get; set; }
@@ -3039,7 +3039,7 @@ namespace Filuet.Hrbl.Ordering.SDK
         public string OrderConfirmEmail { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("OrderTypeId")]
-        public string OrderTypeId { get; set; }
+        public int OrderTypeId { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("OrderTypeCode")]
         public string OrderTypeCode { get; set; }
@@ -3117,7 +3117,7 @@ namespace Filuet.Hrbl.Ordering.SDK
         public object CsDsPhoneNumber { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("OrgId")]
-        public string OrgId { get; set; }
+        public int OrgId { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("HoldId")]
         public object HoldId { get; set; }
@@ -3270,7 +3270,7 @@ namespace Filuet.Hrbl.Ordering.SDK
         public string SMSNumber { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("SlidingDiscount")]
-        public string SlidingDiscount { get; set; }
+        public double SlidingDiscount { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("State")]
         public object State { get; set; }
@@ -3285,16 +3285,16 @@ namespace Filuet.Hrbl.Ordering.SDK
         public object ChrAttribute11 { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("TotalAmountPaid")]
-        public string TotalAmountPaid { get; set; }
+        public double TotalAmountPaid { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("Balance")]
-        public string Balance { get; set; }
+        public double Balance { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("ChrAttribute10")]
         public object ChrAttribute10 { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("TotalRetailPrice")]
-        public string TotalRetailPrice { get; set; }
+        public double TotalRetailPrice { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("WareHouseCode")]
         public string WareHouseCode { get; set; }
@@ -3450,7 +3450,7 @@ namespace Filuet.Hrbl.Ordering.SDK
         public object CsDsType { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("OrderDiscount")]
-        public string OrderDiscount { get; set; }
+        public double OrderDiscount { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("OrderFreightCharges")]
         public object OrderFreightCharges { get; set; }
@@ -3510,7 +3510,7 @@ namespace Filuet.Hrbl.Ordering.SDK
         public string VoidFlag { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("PaymentAmount")]
-        public string PaymentAmount { get; set; }
+        public double PaymentAmount { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("StatusFlag")]
         public object StatusFlag { get; set; }
@@ -3675,7 +3675,7 @@ namespace Filuet.Hrbl.Ordering.SDK
         public object DocSeqNumber { get; set; }
 
         [System.Text.Json.Serialization.JsonPropertyName("PaymentReceived")]
-        public string PaymentReceived { get; set; }
+        public double PaymentReceived { get; set; }
 
         private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
 
@@ -3819,8 +3819,8 @@ namespace Filuet.Hrbl.Ordering.SDK
 
 #pragma warning restore 1591
 #pragma warning restore 1573
-#pragma warning restore  472
-#pragma warning restore  114
-#pragma warning restore  108
+#pragma warning restore 472
+#pragma warning restore 114
+#pragma warning restore 108
 #pragma warning restore 3016
 #pragma warning restore 8603

@@ -1,2 +1,4 @@
 (Get-Content HrblRestApiClient.cs).replace('MediaTypeHeaderValue.Parse("application/json")', 'MediaTypeHeaderValue.Parse("application/json; charset=utf-8")') | Set-Content HrblRestApiClient.cs
 (Get-Content HrblRestApiClient.cs).replace('private System.Net.Http.HttpClient _httpClient;', 'public System.Net.Http.HttpClient _httpClient;') | Set-Content HrblRestApiClient.cs
+(Get-Content HrblRestApiClient.cs).replace('public OrderHLOnlineOrderingts3SubmitOrder_OrderPayment OrderPayment', 'public OrderHLOnlineOrderingts3SubmitOrder_OrderPayment[] OrderPayment') | Set-Content HrblRestApiClient.cs
+(Get-Content HrblRestApiClient.cs).replace('"/Order/HLOnlineOrdering/ts3', '"') | Set-Content HrblRestApiClient.cs

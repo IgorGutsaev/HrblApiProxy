@@ -467,7 +467,7 @@ namespace Filuet.Hrbl.Ordering.Adapter
                     Address3 = request.Header.Address3,
                     Address4 = request.Header.Address4,
                     ShipFromOrgId = request.Header.OrgID.ToString(),
-                    OrderTypeId = request.Header.OrderTypeID?.ToString() ?? string.Empty
+                    OrderTypeId = request.Header.OrderTypeID.HasValue ? request.Header.OrderTypeID.Value : 0
                 },
                 OrderPriceLines = request.Lines.Select(x => new OrderHLOnlineOrderingts3GetPriceDetails_OrderPriceLines
                 {
